@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Noto Serif', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-body);
+    background: #faf9f6;
+    color: #1a1916;
+  }
+
+  .font-serif {
+    font-family: var(--font-display);
+  }
+}
