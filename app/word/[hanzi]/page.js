@@ -3,99 +3,102 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function WordPage({ params }) {
-  const [entry, setEntry] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function Home() {
+  const [query, setQuery] = useState('');
   const router = useRouter();
-  const { hanzi: rawHanzi } = use(params);
-  const hanzi = decodeURIComponent(rawHanzi);
 
-  useEffect(() => {
-    fetch(`/api/search?q=${encodeURIComponent(hanzi)}`)
-      .then(r => r.json())
-      .then(data => {
-        setEntry(data.results[0] || null);
-        setLoading(false);
-      });
-  }, [hanzi]);
-
-  if (loading) return <div className="flex items-center justify-center min-h-screen text-[#a09d97]">Loading…</div>;
-  if (!entry) return <div className="flex items-center justify-center min-h-screen text-[#a09d97]">No results for "{hanzi}"</div>;
-
-  const defs = entry.definitions.split(' | ');
+  function handleSearch() {
+    if (query.trim()) router.push(`/word/${encodeURIComponent(query.trim())}`);
+  }
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb]">
+    <main style={{ minHeight: '100vh', background: '#faf9f6', fontFamily: 'DM Sans, system-ui, sans-serif', color: '#1a1916' }}>
+
       {/* Nav */}
-      <nav className="sticky top-0 z-10 bg-[#faf9f6] border-b border-black/10 h-14 flex items-center justify-between px-8">
-        <span
-          onClick={() => router.push('/')}
-          className="font-serif text-xl font-medium flex items-center gap-2 cursor-pointer"
-        >
-          <span className="w-6 h-6 bg-[#1D9E75] rounded text-white text-xs flex items-center justify-center">汉</span>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 10, background: '#faf9f6', borderBottom: '0.5px solid rgba(0,0,0,0.1)', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 32px' }}>
+        <span style={{ fontSize: 20, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ width: 28, height: 28, background: '#1D9E75', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 13, fontWeight: 500 }}>汉</span>
           HanziDict
         </span>
-        <div className="flex gap-6 text-sm text-[#6b6860]">
-          <button onClick={() => router.push('/')}>Dictionary</button>
-          <button>Flashcards</button>
-          <button>About</button>
+        <div style={{ display: 'flex', gap: 24, fontSize: 13, color: '#6b6860' }}>
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b6860', fontSize: 13 }}>Dictionary</button>
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b6860', fontSize: 13 }}>Flashcards</button>
+          <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6b6860', fontSize: 13 }}>About</button>
         </div>
       </nav>
 
-      {/* Search bar */}
-      <div className="bg-[#faf9f6] border-b border-black/10 px-6 py-3">
-        <div className="relative max-w-xl">
-          <input
-            className="w-full h-10 border border-black/20 rounded-lg px-4 pr-10 text-sm bg-[#f2f0eb] outline-none"
-            defaultValue={hanzi}
-            onKeyDown={e => { if (e.key === 'Enter') router.push(`/word/${encodeURIComponent(e.target.value)}`); }}
-          />
-          <span className="absolute right-3 top-2.5 text-[#a09d97]">🔍</span>
-        </div>
-      </div>
+      {/* Hero */}
+      <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '80px 24px 60px', background: '#faf9f6' }}>
+        <p style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1D9E75', marginBottom: 18 }}>Open source · Free forever</p>
+        <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 400, lineHeight: 1.2, marginBottom: 16, maxWidth: 560, fontFamily: 'Georgia, serif' }}>
+          The Chinese dictionary<br />built for <em style={{ color: '#1D9E75', fontStyle: 'italic' }}>everyone</em>
+        </h1>
+        <p style={{ fontSize: 15, color: '#6b6860', lineHeight: 1.7, maxWidth: 400, marginBottom: 44 }}>
+          Search by character, pinyin, or English — 124,000 entries from CC-CEDICT, with HSK 1–9 tagging and stroke order animations.
+        </p>
 
-      {/* Content */}
-      <div className="grid grid-cols-[1fr_320px] min-h-[500px]">
-        {/* Entry */}
-        <div className="bg-[#faf9f6] border-r border-black/10 px-8 py-7">
-          <div className="flex items-start gap-5 mb-6 pb-6 border-b border-black/10">
-            <div className="font-serif text-8xl leading-none">{entry.traditional}</div>
-            <div className="pt-2">
-              <div className="text-2xl text-[#1D9E75] font-medium mb-1">{entry.pinyin}</div>
-              <div className="text-sm text-[#6b6860] mb-3">HSK {entry.hsk_level || '—'}</div>
-              <div className="flex gap-2 flex-wrap">
-                <span className="text-xs px-2.5 py-1 rounded-md bg-[#E1F5EE] text-[#0a5e44] border border-[#1D9E75]">Traditional: {entry.traditional}</span>
-                <span className="text-xs px-2.5 py-1 rounded-md bg-[#f2f0eb] text-[#6b6860] border border-black/10">Simplified: {entry.simplified}</span>
-              </div>
-            </div>
+        {/* Search widget */}
+        <div style={{ width: '100%', maxWidth: 600, border: '1px solid rgba(0,0,0,0.18)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px 0 18px', background: 'white', borderBottom: '0.5px solid rgba(0,0,0,0.1)' }}>
+            <input
+              style={{ flex: 1, height: 54, border: 'none', outline: 'none', background: 'transparent', fontSize: 17, color: '#1a1916', fontFamily: 'inherit' }}
+              placeholder="Search: 你好, nǐ hǎo, hello…"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSearch()}
+            />
+            <button onClick={handleSearch} style={{ width: 42, height: 42, background: '#1D9E75', border: 'none', borderRadius: 10, color: 'white', fontSize: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>→</button>
           </div>
-
-          <div className="text-xs font-medium tracking-widest text-[#a09d97] uppercase mb-3">Definitions</div>
-          <ul className="space-y-0">
-            {defs.map((def, i) => (
-              <li key={i} className="flex gap-3 py-2.5 border-b border-black/10 last:border-b-0 text-sm text-[#1a1916] leading-relaxed">
-                <span className="w-5 h-5 rounded-full bg-[#f2f0eb] flex items-center justify-center text-xs text-[#a09d97] flex-shrink-0 mt-0.5">{i + 1}</span>
-                {def}
-              </li>
+          <div style={{ display: 'flex', background: '#f2f0eb' }}>
+            {['Text', '✏️ Draw', '⊞ Radicals'].map((tab, i) => (
+              <button key={tab} style={{ flex: 1, padding: '9px 0', fontSize: 13, border: 'none', cursor: 'pointer', background: i === 0 ? '#E1F5EE' : 'transparent', color: i === 0 ? '#1D9E75' : '#6b6860', fontWeight: i === 0 ? 500 : 400, borderBottom: i === 0 ? '2px solid #1D9E75' : '2px solid transparent', fontFamily: 'inherit' }}>
+                {tab}
+              </button>
             ))}
-          </ul>
-        </div>
-
-        {/* Sidebar */}
-        <div className="p-5 flex flex-col gap-4">
-          <div className="bg-[#faf9f6] border border-black/10 rounded-2xl p-4">
-            <div className="text-sm font-medium mb-3">Stroke order — {entry.traditional[0]}</div>
-            <div className="w-full aspect-square bg-[#f2f0eb] rounded-lg flex items-center justify-center text-8xl font-serif">
-              {entry.traditional[0]}
-            </div>
-            <div className="flex gap-2 mt-3">
-              {['⏮ Reset', '▶ Animate', 'Quiz ✎'].map(btn => (
-                <button key={btn} className="flex-1 h-8 border border-black/20 rounded-lg text-xs text-[#6b6860] bg-[#f2f0eb]">{btn}</button>
-              ))}
-            </div>
           </div>
         </div>
+
+        {/* Chips */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 24, maxWidth: 580 }}>
+          {[['你好','nǐ hǎo'],['学习','xuéxí'],['朋友','péngyou'],['汉字','hànzì'],['茶','chá']].map(([hz, py]) => (
+            <button key={hz} onClick={() => router.push(`/word/${encodeURIComponent(hz)}`)}
+              style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '6px 14px', borderRadius: 20, border: '0.5px solid rgba(0,0,0,0.18)', background: '#f2f0eb', color: '#6b6860', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>
+              <span style={{ fontSize: 16, color: '#1a1916' }}>{hz}</span> {py}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Stats */}
+      <div style={{ display: 'flex', justifyContent: 'center', borderTop: '0.5px solid rgba(0,0,0,0.1)', borderBottom: '0.5px solid rgba(0,0,0,0.1)', background: '#f2f0eb' }}>
+        {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['Free','Always & forever']].map(([n, l]) => (
+          <div key={n} style={{ flex: 1, maxWidth: 210, textAlign: 'center', padding: '22px 16px', borderRight: '0.5px solid rgba(0,0,0,0.1)' }}>
+            <div style={{ fontSize: 26, fontWeight: 400, fontFamily: 'Georgia, serif' }}>{n}</div>
+            <div style={{ fontSize: 12, color: '#a09d97', marginTop: 3 }}>{l}</div>
+          </div>
+        ))}
       </div>
+
+      {/* Features */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(0,0,0,0.1)' }}>
+        {[
+          ['✏️', 'Handwriting recognition', 'Draw any character directly in your browser — no input method needed.'],
+          ['筆', 'Stroke order animation', 'Watch every character drawn stroke by stroke, then test yourself in quiz mode.'],
+          ['⊞', 'Radical search', 'Browse characters by their radical components, just like a traditional dictionary.'],
+        ].map(([icon, title, desc]) => (
+          <div key={title} style={{ background: '#faf9f6', padding: '32px 28px' }}>
+            <div style={{ fontSize: 22, marginBottom: 14 }}>{icon}</div>
+            <div style={{ fontSize: 14, fontWeight: 500, marginBottom: 6 }}>{title}</div>
+            <div style={{ fontSize: 13, color: '#6b6860', lineHeight: 1.65 }}>{desc}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <footer style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 32px', borderTop: '0.5px solid rgba(0,0,0,0.1)', background: '#f2f0eb', fontSize: 12, color: '#a09d97' }}>
+        <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
+        <span>Open source · GitHub</span>
+      </footer>
     </main>
   );
 }
