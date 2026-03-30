@@ -19,11 +19,15 @@ export default function WordPage() {
   const [hwLoaded, setHwLoaded] = useState(false);
   const [strokeLabel, setStrokeLabel] = useState('');
   const [quizActive, setQuizActive] = useState(false);
+  const [strokeCharIdx, setStrokeCharIdx] = useState(0);
+  const [example, setExample] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
   const hwRef = useRef(null);
   const searchWrapRef = useRef(null);
   const suggestTimer = useRef(null);
+  // Only show dropdown on explicit user interaction, never on page load or navigation
+  const userTypedRef = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -54,8 +58,20 @@ export default function WordPage() {
     setShowTraditional(false);
     setStrokeLabel('');
     setQuizActive(false);
+    setStrokeCharIdx(0);
+    setShowDrop(false);
+    setExample(null);
+    userTypedRef.current = false;
     hwRef.current = null;
   }, [hanzi]);
+
+  // Reset stroke char index when traditional/simplified view toggles
+  useEffect(() => {
+    setStrokeCharIdx(0);
+    setStrokeLabel('');
+    setQuizActive(false);
+    hwRef.current = null;
+  }, [showTraditional]);
 
   useEffect(() => {
     if (!hanzi) return;
@@ -79,7 +95,13 @@ export default function WordPage() {
           ))
           .catch(() => {});
 
-        // Decomposition: one tile per character position (no dedup)
+        // Example sentence
+        fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`)
+          .then(r => r.ok ? r.json() : null)
+          .then(d => { if (d?.zh) setExample(d); })
+          .catch(() => {});
+
+        // Decomposition: one tile per character (no dedup, preserves position)
         if (primary.simplified.length > 1) {
           const chars = primary.simplified.split('');
           Promise.all(chars.map(ch =>
@@ -96,14 +118,18 @@ export default function WordPage() {
       .catch(() => { setResults([]); setLoading(false); });
   }, [hanzi]);
 
-  // Debounced suggestions
+  // Debounced suggestions — only show dropdown when user has actively typed
   useEffect(() => {
     clearTimeout(suggestTimer.current);
     if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
     suggestTimer.current = setTimeout(() => {
       fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
         .then(r => r.json())
-        .then(d => { setSuggestions((d.results || []).slice(0, 6)); setShowDrop(true); })
+        .then(d => {
+          const s = (d.results || []).slice(0, 6);
+          setSuggestions(s);
+          if (userTypedRef.current) setShowDrop(s.length > 0);
+        })
         .catch(() => {});
     }, 250);
     return () => clearTimeout(suggestTimer.current);
@@ -123,7 +149,8 @@ export default function WordPage() {
   const primary = (results?.find(e => e.simplified === hanzi || e.traditional === hanzi) ?? results?.[0]) ?? null;
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
   const displayHanzi = (showTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
-  const writerChar = displayHanzi[0] ?? '';
+  const writerChar = displayHanzi[strokeCharIdx] ?? displayHanzi[0] ?? '';
+  const multiChar = displayHanzi.length > 1;
 
   useEffect(() => {
     if (!hwLoaded || !writerChar) return;
@@ -161,7 +188,23 @@ export default function WordPage() {
     });
   }
 
-  // Always navigate to the typed query — the word page finds the exact match from results
+  function hwPrev() {
+    if (strokeCharIdx > 0) {
+      setStrokeCharIdx(i => i - 1);
+      setStrokeLabel('');
+      setQuizActive(false);
+      hwRef.current = null;
+    }
+  }
+  function hwNext() {
+    if (strokeCharIdx < displayHanzi.length - 1) {
+      setStrokeCharIdx(i => i + 1);
+      setStrokeLabel('');
+      setQuizActive(false);
+      hwRef.current = null;
+    }
+  }
+
   function handleSearch() {
     if (!query.trim()) return;
     setShowDrop(false);
@@ -178,7 +221,11 @@ export default function WordPage() {
     router.push(`/word/${encodeURIComponent(simplified)}`);
   }
 
-  // ── Shared shell JSX (no nested component defs — they cause remount on re-render)
+  const strokeTitle = multiChar
+    ? `${writerChar} (${strokeCharIdx + 1}/${displayHanzi.length})`
+    : writerChar;
+
+  // Inline JSX — no nested component defs (they cause input remount / focus loss)
   const nav = (
     <nav className="nav">
       <button className="nav-logo" onClick={() => router.push('/')}>
@@ -203,8 +250,8 @@ export default function WordPage() {
               value={query}
               placeholder="Search…"
               autoComplete="off"
-              onChange={e => setQuery(e.target.value)}
-              onFocus={() => suggestions.length > 0 && setShowDrop(true)}
+              onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
+              onFocus={() => { if (userTypedRef.current && suggestions.length > 0) setShowDrop(true); }}
               onKeyDown={handleKeyDown}
             />
             <button className="word-search-ico" onClick={handleSearch}>🔍</button>
@@ -312,7 +359,16 @@ export default function WordPage() {
             {defs.map((def, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
-                <div>{def}</div>
+                <div>
+                  {def}
+                  {i === 0 && example && (
+                    <div className="example-block">
+                      <div className="example-zh">{example.zh}</div>
+                      <div className="example-py">{example.pinyin}</div>
+                      <div className="example-en">{example.en}</div>
+                    </div>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
@@ -323,10 +379,12 @@ export default function WordPage() {
               <div className="decomp-row">
                 {decomp.map((entry, i) => (
                   <button key={i} className="decomp-tile"
-                    onClick={() => entry.pinyin && router.push(`/word/${encodeURIComponent(entry.simplified)}`)}>
+                    onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}>
                     <div className="decomp-hanzi">{entry.simplified}</div>
                     <div className="decomp-info">
-                      {entry.pinyin ? `${convertPinyin(entry.pinyin)} · ${(entry.definitions || '').split(' | ')[0]?.slice(0, 24)}` : '—'}
+                      {entry.pinyin
+                        ? `${convertPinyin(entry.pinyin)} · ${(entry.definitions || '').split(' | ')[0]?.slice(0, 24)}`
+                        : '—'}
                     </div>
                   </button>
                 ))}
@@ -338,7 +396,16 @@ export default function WordPage() {
         {/* ── Right: Sidebar ── */}
         <div className="side-col">
           <div className="side-card">
-            <div className="side-card-title">Stroke order — {writerChar}</div>
+            <div className="stroke-card-header">
+              {multiChar
+                ? <>
+                    <button className="sbtn stroke-nav-btn" onClick={hwPrev} disabled={strokeCharIdx === 0}>‹</button>
+                    <span className="side-card-title" style={{ flex: 1, textAlign: 'center', margin: 0 }}>Stroke order — {strokeTitle}</span>
+                    <button className="sbtn stroke-nav-btn" onClick={hwNext} disabled={strokeCharIdx === displayHanzi.length - 1}>›</button>
+                  </>
+                : <span className="side-card-title" style={{ margin: 0 }}>Stroke order — {strokeTitle}</span>
+              }
+            </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
               <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative' }} />
