@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Noto_Serif, DM_Sans } from "next/font/google";
+import { Lora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const notoSerif = Noto_Serif({
+const lora = Lora({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500"],
+  style: ["normal", "italic"],
 });
 
 const dmSans = DM_Sans({
@@ -19,14 +20,13 @@ export const metadata: Metadata = {
   description: "Open source Chinese dictionary with 124,000 entries",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${notoSerif.variable} ${dmSans.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${lora.variable} ${dmSans.variable}`}>
+      <body>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(localStorage.getItem('hanzidict-dark')==='true')document.documentElement.classList.add('dark')}catch(e){}})()` }} />
+        {children}
+      </body>
     </html>
   );
 }

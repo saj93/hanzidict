@@ -1,95 +1,174 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import SearchDropdown from './components/SearchDropdown';
 
 export default function Home() {
   const [query, setQuery] = useState('');
+  const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
+  const [dark, setDark] = useState(false);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showDrop, setShowDrop] = useState(false);
   const router = useRouter();
+  const searchWrapRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
+    timerRef.current = setTimeout(() => {
+      fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
+        .then(r => r.json())
+        .then(d => {
+          setSuggestions((d.results || []).slice(0, 6));
+          setShowDrop(true);
+        })
+        .catch(() => {});
+    }, 250);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [query]);
+
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
+        setShowDrop(false);
+      }
+    }
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  function toggleDark() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
+    setDark(isDark);
+  }
+
+  function go(simplified: string) {
+    setShowDrop(false);
+    router.push(`/word/${encodeURIComponent(simplified)}`);
+  }
 
   function handleSearch() {
-    if (query.trim()) {
-      router.push(`/word/${encodeURIComponent(query.trim())}`);
-    }
+    if (!query.trim()) return;
+    setShowDrop(false);
+    router.push(`/word/${encodeURIComponent(query.trim())}`);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Escape') { setShowDrop(false); return; }
+    if (e.key === 'Enter') handleSearch();
   }
 
   return (
-    <main className="min-h-screen bg-[#faf9f6]">
-      {/* Nav */}
-      <nav className="sticky top-0 z-10 bg-[#faf9f6] border-b border-black/10 h-14 flex items-center justify-between px-8">
-        <span className="font-serif text-xl font-medium flex items-center gap-2">
-          <span className="w-6 h-6 bg-[#1D9E75] rounded text-white text-xs flex items-center justify-center">汉</span>
+    <main>
+      <nav className="nav">
+        <button className="nav-logo">
+          <span className="logo-mark">汉</span>
           HanziDict
-        </span>
-        <div className="flex gap-6 text-sm text-[#6b6860]">
-          <button>Dictionary</button>
-          <button>Flashcards</button>
-          <button>About</button>
+        </button>
+        <div className="nav-right">
+          <button className="nav-link active">Dictionary</button>
+          <button className="nav-link">Flashcards</button>
+          <button className="nav-link">About</button>
+          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
+            {dark ? '☀️' : '🌙'}
+          </button>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="flex flex-col items-center text-center px-6 pt-20 pb-16">
-        <p className="text-xs font-medium tracking-widest text-[#1D9E75] uppercase mb-4">Open source · Free forever</p>
-        <h1 className="font-serif text-5xl font-normal leading-tight mb-4 max-w-lg">
-          The Chinese dictionary<br />built for <em className="text-[#1D9E75]">everyone</em>
+      <section className="hero">
+        <div className="hero-eyebrow">Open source · Free forever</div>
+        <h1 className="hero-title">
+          The Chinese dictionary<br />built for <em>everyone</em>
         </h1>
-        <p className="text-[#6b6860] text-sm leading-relaxed max-w-sm mb-10">
+        <p className="hero-sub">
           Search by character, pinyin, or English — 124,000 entries from CC-CEDICT, with HSK 1–9 tagging and stroke order animations.
         </p>
 
-        {/* Search */}
-        <div className="w-full max-w-xl border border-black/20 rounded-2xl overflow-hidden shadow-sm">
-          <div className="flex items-center px-4 bg-white border-b border-black/10">
+        <div className="search-widget">
+          <div className="search-field" ref={searchWrapRef}>
             <input
-              className="flex-1 h-14 text-lg outline-none bg-transparent text-[#1a1916] placeholder-[#a09d97]"
               placeholder="Search: 你好, nǐ hǎo, hello…"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSearch()}
+              onFocus={() => suggestions.length > 0 && setShowDrop(true)}
+              onKeyDown={handleKeyDown}
+              autoComplete="off"
             />
-            <button
-              onClick={handleSearch}
-              className="w-10 h-10 bg-[#1D9E75] text-white rounded-lg text-lg flex items-center justify-center"
-            >
-              →
-            </button>
+            <button className="search-go" onClick={handleSearch}>→</button>
+            {showDrop && <SearchDropdown suggestions={suggestions} query={query} onSelect={go} />}
           </div>
-          <div className="flex bg-[#f2f0eb]">
-            {['Text', '✏️ Draw', '⊞ Radicals'].map((tab, i) => (
-              <button key={tab} className={`flex-1 py-2 text-sm ${i === 0 ? 'text-[#1D9E75] font-medium border-b-2 border-[#1D9E75] bg-[#E1F5EE]' : 'text-[#6b6860]'}`}>
-                {tab}
-              </button>
-            ))}
+          <div className="search-tabs">
+            <button className={`stab${searchTab === 'text' ? ' on' : ''}`} onClick={() => setSearchTab('text')}>Text</button>
+            <button className={`stab${searchTab === 'draw' ? ' on' : ''}`} onClick={() => setSearchTab('draw')}>✏️ Draw</button>
+            <button className={`stab${searchTab === 'radical' ? ' on' : ''}`} onClick={() => setSearchTab('radical')}>⊞ Radicals</button>
           </div>
+          {searchTab === 'draw' && (
+            <div className="draw-drop">
+              <div>
+                <div className="draw-canvas">
+                  <div className="draw-grid" />
+                  <div className="draw-hint">Draw a character here</div>
+                </div>
+                <div className="draw-mini-actions">
+                  <button className="draw-mini-btn">Clear</button>
+                  <button className="draw-mini-btn">↩ Undo</button>
+                </div>
+              </div>
+              <div>
+                <div className="candidates-label">Candidates — click to search</div>
+                <div className="candidates">
+                  {['学','见','觉','举','子','字'].map((ch, i) => (
+                    <button key={ch} className={`cand${i === 0 ? ' hot' : ''}`}
+                      onClick={() => router.push(`/word/${encodeURIComponent(ch)}`)}>
+                      {ch}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Chips */}
-        <div className="flex flex-wrap gap-2 justify-center mt-6">
+        <div className="chips">
           {[['你好','nǐ hǎo'],['学习','xuéxí'],['朋友','péngyou'],['汉字','hànzì'],['茶','chá']].map(([hz, py]) => (
-            <button
-              key={hz}
-              onClick={() => { setQuery(hz); router.push(`/word/${encodeURIComponent(hz)}`); }}
-              className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/20 bg-[#f2f0eb] text-sm text-[#6b6860] hover:border-[#1D9E75]"
-            >
-              <span className="text-base text-[#1a1916]">{hz}</span> {py}
+            <button key={hz} className="chip" onClick={() => router.push(`/word/${encodeURIComponent(hz)}`)}>
+              <span className="chip-hanzi">{hz}</span> {py}
             </button>
           ))}
         </div>
       </section>
 
-      {/* Stats */}
-      <div className="flex justify-center border-t border-b border-black/10 bg-[#f2f0eb]">
+      <div className="stats-strip">
         {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['Free','Always & forever']].map(([n, l]) => (
-          <div key={n} className="flex-1 max-w-[210px] text-center py-5 border-r border-black/10 last:border-r-0">
-            <div className="font-serif text-2xl">{n}</div>
-            <div className="text-xs text-[#a09d97] mt-1">{l}</div>
+          <div key={n} className="stat-cell">
+            <div className="stat-n">{n}</div>
+            <div className="stat-l">{l}</div>
           </div>
         ))}
       </div>
 
-      {/* Footer */}
-      <footer className="flex justify-between items-center px-8 py-5 border-t border-black/10 bg-[#f2f0eb] text-xs text-[#a09d97]">
+      <div className="features">
+        {[
+          ['✏️', 'Handwriting recognition', 'Draw any character directly in your browser — no input method needed. HanziLookup identifies it instantly.'],
+          ['筆', 'Stroke order animation', 'Watch every character drawn stroke by stroke with Hanzi Writer, then test yourself in quiz mode.'],
+          ['⊞', 'Radical search', 'Browse characters by their radical components, just like a traditional printed dictionary.'],
+        ].map(([icon, title, desc]) => (
+          <div key={String(title)} className="feat">
+            <div className="feat-icon">{icon}</div>
+            <div className="feat-title">{title}</div>
+            <div className="feat-desc">{desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <footer>
         <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
         <span>Open source · GitHub</span>
       </footer>
