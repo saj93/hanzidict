@@ -251,7 +251,7 @@ export default function WordPage() {
               placeholder="Search…"
               autoComplete="off"
               onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
-              onFocus={() => { if (userTypedRef.current && suggestions.length > 0) setShowDrop(true); }}
+              onFocus={() => { userTypedRef.current = true; if (suggestions.length > 0) setShowDrop(true); }}
               onKeyDown={handleKeyDown}
             />
             <button className="word-search-ico" onClick={handleSearch}>🔍</button>
