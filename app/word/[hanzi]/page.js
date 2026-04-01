@@ -163,7 +163,9 @@ export default function WordPage() {
     } else {
       container.innerHTML = '';
       setTimeout(() => {
-        const rect = container.getBoundingClientRect();
+        // Read from parent (.stroke-area) which has the explicit CSS height — container has no content yet so its height is 0
+        const strokeArea = container.parentElement;
+        const rect = strokeArea.getBoundingClientRect();
         const size = Math.floor(Math.min(rect.width || 280, rect.height || 280)) || 280;
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
