@@ -162,13 +162,13 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      // Derive size from window dimensions — always accurate, no layout timing issues.
-      // On mobile: viewport minus side-col padding (32px) and side-card padding (32px) and borders (2px).
-      // On desktop: fixed 280px cap.
+      // offsetWidth is reliable (CSS width is set, not height).
+      // Cap by the CSS max-height so the square SVG fits within the container.
+      const strokeArea = container.parentElement;
       const isMobile = window.innerWidth <= 640;
-      const size = isMobile
-        ? Math.min(window.innerWidth - 66, 200)
-        : 280;
+      const availW = strokeArea.offsetWidth || (window.innerWidth - 64);
+      const maxH = isMobile ? 216 : 400;
+      const size = Math.min(availW, maxH, 280);
       hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
         width: size, height: size,
         padding: Math.round(size * 0.1),
@@ -414,7 +414,7 @@ export default function WordPage() {
             </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+              <div id="hanzi-writer-target" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
