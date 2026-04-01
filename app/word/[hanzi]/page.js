@@ -164,6 +164,7 @@ export default function WordPage() {
       container.innerHTML = '';
       setTimeout(() => {
         const containerWidth = container.getBoundingClientRect().width;
+        console.log('[HanziWriter] container width:', containerWidth, 'char:', writerChar);
         const size = containerWidth > 0 ? Math.floor(containerWidth) : 280;
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
