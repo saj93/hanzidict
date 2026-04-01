@@ -162,11 +162,12 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      // Use a fixed size — CSS (max-width/max-height on .stroke-area svg) handles scaling down.
-      const size = 300;
-      hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+      setTimeout(() => {
+        const containerWidth = container.getBoundingClientRect().width;
+        const size = containerWidth > 0 ? Math.floor(containerWidth) : 280;
+        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
-          padding: Math.round(size * 0.1),
+          padding: Math.floor(size * 0.1),
           showOutline: true,
           strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
           outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
@@ -174,6 +175,7 @@ export default function WordPage() {
           strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
           showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
+      }, 100);
     }
   }, [hwLoaded, writerChar]);
 
