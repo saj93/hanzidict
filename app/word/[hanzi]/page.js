@@ -162,14 +162,9 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      requestAnimationFrame(() => {
-        const strokeArea = container.parentElement;
-        const isMobile = window.innerWidth <= 640;
-        // Desktop layout: side-col 320px − 40px padding − 32px card padding = 248px → cap 244
-        // Mobile: stroke-area is full width but CSS height is fixed at 220px → cap 214
-        const w = strokeArea.offsetWidth || (isMobile ? window.innerWidth - 64 : 248);
-        const size = Math.min(w - 4, isMobile ? 214 : 244);
-        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+      // Use a fixed size — CSS (max-width/max-height on .stroke-area svg) handles scaling down.
+      const size = 300;
+      hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
           padding: Math.round(size * 0.1),
           showOutline: true,
@@ -179,7 +174,6 @@ export default function WordPage() {
           strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
           showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
-      });
     }
   }, [hwLoaded, writerChar]);
 
