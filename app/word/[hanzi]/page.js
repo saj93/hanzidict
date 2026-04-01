@@ -166,6 +166,10 @@ export default function WordPage() {
         const containerWidth = container.getBoundingClientRect().width;
         console.log('[HanziWriter] container width:', containerWidth, 'char:', writerChar);
         const size = containerWidth > 0 ? Math.floor(containerWidth) : 280;
+        setTimeout(() => {
+          const svg = document.querySelector('#hanzi-writer-target svg');
+          if (svg) console.log('[HanziWriter] SVG dimensions:', svg.getAttribute('width'), svg.getAttribute('height'), svg.getBoundingClientRect());
+        }, 500);
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
           padding: Math.floor(size * 0.1),
