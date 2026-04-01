@@ -520,48 +520,83 @@ html.dark .drop-row:hover { background: var(--bg3); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
+  /* ── Nav ── */
   .nav { padding: 0 16px; height: 50px; }
-  .nav-right { gap: 12px; }
-  .nav-link:not(.active):not(:last-of-type) { display: none; }
+  .nav-right { gap: 10px; }
+  /* Hide Dictionary / Flashcards / About; keep theme toggle */
+  .nav-link { display: none; }
+  .theme-btn { display: flex; }
 
-  .hero { padding: 44px 16px 40px; }
-  .hero-title { font-size: 30px; }
-  .hero-sub { font-size: 14px; margin-bottom: 28px; }
-  .search-field input { font-size: 15px; height: 48px; }
+  /* ── Hero ── */
+  .hero { padding: 36px 16px 32px; }
+  .hero-title { font-size: 28px; }
+  .hero-sub { font-size: 13px; margin-bottom: 24px; }
+
+  /* ── Search widget ── */
+  .search-widget { max-width: 100%; }
+  .search-field input { font-size: 15px; height: 46px; }
+  .search-go { width: 38px; height: 38px; }
   .stab { font-size: 11px; padding: 8px 4px; }
   .draw-drop { flex-direction: column; }
-  .chips { gap: 6px; margin-top: 20px; }
-  .chip { font-size: 12px; padding: 5px 10px; gap: 5px; }
-  .chip-hanzi { font-size: 14px; }
 
+  /* ── Chips ── */
+  .chips { gap: 6px; margin-top: 18px; }
+  .chip { font-size: 11px; padding: 5px 9px; gap: 4px; }
+  .chip-hanzi { font-size: 13px; }
+
+  /* ── Stats strip: 2×2 grid ── */
   .stats-strip { flex-wrap: wrap; }
   .stat-cell { min-width: 50%; max-width: 50%; border-right: none; border-bottom: 0.5px solid var(--border); }
   .stat-cell:nth-child(odd) { border-right: 0.5px solid var(--border); }
-  .stat-cell:last-child { border-bottom: none; }
+  .stat-cell:nth-child(3), .stat-cell:nth-child(4) { border-bottom: none; }
   .stat-n { font-size: 20px; }
 
+  /* ── Features: 1 column ── */
   .features { grid-template-columns: 1fr; }
-  .feat { padding: 24px 20px; }
+  .feat { padding: 22px 18px; }
+
   footer { flex-direction: column; gap: 4px; text-align: center; padding: 16px; }
 
+  /* ── Word page header ── */
   .word-header-bar { padding: 12px 0 0; }
   .word-header-inner { padding: 0 16px; }
+  .word-search-input { height: 38px; font-size: 14px; }
   .word-draw-drop { padding: 14px 16px; flex-direction: column; }
-  .wtab { font-size: 12px; padding: 8px 12px; }
+  .wtab { font-size: 12px; padding: 8px 10px; }
 
-  .word-body { grid-template-columns: 1fr; }
+  /* ── Word body: single column ── */
+  .word-body { grid-template-columns: 1fr; max-width: 100%; }
   .entry-col { padding: 20px 16px; border-right: none; border-bottom: 0.5px solid var(--border); }
   .side-col { padding: 16px; }
-  .hanzi-row { flex-direction: column; gap: 10px; }
-  .hanzi-glyph { font-size: 64px; }
-  .pinyin-line { font-size: 20px; }
+
+  /* ── Character display ── */
+  .hanzi-row { flex-direction: column; gap: 8px; }
+  .hanzi-glyph { font-size: 60px; }
+  .pinyin-line { font-size: 18px; }
+
+  /* ── Decomposition tiles: wrap, min 80px ── */
+  .decomp-row { flex-wrap: wrap; }
+  .decomp-tile { min-width: 80px; flex: 1; }
+
+  /* ── Stroke order: full width ── */
+  .side-card { width: 100%; }
+
+  /* ── Related words: prevent overflow ── */
+  .related-row { padding: 8px 6px; }
+  .related-def { font-size: 11px; }
+
+  /* ── Search results page ── */
+  .sr-hz { font-size: 26px; min-width: 36px; }
+  .sr-py { font-size: 12px; }
+  .sr-def { font-size: 12px; }
 
   .more-label { padding: 20px 16px 8px; }
   .compact-card { padding: 14px 16px; }
 }
 
 @media (max-width: 380px) {
-  .hero-title { font-size: 26px; }
-  .hanzi-glyph { font-size: 54px; }
+  .hero-title { font-size: 24px; }
+  .hanzi-glyph { font-size: 52px; }
   .stab { font-size: 10px; }
+  .chip { font-size: 10px; padding: 4px 8px; }
 }
