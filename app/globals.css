@@ -578,9 +578,9 @@ html.dark .drop-row:hover { background: var(--bg3); }
   .decomp-row { flex-wrap: wrap; }
   .decomp-tile { min-width: 80px; flex: 1; }
 
-  /* ── Stroke order: full width, capped height ── */
-  .side-card { width: 100%; }
-  .stroke-area { max-height: 250px; }
+  /* ── Stroke order: full width, fixed height ── */
+  .side-card { width: 100%; box-sizing: border-box; }
+  .stroke-area { width: 100%; aspect-ratio: unset; height: 220px; max-height: 220px; }
 
   /* ── Related words: prevent overflow ── */
   .related-row { padding: 8px 6px; }
