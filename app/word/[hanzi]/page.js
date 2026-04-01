@@ -162,11 +162,14 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      setTimeout(() => {
-        // Read from parent (.stroke-area) which has the explicit CSS height — container has no content yet so its height is 0
-        const strokeArea = container.parentElement;
+      const strokeArea = container.parentElement;
+      let initialized = false;
+      const initWriter = () => {
+        if (initialized) return;
         const rect = strokeArea.getBoundingClientRect();
-        const size = Math.floor(Math.min(rect.width || 280, rect.height || 280)) || 280;
+        if (rect.width === 0) return;
+        initialized = true;
+        const size = Math.floor(Math.min(rect.width, rect.height > 0 ? rect.height : rect.width));
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
           padding: Math.floor(size * 0.1),
@@ -177,7 +180,10 @@ export default function WordPage() {
           strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
           showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
-      }, 100);
+      };
+      const ro = new ResizeObserver(() => { initWriter(); ro.disconnect(); });
+      ro.observe(strokeArea);
+      setTimeout(initWriter, 500);
     }
   }, [hwLoaded, writerChar]);
 

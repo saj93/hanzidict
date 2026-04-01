@@ -590,10 +590,6 @@ html.dark .drop-row:hover { background: var(--bg3); }
   /* ── Stroke order: full width, fixed height ── */
   .side-card { width: 100%; box-sizing: border-box; }
   .stroke-area { width: 100%; aspect-ratio: unset; height: 220px; max-height: 220px; }
-  #hanzi-writer-target svg {
-    max-width: 100% !important;
-    height: auto !important;
-  }
 
   /* ── Related words: prevent overflow ── */
   .related-row { padding: 8px 6px; }
