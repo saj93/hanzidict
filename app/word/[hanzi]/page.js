@@ -166,10 +166,12 @@ export default function WordPage() {
       // Single rAF can still fire before the browser has computed offsetHeight.
       requestAnimationFrame(() => requestAnimationFrame(() => {
         const strokeArea = container.parentElement;
+        const isMobile = window.innerWidth <= 640;
+        const cap = isMobile ? 200 : 280;
         const rect = strokeArea.getBoundingClientRect();
-        const w = rect.width || strokeArea.offsetWidth || 260;
-        const h = rect.height || strokeArea.offsetHeight || 260;
-        const size = Math.min(w, h, 280);
+        const w = rect.width || strokeArea.offsetWidth || cap;
+        const h = isMobile ? cap : (rect.height || strokeArea.offsetHeight || cap);
+        const size = Math.min(w, h, cap);
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
           padding: Math.round(size * 0.1),
