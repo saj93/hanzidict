@@ -162,22 +162,23 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      // offsetWidth is reliable (CSS width is set, not height).
-      // Cap by the CSS max-height so the square SVG fits within the container.
-      const strokeArea = container.parentElement;
-      const isMobile = window.innerWidth <= 640;
-      const availW = strokeArea.offsetWidth || (window.innerWidth - 64);
-      const maxH = isMobile ? 216 : 400;
-      const size = Math.min(availW, maxH, 280);
-      hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
-        width: size, height: size,
-        padding: Math.round(size * 0.1),
-        showOutline: true,
-        strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
-        outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
-        drawingColor: '#1D9E75', drawingWidth: 4,
-        strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
-        showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
+      requestAnimationFrame(() => {
+        const strokeArea = container.parentElement;
+        const isMobile = window.innerWidth <= 640;
+        // Desktop layout: side-col 320px − 40px padding − 32px card padding = 248px → cap 244
+        // Mobile: stroke-area is full width but CSS height is fixed at 220px → cap 214
+        const w = strokeArea.offsetWidth || (isMobile ? window.innerWidth - 64 : 248);
+        const size = Math.min(w - 4, isMobile ? 214 : 244);
+        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+          width: size, height: size,
+          padding: Math.round(size * 0.1),
+          showOutline: true,
+          strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
+          outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
+          drawingColor: '#1D9E75', drawingWidth: 4,
+          strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
+          showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
+        });
       });
     }
   }, [hwLoaded, writerChar]);
@@ -414,7 +415,7 @@ export default function WordPage() {
             </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }} />
+              <div id="hanzi-writer-target" style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
