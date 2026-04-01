@@ -162,17 +162,25 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      const size = container.offsetWidth || 260;
-      hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
-        width: size, height: size,
-        padding: Math.round(size * 0.1),
-        showOutline: true,
-        strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
-        outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
-        drawingColor: '#1D9E75', drawingWidth: 4,
-        strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
-        showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
-      });
+      // Double-rAF: first frame schedules layout, second frame reads post-paint dimensions.
+      // Single rAF can still fire before the browser has computed offsetHeight.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const strokeArea = container.parentElement;
+        const rect = strokeArea.getBoundingClientRect();
+        const w = rect.width || strokeArea.offsetWidth || 260;
+        const h = rect.height || strokeArea.offsetHeight || 260;
+        const size = Math.min(w, h, 280);
+        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+          width: size, height: size,
+          padding: Math.round(size * 0.1),
+          showOutline: true,
+          strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
+          outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
+          drawingColor: '#1D9E75', drawingWidth: 4,
+          strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
+          showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
+        });
+      }));
     }
   }, [hwLoaded, writerChar]);
 
@@ -408,7 +416,7 @@ export default function WordPage() {
             </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative' }} />
+              <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
