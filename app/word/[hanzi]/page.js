@@ -162,25 +162,25 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          const card = document.getElementById('stroke-order-card');
-          if (!card) return;
-          const rect = card.getBoundingClientRect();
-          const size = Math.floor(rect.width - 32);
-          if (size <= 0) return;
-          hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
-            width: size, height: size,
-            padding: Math.floor(size * 0.08),
-            showOutline: true,
-            strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
-            outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
-            drawingColor: '#1D9E75', drawingWidth: 4,
-            strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
-            showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
-          });
+      // Double-rAF: first frame schedules layout, second frame reads post-paint dimensions.
+      // Single rAF can still fire before the browser has computed offsetHeight.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const strokeArea = container.parentElement;
+        const rect = strokeArea.getBoundingClientRect();
+        const w = rect.width || strokeArea.offsetWidth || 260;
+        const h = rect.height || strokeArea.offsetHeight || 260;
+        const size = Math.min(w, h, 280);
+        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+          width: size, height: size,
+          padding: Math.round(size * 0.1),
+          showOutline: true,
+          strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
+          outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
+          drawingColor: '#1D9E75', drawingWidth: 4,
+          strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
+          showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
-      });
+      }));
     }
   }, [hwLoaded, writerChar]);
 
@@ -403,7 +403,7 @@ export default function WordPage() {
 
         {/* ── Right: Sidebar ── */}
         <div className="side-col">
-          <div className="side-card" id="stroke-order-card">
+          <div className="side-card">
             <div className="stroke-card-header">
               {multiChar
                 ? <>
@@ -416,7 +416,7 @@ export default function WordPage() {
             </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+              <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
