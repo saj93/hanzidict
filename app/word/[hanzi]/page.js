@@ -416,7 +416,7 @@ export default function WordPage() {
             </div>
             <div className="stroke-area">
               <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+              <div id="hanzi-writer-target" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
