@@ -169,7 +169,8 @@ export default function WordPage() {
         const rect = strokeArea.getBoundingClientRect();
         if (rect.width === 0) return;
         initialized = true;
-        const size = Math.floor(Math.min(rect.width, rect.height > 0 ? rect.height : rect.width));
+        const isMobile = window.innerWidth <= 640;
+        const size = isMobile ? Math.min(Math.floor(rect.width), 214) : Math.floor(rect.width);
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
           padding: Math.floor(size * 0.1),
@@ -180,15 +181,6 @@ export default function WordPage() {
           strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
           showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
-        setTimeout(() => {
-          const svg = document.querySelector('#hanzi-writer-target svg');
-          if (svg) {
-            svg.removeAttribute('width');
-            svg.removeAttribute('height');
-            svg.style.width = '100%';
-            svg.style.height = '100%';
-          }
-        }, 300);
       };
       const ro = new ResizeObserver(() => { initWriter(); ro.disconnect(); });
       ro.observe(strokeArea);
