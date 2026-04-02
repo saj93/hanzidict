@@ -162,29 +162,25 @@ export default function WordPage() {
       setQuizActive(false);
     } else {
       container.innerHTML = '';
-      const strokeArea = container.parentElement;
-      let initialized = false;
-      const initWriter = () => {
-        if (initialized) return;
-        const rect = strokeArea.getBoundingClientRect();
-        if (rect.width === 0) return;
-        initialized = true;
-        const isMobile = window.innerWidth <= 640;
-        const size = isMobile ? Math.min(Math.floor(rect.width), 214) : Math.floor(rect.width);
-        hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
-          width: size, height: size,
-          padding: Math.floor(size * 0.1),
-          showOutline: true,
-          strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
-          outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
-          drawingColor: '#1D9E75', drawingWidth: 4,
-          strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
-          showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const card = document.getElementById('stroke-order-card');
+          if (!card) return;
+          const rect = card.getBoundingClientRect();
+          const size = Math.floor(rect.width - 32);
+          if (size <= 0) return;
+          hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
+            width: size, height: size,
+            padding: Math.floor(size * 0.08),
+            showOutline: true,
+            strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
+            outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
+            drawingColor: '#1D9E75', drawingWidth: 4,
+            strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
+            showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
+          });
         });
-      };
-      const ro = new ResizeObserver(() => { initWriter(); ro.disconnect(); });
-      ro.observe(strokeArea);
-      setTimeout(initWriter, 500);
+      });
     }
   }, [hwLoaded, writerChar]);
 
@@ -407,7 +403,7 @@ export default function WordPage() {
 
         {/* ── Right: Sidebar ── */}
         <div className="side-col">
-          <div className="side-card">
+          <div className="side-card" id="stroke-order-card">
             <div className="stroke-card-header">
               {multiChar
                 ? <>
