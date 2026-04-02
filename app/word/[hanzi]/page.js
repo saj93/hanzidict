@@ -180,6 +180,15 @@ export default function WordPage() {
           strokeAnimationSpeed: 1, delayBetweenStrokes: 150,
           showCharacter: true, highlightOnComplete: true, highlightColor: '#1D9E75',
         });
+        setTimeout(() => {
+          const svg = document.querySelector('#hanzi-writer-target svg');
+          if (svg) {
+            svg.removeAttribute('width');
+            svg.removeAttribute('height');
+            svg.style.width = '100%';
+            svg.style.height = '100%';
+          }
+        }, 300);
       };
       const ro = new ResizeObserver(() => { initWriter(); ro.disconnect(); });
       ro.observe(strokeArea);
