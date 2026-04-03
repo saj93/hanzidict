@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lora, DM_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Open source Chinese dictionary with 124,000 entries",
 };
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
 };
