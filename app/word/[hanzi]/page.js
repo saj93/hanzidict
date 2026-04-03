@@ -165,14 +165,12 @@ export default function WordPage() {
       // Double-rAF: first frame schedules layout, second frame reads post-paint dimensions.
       // Single rAF can still fire before the browser has computed offsetHeight.
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        const strokeArea = container.parentElement;
-        const rect = strokeArea.getBoundingClientRect();
-        const w = rect.width || strokeArea.offsetWidth || 260;
-        const h = rect.height || strokeArea.offsetHeight || 260;
-        const size = Math.min(w, h, 280);
+        const isMobile = window.innerWidth <= 640;
+        const width = container.getBoundingClientRect().width || 260;
+        const size = isMobile ? Math.min(width, 220) : width;
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
-          padding: Math.round(size * 0.1),
+          padding: Math.floor(size * 0.08),
           showOutline: true,
           strokeColor: document.documentElement.classList.contains('dark') ? '#f0ede6' : '#1a1916',
           outlineColor: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)',
