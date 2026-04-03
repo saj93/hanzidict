@@ -521,7 +521,7 @@ html.dark .drop-row:hover { background: var(--bg3); }
 .compact-arrow { color: var(--fg3); font-size: 18px; margin-left: auto; flex-shrink: 0; }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   /* ── Nav ── */
   .nav { padding: 0 16px; height: 50px; }
   .nav-right { gap: 10px; }

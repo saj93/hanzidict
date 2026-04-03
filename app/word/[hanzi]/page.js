@@ -165,7 +165,7 @@ export default function WordPage() {
       // Double-rAF: first frame schedules layout, second frame reads post-paint dimensions.
       // Single rAF can still fire before the browser has computed offsetHeight.
       requestAnimationFrame(() => requestAnimationFrame(() => {
-        const isMobile = window.innerWidth <= 640;
+        const isMobile = window.innerWidth <= 768;
         const size = isMobile ? 200 : (container.getBoundingClientRect().width || 280);
         hwRef.current = window.HanziWriter.create('hanzi-writer-target', writerChar, {
           width: size, height: size,
