@@ -408,7 +408,7 @@ export default function WordPage() {
                     <span className="side-card-title" style={{ flex: 1, textAlign: 'center', margin: 0 }}>Stroke order — {strokeTitle}</span>
                     <button className="sbtn stroke-nav-btn" onClick={hwNext} disabled={strokeCharIdx === displayHanzi.length - 1}>›</button>
                   </>
-                : <span className="side-card-title" style={{ margin: 0 }}>Stroke order — {strokeTitle}</span>
+                : <span className="side-card-title" style={{ margin: 0, width: '100%', textAlign: 'center' }}>Stroke order — {strokeTitle}</span>
               }
             </div>
             <div style={{
