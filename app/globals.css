@@ -584,6 +584,7 @@ html.dark .drop-row:hover { background: var(--bg3); }
   /* ── Stroke order: full width, fixed height ── */
   .side-card { width: 100%; box-sizing: border-box; }
   .stroke-area { width: 100%; aspect-ratio: unset; height: 220px; max-height: 220px; overflow: hidden; }
+  #hanzi-writer-target { width: 280px !important; height: 280px !important; }
 
   /* ── Related words: prevent overflow ── */
   .related-row { padding: 8px 6px; }
