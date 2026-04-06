@@ -411,9 +411,19 @@ export default function WordPage() {
                 : <span className="side-card-title" style={{ margin: 0 }}>Stroke order — {strokeTitle}</span>
               }
             </div>
-            <div className="stroke-area">
-              <div className="stroke-grid-bg" />
-              <div id="hanzi-writer-target" style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+            <div style={{
+              border: '1.5px solid var(--border-mid)',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '12px',
+              position: 'relative',
+              overflow: 'hidden',
+              backgroundImage: 'linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px)',
+              backgroundSize: '50% 50%,50% 50%',
+            }}>
+              <div id="hanzi-writer-target" style={{ width: '100%', aspectRatio: '1' }} />
             </div>
             <div className="stroke-btns">
               <button className="sbtn" onClick={hwReset}>↺ Reset</button>
