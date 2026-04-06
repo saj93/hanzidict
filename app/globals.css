@@ -568,9 +568,9 @@ html.dark .drop-row:hover { background: var(--bg3); }
   .wtab { font-size: 12px; padding: 8px 10px; }
 
   /* ── Word body: single column ── */
-  .word-body { grid-template-columns: 1fr; max-width: 100%; }
+  .word-body { grid-template-columns: 1fr; max-width: 100vw; overflow: hidden; }
   .entry-col { padding: 20px 16px; border-right: none; border-bottom: 0.5px solid var(--border); }
-  .side-col { padding: 16px; }
+  .side-col { padding: 12px; max-width: 100vw; overflow: hidden; }
 
   /* ── Character display ── */
   .hanzi-row { flex-direction: column; gap: 8px; }
@@ -582,7 +582,8 @@ html.dark .drop-row:hover { background: var(--bg3); }
   .decomp-tile { min-width: 80px; flex: 1; }
 
   /* ── Stroke order: full width, fixed height ── */
-  .side-card { width: 100%; box-sizing: border-box; }
+  .side-card { width: 100%; box-sizing: border-box; max-width: 100%; overflow: hidden; }
+  #hanzi-writer-target { max-width: 100%; }
   .stroke-area { width: 100%; aspect-ratio: unset; height: 220px; max-height: 220px; overflow: hidden; }
   #hanzi-writer-target { width: 280px !important; height: 280px !important; }
 

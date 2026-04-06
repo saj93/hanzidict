@@ -307,6 +307,7 @@ export default function WordPage() {
   const pinyin = convertPinyin(primary.pinyin);
 
   return (
+    <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
     <main>
       {nav}
       {wordHeader}
@@ -453,5 +454,6 @@ export default function WordPage() {
 
       {footer}
     </main>
+    </div>
   );
 }
