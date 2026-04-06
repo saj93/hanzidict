@@ -98,7 +98,7 @@ export default function WordPage() {
         // Example sentence
         fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`)
           .then(r => r.ok ? r.json() : null)
-          .then(d => { if (d?.zh) setExample(d); })
+          .then(d => { if (d?.chinese) setExample({ zh: d.chinese, pinyin: d.pinyin, en: d.english }); })
           .catch(() => {});
 
         // Decomposition: one tile per character (no dedup, preserves position)
