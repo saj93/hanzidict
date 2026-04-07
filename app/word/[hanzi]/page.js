@@ -251,7 +251,7 @@ export default function WordPage() {
         <button className="nav-link active">Dictionary</button>
         <button className="nav-link">Flashcards</button>
         <button className="nav-link">About</button>
-        <button className="theme-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
+        <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
         <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
       </div>
     </nav>

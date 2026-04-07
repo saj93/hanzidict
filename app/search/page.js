@@ -11,6 +11,7 @@ function SearchResults() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [dark, setDark] = useState(false);
+  const [script, setScript] = useState('simplified');
   const [suggestions, setSuggestions] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
   const searchWrapRef = useRef(null);
@@ -20,7 +21,14 @@ function SearchResults() {
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
   }, []);
+
+  function toggleScript() {
+    const next = script === 'simplified' ? 'traditional' : 'simplified';
+    setScript(next);
+    try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
+  }
 
   function toggleDark() {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -95,6 +103,7 @@ function SearchResults() {
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link">Flashcards</button>
           <button className="nav-link">About</button>
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
         </div>
       </nav>
@@ -142,7 +151,7 @@ function SearchResults() {
             {results.map((r, i) => (
               <button key={i} className="search-result-row"
                 onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
-                <div className="sr-hz">{r.simplified}</div>
+                <div className="sr-hz">{script === 'traditional' && r.traditional ? r.traditional : r.simplified}</div>
                 <div className="sr-body">
                   <div className="sr-py">{convertPinyin(r.pinyin)}</div>
                   <div className="sr-def">{(r.definitions || '').split(' | ')[0]}</div>

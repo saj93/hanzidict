@@ -8,6 +8,7 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
   const [dark, setDark] = useState(false);
+  const [script, setScript] = useState<'simplified' | 'traditional'>('simplified');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showDrop, setShowDrop] = useState(false);
   const router = useRouter();
@@ -16,7 +17,14 @@ export default function Home() {
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
   }, []);
+
+  function toggleScript() {
+    const next = script === 'simplified' ? 'traditional' : 'simplified';
+    setScript(next);
+    try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
+  }
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -76,6 +84,7 @@ export default function Home() {
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link">Flashcards</button>
           <button className="nav-link">About</button>
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
             {dark ? '☀️' : '🌙'}
           </button>

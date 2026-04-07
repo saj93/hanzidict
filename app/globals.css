@@ -82,6 +82,16 @@ body {
   transition: background 0.2s; line-height: 1;
 }
 .theme-btn:hover { background: var(--bg3); }
+.script-btn {
+  height: 32px; padding: 0 10px; border-radius: 50px;
+  border: 0.5px solid var(--accent);
+  background: var(--bg2); cursor: pointer; font-size: 13px; font-weight: 600;
+  color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; line-height: 1;
+  font-family: var(--font-display), serif;
+}
+.script-btn:hover { background: var(--accent-dim); }
 
 /* ── HOME HERO ── */
 .hero {
