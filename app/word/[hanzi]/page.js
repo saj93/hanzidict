@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
 import SearchDropdown from '../../components/SearchDropdown';
+import * as OpenCC from 'opencc-js';
+
+const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
 export default function WordPage() {
   const params = useParams();
@@ -368,8 +371,8 @@ export default function WordPage() {
                   {def}
                   {i === 0 && example && (
                     <div className="example-block">
-                      <div className="example-zh">{example.zh}</div>
-                      <div className="example-py">{example.pinyin}</div>
+                      <div className="example-zh">{showTraditional ? toTraditional(example.zh) : example.zh}</div>
+                      {example.pinyin && <div className="example-py">{example.pinyin}</div>}
                       <div className="example-en">{example.en}</div>
                     </div>
                   )}
