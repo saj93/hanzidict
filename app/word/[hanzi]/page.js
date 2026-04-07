@@ -6,6 +6,7 @@ import { convertPinyin } from '../../../lib/pinyin';
 import SearchDropdown from '../../components/SearchDropdown';
 import * as OpenCC from 'opencc-js';
 
+const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
 export default function WordPage() {
@@ -376,7 +377,7 @@ export default function WordPage() {
                   {def}
                   {i === 0 && example && (
                     <div className="example-block">
-                      <div className="example-zh">{isTraditional ? toTraditional(example.zh) : example.zh}</div>
+                      <div className="example-zh">{isTraditional ? toTraditional(example.zh) : toSimplified(example.zh)}</div>
                       {example.pinyin && <div className="example-py">{example.pinyin}</div>}
                       <div className="example-en">{example.en}</div>
                     </div>
