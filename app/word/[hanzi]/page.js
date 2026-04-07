@@ -16,7 +16,7 @@ export default function WordPage() {
   const [related, setRelated] = useState([]);
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showTraditional, setShowTraditional] = useState(false);
+  const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
   const [searchTab, setSearchTab] = useState('text');
   const [dark, setDark] = useState(false);
   const [hwLoaded, setHwLoaded] = useState(false);
@@ -35,7 +35,16 @@ export default function WordPage() {
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
+    try {
+      if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional');
+    } catch (e) {}
   }, []);
+
+  function toggleScript() {
+    const next = script === 'simplified' ? 'traditional' : 'simplified';
+    setScript(next);
+    try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
+  }
 
   function toggleDark() {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -58,7 +67,6 @@ export default function WordPage() {
 
   useEffect(() => {
     setQuery(hanzi);
-    setShowTraditional(false);
     setStrokeLabel('');
     setQuizActive(false);
     setStrokeCharIdx(0);
@@ -68,13 +76,13 @@ export default function WordPage() {
     hwRef.current = null;
   }, [hanzi]);
 
-  // Reset stroke char index when traditional/simplified view toggles
+  // Reset stroke when script toggles
   useEffect(() => {
     setStrokeCharIdx(0);
     setStrokeLabel('');
     setQuizActive(false);
     hwRef.current = null;
-  }, [showTraditional]);
+  }, [script]);
 
   useEffect(() => {
     if (!hanzi) return;
@@ -151,7 +159,8 @@ export default function WordPage() {
 
   const primary = (results?.find(e => e.simplified === hanzi || e.traditional === hanzi) ?? results?.[0]) ?? null;
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
-  const displayHanzi = (showTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
+  const isTraditional = script === 'traditional';
+  const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
   const writerChar = displayHanzi[strokeCharIdx] ?? displayHanzi[0] ?? '';
   const multiChar = displayHanzi.length > 1;
 
@@ -242,6 +251,7 @@ export default function WordPage() {
         <button className="nav-link active">Dictionary</button>
         <button className="nav-link">Flashcards</button>
         <button className="nav-link">About</button>
+        <button className="theme-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
         <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
       </div>
     </nav>
@@ -350,14 +360,9 @@ export default function WordPage() {
               <div className="pinyin-line">{pinyin}</div>
               <div className="pos-line">{posLine}</div>
               <div className="badges">
-                <button className={`badge${!showTraditional ? ' green' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setShowTraditional(false)}>
-                  Simplified: {primary.simplified}
-                </button>
-                {hasTraditional && (
-                  <button className={`badge${showTraditional ? ' green' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setShowTraditional(true)}>
-                    Traditional: {primary.traditional}
-                  </button>
-                )}
+                <span className="badge green">
+                  {isTraditional ? 'Traditional' : 'Simplified'}: {displayHanzi}
+                </span>
               </div>
             </div>
           </div>
@@ -371,7 +376,7 @@ export default function WordPage() {
                   {def}
                   {i === 0 && example && (
                     <div className="example-block">
-                      <div className="example-zh">{showTraditional ? toTraditional(example.zh) : example.zh}</div>
+                      <div className="example-zh">{isTraditional ? toTraditional(example.zh) : example.zh}</div>
                       {example.pinyin && <div className="example-py">{example.pinyin}</div>}
                       <div className="example-en">{example.en}</div>
                     </div>
@@ -388,7 +393,7 @@ export default function WordPage() {
                 {decomp.map((entry, i) => (
                   <button key={i} className="decomp-tile"
                     onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}>
-                    <div className="decomp-hanzi">{entry.simplified}</div>
+                    <div className="decomp-hanzi">{isTraditional && entry.traditional ? entry.traditional : entry.simplified}</div>
                     <div className="decomp-info">
                       {entry.pinyin
                         ? `${convertPinyin(entry.pinyin)} · ${(entry.definitions || '').split(' | ')[0]?.slice(0, 24)}`
@@ -443,7 +448,7 @@ export default function WordPage() {
               : related.map((r, i) => (
                 <button key={i} className="related-row"
                   onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
-                  <div className="related-hz">{r.simplified}</div>
+                  <div className="related-hz">{isTraditional && r.traditional ? r.traditional : r.simplified}</div>
                   <div className="related-info">
                     <div className="related-py">{convertPinyin(r.pinyin)}</div>
                     <div className="related-def">{(r.definitions || '').split(' | ')[0]}</div>
