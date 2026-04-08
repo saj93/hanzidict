@@ -100,11 +100,9 @@ export default function WordPage() {
         if (!primary) return;
 
         // Related words
-        fetch(`/api/search?q=${encodeURIComponent(primary.simplified[0])}`)
+        fetch(`/api/related?word=${encodeURIComponent(primary.simplified)}`)
           .then(r => r.json())
-          .then(d => setRelated(
-            (d.results || []).filter(e => e.simplified !== primary.simplified).slice(0, 5)
-          ))
+          .then(d => setRelated(d.results || []))
           .catch(() => {});
 
         // Example sentence
