@@ -11,6 +11,8 @@ const sb = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_KEY);
 const SENTENCES_FILE = `${process.env.HOME}/Downloads/sentences.csv`;
 const LINKS_FILE = `${process.env.HOME}/Downloads/links.csv`;
 const BATCH_SIZE = 500;
+const MAX_EXAMPLES_PER_WORD = 5;
+const MAX_CHINESE_CHARS = 20;
 
 async function readLines(file, onLine) {
   const rl = createInterface({ input: createReadStream(file), crlfDelay: Infinity });
@@ -18,8 +20,8 @@ async function readLines(file, onLine) {
 }
 
 console.log('Step 1: Loading Chinese and English sentences...');
-const chineseMap = new Map(); // id -> text
-const englishMap = new Map(); // id -> text
+const chineseMap = new Map();
+const englishMap = new Map();
 
 await readLines(SENTENCES_FILE, line => {
   const tab1 = line.indexOf('\t');
@@ -35,7 +37,7 @@ await readLines(SENTENCES_FILE, line => {
 console.log(`  Chinese: ${chineseMap.size}, English: ${englishMap.size}`);
 
 console.log('Step 2: Building Chinese-English pairs from links...');
-// pairs: chineseId -> englishText (first match wins)
+// pairs: chineseId -> [englishText, ...]  (collect all translations)
 const pairs = new Map();
 
 await readLines(LINKS_FILE, line => {
@@ -64,43 +66,48 @@ while (true) {
 }
 console.log(`  Loaded ${allSimplified.length} entries`);
 
-// Build a set for quick lookup, sorted by length desc (prefer longer matches)
 const wordSet = new Set(allSimplified);
 
-console.log('Step 4: Matching sentences to dictionary words...');
-// For each pair, find which dictionary words appear in the Chinese sentence
-// We only store one example per word (first found)
-const wordExamples = new Map(); // simplified -> { chinese, english }
+console.log('Step 4: Matching sentences to dictionary words (max 5 short examples per word)...');
+// wordExamples: simplified -> [{ chinese, english }, ...]
+const wordExamples = new Map();
 
 for (const [id, english] of pairs) {
   const chinese = chineseMap.get(id);
   if (!chinese) continue;
+  // Only short sentences
+  if ([...chinese].length > MAX_CHINESE_CHARS) continue;
 
-  // Check each character/word in the sentence against the dictionary
-  // Try substrings of length 4 down to 1
   for (let i = 0; i < chinese.length; i++) {
     for (let len = Math.min(4, chinese.length - i); len >= 1; len--) {
       const candidate = chinese.slice(i, i + len);
-      if (wordSet.has(candidate) && !wordExamples.has(candidate)) {
-        wordExamples.set(candidate, { chinese, english });
+      if (wordSet.has(candidate)) {
+        const list = wordExamples.get(candidate) || [];
+        if (list.length < MAX_EXAMPLES_PER_WORD) {
+          list.push({ chinese, english });
+          wordExamples.set(candidate, list);
+        }
         break;
       }
     }
   }
 }
 
-console.log(`  Matched examples for ${wordExamples.size} words`);
+const totalExamples = [...wordExamples.values()].reduce((s, a) => s + a.length, 0);
+console.log(`  Matched ${wordExamples.size} words, ${totalExamples} total examples`);
 
 console.log('Step 5: Inserting into Supabase examples table...');
 const rows = [];
-for (const [simplified, { chinese, english }] of wordExamples) {
-  rows.push({ simplified, chinese, pinyin: null, english });
+for (const [simplified, examples] of wordExamples) {
+  for (const { chinese, english } of examples) {
+    rows.push({ simplified, chinese, pinyin: null, english });
+  }
 }
 
 let inserted = 0;
 for (let i = 0; i < rows.length; i += BATCH_SIZE) {
   const batch = rows.slice(i, i + BATCH_SIZE);
-  const { error } = await sb.from('examples').upsert(batch, { onConflict: 'simplified' });
+  const { error } = await sb.from('examples').insert(batch);
   if (error) { console.error('Insert error:', error.message); continue; }
   inserted += batch.length;
   process.stdout.write(`\r  Inserted ${inserted}/${rows.length}`);

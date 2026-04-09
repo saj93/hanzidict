@@ -24,7 +24,8 @@ export default function WordPage() {
   const [strokeLabel, setStrokeLabel] = useState('');
   const [quizActive, setQuizActive] = useState(false);
   const [strokeCharIdx, setStrokeCharIdx] = useState(0);
-  const [example, setExample] = useState(null);
+  const [examples, setExamples] = useState([]);
+  const [exampleIdx, setExampleIdx] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
   const hwRef = useRef(null);
@@ -72,7 +73,8 @@ export default function WordPage() {
     setQuizActive(false);
     setStrokeCharIdx(0);
     setShowDrop(false);
-    setExample(null);
+    setExamples([]);
+    setExampleIdx(0);
     userTypedRef.current = false;
     hwRef.current = null;
   }, [hanzi]);
@@ -105,10 +107,10 @@ export default function WordPage() {
           .then(d => setRelated(d.results || []))
           .catch(() => {});
 
-        // Example sentence
+        // Example sentences
         fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`)
           .then(r => r.ok ? r.json() : null)
-          .then(d => { if (d?.chinese) setExample({ zh: d.chinese, pinyin: d.pinyin, en: d.english }); })
+          .then(d => { if (d?.results?.length) { setExamples(d.results); setExampleIdx(0); } })
           .catch(() => {});
 
         // Decomposition: one tile per character (no dedup, preserves position)
@@ -373,13 +375,23 @@ export default function WordPage() {
                 <span className="def-num">{i + 1}</span>
                 <div>
                   {def}
-                  {i === 0 && example && (
-                    <div className="example-block">
-                      <div className="example-zh">{isTraditional ? toTraditional(example.zh) : toSimplified(example.zh)}</div>
-                      {example.pinyin && <div className="example-py">{example.pinyin}</div>}
-                      <div className="example-en">{example.en}</div>
-                    </div>
-                  )}
+                  {i === 0 && examples.length > 0 && (() => {
+                    const ex = examples[exampleIdx];
+                    return (
+                      <div className="example-block">
+                        <div className="example-zh">{isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)}</div>
+                        {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
+                        <div className="example-en">{ex.english}</div>
+                        {examples.length > 1 && (
+                          <div className="example-nav">
+                            <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i - 1)} disabled={exampleIdx === 0}>‹</button>
+                            <span className="example-counter">{exampleIdx + 1} / {examples.length}</span>
+                            <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i + 1)} disabled={exampleIdx === examples.length - 1}>›</button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               </li>
             ))}
