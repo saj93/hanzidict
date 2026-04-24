@@ -1021,3 +1021,15 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .rad-res-hanzi { font-size: 18px; font-family: var(--font-display), serif; color: var(--fg); min-width: 28px; }
 .rad-res-pinyin { font-size: 12px; color: var(--accent); min-width: 70px; }
 .rad-res-def { font-size: 12px; color: var(--fg3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ── Character breakdown (radical tab on word page) ──────────────────────── */
+.char-breakdown { display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; }
+.char-breakdown-tile { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; min-width: 120px; display: flex; flex-direction: column; gap: 8px; }
+.cb-char { font-size: 40px; font-family: var(--font-display), serif; color: var(--fg); line-height: 1; margin-bottom: 4px; }
+.cb-row { display: flex; align-items: center; gap: 8px; }
+.cb-label { font-size: 11px; color: var(--fg3); text-transform: uppercase; letter-spacing: .05em; min-width: 48px; }
+.cb-radical { font-size: 22px; font-family: var(--font-display), serif; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; line-height: 1; }
+.cb-radical:hover { opacity: .75; }
+.cb-strokes { font-size: 15px; font-weight: 500; color: var(--fg); }
+.cb-na { font-size: 15px; color: var(--fg3); }
+.cb-loading { font-size: 13px; color: var(--fg3); padding: 16px; }

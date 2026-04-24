@@ -5,7 +5,6 @@ import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import SearchDropdown from '../../components/SearchDropdown';
 import DrawCanvas from '../../components/DrawCanvas';
-import RadicalSearch from '../../components/RadicalSearch';
 import UserMenu from '../../components/UserMenu';
 import * as OpenCC from 'opencc-js';
 
@@ -365,7 +364,26 @@ export default function WordPage() {
       {searchTab === 'radical' && (
         <div className="word-draw-drop">
           <div className="word-header-inner">
-            <RadicalSearch />
+            <div className="char-breakdown">
+              {(multiChar ? decomp : primary ? [primary] : []).map((entry, i) => (
+                <div key={i} className="char-breakdown-tile">
+                  <div className="cb-char">{entry.simplified}</div>
+                  <div className="cb-row">
+                    <span className="cb-label">Radical</span>
+                    {entry.radical
+                      ? <button className="cb-radical" onClick={() => router.push(`/word/${encodeURIComponent(entry.radical)}`)}>{entry.radical}</button>
+                      : <span className="cb-na">—</span>}
+                  </div>
+                  <div className="cb-row">
+                    <span className="cb-label">Strokes</span>
+                    <span className="cb-strokes">{entry.stroke_count ?? '—'}</span>
+                  </div>
+                </div>
+              ))}
+              {multiChar && decomp.length === 0 && (
+                <div className="cb-loading">Loading…</div>
+              )}
+            </div>
           </div>
         </div>
       )}
