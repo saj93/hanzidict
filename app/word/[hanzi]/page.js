@@ -70,6 +70,7 @@ export default function WordPage() {
     if (hwRef.current) {
       hwRef.current.updateColor('strokeColor', isDark ? '#f0ede6' : '#1a1916');
       hwRef.current.updateColor('outlineColor', isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)');
+      hwRef.current.showCharacter();
     }
   }
 
