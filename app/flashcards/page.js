@@ -166,7 +166,7 @@ export default function FlashcardsPage() {
             <p className="fc-subtitle">Review vocabulary by HSK level</p>
           </div>
           <div className="fc-deck-grid">
-            {HSK_META.map(({ level, label, free }) => {
+            {HSK_META.filter(({ level }) => !deckCounts || deckCounts[level] == null || deckCounts[level] > 0).map(({ level, label, free }) => {
               const count = deckCounts[level];
               return (
                 <div key={level} className={`fc-deck-card${free ? '' : ' fc-deck-premium'}`}>
