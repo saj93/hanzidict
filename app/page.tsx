@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchDropdown from './components/SearchDropdown';
 import DrawCanvas from './components/DrawCanvas';
+import RadicalSearch from './components/RadicalSearch';
 import UserMenu from './components/UserMenu';
 
 export default function Home() {
@@ -124,6 +125,11 @@ export default function Home() {
           {searchTab === 'draw' && (
             <div className="draw-drop">
               <DrawCanvas />
+            </div>
+          )}
+          {searchTab === 'radical' && (
+            <div className="radical-drop">
+              <RadicalSearch />
             </div>
           )}
         </div>
