@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
+import { isVariantEntry } from '../../../lib/utils';
 import SearchDropdown from '../../components/SearchDropdown';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
@@ -11,10 +12,8 @@ import * as OpenCC from 'opencc-js';
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
-const VARIANT_RE = /^(variant of|old variant of|Japanese variant of|see \[)/i;
-
 function isVariant(entry) {
-  return VARIANT_RE.test((entry.definitions || '').split(' | ')[0].trim());
+  return isVariantEntry(entry.definitions);
 }
 
 function normalizePy(pinyin) {
