@@ -17,9 +17,7 @@ const HSK_META = [
   { level: 4, label: 'HSK 4', free: true },
   { level: 5, label: 'HSK 5', free: false },
   { level: 6, label: 'HSK 6', free: false },
-  { level: 7, label: 'HSK 7', free: false },
-  { level: 8, label: 'HSK 8', free: false },
-  { level: 9, label: 'HSK 9', free: false },
+  { level: 7, label: 'HSK 7–9', free: false },
 ];
 
 const RATINGS = [
