@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import SearchDropdown from '../../components/SearchDropdown';
 import DrawCanvas from '../../components/DrawCanvas';
+import RadicalSearch from '../../components/RadicalSearch';
 import UserMenu from '../../components/UserMenu';
 import * as OpenCC from 'opencc-js';
 
@@ -358,6 +359,13 @@ export default function WordPage() {
         <div className="word-draw-drop">
           <div className="word-header-inner">
             <DrawCanvas />
+          </div>
+        </div>
+      )}
+      {searchTab === 'radical' && (
+        <div className="word-draw-drop">
+          <div className="word-header-inner">
+            <RadicalSearch />
           </div>
         </div>
       )}
