@@ -552,14 +552,25 @@ html.dark .drop-row:hover { background: var(--bg3); }
 .compact-def { font-size: 14px; color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .compact-arrow { color: var(--fg3); font-size: 18px; margin-left: auto; flex-shrink: 0; }
 
+/* ── Hamburger / mobile menu ─────────────────────────────────────────────── */
+.hamburger-btn { display: none; flex-direction: column; justify-content: center; gap: 4px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 4px; }
+.ham-line { display: block; width: 20px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform .2s, opacity .2s; }
+.mobile-menu { display: none; position: fixed; top: 50px; left: 0; right: 0; z-index: 99; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 16px 16px; flex-direction: column; gap: 2px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+.mobile-menu-link { background: none; border: none; text-align: left; padding: 12px 8px; font-size: 16px; color: var(--fg2); cursor: pointer; border-radius: 8px; }
+.mobile-menu-link.active { color: var(--fg); font-weight: 500; }
+.mobile-menu-link:hover { background: var(--bg2); }
+.mobile-menu-actions { display: flex; gap: 8px; padding: 8px 8px 0; margin-top: 4px; border-top: 1px solid var(--border); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   /* ── Nav ── */
   .nav { padding: 0 16px; height: 50px; }
   .nav-right { gap: 10px; }
-  /* Hide Dictionary / Flashcards / About; keep theme toggle */
+  /* Hide Dictionary / Flashcards / About; keep theme toggle + hamburger */
   .nav-link { display: none; }
   .theme-btn { display: flex; }
+  .hamburger-btn { display: flex; }
+  .mobile-menu { display: flex; }
 
   /* ── Hero ── */
   .hero { padding: 36px 16px 32px; }

@@ -9,6 +9,7 @@ import UserMenu from './components/UserMenu';
 
 export default function Home() {
   const [query, setQuery] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState<'simplified' | 'traditional'>('simplified');
@@ -92,8 +93,22 @@ export default function Home() {
             {dark ? '☀️' : '🌙'}
           </button>
           <UserMenu />
+          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
+          </button>
         </div>
       </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button className="mobile-menu-link active">Dictionary</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          <div className="mobile-menu-actions">
+            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
+            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
+          </div>
+        </div>
+      )}
 
       <section className="hero">
         <div className="hero-eyebrow">Open source · Free forever</div>

@@ -4,10 +4,12 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
 
+
 export default function AboutPage() {
   const router = useRouter();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -39,8 +41,22 @@ export default function AboutPage() {
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
+          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
+          </button>
         </div>
       </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link active">About</button>
+          <div className="mobile-menu-actions">
+            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
+            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
+          </div>
+        </div>
+      )}
 
       <div className="about-page">
         <h1 className="about-title">About HanziDict</h1>

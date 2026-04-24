@@ -56,6 +56,7 @@ export default function WordPage() {
   const [query, setQuery] = useState(hanzi);
   const [results, setResults] = useState(null);
   const [alternates, setAlternates] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [related, setRelated] = useState([]);
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -296,19 +297,35 @@ export default function WordPage() {
 
   // Inline JSX — no nested component defs (they cause input remount / focus loss)
   const nav = (
-    <nav className="nav">
-      <button className="nav-logo" onClick={() => router.push('/')}>
-        <span className="logo-mark">汉</span>HanziDict
-      </button>
-      <div className="nav-right">
-        <button className="nav-link active">Dictionary</button>
-        <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
-        <button className="nav-link" onClick={() => router.push('/about')}>About</button>
-        <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
-        <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
-        <UserMenu />
-      </div>
-    </nav>
+    <>
+      <nav className="nav">
+        <button className="nav-logo" onClick={() => router.push('/')}>
+          <span className="logo-mark">汉</span>HanziDict
+        </button>
+        <div className="nav-right">
+          <button className="nav-link active">Dictionary</button>
+          <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
+          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
+          <UserMenu />
+          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
+          </button>
+        </div>
+      </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button className="mobile-menu-link active">Dictionary</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          <div className="mobile-menu-actions">
+            <button className="script-btn" onClick={toggleScript}>{isTraditional ? '繁' : '简'}</button>
+            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 
   const wordHeader = (

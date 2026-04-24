@@ -129,20 +129,38 @@ export default function FlashcardsPage() {
     acc[k] = (acc[k] || 0) + 1; return acc;
   }, {});
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const nav = (
-    <nav className="nav">
-      <button className="nav-logo" onClick={() => router.push('/')}>
-        <span className="logo-mark">汉</span>HanziDict
-      </button>
-      <div className="nav-right">
-        <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
-        <button className="nav-link active">Flashcards</button>
-        <button className="nav-link" onClick={() => router.push('/about')}>About</button>
-        <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
-        <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
-        <UserMenu />
-      </div>
-    </nav>
+    <>
+      <nav className="nav">
+        <button className="nav-logo" onClick={() => router.push('/')}>
+          <span className="logo-mark">汉</span>HanziDict
+        </button>
+        <div className="nav-right">
+          <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
+          <button className="nav-link active">Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
+          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
+          <UserMenu />
+          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
+          </button>
+        </div>
+      </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
+          <button className="mobile-menu-link active">Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          <div className="mobile-menu-actions">
+            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
+            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 
   const loginBanner = !user && (
