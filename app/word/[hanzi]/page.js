@@ -272,7 +272,7 @@ export default function WordPage() {
       <div className="nav-right">
         <button className="nav-link active">Dictionary</button>
         <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
-        <button className="nav-link">About</button>
+        <button className="nav-link" onClick={() => router.push('/about')}>About</button>
         <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
         <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
         <UserMenu />

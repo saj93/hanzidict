@@ -139,7 +139,7 @@ export default function FlashcardsPage() {
       <div className="nav-right">
         <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
         <button className="nav-link active">Flashcards</button>
-        <button className="nav-link">About</button>
+        <button className="nav-link" onClick={() => router.push('/about')}>About</button>
         <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
         <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
         <UserMenu />

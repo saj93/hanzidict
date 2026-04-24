@@ -988,3 +988,15 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .alt-py { color: var(--accent); font-weight: 500; }
 .alt-def { color: var(--fg3); overflow: hidden; text-overflow: ellipsis; max-width: 220px; white-space: nowrap; }
 .alt-sep { color: var(--fg3); margin-left: 2px; }
+
+/* ── About page ─────────────────────────────────────────────────────────── */
+.about-page { max-width: 680px; margin: 60px auto; padding: 0 24px 80px; }
+.about-title { font-size: 32px; font-weight: 700; color: var(--fg); margin-bottom: 40px; }
+.about-section { margin-bottom: 36px; }
+.about-section h2 { font-size: 17px; font-weight: 600; color: var(--fg); margin-bottom: 10px; }
+.about-section p { font-size: 15px; line-height: 1.7; color: var(--fg2); }
+.about-section a { color: var(--accent); text-decoration: none; }
+.about-section a:hover { text-decoration: underline; }
+.about-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.about-list li { font-size: 15px; line-height: 1.6; color: var(--fg2); padding-left: 16px; position: relative; }
+.about-list li::before { content: '·'; position: absolute; left: 0; color: var(--accent); }
