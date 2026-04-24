@@ -11,16 +11,43 @@ import * as OpenCC from 'opencc-js';
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
+const VARIANT_RE = /^(variant of|old variant of|Japanese variant of|see \[)/i;
+
+function isVariant(entry) {
+  return VARIANT_RE.test((entry.definitions || '').split(' | ')[0].trim());
+}
+
+function normalizePy(pinyin) {
+  return (pinyin || '').toLowerCase().trim();
+}
+
 function sortByHskPinyin(entries) {
   return [...entries].sort((a, b) => {
+    // Non-variants always beat variants
+    const av = isVariant(a) ? 1 : 0, bv = isVariant(b) ? 1 : 0;
+    if (av !== bv) return av - bv;
     const ha = a.hsk_level ?? 999, hb = b.hsk_level ?? 999;
     if (ha !== hb) return ha - hb;
-    // Lowercase pinyin first (common word) over uppercase (surname/proper)
     const aUpper = /^[A-Z]/.test(a.pinyin || '');
     const bUpper = /^[A-Z]/.test(b.pinyin || '');
     if (aUpper !== bUpper) return aUpper ? 1 : -1;
     return (a.pinyin || '').localeCompare(b.pinyin || '');
   });
+}
+
+function processExactMatches(entries) {
+  const sorted = sortByHskPinyin(entries);
+  // Merge same-pinyin groups: keep best (non-variant) per unique pinyin
+  const seen = new Map();
+  for (const e of sorted) {
+    const key = normalizePy(e.pinyin);
+    if (!seen.has(key)) seen.set(key, e);
+    else if (isVariant(seen.get(key)) && !isVariant(e)) seen.set(key, e);
+  }
+  const deduped = [...seen.values()];
+  const primary = deduped.find(e => !isVariant(e)) ?? deduped[0] ?? null;
+  const alternates = deduped.filter(e => e !== primary);
+  return { primary, alternates, deduped };
 }
 
 export default function WordPage() {
@@ -117,14 +144,12 @@ export default function WordPage() {
       .then(r => r.json())
       .then(data => {
         const entries = data.results || [];
-        // Split exact matches (same simplified/traditional) from the rest
         const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
-        const sorted = sortByHskPinyin(exactMatches);
+        const { primary, alternates, deduped } = processExactMatches(exactMatches);
         const otherEntries = entries.filter(e => e.simplified !== hanzi && e.traditional !== hanzi);
-        setResults([...sorted, ...otherEntries]);
-        setAlternates(sorted.slice(1));
+        setResults([...(primary ? [primary] : []), ...alternates, ...otherEntries]);
+        setAlternates(alternates);
         setLoading(false);
-        const primary = sorted[0] ?? entries[0];
         if (!primary) return;
 
         // Related words
@@ -185,7 +210,7 @@ export default function WordPage() {
   }, []);
 
   const exactMatches = results?.filter(e => e.simplified === hanzi || e.traditional === hanzi) ?? [];
-  const primary = (sortByHskPinyin(exactMatches)[0] ?? results?.[0]) ?? null;
+  const primary = (processExactMatches(exactMatches).primary ?? results?.[0]) ?? null;
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
   const isTraditional = script === 'traditional';
   const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
