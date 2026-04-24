@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchDropdown from './components/SearchDropdown';
+import DrawCanvas from './components/DrawCanvas';
+import UserMenu from './components/UserMenu';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -82,12 +84,13 @@ export default function Home() {
         </button>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
-          <button className="nav-link">Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
           <button className="nav-link">About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
             {dark ? '☀️' : '🌙'}
           </button>
+          <UserMenu />
         </div>
       </nav>
 
@@ -120,27 +123,7 @@ export default function Home() {
           </div>
           {searchTab === 'draw' && (
             <div className="draw-drop">
-              <div>
-                <div className="draw-canvas">
-                  <div className="draw-grid" />
-                  <div className="draw-hint">Draw a character here</div>
-                </div>
-                <div className="draw-mini-actions">
-                  <button className="draw-mini-btn">Clear</button>
-                  <button className="draw-mini-btn">↩ Undo</button>
-                </div>
-              </div>
-              <div>
-                <div className="candidates-label">Candidates — click to search</div>
-                <div className="candidates">
-                  {['学','见','觉','举','子','字'].map((ch, i) => (
-                    <button key={ch} className={`cand${i === 0 ? ' hot' : ''}`}
-                      onClick={() => router.push(`/word/${encodeURIComponent(ch)}`)}>
-                      {ch}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <DrawCanvas />
             </div>
           )}
         </div>

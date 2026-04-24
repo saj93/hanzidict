@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Lora, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "./components/AuthProvider";
 
 const lora = Lora({
   variable: "--font-display",
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(localStorage.getItem('hanzidict-dark')==='true')document.documentElement.classList.add('dark')}catch(e){}})()` }} />
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var s=localStorage.getItem('hanzidict-script');if(s)document.documentElement.setAttribute('data-script',s)}catch(e){}})()` }} />
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

@@ -2,18 +2,33 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { convertPinyin } from '../../../lib/pinyin';
+import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import SearchDropdown from '../../components/SearchDropdown';
+import DrawCanvas from '../../components/DrawCanvas';
+import UserMenu from '../../components/UserMenu';
 import * as OpenCC from 'opencc-js';
 
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
+
+function sortByHskPinyin(entries) {
+  return [...entries].sort((a, b) => {
+    const ha = a.hsk_level ?? 999, hb = b.hsk_level ?? 999;
+    if (ha !== hb) return ha - hb;
+    // Lowercase pinyin first (common word) over uppercase (surname/proper)
+    const aUpper = /^[A-Z]/.test(a.pinyin || '');
+    const bUpper = /^[A-Z]/.test(b.pinyin || '');
+    if (aUpper !== bUpper) return aUpper ? 1 : -1;
+    return (a.pinyin || '').localeCompare(b.pinyin || '');
+  });
+}
 
 export default function WordPage() {
   const params = useParams();
   const hanzi = decodeURIComponent(params.hanzi || '');
   const [query, setQuery] = useState(hanzi);
   const [results, setResults] = useState(null);
+  const [alternates, setAlternates] = useState([]);
   const [related, setRelated] = useState([]);
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -96,9 +111,14 @@ export default function WordPage() {
       .then(r => r.json())
       .then(data => {
         const entries = data.results || [];
-        setResults(entries);
+        // Split exact matches (same simplified/traditional) from the rest
+        const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
+        const sorted = sortByHskPinyin(exactMatches);
+        const otherEntries = entries.filter(e => e.simplified !== hanzi && e.traditional !== hanzi);
+        setResults([...sorted, ...otherEntries]);
+        setAlternates(sorted.slice(1));
         setLoading(false);
-        const primary = entries.find(e => e.simplified === hanzi || e.traditional === hanzi) ?? entries[0];
+        const primary = sorted[0] ?? entries[0];
         if (!primary) return;
 
         // Related words
@@ -158,7 +178,8 @@ export default function WordPage() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const primary = (results?.find(e => e.simplified === hanzi || e.traditional === hanzi) ?? results?.[0]) ?? null;
+  const exactMatches = results?.filter(e => e.simplified === hanzi || e.traditional === hanzi) ?? [];
+  const primary = (sortByHskPinyin(exactMatches)[0] ?? results?.[0]) ?? null;
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
   const isTraditional = script === 'traditional';
   const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
@@ -250,10 +271,11 @@ export default function WordPage() {
       </button>
       <div className="nav-right">
         <button className="nav-link active">Dictionary</button>
-        <button className="nav-link">Flashcards</button>
+        <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
         <button className="nav-link">About</button>
         <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
         <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
+        <UserMenu />
       </div>
     </nav>
   );
@@ -328,25 +350,8 @@ export default function WordPage() {
 
       {searchTab === 'draw' && (
         <div className="word-draw-drop">
-          <div className="word-header-inner" style={{ width: '100%', display: 'flex', gap: 20 }}>
-            <div>
-              <div className="draw-canvas"><div className="draw-grid" /><div className="draw-hint">Draw a character here</div></div>
-              <div className="draw-mini-actions">
-                <button className="draw-mini-btn">Clear</button>
-                <button className="draw-mini-btn">↩ Undo</button>
-              </div>
-            </div>
-            <div>
-              <div className="candidates-label">Candidates — click to search</div>
-              <div className="candidates">
-                {['学','见','觉','举','子','字'].map((ch, i) => (
-                  <button key={ch} className={`cand${i === 0 ? ' hot' : ''}`}
-                    onClick={() => router.push(`/word/${encodeURIComponent(ch)}`)}>
-                    {ch}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="word-header-inner">
+            <DrawCanvas />
           </div>
         </div>
       )}
@@ -368,13 +373,29 @@ export default function WordPage() {
             </div>
           </div>
 
+          {alternates.length > 0 && (
+            <div className="alt-inline">
+              <span className="alt-also-label">
+                Also:
+                <span className="alt-tooltip">This character has multiple pronunciations (多音字)</span>
+              </span>
+              {alternates.map((alt, i) => (
+                <span key={i} className="alt-inline-item">
+                  <span className="alt-py">{convertPinyin(alt.pinyin)}</span>
+                  <span className="alt-def">{(alt.definitions || '').split(' | ')[0]}</span>
+                  {i < alternates.length - 1 && <span className="alt-sep">·</span>}
+                </span>
+              ))}
+            </div>
+          )}
+
           <div className="sec-label">Definitions</div>
           <ul className="defs">
             {defs.map((def, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
                 <div>
-                  {def}
+                  {convertPinyinInText(def)}
                   {i === 0 && examples.length > 0 && (() => {
                     const ex = examples[exampleIdx];
                     return (

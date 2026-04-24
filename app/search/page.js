@@ -4,11 +4,51 @@ import { Suspense, useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import SearchDropdown from '../components/SearchDropdown';
+import UserMenu from '../components/UserMenu';
+
+const PAGE_SIZE = 20;
+
+function Pagination({ page, totalPages, onPage }) {
+  if (totalPages <= 1) return null;
+
+  // Build page number list with ellipsis
+  function pageList() {
+    if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const pages = [];
+    // Always show first 1, last, and window around current
+    const around = new Set([1, totalPages, page - 1, page, page + 1].filter(p => p >= 1 && p <= totalPages));
+    const sorted = [...around].sort((a, b) => a - b);
+    let prev = 0;
+    for (const p of sorted) {
+      if (p - prev > 1) pages.push('…');
+      pages.push(p);
+      prev = p;
+    }
+    return pages;
+  }
+
+  return (
+    <div className="pagination">
+      <button className="pg-btn" onClick={() => onPage(page - 1)} disabled={page === 1}>‹</button>
+      {pageList().map((p, i) =>
+        p === '…'
+          ? <span key={`e${i}`} className="pg-ellipsis">…</span>
+          : <button
+              key={p}
+              className={`pg-btn${p === page ? ' active' : ''}`}
+              onClick={() => onPage(p)}
+            >{p}</button>
+      )}
+      <button className="pg-btn" onClick={() => onPage(page + 1)} disabled={page === totalPages}>›</button>
+    </div>
+  );
+}
 
 function SearchResults() {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [results, setResults] = useState(null);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
@@ -38,22 +78,23 @@ function SearchResults() {
 
   useEffect(() => {
     const q = searchParams.get('q') || '';
+    const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     setQuery(q);
     userTypedRef.current = false;
     setShowDrop(false);
-    if (!q.trim()) { setResults([]); return; }
+    if (!q.trim()) { setResults([]); setTotal(0); return; }
     setLoading(true);
-    fetch(`/api/search?q=${encodeURIComponent(q.trim())}`)
+    fetch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`)
       .then(r => r.json())
-      .then(d => { setResults(d.results || []); setLoading(false); })
-      .catch(() => { setResults([]); setLoading(false); });
+      .then(d => { setResults(d.results || []); setTotal(d.total ?? 0); setLoading(false); })
+      .catch(() => { setResults([]); setTotal(0); setLoading(false); });
   }, [searchParams]);
 
   useEffect(() => {
     clearTimeout(suggestTimer.current);
     if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
     suggestTimer.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
+      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`)
         .then(r => r.json())
         .then(d => {
           const s = (d.results || []).slice(0, 6);
@@ -91,7 +132,15 @@ function SearchResults() {
     router.push(`/word/${encodeURIComponent(simplified)}`);
   }
 
+  function goToPage(p) {
+    const q = searchParams.get('q') || '';
+    router.push(`/search?q=${encodeURIComponent(q)}&page=${p}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   const q = searchParams.get('q') || '';
+  const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
     <main>
@@ -101,10 +150,11 @@ function SearchResults() {
         </button>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
-          <button className="nav-link">Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
           <button className="nav-link">About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
+          <UserMenu />
         </div>
       </nav>
 
@@ -132,7 +182,7 @@ function SearchResults() {
         {q && (
           <div style={{ marginBottom: 20 }}>
             <span style={{ fontSize: 13, color: 'var(--fg3)' }}>
-              {loading ? 'Searching…' : `${results?.length ?? 0} results for `}
+              {loading ? 'Searching…' : `${total} result${total !== 1 ? 's' : ''} for `}
             </span>
             {!loading && <span style={{ fontSize: 13, color: 'var(--fg)', fontWeight: 500 }}>"{q}"</span>}
           </div>
@@ -147,19 +197,22 @@ function SearchResults() {
         )}
 
         {!loading && results && results.length > 0 && (
-          <div className="search-results-list">
-            {results.map((r, i) => (
-              <button key={i} className="search-result-row"
-                onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
-                <div className="sr-hz">{script === 'traditional' && r.traditional ? r.traditional : r.simplified}</div>
-                <div className="sr-body">
-                  <div className="sr-py">{convertPinyin(r.pinyin)}</div>
-                  <div className="sr-def">{(r.definitions || '').split(' | ')[0]}</div>
-                </div>
-                <div className="sr-arrow">›</div>
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="search-results-list">
+              {results.map((r, i) => (
+                <button key={i} className="search-result-row"
+                  onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
+                  <div className="sr-hz">{script === 'traditional' && r.traditional ? r.traditional : r.simplified}</div>
+                  <div className="sr-body">
+                    <div className="sr-py">{convertPinyin(r.pinyin)}</div>
+                    <div className="sr-def">{(r.definitions || '').split(' | ')[0]}</div>
+                  </div>
+                  <div className="sr-arrow">›</div>
+                </button>
+              ))}
+            </div>
+            <Pagination page={page} totalPages={totalPages} onPage={goToPage} />
+          </>
         )}
       </div>
 
