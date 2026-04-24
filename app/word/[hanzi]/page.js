@@ -35,6 +35,7 @@ export default function WordPage() {
   const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
   const [searchTab, setSearchTab] = useState('text');
   const [dark, setDark] = useState(false);
+  const [hwDark, setHwDark] = useState(false);
   const [hwLoaded, setHwLoaded] = useState(false);
   const [strokeLabel, setStrokeLabel] = useState('');
   const [quizActive, setQuizActive] = useState(false);
@@ -51,7 +52,9 @@ export default function WordPage() {
   const router = useRouter();
 
   useEffect(() => {
-    setDark(document.documentElement.classList.contains('dark'));
+    const isDark = document.documentElement.classList.contains('dark');
+    setDark(isDark);
+    setHwDark(isDark);
     try {
       if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional');
     } catch (e) {}
@@ -67,11 +70,13 @@ export default function WordPage() {
     const isDark = document.documentElement.classList.toggle('dark');
     try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
     setDark(isDark);
+    // Re-initialize HanziWriter with correct colors by resetting ref and toggling hwDark
     if (hwRef.current) {
-      hwRef.current.updateColor('strokeColor', isDark ? '#f0ede6' : '#1a1916');
-      hwRef.current.updateColor('outlineColor', isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)');
-      hwRef.current.showCharacter();
+      hwRef.current = null;
+      const container = document.getElementById('hanzi-writer-target');
+      if (container) container.innerHTML = '';
     }
+    setHwDark(isDark);
   }
 
   useEffect(() => {
@@ -213,7 +218,7 @@ export default function WordPage() {
         });
       }));
     }
-  }, [hwLoaded, writerChar]);
+  }, [hwLoaded, writerChar, hwDark]);
 
   function hwAnimate() { if (!hwRef.current) return; setQuizActive(false); setStrokeLabel(''); hwRef.current.animateCharacter(); }
   function hwReset() { if (!hwRef.current) return; setQuizActive(false); setStrokeLabel(''); hwRef.current.showCharacter(); }
