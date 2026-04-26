@@ -318,10 +318,6 @@ export default function WordPage() {
           <button className="mobile-menu-link active">Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
-          <div className="mobile-menu-actions">
-            <button className="script-btn" onClick={toggleScript}>{isTraditional ? '繁' : '简'}</button>
-            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
-          </div>
         </div>
       )}
     </>

@@ -51,10 +51,6 @@ export default function AboutPage() {
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link active">About</button>
-          <div className="mobile-menu-actions">
-            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
-            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
-          </div>
         </div>
       )}
 

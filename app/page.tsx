@@ -103,10 +103,6 @@ export default function Home() {
           <button className="mobile-menu-link active">Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
-          <div className="mobile-menu-actions">
-            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
-            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
-          </div>
         </div>
       )}
 
