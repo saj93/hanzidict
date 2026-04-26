@@ -39,8 +39,9 @@ export async function GET(request) {
 
   const { searchParams } = new URL(request.url);
   const hsk = parseInt(searchParams.get('hsk') || '1', 10);
+  const newLimit = parseInt(searchParams.get('newLimit') || '20', 10);
 
-  const cards = await getDueCards(user.id, hsk);
+  const cards = await getDueCards(user.id, hsk, newLimit);
   return Response.json({ cards });
 }
 

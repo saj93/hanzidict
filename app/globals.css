@@ -850,6 +850,57 @@ html.dark .drop-row:hover { background: var(--bg3); }
 .fc-done-stat-n { font-size: 22px; font-weight: 600; }
 .fc-done-stat-l { font-size: 11px; color: var(--fg3); margin-top: 2px; }
 
+/* Deck stats badges */
+.fc-deck-stats {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 4px;
+}
+.fc-stat-due {
+  font-size: 11px; font-weight: 600; color: #3182ce;
+  background: rgba(49,130,206,0.1); border-radius: 5px; padding: 2px 7px;
+}
+.fc-stat-new {
+  font-size: 11px; font-weight: 600; color: #1D9E75;
+  background: rgba(29,158,117,0.1); border-radius: 5px; padding: 2px 7px;
+}
+.fc-stat-total {
+  font-size: 11px; font-weight: 600; color: var(--fg3);
+  background: var(--bg3); border-radius: 5px; padding: 2px 7px;
+}
+
+/* Settings panel */
+.fc-settings-btn {
+  background: none; border: none; font-size: 20px; cursor: pointer;
+  padding: 4px 8px; border-radius: 8px; line-height: 1;
+  transition: background 0.15s;
+}
+.fc-settings-btn:hover { background: var(--bg3); }
+.fc-settings-panel {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px; margin-top: 12px;
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.fc-settings-label {
+  font-size: 13px; color: var(--fg2); font-weight: 500;
+}
+.fc-settings-options { display: flex; gap: 6px; }
+.fc-limit-btn {
+  padding: 5px 14px; border-radius: 8px; border: 1.5px solid var(--border);
+  background: var(--bg); color: var(--fg2); font-size: 13px; cursor: pointer;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: all 0.15s;
+}
+.fc-limit-btn.active {
+  background: var(--accent); color: white; border-color: var(--accent);
+}
+.fc-limit-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+/* New badge on card */
+.fc-new-badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  color: #1D9E75; background: rgba(29,158,117,0.12);
+  border-radius: 6px; padding: 2px 8px; margin-top: 6px;
+}
+
 .fc-action-btn {
   padding: 10px 22px;
   background: var(--accent); color: white;

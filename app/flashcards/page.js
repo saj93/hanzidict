@@ -6,7 +6,6 @@ import { convertPinyin } from '../../lib/pinyin';
 import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
-import { createClient } from '../../lib/supabase';
 
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
@@ -27,27 +26,48 @@ const RATINGS = [
   { label: 'Easy',  color: '#3182ce', key: 'easy'  },
 ];
 
+const NEW_LIMIT_OPTIONS = [10, 20, 30, 50];
+
 export default function FlashcardsPage() {
   const router = useRouter();
   const { user, session } = useAuth();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [deckCounts, setDeckCounts] = useState({});
-  const [view, setView] = useState('decks'); // 'decks' | 'loading' | 'study' | 'done'
+  const [deckStats, setDeckStats] = useState({}); // per-level {due, newAvailable, total}
+  const [view, setView] = useState('decks'); // 'decks' | 'loading' | 'study' | 'done' | 'empty'
   const [activeLevel, setActiveLevel] = useState(null);
   const [cards, setCards] = useState([]);
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
-  const [ratings, setRatings] = useState({}); // cardIdx → key
+  const [ratings, setRatings] = useState({});
+  const [newLimit, setNewLimit] = useState(20);
+  const [sessionDue, setSessionDue] = useState(0);
+  const [sessionNew, setSessionNew] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
-    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
+    try {
+      if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional');
+      const saved = parseInt(localStorage.getItem('hanzidict-new-limit') || '20', 10);
+      if (NEW_LIMIT_OPTIONS.includes(saved)) setNewLimit(saved);
+    } catch (e) {}
     fetch('/api/flashcards?counts=1')
       .then(r => r.json())
       .then(d => setDeckCounts(d.counts || {}))
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (!user || !session) return;
+    const token = session.access_token;
+    fetch('/api/flashcards/stats', { headers: { Authorization: `Bearer ${token}` } })
+      .then(r => r.json())
+      .then(d => setDeckStats(d.stats || {}))
+      .catch(() => {});
+  }, [user, session]);
 
   function toggleDark() {
     const isDark = document.documentElement.classList.toggle('dark');
@@ -61,6 +81,11 @@ export default function FlashcardsPage() {
     try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
   }
 
+  function setAndSaveNewLimit(val) {
+    setNewLimit(val);
+    try { localStorage.setItem('hanzidict-new-limit', String(val)); } catch (e) {}
+  }
+
   function authHeaders() {
     const token = session?.access_token;
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -69,28 +94,34 @@ export default function FlashcardsPage() {
   function startDeck(level) {
     setView('loading');
     setActiveLevel(level);
-    // If logged in, load due cards from progress API; otherwise random cards
     const url = user
-      ? `/api/flashcards/progress?hsk=${level}`
+      ? `/api/flashcards/progress?hsk=${level}&newLimit=${newLimit}`
       : `/api/flashcards?hsk=${level}`;
     fetch(url, { headers: authHeaders() })
       .then(r => r.json())
       .then(d => {
         const fetchedCards = d.cards || [];
+        if (!fetchedCards.length) {
+          setView('empty');
+          return;
+        }
+        // Count due vs new in the loaded session
+        const dueCount = fetchedCards.filter(c => !c.is_new && c.reviews > 0).length;
+        const newCount = fetchedCards.filter(c => c.is_new).length;
+        setSessionDue(dueCount);
+        setSessionNew(newCount);
         setCards(fetchedCards);
         setIdx(0);
         setFlipped(false);
         setRatings({});
-        setView(fetchedCards.length ? 'study' : 'done');
+        setView('study');
       })
       .catch(() => setView('decks'));
   }
 
   function rate(key) {
     const card = cards[idx];
-    // Save progress if logged in (fire-and-forget)
     if (user && card) {
-      const ratingMap = { again: 0, hard: 3, good: 4, easy: 5 };
       fetch('/api/flashcards/progress', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
@@ -128,8 +159,6 @@ export default function FlashcardsPage() {
   const ratingCounts = Object.values(ratings).reduce((acc, k) => {
     acc[k] = (acc[k] || 0) + 1; return acc;
   }, {});
-
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const nav = (
     <>
@@ -174,12 +203,34 @@ export default function FlashcardsPage() {
         {loginBanner}
         <div className="fc-page">
           <div className="fc-page-header">
-            <h1 className="fc-title">Flashcard Decks</h1>
-            <p className="fc-subtitle">Review vocabulary by HSK level</p>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+              <div>
+                <h1 className="fc-title">Flashcard Decks</h1>
+                <p className="fc-subtitle">Review vocabulary by HSK level</p>
+              </div>
+              {user && (
+                <button className="fc-settings-btn" onClick={() => setShowSettings(o => !o)} title="Settings">⚙️</button>
+              )}
+            </div>
+            {showSettings && user && (
+              <div className="fc-settings-panel">
+                <label className="fc-settings-label">New cards per session</label>
+                <div className="fc-settings-options">
+                  {NEW_LIMIT_OPTIONS.map(n => (
+                    <button
+                      key={n}
+                      className={`fc-limit-btn${newLimit === n ? ' active' : ''}`}
+                      onClick={() => setAndSaveNewLimit(n)}
+                    >{n}</button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
           <div className="fc-deck-grid">
             {HSK_META.filter(({ level }) => !deckCounts || deckCounts[level] == null || deckCounts[level] > 0).map(({ level, label, free }) => {
               const count = deckCounts[level];
+              const stats = deckStats[level];
               return (
                 <div key={level} className={`fc-deck-card${free ? '' : ' fc-deck-premium'}`}>
                   <div className="fc-deck-badge">
@@ -191,6 +242,13 @@ export default function FlashcardsPage() {
                   <div className="fc-deck-count">
                     {count == null ? '…' : `${count.toLocaleString()} words`}
                   </div>
+                  {user && stats && (
+                    <div className="fc-deck-stats">
+                      <span className="fc-stat-due">{stats.due} due</span>
+                      <span className="fc-stat-new">{Math.min(stats.newAvailable, newLimit)} new</span>
+                      <span className="fc-stat-total">{stats.total} total</span>
+                    </div>
+                  )}
                   <button
                     className={`fc-start-btn${free ? '' : ' fc-start-btn-locked'}`}
                     onClick={() => free && startDeck(level)}
@@ -223,8 +281,34 @@ export default function FlashcardsPage() {
     );
   }
 
+  // ── Empty (no due or new cards) ──
+  if (view === 'empty') {
+    return (
+      <main>
+        {nav}
+        <div className="fc-center">
+          <div className="fc-done-card">
+            <div className="fc-done-emoji">🌙</div>
+            <h2 className="fc-done-title">You're all caught up!</h2>
+            <p className="fc-done-sub">No cards are due for HSK {activeLevel === 7 ? '7–9' : activeLevel} right now.</p>
+            <p style={{ color: 'var(--fg3)', fontSize: 14, marginTop: 8 }}>Come back tomorrow for your next review.</p>
+            <div style={{ marginTop: 28 }}>
+              <button className="fc-action-btn fc-action-secondary" onClick={() => setView('decks')}>← All decks</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   // ── Done ──
   if (view === 'done') {
+    const reviewedDue = ratingCounts['again'] || 0 + ratingCounts['hard'] || 0 + ratingCounts['good'] || 0 + ratingCounts['easy'] || 0;
+    const newLearned = cards.filter(c => c.is_new).length;
+    const nextDue = new Date();
+    nextDue.setDate(nextDue.getDate() + 1);
+    const nextDueStr = nextDue.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+
     return (
       <main>
         {nav}
@@ -232,7 +316,7 @@ export default function FlashcardsPage() {
           <div className="fc-done-card">
             <div className="fc-done-emoji">🎉</div>
             <h2 className="fc-done-title">Session complete!</h2>
-            <p className="fc-done-sub">You reviewed {cards.length} cards from HSK {activeLevel}</p>
+            <p className="fc-done-sub">HSK {activeLevel === 7 ? '7–9' : activeLevel} · {cards.length} cards reviewed</p>
             <div className="fc-done-stats">
               {RATINGS.map(r => (
                 <div key={r.key} className="fc-done-stat">
@@ -241,6 +325,11 @@ export default function FlashcardsPage() {
                 </div>
               ))}
             </div>
+            {user && newLearned > 0 && (
+              <p style={{ color: 'var(--fg2)', fontSize: 14, marginTop: 16 }}>
+                {newLearned} new {newLearned === 1 ? 'word' : 'words'} learned · next review {nextDueStr}
+              </p>
+            )}
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 28 }}>
               <button className="fc-action-btn" onClick={() => startDeck(activeLevel)}>Study again</button>
               <button className="fc-action-btn fc-action-secondary" onClick={() => setView('decks')}>← All decks</button>
@@ -258,7 +347,6 @@ export default function FlashcardsPage() {
     <main>
       {nav}
 
-      {/* Progress bar */}
       <div className="fc-progress-wrap">
         <div className="fc-progress-bar" style={{ width: `${progress * 100}%` }} />
         <span className="fc-progress-label">{idx} / {cards.length}</span>
@@ -267,13 +355,12 @@ export default function FlashcardsPage() {
       <div className="fc-study-wrap">
         <button className="fc-back-btn" onClick={() => setView('decks')}>← Decks</button>
 
-        {/* Card */}
         <div className="fc-card-scene">
           <div className={`fc-card-inner${flipped ? ' flipped' : ''}`}>
 
-            {/* Front */}
             <div className="fc-face fc-front">
               <div className="fc-char">{displayHanzi(card)}</div>
+              {card?.is_new && <span className="fc-new-badge">New</span>}
               {!flipped && (
                 <button className="fc-show-btn" onClick={() => setFlipped(true)}>
                   Show answer
@@ -281,7 +368,6 @@ export default function FlashcardsPage() {
               )}
             </div>
 
-            {/* Back */}
             <div className="fc-face fc-back">
               <div className="fc-char fc-char-sm">{displayHanzi(card)}</div>
               <div className="fc-pinyin">{convertPinyin(card?.pinyin || '')}</div>
@@ -297,7 +383,6 @@ export default function FlashcardsPage() {
           </div>
         </div>
 
-        {/* Rating buttons — only visible after flip */}
         <div className={`fc-ratings${flipped ? ' visible' : ''}`}>
           {RATINGS.map(r => (
             <button
