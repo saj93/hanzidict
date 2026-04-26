@@ -72,7 +72,7 @@ export default function FlashcardsPage() {
     // If logged in, load due cards from progress API; otherwise random cards
     const url = user
       ? `/api/flashcards/progress?hsk=${level}`
-      : `/api/flashcards?hsk=${level}&limit=20`;
+      : `/api/flashcards?hsk=${level}`;
     fetch(url, { headers: authHeaders() })
       .then(r => r.json())
       .then(d => {

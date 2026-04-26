@@ -9,9 +9,8 @@ export async function GET(request) {
   }
 
   const hsk = parseInt(searchParams.get('hsk') || '1', 10);
-  const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '20', 10)));
   if (hsk < 1 || hsk > 9) return Response.json({ cards: [] });
 
-  const cards = await getFlashcards(hsk, limit);
+  const cards = await getFlashcards(hsk);
   return Response.json({ cards });
 }

@@ -40,7 +40,7 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const hsk = parseInt(searchParams.get('hsk') || '1', 10);
 
-  const cards = await getDueCards(user.id, hsk, 20);
+  const cards = await getDueCards(user.id, hsk);
   return Response.json({ cards });
 }
 
