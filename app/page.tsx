@@ -6,6 +6,7 @@ import SearchDropdown from './components/SearchDropdown';
 import DrawCanvas from './components/DrawCanvas';
 import RadicalSearch from './components/RadicalSearch';
 import UserMenu from './components/UserMenu';
+import Footer from './components/Footer';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -177,10 +178,7 @@ export default function Home() {
         ))}
       </div>
 
-      <footer>
-        <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
-        <span>Open source · GitHub</span>
-      </footer>
+      <Footer />
     </main>
   );
 }

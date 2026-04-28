@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
+import Footer from '../components/Footer';
 
 
 export default function AboutPage() {
@@ -86,10 +87,7 @@ export default function AboutPage() {
         </section>
       </div>
 
-      <footer>
-        <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
-        <span>Open source · GitHub</span>
-      </footer>
+      <Footer />
     </main>
   );
 }

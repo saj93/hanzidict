@@ -6,6 +6,7 @@ import { convertPinyin } from '../../lib/pinyin';
 import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
+import Footer from '../components/Footer';
 
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
@@ -256,6 +257,11 @@ export default function FlashcardsPage() {
                   >
                     {free ? 'Start →' : 'Unlock'}
                   </button>
+                  {free && (
+                    <button className="fc-wordlist-link" onClick={() => router.push(`/hsk/${level}`)}>
+                      View word list
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -397,10 +403,7 @@ export default function FlashcardsPage() {
         </div>
       </div>
 
-      <footer>
-        <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
-        <span>Open source · GitHub</span>
-      </footer>
+      <Footer />
     </main>
   );
 }

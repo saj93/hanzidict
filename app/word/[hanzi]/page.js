@@ -7,6 +7,7 @@ import { isVariantEntry } from '../../../lib/utils';
 import SearchDropdown from '../../components/SearchDropdown';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
+import Footer from '../../components/Footer';
 import * as OpenCC from 'opencc-js';
 
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
@@ -350,12 +351,7 @@ export default function WordPage() {
     </div>
   );
 
-  const footer = (
-    <footer>
-      <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
-      <span>Open source · GitHub</span>
-    </footer>
-  );
+  const footer = <Footer />;
 
   if (loading || results === null) {
     return (
