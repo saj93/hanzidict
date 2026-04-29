@@ -54,16 +54,19 @@ export default function DrawCanvas() {
       ctx.lineWidth = 3;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.beginPath();
-      ctx.moveTo(x, y);
     }
 
     function onMove(e) {
       e.preventDefault();
       if (!activeStrokeRef.current) return;
+      const pts = activeStrokeRef.current;
+      const [px, py] = pts[pts.length - 1];
       const [x, y] = getPos(e);
-      activeStrokeRef.current.push([x, y]);
+      pts.push([x, y]);
+      // Draw only the new segment — never re-stroke the whole path
       const ctx = canvas.getContext('2d');
+      ctx.beginPath();
+      ctx.moveTo(px, py);
       ctx.lineTo(x, y);
       ctx.stroke();
     }

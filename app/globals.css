@@ -173,6 +173,7 @@ html.dark .search-field { background: var(--bg2); }
   width: 160px; height: 160px; min-width: 160px;
   background: white; border: 0.5px solid var(--border-mid);
   border-radius: 8px; position: relative; overflow: hidden;
+  touch-action: none;
 }
 html.dark .draw-canvas { background: var(--bg3); }
 .draw-grid {
