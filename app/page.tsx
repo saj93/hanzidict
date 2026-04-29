@@ -7,6 +7,9 @@ import DrawCanvas from './components/DrawCanvas';
 import RadicalSearch from './components/RadicalSearch';
 import UserMenu from './components/UserMenu';
 import Footer from './components/Footer';
+import { convertPinyin } from '../lib/pinyin';
+
+const FALLBACK_CHIPS: [string, string][] = [['你好','nǐ hǎo'],['学习','xuéxí'],['朋友','péngyou'],['汉字','hànzì'],['茶','chá']];
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -16,6 +19,7 @@ export default function Home() {
   const [script, setScript] = useState<'simplified' | 'traditional'>('simplified');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showDrop, setShowDrop] = useState(false);
+  const [chips, setChips] = useState<[string, string][]>(FALLBACK_CHIPS);
   const router = useRouter();
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -23,6 +27,16 @@ export default function Home() {
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
+    fetch('/api/hsk?level=1&sample=5')
+      .then(r => r.json())
+      .then(d => {
+        const loaded: [string, string][] = (d.entries || [])
+          .filter((e: any) => e.simplified && e.pinyin)
+          .slice(0, 5)
+          .map((e: any) => [e.simplified, convertPinyin(e.pinyin)] as [string, string]);
+        if (loaded.length === 5) setChips(loaded);
+      })
+      .catch(() => {});
   }, []);
 
   function toggleScript() {
@@ -147,7 +161,7 @@ export default function Home() {
         </div>
 
         <div className="chips">
-          {[['你好','nǐ hǎo'],['学习','xuéxí'],['朋友','péngyou'],['汉字','hànzì'],['茶','chá']].map(([hz, py]) => (
+          {chips.map(([hz, py]) => (
             <button key={hz} className="chip" onClick={() => router.push(`/word/${encodeURIComponent(hz)}`)}>
               <span className="chip-hanzi">{hz}</span> {py}
             </button>
