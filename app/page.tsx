@@ -7,6 +7,7 @@ import DrawCanvas from './components/DrawCanvas';
 import RadicalSearch from './components/RadicalSearch';
 import UserMenu from './components/UserMenu';
 import Footer from './components/Footer';
+import FeatureCards from './components/FeatureCards';
 import { convertPinyin } from '../lib/pinyin';
 
 const FALLBACK_CHIPS: [string, string][] = [['你好','nǐ hǎo'],['学习','xuéxí'],['朋友','péngyou'],['汉字','hànzì'],['茶','chá']];
@@ -178,19 +179,10 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="features">
-        {[
-          ['✏️', 'Handwriting recognition', 'Draw any character directly in your browser — no input method needed. HanziLookup identifies it instantly.'],
-          ['筆', 'Stroke order animation', 'Watch every character drawn stroke by stroke with Hanzi Writer, then test yourself in quiz mode.'],
-          ['⊞', 'Radical search', 'Browse characters by their radical components, just like a traditional printed dictionary.'],
-        ].map(([icon, title, desc]) => (
-          <div key={String(title)} className="feat">
-            <div className="feat-icon">{icon}</div>
-            <div className="feat-title">{title}</div>
-            <div className="feat-desc">{desc}</div>
-          </div>
-        ))}
-      </div>
+      <FeatureCards
+        onTryDraw={() => { setSearchTab('draw'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        onTryRadical={() => { setSearchTab('radical'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+      />
 
       <Footer />
     </main>
