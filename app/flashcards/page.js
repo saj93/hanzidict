@@ -7,6 +7,7 @@ import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
 import Footer from '../components/Footer';
+import NavSearch from '../components/NavSearch';
 
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
@@ -167,6 +168,7 @@ export default function FlashcardsPage() {
         <button className="nav-logo" onClick={() => router.push('/')}>
           <span className="logo-mark">汉</span>HanziDict
         </button>
+        <div className="nav-search-center"><NavSearch /></div>
         <div className="nav-right">
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
           <button className="nav-link active">Flashcards</button>

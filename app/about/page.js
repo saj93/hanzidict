@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
 import Footer from '../components/Footer';
+import NavSearch from '../components/NavSearch';
 
 
 export default function AboutPage() {
@@ -35,6 +36,7 @@ export default function AboutPage() {
         <button className="nav-logo" onClick={() => router.push('/')}>
           <span className="logo-mark">汉</span>HanziDict
         </button>
+        <div className="nav-search-center"><NavSearch /></div>
         <div className="nav-right">
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>

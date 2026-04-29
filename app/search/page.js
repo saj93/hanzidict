@@ -1,10 +1,10 @@
 'use client';
 
-import { Suspense, useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
-import SearchDropdown from '../components/SearchDropdown';
 import UserMenu from '../components/UserMenu';
+import NavSearch from '../components/NavSearch';
 
 const PAGE_SIZE = 20;
 
@@ -46,17 +46,11 @@ function Pagination({ page, totalPages, onPage }) {
 
 function SearchResults() {
   const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get('q') || '');
   const [results, setResults] = useState(null);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
-  const [suggestions, setSuggestions] = useState([]);
-  const [showDrop, setShowDrop] = useState(false);
-  const searchWrapRef = useRef(null);
-  const suggestTimer = useRef(null);
-  const userTypedRef = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -79,9 +73,6 @@ function SearchResults() {
   useEffect(() => {
     const q = searchParams.get('q') || '';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    setQuery(q);
-    userTypedRef.current = false;
-    setShowDrop(false);
     if (!q.trim()) { setResults([]); setTotal(0); return; }
     setLoading(true);
     fetch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`)
@@ -89,48 +80,6 @@ function SearchResults() {
       .then(d => { setResults(d.results || []); setTotal(d.total ?? 0); setLoading(false); })
       .catch(() => { setResults([]); setTotal(0); setLoading(false); });
   }, [searchParams]);
-
-  useEffect(() => {
-    clearTimeout(suggestTimer.current);
-    if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
-    suggestTimer.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`)
-        .then(r => r.json())
-        .then(d => {
-          const s = (d.results || []).slice(0, 6);
-          setSuggestions(s);
-          if (userTypedRef.current) setShowDrop(s.length > 0);
-        })
-        .catch(() => {});
-    }, 250);
-    return () => clearTimeout(suggestTimer.current);
-  }, [query]);
-
-  useEffect(() => {
-    function handler(e) {
-      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) {
-        setShowDrop(false);
-      }
-    }
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
-
-  function handleSearch() {
-    if (!query.trim()) return;
-    setShowDrop(false);
-    router.push(`/search?q=${encodeURIComponent(query.trim())}`);
-  }
-
-  function handleKeyDown(e) {
-    if (e.key === 'Escape') { setShowDrop(false); return; }
-    if (e.key === 'Enter') handleSearch();
-  }
-
-  function goToWord(simplified) {
-    setShowDrop(false);
-    router.push(`/word/${encodeURIComponent(simplified)}`);
-  }
 
   function goToPage(p) {
     const q = searchParams.get('q') || '';
@@ -148,6 +97,12 @@ function SearchResults() {
         <button className="nav-logo" onClick={() => router.push('/')}>
           <span className="logo-mark">汉</span>HanziDict
         </button>
+        <div className="nav-search-center">
+          <NavSearch
+            initialQuery={q}
+            onSubmit={newQ => router.push(`/search?q=${encodeURIComponent(newQ)}`)}
+          />
+        </div>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
@@ -157,26 +112,6 @@ function SearchResults() {
           <UserMenu />
         </div>
       </nav>
-
-      <div className="word-header-bar">
-        <div className="word-header-inner">
-          <div className="word-search-row">
-            <div className="word-search-wrap" ref={searchWrapRef}>
-              <input
-                className="word-search-input"
-                value={query}
-                placeholder="Search…"
-                autoComplete="off"
-                onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
-                onFocus={() => { userTypedRef.current = true; if (suggestions.length > 0) setShowDrop(true); }}
-                onKeyDown={handleKeyDown}
-              />
-              <button className="word-search-ico" onClick={handleSearch}>🔍</button>
-              {showDrop && <SearchDropdown suggestions={suggestions} query={query} onSelect={goToWord} />}
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '24px 28px' }}>
         {q && (

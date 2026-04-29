@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import { isVariantEntry } from '../../../lib/utils';
-import SearchDropdown from '../../components/SearchDropdown';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
+import NavSearch from '../../components/NavSearch';
 import Footer from '../../components/Footer';
 import * as OpenCC from 'opencc-js';
 
@@ -53,7 +53,6 @@ function processExactMatches(entries) {
 export default function WordPage() {
   const params = useParams();
   const hanzi = decodeURIComponent(params.hanzi || '');
-  const [query, setQuery] = useState(hanzi);
   const [results, setResults] = useState(null);
   const [alternates, setAlternates] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,13 +69,7 @@ export default function WordPage() {
   const [strokeCharIdx, setStrokeCharIdx] = useState(0);
   const [examples, setExamples] = useState([]);
   const [exampleIdx, setExampleIdx] = useState(0);
-  const [suggestions, setSuggestions] = useState([]);
-  const [showDrop, setShowDrop] = useState(false);
   const hwRef = useRef(null);
-  const searchWrapRef = useRef(null);
-  const suggestTimer = useRef(null);
-  // Only show dropdown on explicit user interaction, never on page load or navigation
-  const userTypedRef = useRef(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -117,14 +110,11 @@ export default function WordPage() {
   }, []);
 
   useEffect(() => {
-    setQuery(hanzi);
     setStrokeLabel('');
     setQuizActive(false);
     setStrokeCharIdx(0);
-    setShowDrop(false);
     setExamples([]);
     setExampleIdx(0);
-    userTypedRef.current = false;
     hwRef.current = null;
   }, [hanzi]);
 
@@ -182,33 +172,6 @@ export default function WordPage() {
       .catch(() => { setResults([]); setLoading(false); });
   }, [hanzi]);
 
-  // Debounced suggestions — only show dropdown when user has actively typed
-  useEffect(() => {
-    clearTimeout(suggestTimer.current);
-    if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
-    suggestTimer.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
-        .then(r => r.json())
-        .then(d => {
-          const s = (d.results || []).slice(0, 6);
-          setSuggestions(s);
-          if (userTypedRef.current) setShowDrop(s.length > 0);
-        })
-        .catch(() => {});
-    }, 250);
-    return () => clearTimeout(suggestTimer.current);
-  }, [query]);
-
-  // Outside click closes dropdown
-  useEffect(() => {
-    function handler(e) {
-      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) {
-        setShowDrop(false);
-      }
-    }
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
 
   const exactMatches = results?.filter(e => e.simplified === hanzi || e.traditional === hanzi) ?? [];
   const primary = (processExactMatches(exactMatches).primary ?? results?.[0]) ?? null;
@@ -275,22 +238,6 @@ export default function WordPage() {
     }
   }
 
-  function handleSearch() {
-    if (!query.trim()) return;
-    setShowDrop(false);
-    router.push(`/word/${encodeURIComponent(query.trim())}`);
-  }
-
-  function handleKeyDown(e) {
-    if (e.key === 'Escape') { setShowDrop(false); return; }
-    if (e.key === 'Enter') handleSearch();
-  }
-
-  function goToWord(simplified) {
-    setShowDrop(false);
-    router.push(`/word/${encodeURIComponent(simplified)}`);
-  }
-
   const strokeTitle = multiChar
     ? `${writerChar} (${strokeCharIdx + 1}/${displayHanzi.length})`
     : writerChar;
@@ -302,6 +249,9 @@ export default function WordPage() {
         <button className="nav-logo" onClick={() => router.push('/')}>
           <span className="logo-mark">汉</span>HanziDict
         </button>
+        <div className="nav-search-center">
+          <NavSearch initialQuery={hanzi} />
+        </div>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
@@ -327,21 +277,6 @@ export default function WordPage() {
   const wordHeader = (
     <div className="word-header-bar">
       <div className="word-header-inner">
-        <div className="word-search-row">
-          <div className="word-search-wrap" ref={searchWrapRef}>
-            <input
-              className="word-search-input"
-              value={query}
-              placeholder="Search…"
-              autoComplete="off"
-              onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
-              onFocus={() => { userTypedRef.current = true; if (suggestions.length > 0) setShowDrop(true); }}
-              onKeyDown={handleKeyDown}
-            />
-            <button className="word-search-ico" onClick={handleSearch}>🔍</button>
-            {showDrop && <SearchDropdown suggestions={suggestions} query={query} onSelect={goToWord} />}
-          </div>
-        </div>
         <div className="word-tabs">
           <button className={`wtab${searchTab === 'text' ? ' on' : ''}`} onClick={() => setSearchTab('text')}>Text</button>
           <button className={`wtab${searchTab === 'draw' ? ' on' : ''}`} onClick={() => setSearchTab('draw')}>✏️ Draw</button>

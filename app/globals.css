@@ -47,7 +47,7 @@ body {
   background: var(--bg);
   border-bottom: 0.5px solid var(--border);
   height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; gap: 16px;
   padding: 0 32px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -67,7 +67,39 @@ body {
   font-size: 13px; font-weight: 500;
   color: white; letter-spacing: -0.5px;
 }
-.nav-right { display: flex; align-items: center; gap: 24px; }
+.nav-right { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+
+/* Nav search bar (all pages except homepage) */
+.nav-search-center {
+  flex: 1; display: flex; justify-content: center; min-width: 0;
+}
+.nav-search-wrap {
+  position: relative;
+  display: flex; align-items: center;
+  width: 100%; max-width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--border-mid);
+  border-radius: 10px;
+  height: 36px;
+  transition: border-color 0.15s;
+}
+.nav-search-wrap:focus-within { border-color: var(--accent); }
+.nav-search-input {
+  flex: 1; height: 36px; min-width: 0;
+  border: none; outline: none; background: transparent;
+  font-size: 13px; font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--fg); padding: 0 8px 0 14px;
+}
+.nav-search-input::placeholder { color: var(--fg3); }
+.nav-search-go {
+  width: 28px; height: 28px;
+  background: var(--accent); border: none; border-radius: 7px;
+  color: white; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-right: 4px;
+  transition: opacity 0.15s;
+}
+.nav-search-go:hover { opacity: 0.88; }
 .nav-link {
   font-size: 13px; color: var(--fg2);
   cursor: pointer; background: none; border: none;
@@ -732,8 +764,9 @@ html.dark .drop-row:hover { background: var(--bg3); }
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   /* ── Nav ── */
-  .nav { padding: 0 16px; height: 50px; }
+  .nav { padding: 0 16px; height: 50px; gap: 10px; }
   .nav-right { gap: 10px; }
+  .nav-search-center { display: none; }
   /* Hide Dictionary / Flashcards / About; keep theme toggle + hamburger */
   .nav-link { display: none; }
   .theme-btn { display: flex; }
