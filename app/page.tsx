@@ -123,7 +123,7 @@ export default function Home() {
       )}
 
       <section className="hero">
-        <div className="hero-eyebrow">Open source · Free forever</div>
+        <div className="hero-eyebrow">Open source · CC-CEDICT</div>
         <h1 className="hero-title">
           The Chinese dictionary<br />built for <em>everyone</em>
         </h1>
@@ -171,7 +171,7 @@ export default function Home() {
       </section>
 
       <div className="stats-strip">
-        {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['Free','Always & forever']].map(([n, l]) => (
+        {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['19,294','Example sentences']].map(([n, l]) => (
           <div key={n} className="stat-cell">
             <div className="stat-n">{n}</div>
             <div className="stat-l">{l}</div>
