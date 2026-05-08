@@ -1,11 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-function pickVoice() {
-  const voices = window.speechSynthesis.getVoices();
+function pickVoice(voices) {
   return (
     voices.find(v => v.lang === 'zh-CN') ||
-    voices.find(v => v.lang.startsWith('zh')) ||
+    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('TW') && !v.lang.includes('HK')) ||
     null
   );
 }
@@ -27,25 +26,29 @@ export default function SpeakButton({ text }) {
       return;
     }
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'zh-CN';
-    utter.rate = 0.85;
 
-    // Voices may not be loaded yet — try immediately, retry after voiceschanged
-    const voice = pickVoice();
-    if (voice) {
-      utter.voice = voice;
-    } else {
-      window.speechSynthesis.addEventListener('voiceschanged', () => {
-        const v = pickVoice();
-        if (v) utter.voice = v;
-      }, { once: true });
+    function doSpeak() {
+      const voices = window.speechSynthesis.getVoices();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'zh-CN';
+      utter.rate = 0.9;
+      const voice = pickVoice(voices);
+      if (voice) utter.voice = voice;
+      utter.onstart = () => setSpeaking(true);
+      utter.onend = () => setSpeaking(false);
+      utter.onerror = () => setSpeaking(false);
+      window.speechSynthesis.speak(utter);
     }
 
-    utter.onstart = () => setSpeaking(true);
-    utter.onend = () => setSpeaking(false);
-    utter.onerror = () => setSpeaking(false);
-    window.speechSynthesis.speak(utter);
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      doSpeak();
+    } else {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.onvoiceschanged = null;
+        doSpeak();
+      };
+    }
   }
 
   return (

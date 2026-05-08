@@ -572,12 +572,10 @@ html.dark .drop-row:hover { background: var(--bg3); }
   border-radius: 8px; border: none; cursor: pointer;
   background: var(--accent);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity 0.15s, filter 0.15s;
+  transition: filter 0.15s;
 }
-.speak-btn:hover { filter: brightness(1.1); }
-.speak-btn.speaking { opacity: 1; filter: brightness(0.9); }
-.hanzi-meta:hover .speak-btn { opacity: 1; }
-@media (max-width: 768px) { .speak-btn { opacity: 1; } }
+.speak-btn:hover { filter: brightness(1.12); }
+.speak-btn.speaking { filter: brightness(0.88); }
 .pos-line { font-size: 13px; color: var(--fg2); margin-bottom: 10px; }
 .badges { display: flex; gap: 7px; flex-wrap: wrap; }
 .badge {
