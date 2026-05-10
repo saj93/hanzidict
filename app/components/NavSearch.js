@@ -10,14 +10,15 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
   const [showDrop, setShowDrop] = useState(false);
   const wrapRef = useRef(null);
   const timerRef = useRef(null);
+  const userTypedRef = useRef(false);
   const router = useRouter();
 
-  // Sync when the parent navigates to a new word/query
-  useEffect(() => { setQuery(initialQuery); }, [initialQuery]);
+  // Sync when the parent navigates to a new word/query — never triggers the dropdown
+  useEffect(() => { setQuery(initialQuery); userTypedRef.current = false; }, [initialQuery]);
 
   useEffect(() => {
     clearTimeout(timerRef.current);
-    if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
+    if (!query.trim() || !userTypedRef.current) { setSuggestions([]); setShowDrop(false); return; }
     timerRef.current = setTimeout(() => {
       fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`)
         .then(r => r.json())
@@ -63,8 +64,8 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
         value={query}
         placeholder="Search characters, pinyin, English…"
         autoComplete="off"
-        onChange={e => setQuery(e.target.value)}
-        onFocus={() => suggestions.length > 0 && setShowDrop(true)}
+        onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
+        onFocus={() => userTypedRef.current && suggestions.length > 0 && setShowDrop(true)}
         onKeyDown={onKeyDown}
       />
       <button className="nav-search-go" onClick={submit}>→</button>
