@@ -7,7 +7,7 @@ import { isVariantEntry } from '../../../lib/utils';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
-import SpeakButton from '../../components/SpeakButton';
+import AudioButton from '../../components/AudioButton';
 import Footer from '../../components/Footer';
 import * as OpenCC from 'opencc-js';
 
@@ -366,7 +366,7 @@ export default function WordPage() {
             <div className="hanzi-meta">
               <div className="pinyin-row">
                 <div className="pinyin-line">{pinyin}</div>
-                <SpeakButton text={primary?.simplified || hanzi} />
+                <AudioButton text={primary?.simplified || hanzi} />
               </div>
               <div className="pos-line">{posLine}</div>
               <div className="badges">

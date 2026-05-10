@@ -576,6 +576,13 @@ html.dark .drop-row:hover { background: var(--bg3); }
 }
 .speak-btn:hover { filter: brightness(1.12); }
 .speak-btn.speaking { filter: brightness(0.88); }
+.speak-btn.loading { opacity: 0.75; cursor: default; }
+.spin-icon { animation: spin 0.75s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Flashcard audio layout */
+.fc-front-audio { margin-top: 8px; }
+.fc-pinyin-row { display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 8px; }
 .pos-line { font-size: 13px; color: var(--fg2); margin-bottom: 10px; }
 .badges { display: flex; gap: 7px; flex-wrap: wrap; }
 .badge {

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 function pickVoice(voices) {
   return (
     voices.find(v => v.lang === 'zh-CN') ||
-    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('TW') && !v.lang.includes('HK')) ||
+    voices.find(v => v.lang === 'zh-TW') ||
+    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('HK')) ||
     null
   );
 }

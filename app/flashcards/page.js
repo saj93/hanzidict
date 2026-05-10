@@ -8,6 +8,7 @@ import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
 import Footer from '../components/Footer';
 import NavSearch from '../components/NavSearch';
+import AudioButton from '../components/AudioButton';
 
 const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
@@ -368,6 +369,9 @@ export default function FlashcardsPage() {
 
             <div className="fc-face fc-front">
               <div className="fc-char">{displayHanzi(card)}</div>
+              <div className="fc-front-audio">
+                <AudioButton text={card?.simplified || ''} />
+              </div>
               {card?.is_new && <span className="fc-new-badge">New</span>}
               {!flipped && (
                 <button className="fc-show-btn" onClick={() => setFlipped(true)}>
@@ -378,7 +382,10 @@ export default function FlashcardsPage() {
 
             <div className="fc-face fc-back">
               <div className="fc-char fc-char-sm">{displayHanzi(card)}</div>
-              <div className="fc-pinyin">{convertPinyin(card?.pinyin || '')}</div>
+              <div className="fc-pinyin-row">
+                <div className="fc-pinyin">{convertPinyin(card?.pinyin || '')}</div>
+                <AudioButton text={card?.simplified || ''} />
+              </div>
               <div className="fc-defs">
                 {defs.slice(0, 3).map((d, i) => (
                   <div key={i} className="fc-def-row">
