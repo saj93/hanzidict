@@ -24,14 +24,25 @@ function normalizePy(pinyin) {
 
 function sortByHskPinyin(entries) {
   return [...entries].sort((a, b) => {
-    // Non-variants always beat variants
+    // frequency_rank first (lower = more common), nulls last
+    const aFreq = a.frequency_rank ?? Infinity;
+    const bFreq = b.frequency_rank ?? Infinity;
+    if (aFreq !== bFreq) return aFreq - bFreq;
+    // Then HSK-tagged before untagged, lower level first
+    const aIsHSK = a.hsk_level !== null && a.hsk_level !== undefined;
+    const bIsHSK = b.hsk_level !== null && b.hsk_level !== undefined;
+    if (aIsHSK && !bIsHSK) return -1;
+    if (!aIsHSK && bIsHSK) return 1;
+    if (aIsHSK && bIsHSK) return a.hsk_level - b.hsk_level;
+    // Both non-HSK: non-variants before variants/surnames
     const av = isVariant(a) ? 1 : 0, bv = isVariant(b) ? 1 : 0;
     if (av !== bv) return av - bv;
-    const ha = a.hsk_level ?? 999, hb = b.hsk_level ?? 999;
-    if (ha !== hb) return ha - hb;
     const aUpper = /^[A-Z]/.test(a.pinyin || '');
     const bUpper = /^[A-Z]/.test(b.pinyin || '');
     if (aUpper !== bUpper) return aUpper ? 1 : -1;
+    const aDefCount = (a.definitions || '').split(' | ').length;
+    const bDefCount = (b.definitions || '').split(' | ').length;
+    if (aDefCount !== bDefCount) return bDefCount - aDefCount;
     return (a.pinyin || '').localeCompare(b.pinyin || '');
   });
 }

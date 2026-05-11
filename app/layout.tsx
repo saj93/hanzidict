@@ -17,8 +17,26 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "HanziDict — Chinese Dictionary",
-  description: "Open source Chinese dictionary with 124,000 entries",
+  title: 'HanziDict — Chinese Dictionary',
+  description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging, stroke order animations, example sentences, and flashcards. Search by character, pinyin, or English.',
+  keywords: 'Chinese dictionary, Mandarin, HSK, pinyin, hanzi, stroke order, flashcards, CC-CEDICT',
+  openGraph: {
+    title: 'HanziDict — Chinese Dictionary',
+    description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging and stroke order animations.',
+    url: 'https://hanzidict.vercel.app',
+    siteName: 'HanziDict',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'HanziDict — Chinese Dictionary',
+    description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging and stroke order animations.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export const viewport: Viewport = {

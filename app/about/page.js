@@ -6,7 +6,6 @@ import UserMenu from '../components/UserMenu';
 import Footer from '../components/Footer';
 import NavSearch from '../components/NavSearch';
 
-
 export default function AboutPage() {
   const router = useRouter();
   const [dark, setDark] = useState(false);
@@ -61,32 +60,41 @@ export default function AboutPage() {
         <h1 className="about-title">About HanziDict</h1>
 
         <section className="about-section">
-          <h2>What is HanziDict?</h2>
-          <p>HanziDict is a free, open-source Chinese dictionary built for learners and enthusiasts at every level. Search by character, pinyin, or English across 124,000 entries sourced from CC-CEDICT.</p>
+          <p>HanziDict was born out of a simple frustration — existing Chinese dictionaries are either incomplete, cluttered, or stuck in the early 2000s aesthetically. Learning Chinese is already hard enough; your tools shouldn't make it harder.</p>
+          <p style={{ marginTop: 14 }}>The goal is simple: a fast, clean, and genuinely pleasant dictionary for anyone learning Mandarin — whether you're a complete beginner or preparing for HSK 7–9.</p>
         </section>
 
         <section className="about-section">
-          <h2>Features</h2>
-          <ul className="about-list">
-            <li><strong>124,000 entries</strong> from CC-CEDICT, the community-maintained Chinese dictionary</li>
-            <li><strong>HSK 1–9 tagging</strong> so you always know a word's difficulty level</li>
-            <li><strong>Stroke order animation</strong> powered by HanziWriter</li>
-            <li><strong>Handwriting recognition</strong> — draw any character directly in your browser</li>
-            <li><strong>Flashcards</strong> with spaced repetition (SM-2) to help you retain vocabulary</li>
-            <li><strong>Simplified / Traditional</strong> toggle across all pages</li>
-            <li><strong>Pinyin search</strong> with tone support and ü variations</li>
+          <h2>Data sources</h2>
+          <p style={{ marginBottom: 14 }}>HanziDict is built on open, community-maintained data:</p>
+          <ul className="about-data-list">
+            <li>
+              <strong>CC-CEDICT</strong> — 124,000+ entries, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
+            </li>
+            <li>
+              <strong>Tatoeba</strong> — 19,000+ example sentences, licensed under <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">CC BY 2.0</a>
+            </li>
+            <li>
+              <strong>Unihan</strong> — radical and stroke count data from the Unicode Consortium
+            </li>
           </ul>
         </section>
 
         <section className="about-section">
-          <h2>Data</h2>
-          <p>Dictionary data is from <strong>CC-CEDICT</strong>, released under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0</a> license. Stroke order data is provided by <strong>HanziWriter</strong>.</p>
+          <h2>Open source</h2>
+          <p>HanziDict is open source. The code is available on <a href="https://github.com/saj93/hanzidict" target="_blank" rel="noopener noreferrer">GitHub</a> — contributions, bug reports, and suggestions are welcome.</p>
         </section>
 
         <section className="about-section">
-          <h2>Open Source</h2>
-          <p>HanziDict is open source. Contributions and feedback are welcome on <a href="https://github.com/saj93/hanzidict" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+          <h2>Contact</h2>
+          <p>Found an error? Have a suggestion? <a href="https://github.com/saj93/hanzidict/issues" target="_blank" rel="noopener noreferrer">Open an issue on GitHub</a>.</p>
         </section>
+
+        <div className="about-cta">
+          <button className="about-cta-btn" onClick={() => router.push('/flashcards')}>
+            Explore Flashcards →
+          </button>
+        </div>
       </div>
 
       <Footer />
