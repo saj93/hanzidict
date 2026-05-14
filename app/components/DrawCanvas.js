@@ -28,26 +28,19 @@ export default function DrawCanvas() {
     document.head.appendChild(s);
   }, []);
 
-  // Attach pointer listeners with { passive: false } so preventDefault() works on mobile
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    function getPos(e) {
+    function scalePos(clientX, clientY) {
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
       return [
-        (e.clientX - rect.left) * scaleX,
-        (e.clientY - rect.top) * scaleY,
+        (clientX - rect.left) * (canvas.width / rect.width),
+        (clientY - rect.top) * (canvas.height / rect.height),
       ];
     }
 
-    function onDown(e) {
-      e.preventDefault();
-      canvas.setPointerCapture(e.pointerId);
-      const [x, y] = getPos(e);
-      activeStrokeRef.current = [[x, y]];
+    function setupCtx() {
       const isDark = document.documentElement.classList.contains('dark');
       const ctx = canvas.getContext('2d');
       ctx.strokeStyle = isDark ? '#f0ede6' : '#1a1916';
@@ -56,14 +49,16 @@ export default function DrawCanvas() {
       ctx.lineJoin = 'round';
     }
 
-    function onMove(e) {
-      e.preventDefault();
+    function startStroke(x, y) {
+      setupCtx();
+      activeStrokeRef.current = [[x, y]];
+    }
+
+    function continueStroke(x, y) {
       if (!activeStrokeRef.current) return;
       const pts = activeStrokeRef.current;
       const [px, py] = pts[pts.length - 1];
-      const [x, y] = getPos(e);
       pts.push([x, y]);
-      // Draw only the new segment — never re-stroke the whole path
       const ctx = canvas.getContext('2d');
       ctx.beginPath();
       ctx.moveTo(px, py);
@@ -71,8 +66,7 @@ export default function DrawCanvas() {
       ctx.stroke();
     }
 
-    function onUp(e) {
-      e.preventDefault();
+    function endStroke() {
       if (!activeStrokeRef.current) return;
       const newStrokes = [...drawStrokesRef.current, activeStrokeRef.current];
       drawStrokesRef.current = newStrokes;
@@ -81,21 +75,73 @@ export default function DrawCanvas() {
       runLookup(newStrokes, canvas);
     }
 
-    function onCancel(e) {
-      // Treat cancelled pointer (e.g. browser scroll takeover) same as up
-      onUp(e);
+    // ── Touch handlers (iOS Safari) ──────────────────────────────────────────
+    // preventDefault on touchstart is the only reliable way to suppress the
+    // iOS long-press callout on canvas. Per spec, this also blocks pointer
+    // events for the same touch, so touch events handle drawing independently.
+    function onTouchStart(e) {
+      e.preventDefault();
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const [x, y] = scalePos(t.clientX, t.clientY);
+      startStroke(x, y);
     }
 
-    canvas.addEventListener('pointerdown', onDown, { passive: false });
-    canvas.addEventListener('pointermove', onMove, { passive: false });
-    canvas.addEventListener('pointerup', onUp, { passive: false });
-    canvas.addEventListener('pointercancel', onCancel, { passive: false });
+    function onTouchMove(e) {
+      e.preventDefault();
+      if (!activeStrokeRef.current || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const [x, y] = scalePos(t.clientX, t.clientY);
+      continueStroke(x, y);
+    }
+
+    function onTouchEnd(e) {
+      e.preventDefault();
+      endStroke();
+    }
+
+    // ── Pointer handlers (mouse / stylus / non-touch) ────────────────────────
+    // Skip touch pointers — handled above to avoid double-drawing on browsers
+    // that dispatch both touch and pointer events.
+    function onDown(e) {
+      if (e.pointerType === 'touch') return;
+      e.preventDefault();
+      canvas.setPointerCapture(e.pointerId);
+      const [x, y] = scalePos(e.clientX, e.clientY);
+      startStroke(x, y);
+    }
+
+    function onMove(e) {
+      if (e.pointerType === 'touch') return;
+      e.preventDefault();
+      continueStroke(...scalePos(e.clientX, e.clientY));
+    }
+
+    function onUp(e) {
+      if (e.pointerType === 'touch') return;
+      e.preventDefault();
+      endStroke();
+    }
+
+    canvas.addEventListener('touchstart',   onTouchStart, { passive: false });
+    canvas.addEventListener('touchmove',    onTouchMove,  { passive: false });
+    canvas.addEventListener('touchend',     onTouchEnd,   { passive: false });
+    canvas.addEventListener('touchcancel',  onTouchEnd,   { passive: false });
+    canvas.addEventListener('pointerdown',  onDown,       { passive: false });
+    canvas.addEventListener('pointermove',  onMove,       { passive: false });
+    canvas.addEventListener('pointerup',    onUp,         { passive: false });
+    canvas.addEventListener('pointercancel', onUp,        { passive: false });
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
 
     return () => {
+      canvas.removeEventListener('touchstart',  onTouchStart);
+      canvas.removeEventListener('touchmove',   onTouchMove);
+      canvas.removeEventListener('touchend',    onTouchEnd);
+      canvas.removeEventListener('touchcancel', onTouchEnd);
       canvas.removeEventListener('pointerdown', onDown);
       canvas.removeEventListener('pointermove', onMove);
-      canvas.removeEventListener('pointerup', onUp);
-      canvas.removeEventListener('pointercancel', onCancel);
+      canvas.removeEventListener('pointerup',   onUp);
+      canvas.removeEventListener('pointercancel', onUp);
     };
   }, []);
 
@@ -153,7 +199,15 @@ export default function DrawCanvas() {
   return (
     <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
       <div>
-        <div className="draw-canvas" style={{ position: 'relative' }}>
+        <div
+          className="draw-canvas"
+          style={{
+            position: 'relative',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none',
+          }}
+        >
           <div className="draw-grid" />
           {drawStrokes.length === 0 && (
             <div className="draw-hint" style={{ pointerEvents: 'none' }}>
@@ -170,6 +224,9 @@ export default function DrawCanvas() {
               touchAction: 'none',
               cursor: 'crosshair',
               borderRadius: 8,
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
             }}
           />
         </div>
@@ -184,8 +241,11 @@ export default function DrawCanvas() {
         </div>
         <div className="candidates">
           {candidates.map((ch, i) => (
-            <button key={i} className={`cand${i === 0 ? ' hot' : ''}`}
-              onClick={() => router.push(`/word/${encodeURIComponent(ch)}`)}>
+            <button
+              key={i}
+              className={`cand${i === 0 ? ' hot' : ''}`}
+              onClick={() => router.push(`/word/${encodeURIComponent(ch)}`)}
+            >
               {ch}
             </button>
           ))}

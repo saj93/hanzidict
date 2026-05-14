@@ -36,7 +36,7 @@ export default function FlashcardsPage() {
   const { user, session } = useAuth();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
-  const [deckCounts, setDeckCounts] = useState({});
+  const [deckCounts, setDeckCounts] = useState({ 1: 605, 2: 862, 3: 1088, 4: 1127, 5: 1180, 6: 1279, 7: 5967 });
   const [deckStats, setDeckStats] = useState({}); // per-level {due, newAvailable, total}
   const [view, setView] = useState('decks'); // 'decks' | 'loading' | 'study' | 'done' | 'empty'
   const [activeLevel, setActiveLevel] = useState(null);
@@ -232,7 +232,7 @@ export default function FlashcardsPage() {
             )}
           </div>
           <div className="fc-deck-grid">
-            {HSK_META.filter(({ level }) => !deckCounts || deckCounts[level] == null || deckCounts[level] > 0).map(({ level, label, free }) => {
+            {HSK_META.map(({ level, label, free }) => {
               const count = deckCounts[level];
               const stats = deckStats[level];
               return (
@@ -244,7 +244,7 @@ export default function FlashcardsPage() {
                   </div>
                   <div className="fc-deck-level">{label}</div>
                   <div className="fc-deck-count">
-                    {count == null ? '…' : `${count.toLocaleString()} words`}
+                    {count == null ? '…' : `${count.toLocaleString('en-US')} words`}
                   </div>
                   {user && stats && (
                     <div className="fc-deck-stats">
