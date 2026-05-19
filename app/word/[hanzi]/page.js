@@ -295,6 +295,13 @@ export default function WordPage() {
           <button className={`wtab${searchTab === 'radical' ? ' on' : ''}`} onClick={() => setSearchTab('radical')}>⊞ Radicals</button>
         </div>
       </div>
+      {searchTab === 'draw' && (
+        <div className="word-draw-drop">
+          <div className="word-header-inner">
+            <DrawCanvas />
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -334,13 +341,6 @@ export default function WordPage() {
       {nav}
       {wordHeader}
 
-      {searchTab === 'draw' && (
-        <div className="word-draw-drop">
-          <div className="word-header-inner">
-            <DrawCanvas />
-          </div>
-        </div>
-      )}
       {searchTab === 'radical' && (
         <div className="word-draw-drop">
           <div className="word-header-inner">

@@ -146,7 +146,6 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
             </div>
           )}
         </div>
-
         {initialChips.length > 0 && (
           <div className="chips">
             {initialChips.map(([hz, py]) => (

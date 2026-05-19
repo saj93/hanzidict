@@ -9,6 +9,7 @@ export default function DrawCanvas() {
   const [drawStrokes, setDrawStrokes] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const canvasRef = useRef(null);
+  const wrapRef = useRef(null);
   const activeStrokeRef = useRef(null);
   const drawStrokesRef = useRef([]);
 
@@ -133,6 +134,12 @@ export default function DrawCanvas() {
     canvas.addEventListener('pointercancel', onUp,        { passive: false });
     canvas.addEventListener('contextmenu', e => e.preventDefault());
 
+    // Capture-phase touchstart on the wrapper div fires before the target phase
+    // and before iOS's gesture recognizer can claim the touch for the callout.
+    const wrap = wrapRef.current;
+    function suppressCallout(e) { e.preventDefault(); }
+    wrap?.addEventListener('touchstart', suppressCallout, { passive: false, capture: true });
+
     return () => {
       canvas.removeEventListener('touchstart',  onTouchStart);
       canvas.removeEventListener('touchmove',   onTouchMove);
@@ -142,6 +149,7 @@ export default function DrawCanvas() {
       canvas.removeEventListener('pointermove', onMove);
       canvas.removeEventListener('pointerup',   onUp);
       canvas.removeEventListener('pointercancel', onUp);
+      wrap?.removeEventListener('touchstart', suppressCallout, { capture: true });
     };
   }, []);
 
@@ -200,6 +208,7 @@ export default function DrawCanvas() {
     <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
       <div>
         <div
+          ref={wrapRef}
           className="draw-canvas"
           style={{
             position: 'relative',

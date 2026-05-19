@@ -36,7 +36,7 @@ export default function FlashcardsPage() {
   const { user, session } = useAuth();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
-  const [deckCounts, setDeckCounts] = useState({ 1: 605, 2: 862, 3: 1088, 4: 1127, 5: 1180, 6: 1279, 7: 5967 });
+  const [deckCounts, setDeckCounts] = useState({ 1: 467, 2: 729, 3: 944, 4: 979, 5: 1061, 6: 1124, 7: 5595 });
   const [deckStats, setDeckStats] = useState({}); // per-level {due, newAvailable, total}
   const [view, setView] = useState('decks'); // 'decks' | 'loading' | 'study' | 'done' | 'empty'
   const [activeLevel, setActiveLevel] = useState(null);
@@ -57,9 +57,9 @@ export default function FlashcardsPage() {
       const saved = parseInt(localStorage.getItem('hanzidict-new-limit') || '20', 10);
       if (NEW_LIMIT_OPTIONS.includes(saved)) setNewLimit(saved);
     } catch (e) {}
-    fetch('/api/flashcards?counts=1')
+    fetch('/api/flashcards?counts=1', { cache: 'no-store' })
       .then(r => r.json())
-      .then(d => setDeckCounts(d.counts || {}))
+      .then(d => { if (d.counts && Object.keys(d.counts).length > 0) setDeckCounts(d.counts); })
       .catch(() => {});
   }, []);
 

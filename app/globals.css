@@ -206,6 +206,14 @@ html.dark .search-field { background: var(--bg2); }
   background: white; border: 0.5px solid var(--border-mid);
   border-radius: 8px; position: relative; overflow: hidden;
   touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.draw-canvas * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 html.dark .draw-canvas { background: var(--bg3); }
 .draw-grid {
@@ -239,6 +247,9 @@ html.dark .draw-mini-btn { background: var(--bg3); }
   font-size: 21px; cursor: pointer; color: var(--fg);
   transition: border-color 0.15s, background 0.15s;
   border-style: solid;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 html.dark .cand { background: var(--bg3); }
 .cand.hot { border-color: var(--accent); background: var(--accent-dim); color: var(--accent-text); }
@@ -537,9 +548,9 @@ html.dark .drop-row:hover { background: var(--bg3); }
 
 .word-draw-drop {
   background: var(--bg2);
-  border-bottom: 0.5px solid var(--border);
-  padding: 16px 28px;
-  display: flex; gap: 20px; align-items: flex-start;
+  border-top: 0.5px solid var(--border);
+  padding: 16px 0;
+  overscroll-behavior: none;
 }
 
 /* Word body grid */
@@ -827,7 +838,7 @@ html.dark .drop-row:hover { background: var(--bg3); }
   .word-header-bar { padding: 12px 0 0; }
   .word-header-inner { padding: 0 16px; }
   .word-search-input { height: 38px; font-size: 14px; }
-  .word-draw-drop { padding: 14px 16px; flex-direction: column; }
+  .word-draw-drop { padding: 12px 0; }
   .wtab { font-size: 12px; padding: 8px 10px; }
 
   /* ── Word body: single column ── */
