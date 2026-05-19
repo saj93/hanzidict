@@ -6,6 +6,7 @@ import { convertPinyin } from '../../lib/pinyin';
 import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
+import { useSubscription } from '../hooks/useSubscription';
 import Footer from '../components/Footer';
 import NavSearch from '../components/NavSearch';
 import AudioButton from '../components/AudioButton';
@@ -34,6 +35,7 @@ const NEW_LIMIT_OPTIONS = [10, 20, 30, 50];
 export default function FlashcardsPage() {
   const router = useRouter();
   const { user, session } = useAuth();
+  const { isPremium } = useSubscription();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [deckCounts, setDeckCounts] = useState({ 1: 467, 2: 729, 3: 944, 4: 979, 5: 1061, 6: 1124, 7: 5595 });
@@ -174,6 +176,7 @@ export default function FlashcardsPage() {
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
           <button className="nav-link active">Flashcards</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <button className="nav-link" onClick={() => router.push('/pricing')}>Pricing</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
@@ -233,14 +236,17 @@ export default function FlashcardsPage() {
           </div>
           <div className="fc-deck-grid">
             {HSK_META.map(({ level, label, free }) => {
+              const unlocked = free || isPremium;
               const count = deckCounts[level];
               const stats = deckStats[level];
               return (
-                <div key={level} className={`fc-deck-card${free ? '' : ' fc-deck-premium'}`}>
+                <div key={level} className={`fc-deck-card${unlocked ? '' : ' fc-deck-premium'}`}>
                   <div className="fc-deck-badge">
                     {free
                       ? <span className="fc-badge-free">Free</span>
-                      : <span className="fc-badge-premium">🔒 Premium</span>}
+                      : isPremium
+                        ? <span className="fc-badge-free">Premium ✓</span>
+                        : <span className="fc-badge-premium">🔒 Premium</span>}
                   </div>
                   <div className="fc-deck-level">{label}</div>
                   <div className="fc-deck-count">
@@ -254,13 +260,12 @@ export default function FlashcardsPage() {
                     </div>
                   )}
                   <button
-                    className={`fc-start-btn${free ? '' : ' fc-start-btn-locked'}`}
-                    onClick={() => free && startDeck(level)}
-                    disabled={!free}
+                    className={`fc-start-btn${unlocked ? '' : ' fc-start-btn-locked'}`}
+                    onClick={() => unlocked ? startDeck(level) : router.push('/pricing')}
                   >
-                    {free ? 'Start →' : 'Unlock'}
+                    {unlocked ? 'Start →' : 'Unlock →'}
                   </button>
-                  {free && (
+                  {unlocked && (
                     <button className="fc-wordlist-link" onClick={() => router.push(`/hsk/${level}`)}>
                       View word list
                     </button>
