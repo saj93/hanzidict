@@ -289,23 +289,9 @@ export default function WordPage() {
   const wordHeader = (
     <div className="word-header-bar">
       <div className="word-header-inner">
-        <form
-          className="word-mobile-search"
-          onSubmit={e => {
-            e.preventDefault();
-            const q = e.currentTarget.q.value.trim();
-            if (q) router.push(`/word/${encodeURIComponent(q)}`);
-          }}
-        >
-          <input
-            name="q"
-            className="word-mobile-search-input"
-            defaultValue={hanzi}
-            placeholder="Search another word…"
-            autoComplete="off"
-          />
-          <button type="submit" className="word-mobile-search-btn">→</button>
-        </form>
+        <div className="word-mobile-search">
+          <NavSearch initialQuery={hanzi} />
+        </div>
         <div className="word-tabs">
           <button className={`wtab${searchTab === 'text' ? ' on' : ''}`} onClick={() => setSearchTab('text')}>Text</button>
           <button className={`wtab${searchTab === 'draw' ? ' on' : ''}`} onClick={() => setSearchTab('draw')}>✏️ Draw</button>
