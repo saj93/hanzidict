@@ -89,6 +89,7 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
@@ -104,6 +105,7 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         <div className="mobile-menu">
           <button className="mobile-menu-link active">Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
         </div>
       )}
