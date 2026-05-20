@@ -1315,6 +1315,35 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .alt-def { color: var(--fg3); overflow: hidden; text-overflow: ellipsis; max-width: 220px; white-space: nowrap; }
 .alt-sep { color: var(--fg3); margin-left: 2px; }
 
+/* ── Classifier (CL:) section ── */
+.cl-inline {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px; font-size: 13px;
+}
+.cl-label {
+  position: relative; display: inline-flex; align-items: center;
+  color: var(--fg3); font-weight: 500; cursor: default;
+  border-bottom: 1px dashed var(--border-mid);
+  white-space: nowrap;
+}
+.cl-label .alt-tooltip { white-space: normal; width: 240px; }
+.cl-label:hover .alt-tooltip { display: block; }
+.cl-items { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.cl-item { display: inline-flex; align-items: baseline; gap: 3px; }
+.cl-char {
+  background: none; border: none; padding: 0;
+  font-size: 15px; color: var(--fg); cursor: pointer; font-weight: 500;
+  text-decoration: underline dotted var(--border-mid);
+}
+.cl-char:hover { color: var(--accent); }
+.cl-py { color: var(--fg3); font-size: 12px; }
+.cl-more {
+  background: none; border: none; padding: 0;
+  font-size: 12px; color: var(--accent); cursor: pointer;
+  white-space: nowrap;
+}
+.cl-more:hover { text-decoration: underline; }
+
 /* ── About page ─────────────────────────────────────────────────────────── */
 .about-page { max-width: 680px; margin: 60px auto; padding: 0 24px 80px; }
 .about-title { font-size: 32px; font-weight: 700; color: var(--fg); margin-bottom: 40px; }

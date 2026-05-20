@@ -334,7 +334,15 @@ export default function WordPage() {
     );
   }
 
-  const defs = (primary.definitions || '').split(' | ').filter(Boolean);
+  const allDefs = (primary.definitions || '').split(' | ').filter(Boolean);
+  const clDef = allDefs.find(d => d.startsWith('CL:'));
+  const defs = allDefs.filter(d => !d.startsWith('CL:'));
+  const classifiers = clDef
+    ? clDef.slice(3).split(',').map(s => {
+        const m = s.match(/^(.+?)\[(.+?)\]$/);
+        return m ? { char: m[1], pinyin: m[2] } : null;
+      }).filter(Boolean)
+    : [];
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : 'CC-CEDICT';
   const pinyin = convertPinyin(primary.pinyin);
 
@@ -404,6 +412,24 @@ export default function WordPage() {
                   {i < alternates.length - 1 && <span className="alt-sep">·</span>}
                 </span>
               ))}
+            </div>
+          )}
+
+          {classifiers.length > 0 && (
+            <div className="cl-inline">
+              <span className="cl-label">
+                量词 Classifier
+                <span className="alt-tooltip">Classifiers (量词 liàngcí) are counting words used before nouns in Chinese. Example: 三辆车 (3 cars) — 辆 is the classifier for vehicles.</span>
+              </span>
+              <span className="cl-items">
+                {classifiers.map((cl, i) => (
+                  <span key={i} className="cl-item">
+                    <button className="cl-char" onClick={() => router.push(`/word/${encodeURIComponent(cl.char)}`)}>{cl.char}</button>
+                    <span className="cl-py">[{convertPinyin(cl.pinyin)}]</span>
+                  </span>
+                ))}
+              </span>
+              <button className="cl-more" onClick={() => router.push('/blog/classifiers')}>Learn more →</button>
             </div>
           )}
 
