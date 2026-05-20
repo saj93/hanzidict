@@ -335,17 +335,30 @@ export default function WordPage() {
   }
 
   const allDefs = (primary.definitions || '').split(' | ').filter(Boolean);
-  const clDef = allDefs.find(d => d.startsWith('CL:'));
-  const defs = allDefs.filter(d => !d.startsWith('CL:'));
-  const classifiers = clDef
-    ? clDef.slice(3).split(',').map(s => {
-        const m = s.match(/^(.+?)\[(.+?)\]$/);
-        if (!m) return null;
-        const parts = m[1].split('|');
-        const trad = parts[0], simp = parts.length > 1 ? parts[1] : parts[0];
-        return { simp, trad, pinyin: m[2] };
-      }).filter(Boolean)
-    : [];
+
+  function parseClassifiers(clStr) {
+    return clStr.split(',').map(s => {
+      const m = s.trim().match(/^(.+?)\[(.+?)\]$/);
+      if (!m) return null;
+      const parts = m[1].split('|');
+      const trad = parts[0], simp = parts.length > 1 ? parts[1] : parts[0];
+      return { simp, trad, pinyin: m[2] };
+    }).filter(Boolean);
+  }
+
+  const clRegex = /\(?CL:([^)]+)\)?/;
+  const classifiers = [];
+  const defs = [];
+  for (const d of allDefs) {
+    const m = d.match(clRegex);
+    if (m) {
+      classifiers.push(...parseClassifiers(m[1]));
+      const cleaned = d.replace(clRegex, '').replace(/\s{2,}/g, ' ').trim();
+      if (cleaned) defs.push(cleaned);
+    } else {
+      defs.push(d);
+    }
+  }
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : 'CC-CEDICT';
   const pinyin = convertPinyin(primary.pinyin);
 
