@@ -38,7 +38,7 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
           setShowDrop(s.length > 0);
         })
         .catch(() => {});
-    }, 250);
+    }, 100);
     return () => clearTimeout(timerRef.current);
   }, [query]);
 
