@@ -428,7 +428,7 @@ export default function WordPage() {
                 {classifiers.map((cl, i) => (
                   <span key={i} className="cl-item">
                     <button className="cl-char" onClick={() => router.push(`/word/${encodeURIComponent(cl.simp)}`)}>
-                      {cl.simp}{cl.trad !== cl.simp ? ` / ${cl.trad}` : ''}
+                      {isTraditional ? cl.trad : cl.simp}
                     </button>
                     <span className="cl-py">{convertPinyin(cl.pinyin)}</span>
                   </span>
