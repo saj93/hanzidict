@@ -65,7 +65,21 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
         placeholder="Search characters, pinyin, English…"
         autoComplete="off"
         onChange={e => { userTypedRef.current = true; setQuery(e.target.value); }}
-        onFocus={() => userTypedRef.current && suggestions.length > 0 && setShowDrop(true)}
+        onFocus={() => {
+          if (userTypedRef.current && suggestions.length > 0) { setShowDrop(true); return; }
+          // Pre-filled query (e.g. word page): fetch suggestions on focus
+          const q = query.trim();
+          if (q) {
+            fetch(`/api/search?q=${encodeURIComponent(q)}&limit=6`)
+              .then(r => r.json())
+              .then(d => {
+                const s = (d.results || []).slice(0, 6);
+                setSuggestions(s);
+                if (s.length > 0) setShowDrop(true);
+              })
+              .catch(() => {});
+          }
+        }}
         onKeyDown={onKeyDown}
       />
       <button className="nav-search-go" onClick={submit}>→</button>
