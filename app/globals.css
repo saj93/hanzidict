@@ -807,6 +807,8 @@ html.dark .drop-row:hover { background: var(--bg3); }
   .mobile-menu { display: flex; }
   /* Word page: show search bar below tabs on mobile */
   .word-mobile-search { display: block; margin-bottom: 10px; }
+  /* Prevent iOS Safari zoom on input focus (requires font-size >= 16px) */
+  .nav-search-input { font-size: 16px; }
 
   /* ── Hero ── */
   .hero { padding: 36px 16px 32px; }
