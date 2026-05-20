@@ -1,11 +1,10 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
-
 // Must read raw body for Stripe signature verification
 export async function POST(request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
   const body = await request.text();
   const sig  = request.headers.get('stripe-signature');
 
@@ -22,13 +21,13 @@ export async function POST(request) {
   try {
     switch (event.type) {
       case 'checkout.session.completed':
-        await handleCheckoutComplete(event.data.object);
+        await handleCheckoutComplete(event.data.object, stripe, supabase);
         break;
       case 'invoice.payment_succeeded':
-        await handleInvoicePayment(event.data.object);
+        await handleInvoicePayment(event.data.object, stripe, supabase);
         break;
       case 'customer.subscription.deleted':
-        await handleSubscriptionDeleted(event.data.object);
+        await handleSubscriptionDeleted(event.data.object, supabase);
         break;
     }
   } catch (err) {
@@ -39,7 +38,7 @@ export async function POST(request) {
   return new Response('ok', { status: 200 });
 }
 
-async function handleCheckoutComplete(session) {
+async function handleCheckoutComplete(session, stripe, supabase) {
   const userId = session.client_reference_id;
   if (!userId || !session.subscription) return;
 
@@ -59,7 +58,7 @@ async function handleCheckoutComplete(session) {
   if (error) console.error('[webhook] upsert error:', error.message);
 }
 
-async function handleInvoicePayment(invoice) {
+async function handleInvoicePayment(invoice, stripe, supabase) {
   if (!invoice.subscription) return;
 
   const sub = await stripe.subscriptions.retrieve(invoice.subscription);
@@ -70,8 +69,7 @@ async function handleInvoicePayment(invoice) {
     .eq('stripe_subscription_id', invoice.subscription);
 }
 
-async function handleSubscriptionDeleted(sub) {
-  // User keeps access until period end; just clear the subscription ID so it won't renew
+async function handleSubscriptionDeleted(sub, supabase) {
   await supabase.from('subscriptions')
     .update({ stripe_subscription_id: null, updated_at: new Date().toISOString() })
     .eq('stripe_subscription_id', sub.id);

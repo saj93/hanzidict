@@ -1,15 +1,14 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
-
-const PRICE_IDS = {
-  monthly: process.env.STRIPE_PRICE_MONTHLY,
-  annual:  process.env.STRIPE_PRICE_ANNUAL,
-};
-
 export async function POST(request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
+  const PRICE_IDS = {
+    monthly: process.env.STRIPE_PRICE_MONTHLY,
+    annual:  process.env.STRIPE_PRICE_ANNUAL,
+  };
   const { plan } = await request.json();
   if (!['monthly', 'annual'].includes(plan)) {
     return Response.json({ error: 'Invalid plan' }, { status: 400 });
