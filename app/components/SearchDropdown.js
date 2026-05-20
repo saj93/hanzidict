@@ -12,7 +12,7 @@ export default function SearchDropdown({ suggestions, query, onSelect }) {
           <span className="drop-hz">{s.simplified}</span>
           <div className="drop-right">
             <span className="drop-py">{convertPinyin(s.pinyin)}</span>
-            <span className="drop-def">{(s.definitions || '').split(' | ')[0]}</span>
+            <span className="drop-def">{(s.definitions || '').split(' | ').find(d => !d.startsWith('CL:') && !d.match(/\bCL:/)) ?? ''}</span>
           </div>
         </button>
       ))}
