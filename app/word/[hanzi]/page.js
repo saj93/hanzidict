@@ -340,7 +340,10 @@ export default function WordPage() {
   const classifiers = clDef
     ? clDef.slice(3).split(',').map(s => {
         const m = s.match(/^(.+?)\[(.+?)\]$/);
-        return m ? { char: m[1], pinyin: m[2] } : null;
+        if (!m) return null;
+        const parts = m[1].split('|');
+        const trad = parts[0], simp = parts.length > 1 ? parts[1] : parts[0];
+        return { simp, trad, pinyin: m[2] };
       }).filter(Boolean)
     : [];
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : 'CC-CEDICT';
@@ -424,8 +427,10 @@ export default function WordPage() {
               <span className="cl-items">
                 {classifiers.map((cl, i) => (
                   <span key={i} className="cl-item">
-                    <button className="cl-char" onClick={() => router.push(`/word/${encodeURIComponent(cl.char)}`)}>{cl.char}</button>
-                    <span className="cl-py">[{convertPinyin(cl.pinyin)}]</span>
+                    <button className="cl-char" onClick={() => router.push(`/word/${encodeURIComponent(cl.simp)}`)}>
+                      {cl.simp}{cl.trad !== cl.simp ? ` / ${cl.trad}` : ''}
+                    </button>
+                    <span className="cl-py">{convertPinyin(cl.pinyin)}</span>
                   </span>
                 ))}
               </span>
