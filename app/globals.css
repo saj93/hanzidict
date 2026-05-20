@@ -521,6 +521,21 @@ html.dark .drop-row:hover { background: var(--bg3); }
   margin: 0 auto;
   padding: 0 28px;
 }
+/* Mobile-only search bar inside word header */
+.word-mobile-search { display: none; }
+.word-mobile-search-input {
+  flex: 1; height: 36px;
+  border: 0.5px solid var(--border-mid); border-radius: 8px 0 0 8px;
+  padding: 0 12px; font-size: 15px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  background: var(--bg); color: var(--fg); outline: none;
+}
+.word-mobile-search-btn {
+  height: 36px; padding: 0 14px;
+  background: var(--accent); color: white; border: none;
+  border-radius: 0 8px 8px 0; font-size: 16px; cursor: pointer;
+}
+
 .word-search-row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
 .word-search-wrap { flex: 1; max-width: 600px; position: relative; z-index: 200; }
 .word-search-input {
@@ -792,14 +807,18 @@ html.dark .drop-row:hover { background: var(--bg3); }
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   /* ── Nav ── */
-  .nav { padding: 0 16px; height: 50px; gap: 10px; }
+  .nav { padding: 0 16px; height: 50px; gap: 10px; position: relative; }
   .nav-right { gap: 10px; }
   .nav-search-center { display: none; }
   /* Hide Dictionary / Flashcards / About; keep theme toggle + hamburger */
   .nav-link { display: none; }
   .theme-btn { display: flex; }
-  .hamburger-btn { display: flex; }
+  /* Hamburger: pull to left side via absolute positioning */
+  .hamburger-btn { display: flex; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); }
+  .nav-logo { margin-left: 36px; }
   .mobile-menu { display: flex; }
+  /* Word page: show search bar below tabs on mobile */
+  .word-mobile-search { display: flex; gap: 0; margin-bottom: 10px; }
 
   /* ── Hero ── */
   .hero { padding: 36px 16px 32px; }
