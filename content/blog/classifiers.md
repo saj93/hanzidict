@@ -158,7 +158,7 @@ Food portions, documents, sets.
 
 Some nouns accept more than one classifier, each with a slightly different nuance:
 
-> 一本书 / 一部书 / 一册书 — all mean "a book"
+> **一本书 / 一部书 / 一册书** *yī běn shū / yī bù shū / yī cè shū* — all mean "a book"
 
 In practice, 本 *běn* is by far the most common for books. The others appear in more formal or literary contexts. When in doubt, go with the most frequent one — which is usually the one listed first in dictionary entries.
 
@@ -169,7 +169,7 @@ In practice, 本 *běn* is by far the most common for books. The others appear i
 When using classifiers with the number two, use **两 *liǎng*** instead of 二 *èr* before classifiers at 百 (hundred) and above, and generally in spoken Chinese:
 
 > **两辆车** *liǎng liàng chē* — ✓ two cars
-> ~~二辆车~~ — ✗
+> ~~**二辆车** *èr liàng chē*~~ — ✗
 
 > **两本书** *liǎng běn shū* — ✓ two books
 
