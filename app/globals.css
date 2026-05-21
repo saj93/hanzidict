@@ -1525,13 +1525,8 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   font-size: 21px; font-weight: 700; color: var(--fg);
   margin: 2.5rem 0 .75em; border-bottom: 0.5px solid var(--border); padding-bottom: .4em;
 }
-/* ### headings styled as subtle cards with accent left border */
 .blog-post-body h3 {
-  font-size: 17px; font-weight: 600; color: var(--fg);
-  margin: 1.8em 0 .4em;
-  border-left: 3px solid var(--accent);
-  padding: .3em 0 .3em .75em;
-  background: rgba(29,158,117,.05); border-radius: 0 6px 6px 0;
+  font-size: 17px; font-weight: 600; color: var(--fg); margin: 1.8em 0 .4em;
 }
 .blog-post-body p { margin: 0 0 1.2em; }
 .blog-post-body ul, .blog-post-body ol { margin: 0 0 1.2em 1.4em; }

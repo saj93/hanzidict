@@ -36,11 +36,11 @@ Classifiers show up in four main contexts:
 > **那辆车** *nà liàng chē* — that car
 
 **After the question words 哪 and 几:**
-> 哪本？*Nǎ běn?* — Which one?
-> 他们有几辆车？*Tāmen yǒu jǐ liàng chē?* — How many cars do they have?
+> **哪本？** *Nǎ běn?* — Which one?
+> **他们有几辆车？** *Tāmen yǒu jǐ liàng chē?* — How many cars do they have?
 
 **Standalone after context is established:**
-> 他们有三辆。*Tāmen yǒu sān liàng.* — They have three. (no need to repeat 车)
+> **他们有三辆。** *Tāmen yǒu sān liàng.* — They have three. (no need to repeat 车)
 
 ---
 
@@ -140,7 +140,7 @@ Pens, cigarettes, candles.
 
 ### 口 kǒu — family members
 Literally "mouth" — used for counting people in a household.
-> 你家有几口人？*Nǐ jiā yǒu jǐ kǒu rén?* — How many people are in your family?
+> **你家有几口人？** *Nǐ jiā yǒu jǐ kǒu rén?* — How many people are in your family?
 > **四口人** *sì kǒu rén* — four people (in a family)
 
 ### 份 fèn — portions and copies
