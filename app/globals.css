@@ -1513,39 +1513,50 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 
 /* ── Blog post ── */
 .blog-post {
-  max-width: 680px; margin: 0 auto; padding: 48px 28px 80px;
+  max-width: 660px; margin: 0 auto; padding: 48px 28px 80px;
 }
 .blog-post-header { margin-bottom: 36px; }
 .blog-post-title { font-size: 30px; font-weight: 700; color: var(--fg); margin: 12px 0 12px; line-height: 1.25; }
 .blog-post-desc { font-size: 16px; color: var(--fg3); margin: 0; line-height: 1.6; }
 .blog-post-body {
-  font-size: 17px; line-height: 1.7; color: var(--fg2);
+  font-size: 17px; line-height: 1.75; color: var(--fg2);
 }
 .blog-post-body h2 {
   font-size: 21px; font-weight: 700; color: var(--fg);
-  margin: 2.2em 0 .7em; border-bottom: 0.5px solid var(--border); padding-bottom: .4em;
+  margin: 2.5rem 0 .75em; border-bottom: 0.5px solid var(--border); padding-bottom: .4em;
 }
+/* ### headings styled as subtle cards with accent left border */
 .blog-post-body h3 {
-  font-size: 18px; font-weight: 600; color: var(--fg); margin: 1.8em 0 .5em;
+  font-size: 17px; font-weight: 600; color: var(--fg);
+  margin: 1.8em 0 .4em;
+  border-left: 3px solid var(--accent);
+  padding: .3em 0 .3em .75em;
+  background: rgba(29,158,117,.05); border-radius: 0 6px 6px 0;
 }
 .blog-post-body p { margin: 0 0 1.2em; }
 .blog-post-body ul, .blog-post-body ol { margin: 0 0 1.2em 1.4em; }
 .blog-post-body li { margin-bottom: .4em; }
 .blog-post-body strong { color: var(--fg); font-weight: 600; }
-.blog-post-body em { color: var(--fg2); }
-.blog-post-body hr { border: none; border-top: 0.5px solid var(--border); margin: 2.2em 0; }
+.blog-post-body em { color: var(--fg2); font-style: normal; }
+.blog-post-body hr { border: none; border-top: 0.5px solid var(--border); margin: 2.4em 0; }
 .blog-post-body blockquote {
   border-left: 3px solid var(--accent);
-  margin: 1.4em 0; padding: .8em 1.2em;
-  color: var(--fg2); background: var(--bg2); border-radius: 0 8px 8px 0;
+  margin: 1.2em 0; padding: .7em 1.2em;
+  background: var(--bg2); border-radius: 0 8px 8px 0;
 }
-/* pre-line preserves soft line-breaks (\n) inside blockquote paragraphs so
-   each example entry appears on its own line instead of collapsing to spaces */
+/* pre-line preserves soft line-breaks so each > line appears on its own line */
 .blog-post-body blockquote p {
-  margin: 0; white-space: pre-line; line-height: 2.1;
+  margin: 0; white-space: pre-line; line-height: 2.2; color: var(--fg3);
 }
 .blog-post-body blockquote p + p {
   margin-top: 1em; padding-top: 1em; border-top: 0.5px solid var(--border);
+}
+/* Three visual levels: Chinese (bold/white) > pinyin (green) > translation (muted) */
+.blog-post-body blockquote strong {
+  color: var(--fg); font-size: 1.15em; font-weight: 600;
+}
+.blog-post-body blockquote em {
+  color: var(--accent); font-style: normal; font-size: .92em;
 }
 .blog-post-body code {
   font-family: var(--font-mono, monospace); font-size: .88em;
@@ -1565,8 +1576,10 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   .blog-post-card { padding: 18px 16px; }
   .blog-post { padding: 28px 16px 60px; }
   .blog-post-title { font-size: 22px; }
-  .blog-post-body { font-size: 15px; }
+  .blog-post-body { font-size: 15px; line-height: 1.7; }
   .blog-post-body h2 { font-size: 18px; }
+  .blog-post-body h3 { font-size: 15px; }
+  .blog-post-body blockquote strong { font-size: 1.1em; }
 }
 
 @media (max-width: 760px) {
