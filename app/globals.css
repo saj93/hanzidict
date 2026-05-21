@@ -1517,7 +1517,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 .blog-post-header { margin-bottom: 36px; }
 .blog-post-title { font-size: 30px; font-weight: 700; color: var(--fg); margin: 12px 0 12px; line-height: 1.25; }
-.blog-post-desc { font-size: 16px; color: var(--fg3); margin: 0; line-height: 1.6; }
+.blog-post-desc { font-size: 16px; color: var(--fg2); margin: 0; line-height: 1.6; }
 .blog-post-body {
   font-size: 17px; line-height: 1.75; color: var(--fg2);
 }
