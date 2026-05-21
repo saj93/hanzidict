@@ -1546,7 +1546,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 /* pre-line preserves soft line-breaks so each > line appears on its own line */
 .blog-post-body blockquote p {
-  margin: 0; white-space: pre-line; line-height: 2.2; color: var(--fg3);
+  margin: 0; white-space: pre-line; line-height: 2.2; color: var(--fg2);
 }
 .blog-post-body blockquote p + p {
   margin-top: 1em; padding-top: 1em; border-top: 0.5px solid var(--border);
