@@ -1594,10 +1594,23 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 .atl-btn:hover { color: var(--accent); background: var(--hover-bg); }
 .atl-btn.atl-saved { color: var(--accent); }
+
+/* backdrop: transparent on desktop (just catches outside clicks), dim on mobile */
+.atl-backdrop { position: fixed; inset: 0; z-index: 9998; }
+.atl-backdrop-mobile { background: rgba(0,0,0,0.45); }
+
+/* desktop popover */
 .atl-popover {
-  min-width: 220px; background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,0.22);
   padding: 8px 0; z-index: 9999;
+}
+/* mobile: centered modal */
+.atl-popover-mobile {
+  position: fixed !important;
+  top: 50% !important; left: 50% !important;
+  transform: translate(-50%, -50%);
+  width: calc(100vw - 48px); max-width: 320px;
 }
 .atl-header { padding: 8px 14px 6px; font-size: 12px; font-weight: 600; color: var(--fg3); text-transform: uppercase; letter-spacing: .04em; }
 .atl-loading { padding: 14px; font-size: 13px; color: var(--fg3); text-align: center; }
