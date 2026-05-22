@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
+
+const POPOVER_W = 230;
 
 export default function AddToListButton({ simplified }) {
   const { user, session } = useAuth();
@@ -14,10 +16,24 @@ export default function AddToListButton({ simplified }) {
   const [newName, setNewName] = useState('');
   const [creating, setCreating] = useState(false);
   const [upgradeNeeded, setUpgradeNeeded] = useState(false);
+  const [popStyle, setPopStyle] = useState({});
+  const btnRef = useRef(null);
 
   const saved = lists.some(l => l.contains);
 
-  async function openSheet() {
+  async function openPanel() {
+    if (open) { close(); return; }
+
+    // Position: right-edge of popover aligned to right-edge of button,
+    // so it opens leftward and stays out of the right sidebar.
+    // On mobile, clamp so it never goes off the left edge.
+    if (btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      let left = r.right - POPOVER_W;
+      if (left < 8) left = Math.min(r.left, window.innerWidth - POPOVER_W - 8);
+      setPopStyle({ top: r.bottom + 6, left: Math.max(8, left) });
+    }
+
     setOpen(true);
     if (!user || !session) return;
     setLoading(true);
@@ -25,8 +41,7 @@ export default function AddToListButton({ simplified }) {
       const res = await fetch(`/api/lists?simplified=${encodeURIComponent(simplified)}`, {
         headers: { Authorization: `Bearer ${session.access_token}` },
       });
-      const data = await res.json();
-      setLists(data.lists || []);
+      setLists((await res.json()).lists || []);
     } finally {
       setLoading(false);
     }
@@ -59,24 +74,19 @@ export default function AddToListButton({ simplified }) {
       if (data.upgrade) { setUpgradeNeeded(true); setCreating(false); return; }
       if (data.list) {
         setLists(prev => [{ ...data.list, contains: false }, ...prev]);
-        setNewName('');
-        setShowNew(false);
+        setNewName(''); setShowNew(false);
         await toggle(data.list.id);
       }
-    } finally {
-      setCreating(false);
-    }
+    } finally { setCreating(false); }
   }
 
   return (
     <>
-      <button
-        className={`atl-btn${saved ? ' atl-saved' : ''}`}
-        onClick={openSheet}
-        title="Save to list"
-        aria-label="Save to list"
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <button ref={btnRef} className={`atl-btn${saved ? ' atl-saved' : ''}`}
+        onClick={openPanel} title="Save to list" aria-label="Save to list">
+        <svg width="16" height="16" viewBox="0 0 24 24"
+          fill={saved ? 'currentColor' : 'none'} stroke="currentColor"
+          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
         </svg>
       </button>
@@ -84,13 +94,12 @@ export default function AddToListButton({ simplified }) {
       {open && (
         <>
           <div className="atl-backdrop" onClick={close} />
-          <div className="atl-sheet">
-            <div className="atl-sheet-handle" />
-
+          <div className="atl-popover" style={{ position: 'fixed', width: POPOVER_W, ...popStyle }}>
             {!user ? (
               <div className="atl-login">
                 <p className="atl-login-text">Log in to save words to lists</p>
-                <button className="atl-login-btn" onClick={() => router.push('/login?next=' + encodeURIComponent(window.location.pathname))}>
+                <button className="atl-login-btn"
+                  onClick={() => router.push('/login?next=' + encodeURIComponent(window.location.pathname))}>
                   Log in →
                 </button>
               </div>
@@ -98,13 +107,13 @@ export default function AddToListButton({ simplified }) {
               <div className="atl-loading">Loading…</div>
             ) : (
               <>
-                <div className="atl-sheet-title">Save "{simplified}"</div>
-                {lists.length === 0 && !showNew && (
-                  <div className="atl-empty">No lists yet — create one below</div>
-                )}
+                <div className="atl-header">Save "{simplified}"</div>
+                {lists.length === 0 && !showNew && <div className="atl-empty">No lists yet</div>}
                 <div className="atl-list-items">
                   {lists.map(list => (
-                    <button key={list.id} className={`atl-list-item${list.contains ? ' atl-in-list' : ''}`} onClick={() => toggle(list.id)}>
+                    <button key={list.id}
+                      className={`atl-list-item${list.contains ? ' atl-in-list' : ''}`}
+                      onClick={() => toggle(list.id)}>
                       <span className="atl-check-icon">{list.contains ? '✓' : ''}</span>
                       <span className="atl-list-name">{list.name}</span>
                       <span className="atl-list-count">{list.word_count}</span>
@@ -119,14 +128,10 @@ export default function AddToListButton({ simplified }) {
                 )}
                 {showNew ? (
                   <div className="atl-new-form">
-                    <input
-                      className="atl-new-input"
-                      placeholder="List name…"
-                      value={newName}
+                    <input className="atl-new-input" placeholder="List name…" value={newName}
                       onChange={e => setNewName(e.target.value)}
                       onKeyDown={e => { if (e.key === 'Enter') createList(); if (e.key === 'Escape') setShowNew(false); }}
-                      autoFocus
-                    />
+                      autoFocus />
                     <button className="atl-new-confirm" onClick={createList} disabled={creating}>
                       {creating ? '…' : 'Create'}
                     </button>
