@@ -570,7 +570,6 @@ html.dark .drop-row:hover { background: var(--bg3); }
   border-right: 0.5px solid var(--border);
 }
 .hanzi-row { display: flex; align-items: flex-start; gap: 22px; margin-bottom: 24px; }
-.hanzi-row-actions { margin-left: auto; padding-top: 2px; flex-shrink: 0; }
 .hanzi-glyph {
   font-family: var(--font-display), 'Lora', 'Noto Sans SC', 'PingFang SC', 'Heiti SC', Georgia, serif;
   font-size: 90px; line-height: 1;

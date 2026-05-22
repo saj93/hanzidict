@@ -408,6 +408,7 @@ export default function WordPage() {
               <div className="pinyin-row">
                 <div className="pinyin-line">{pinyin}</div>
                 <AudioButton text={primary?.simplified || hanzi} />
+                <AddToListButton simplified={primary?.simplified || hanzi} />
               </div>
               <div className="pos-line">{posLine}</div>
               <div className="badges">
@@ -415,9 +416,6 @@ export default function WordPage() {
                   {isTraditional ? 'Traditional' : 'Simplified'}: {displayHanzi}
                 </span>
               </div>
-            </div>
-            <div className="hanzi-row-actions">
-              <AddToListButton simplified={primary?.simplified || hanzi} />
             </div>
           </div>
 
