@@ -33,9 +33,11 @@ export default function AddToListButton({ simplified }) {
         // Mobile: open above the button (badges/definitions are below)
         setPopStyle({ bottom: window.innerHeight - r.top + 6, left, width: POPOVER_W });
       } else {
-        // Desktop: open to the RIGHT of the button at the same height —
-        // there is clear space between the button and the right sidebar.
-        setPopStyle({ top: r.top, left: r.right + 10, width: POPOVER_W });
+        // Desktop: left-aligned with the bookmark button, below the button row.
+        // The Simplified badge ends well to the left of the button, so this
+        // area is clear. Clamp right edge away from the sidebar.
+        const dLeft = Math.min(r.left, window.innerWidth - POPOVER_W - 12);
+        setPopStyle({ top: r.bottom + 8, left: Math.max(8, dLeft), width: POPOVER_W });
       }
     }
 
