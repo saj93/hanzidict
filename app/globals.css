@@ -1631,9 +1631,9 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   padding: 5px 10px; background: var(--accent); color: #fff; border: none;
   border-radius: 6px; font-size: 13px; cursor: pointer;
 }
-.atl-login { padding: 14px; text-align: center; }
-.atl-login-text { font-size: 13px; color: var(--fg3); margin-bottom: 8px; }
-.atl-login-btn { padding: 6px 14px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; }
+.atl-login { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+.atl-login-text { font-size: 13px; color: var(--fg3); flex: 1; }
+.atl-login-btn { flex-shrink: 0; padding: 5px 11px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .atl-upgrade { padding: 8px 14px; font-size: 12px; color: var(--fg3); }
 .atl-upgrade-link { background: none; border: none; cursor: pointer; color: var(--accent); font-size: 12px; padding: 0; }
 

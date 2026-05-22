@@ -4,8 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 
-const POPOVER_W_DESKTOP = 230;
-const POPOVER_W_MOBILE = 180;
+const POPOVER_W = 230;
 
 export default function AddToListButton({ simplified }) {
   const { user, session } = useAuth();
@@ -28,17 +27,16 @@ export default function AddToListButton({ simplified }) {
     if (btnRef.current) {
       const r = btnRef.current.getBoundingClientRect();
       const mobile = window.innerWidth < 640;
-      const w = mobile ? POPOVER_W_MOBILE : POPOVER_W_DESKTOP;
-      let left;
+      // clamp left so popover never overflows either edge
+      const left = Math.max(8, Math.min(r.left, window.innerWidth - POPOVER_W - 8));
       if (mobile) {
-        // Open rightward from button's left edge, clamped to viewport
-        left = Math.min(r.left, window.innerWidth - w - 8);
+        // Open ABOVE the button so it doesn't cover the badges/definitions below
+        setPopStyle({ bottom: window.innerHeight - r.top + 6, left, width: POPOVER_W });
       } else {
-        // Open leftward: right edge of popover aligns with right edge of button
-        left = r.right - w;
-        if (left < 8) left = Math.min(r.left, window.innerWidth - w - 8);
+        // Desktop: open below, right-aligned to button
+        const dLeft = Math.max(8, r.right - POPOVER_W);
+        setPopStyle({ top: r.bottom + 6, left: dLeft, width: POPOVER_W });
       }
-      setPopStyle({ top: r.bottom + 6, left: Math.max(8, left), width: w });
     }
 
     setOpen(true);
@@ -104,7 +102,7 @@ export default function AddToListButton({ simplified }) {
           <div className="atl-popover" style={{ position: 'fixed', ...popStyle }}>
             {!user ? (
               <div className="atl-login">
-                <p className="atl-login-text">Log in to save words to lists</p>
+                <span className="atl-login-text">Save to list</span>
                 <button className="atl-login-btn"
                   onClick={() => router.push('/login?next=' + encodeURIComponent(window.location.pathname))}>
                   Log in →
