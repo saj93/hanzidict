@@ -14,6 +14,7 @@ export default function AddToListButton({ simplified }) {
   const [newName, setNewName] = useState('');
   const [creating, setCreating] = useState(false);
   const [upgradeNeeded, setUpgradeNeeded] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
   const ref = useRef(null);
 
   const saved = lists.some(l => l.contains);
@@ -31,8 +32,15 @@ export default function AddToListButton({ simplified }) {
   }, [open]);
 
   async function openPanel() {
-    setOpen(o => !o);
-    if (!user || !session || open) return;
+    const next = !open;
+    if (next && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const popoverW = 220;
+      const left = Math.min(rect.left, window.innerWidth - popoverW - 12);
+      setPos({ top: rect.bottom + 8, left: Math.max(8, left) });
+    }
+    setOpen(next);
+    if (!next || !user || !session || open) return;
     setLoading(true);
     try {
       const res = await fetch(`/api/lists?simplified=${encodeURIComponent(simplified)}`, {
@@ -85,7 +93,7 @@ export default function AddToListButton({ simplified }) {
       <button
         className={`atl-btn${saved ? ' atl-saved' : ''}`}
         onClick={openPanel}
-        title={saved ? 'Saved to list' : 'Save to list'}
+        title="Save to list"
         aria-label="Save to list"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -94,7 +102,7 @@ export default function AddToListButton({ simplified }) {
       </button>
 
       {open && (
-        <div className="atl-popover">
+        <div className="atl-popover" style={{ position: 'fixed', top: pos.top, left: pos.left }}>
           {!user ? (
             <div className="atl-login">
               <p className="atl-login-text">Log in to save words to lists</p>
