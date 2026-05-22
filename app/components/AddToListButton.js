@@ -4,7 +4,8 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 
-const POPOVER_W = 230;
+const POPOVER_W_DESKTOP = 230;
+const POPOVER_W_MOBILE = 180;
 
 export default function AddToListButton({ simplified }) {
   const { user, session } = useAuth();
@@ -24,14 +25,20 @@ export default function AddToListButton({ simplified }) {
   async function openPanel() {
     if (open) { close(); return; }
 
-    // Position: right-edge of popover aligned to right-edge of button,
-    // so it opens leftward and stays out of the right sidebar.
-    // On mobile, clamp so it never goes off the left edge.
     if (btnRef.current) {
       const r = btnRef.current.getBoundingClientRect();
-      let left = r.right - POPOVER_W;
-      if (left < 8) left = Math.min(r.left, window.innerWidth - POPOVER_W - 8);
-      setPopStyle({ top: r.bottom + 6, left: Math.max(8, left) });
+      const mobile = window.innerWidth < 640;
+      const w = mobile ? POPOVER_W_MOBILE : POPOVER_W_DESKTOP;
+      let left;
+      if (mobile) {
+        // Open rightward from button's left edge, clamped to viewport
+        left = Math.min(r.left, window.innerWidth - w - 8);
+      } else {
+        // Open leftward: right edge of popover aligns with right edge of button
+        left = r.right - w;
+        if (left < 8) left = Math.min(r.left, window.innerWidth - w - 8);
+      }
+      setPopStyle({ top: r.bottom + 6, left: Math.max(8, left), width: w });
     }
 
     setOpen(true);
@@ -94,7 +101,7 @@ export default function AddToListButton({ simplified }) {
       {open && (
         <>
           <div className="atl-backdrop" onClick={close} />
-          <div className="atl-popover" style={{ position: 'fixed', width: POPOVER_W, ...popStyle }}>
+          <div className="atl-popover" style={{ position: 'fixed', ...popStyle }}>
             {!user ? (
               <div className="atl-login">
                 <p className="atl-login-text">Log in to save words to lists</p>
