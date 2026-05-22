@@ -29,14 +29,10 @@ export default function AddToListButton({ simplified }) {
       const mobile = window.innerWidth < 640;
       // clamp left so popover never overflows either edge
       const left = Math.max(8, Math.min(r.left, window.innerWidth - POPOVER_W - 8));
-      if (mobile) {
-        // Open ABOVE the button so it doesn't cover the badges/definitions below
-        setPopStyle({ bottom: window.innerHeight - r.top + 6, left, width: POPOVER_W });
-      } else {
-        // Desktop: open below, right-aligned to button
-        const dLeft = Math.max(8, r.right - POPOVER_W);
-        setPopStyle({ top: r.bottom + 6, left: dLeft, width: POPOVER_W });
-      }
+      // Open ABOVE the button on all screen sizes — badges/definitions are below,
+      // the character glyph area above is free space.
+      const dLeft = Math.max(8, r.right - POPOVER_W);
+      setPopStyle({ bottom: window.innerHeight - r.top + 6, left: mobile ? left : dLeft, width: POPOVER_W });
     }
 
     setOpen(true);
