@@ -1595,7 +1595,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .atl-btn:hover { color: var(--accent); background: var(--hover-bg); }
 .atl-btn.atl-saved { color: var(--accent); }
 .atl-popover {
-  position: absolute; top: calc(100% + 8px); right: 0;
+  position: absolute; top: calc(100% + 8px); left: 0;
   min-width: 220px; background: var(--card-bg); border: 1px solid var(--border);
   border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.18);
   padding: 8px 0; z-index: 300;
