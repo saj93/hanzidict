@@ -570,6 +570,7 @@ html.dark .drop-row:hover { background: var(--bg3); }
   border-right: 0.5px solid var(--border);
 }
 .hanzi-row { display: flex; align-items: flex-start; gap: 22px; margin-bottom: 24px; }
+.hanzi-row-actions { margin-left: auto; padding-top: 2px; flex-shrink: 0; }
 .hanzi-glyph {
   font-family: var(--font-display), 'Lora', 'Noto Sans SC', 'PingFang SC', 'Heiti SC', Georgia, serif;
   font-size: 90px; line-height: 1;
@@ -1595,7 +1596,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .atl-btn:hover { color: var(--accent); background: var(--hover-bg); }
 .atl-btn.atl-saved { color: var(--accent); }
 .atl-popover {
-  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  position: absolute; top: calc(100% + 8px); right: 0;
   min-width: 220px; background: var(--card-bg); border: 1px solid var(--border);
   border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.18);
   padding: 8px 0; z-index: 300;
