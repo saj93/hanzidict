@@ -8,6 +8,7 @@ import RadicalSearch from './RadicalSearch';
 import UserMenu from './UserMenu';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
+import NewsletterForm from './NewsletterForm';
 
 export default function HomeClient({ initialChips }: { initialChips: [string, string][] }) {
   const [query, setQuery] = useState('');
@@ -172,6 +173,8 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         onTryDraw={() => { setSearchTab('draw'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
         onTryRadical={() => { setSearchTab('radical'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
       />
+
+      <NewsletterForm />
 
       <Footer />
     </main>

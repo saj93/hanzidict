@@ -410,6 +410,67 @@ footer:not(.site-footer) {
   display: flex; justify-content: space-between; align-items: center;
 }
 
+/* ── Newsletter ── */
+.nl-section {
+  border-top: 0.5px solid var(--border);
+  background: var(--bg2);
+  padding: 48px 32px;
+  text-align: center;
+}
+.nl-inner { max-width: 480px; margin: 0 auto; }
+.nl-heading {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: 22px; font-weight: 500; color: var(--fg); margin-bottom: 8px;
+}
+.nl-sub { font-size: 14px; color: var(--fg2); margin-bottom: 20px; }
+.nl-form { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.nl-input {
+  flex: 1 1 200px; min-width: 0; max-width: 280px;
+  padding: 10px 14px; border-radius: 8px;
+  border: 1px solid var(--border-mid); background: var(--bg);
+  color: var(--fg); font-size: 14px; font-family: var(--font-body), system-ui, sans-serif;
+  outline: none; transition: border-color 0.15s;
+}
+.nl-input:focus { border-color: var(--accent); }
+.nl-input::placeholder { color: var(--fg3); }
+.nl-btn {
+  padding: 10px 20px; border-radius: 8px; border: none;
+  background: var(--accent); color: #fff; font-size: 14px; font-weight: 500;
+  font-family: var(--font-body), system-ui, sans-serif;
+  cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
+}
+.nl-btn:disabled { opacity: 0.6; cursor: default; }
+.nl-btn:not(:disabled):hover { opacity: 0.88; }
+.nl-success { color: var(--accent); font-size: 14px; font-weight: 500; }
+.nl-error { color: #e05a5a; font-size: 13px; margin-top: 10px; }
+
+/* Compact (footer) variant */
+.nl-compact {
+  padding: 12px 32px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.nl-compact-form { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; width: 100%; }
+.nl-compact-input {
+  flex: 1 1 140px; min-width: 0; max-width: 220px;
+  padding: 5px 10px; border-radius: 6px;
+  border: 1px solid var(--border-mid); background: var(--bg);
+  color: var(--fg); font-size: 12px; font-family: var(--font-body), system-ui, sans-serif;
+  outline: none; transition: border-color 0.15s;
+}
+.nl-compact-input:focus { border-color: var(--accent); }
+.nl-compact-input::placeholder { color: var(--fg3); }
+.nl-compact-btn {
+  padding: 5px 12px; border-radius: 6px; border: none;
+  background: var(--accent); color: #fff; font-size: 12px; font-weight: 500;
+  font-family: var(--font-body), system-ui, sans-serif;
+  cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
+}
+.nl-compact-btn:disabled { opacity: 0.6; cursor: default; }
+.nl-compact-btn:not(:disabled):hover { opacity: 0.88; }
+.nl-compact-success { font-size: 12px; color: var(--accent); font-weight: 500; }
+.nl-compact-error { font-size: 12px; color: #e05a5a; }
+
 /* ── HSK level page ── */
 .hsk-page {
   max-width: 960px; margin: 0 auto; padding: 40px 28px 64px;

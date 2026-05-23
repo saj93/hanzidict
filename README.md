@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Variables
+
+Copy `.env.local.example` to `.env.local` and fill in the values:
+
+| Variable | Required | Description |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anon/public key |
+| `SUPABASE_SERVICE_KEY` | Yes | Supabase service role key (server-only) |
+| `SUPABASE_URL` | Yes | Supabase project URL (server-only alias) |
+| `RESEND_API_KEY` | Yes | Resend API key for newsletter subscriptions |
+| `RESEND_AUDIENCE_ID` | Yes | Resend audience/contact list ID |
+| `STRIPE_SECRET_KEY` | No | Stripe secret key (for subscriptions) |
+| `STRIPE_WEBHOOK_SECRET` | No | Stripe webhook signing secret |
+
 ## Getting Started
 
 First, run the development server:
