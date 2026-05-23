@@ -29,6 +29,7 @@ export default function NewsletterForm({ compact = false }) {
           <span className="nl-compact-success">You're in! Check your inbox.</span>
         ) : (
           <form className="nl-compact-form" onSubmit={submit}>
+            <span className="nl-compact-label">Get weekly Chinese tips</span>
             <input
               className="nl-compact-input"
               type="email"
@@ -42,7 +43,7 @@ export default function NewsletterForm({ compact = false }) {
               {status === 'loading' ? '…' : 'Subscribe'}
             </button>
             {status === 'error' && (
-              <span className="nl-compact-error">Something went wrong. Try again.</span>
+              <span className="nl-compact-error">Failed. Try again.</span>
             )}
           </form>
         )}
