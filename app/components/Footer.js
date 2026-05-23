@@ -1,5 +1,4 @@
 import { useRouter } from 'next/navigation';
-import NewsletterForm from './NewsletterForm';
 
 const HSK_LINKS = [
   { level: 1, label: 'HSK 1' },
@@ -15,7 +14,6 @@ export default function Footer() {
   const router = useRouter();
   return (
     <footer className="site-footer">
-      <NewsletterForm compact />
       <div className="footer-hsk-links">
         {HSK_LINKS.map((h, i) => (
           <span key={h.level}>

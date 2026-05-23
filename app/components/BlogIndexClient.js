@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import UserMenu from './UserMenu';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
+import NewsletterForm from './NewsletterForm';
 
 export default function BlogIndexClient({ posts }) {
   const router = useRouter();
@@ -71,6 +72,7 @@ export default function BlogIndexClient({ posts }) {
         </div>
       </div>
 
+      <NewsletterForm />
       <Footer />
     </main>
   );

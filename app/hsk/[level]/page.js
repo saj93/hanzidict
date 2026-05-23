@@ -5,6 +5,7 @@ import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
 import UserMenu from '../../components/UserMenu';
 import Footer from '../../components/Footer';
+import NewsletterForm from '../../components/NewsletterForm';
 import NavSearch from '../../components/NavSearch';
 
 const HSK_LABEL = { 1: 'HSK 1', 2: 'HSK 2', 3: 'HSK 3', 4: 'HSK 4', 5: 'HSK 5', 6: 'HSK 6', 7: 'HSK 7–9' };
@@ -170,6 +171,7 @@ export default function HskLevelPage() {
         )}
       </div>
 
+      <NewsletterForm />
       <Footer />
     </main>
   );

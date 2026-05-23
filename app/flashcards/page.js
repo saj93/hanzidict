@@ -8,6 +8,7 @@ import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
 import { useSubscription } from '../hooks/useSubscription';
 import Footer from '../components/Footer';
+import NewsletterForm from '../components/NewsletterForm';
 import NavSearch from '../components/NavSearch';
 import AudioButton from '../components/AudioButton';
 
@@ -419,6 +420,7 @@ export default function FlashcardsPage() {
         </div>
       </div>
 
+      <NewsletterForm />
       <Footer />
     </main>
   );

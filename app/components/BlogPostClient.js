@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import UserMenu from './UserMenu';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
+import NewsletterForm from './NewsletterForm';
 
 export default function BlogPostClient({ frontmatter, children }) {
   const router = useRouter();
@@ -68,6 +69,7 @@ export default function BlogPostClient({ frontmatter, children }) {
         </div>
       </article>
 
+      <NewsletterForm />
       <Footer />
     </main>
   );

@@ -10,6 +10,7 @@ import NavSearch from '../../components/NavSearch';
 import AudioButton from '../../components/AudioButton';
 import AddToListButton from '../../components/AddToListButton';
 import Footer from '../../components/Footer';
+import NewsletterForm from '../../components/NewsletterForm';
 import * as OpenCC from 'opencc-js';
 
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
@@ -311,7 +312,7 @@ export default function WordPage() {
     </div>
   );
 
-  const footer = <Footer />;
+  const footer = <><NewsletterForm /><Footer /></>;
 
   if (loading || results === null) {
     return (

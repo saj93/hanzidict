@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
 import Footer from '../components/Footer';
+import NewsletterForm from '../components/NewsletterForm';
 import NavSearch from '../components/NavSearch';
 
 export default function AboutPage() {
@@ -99,6 +100,7 @@ export default function AboutPage() {
         </div>
       </div>
 
+      <NewsletterForm />
       <Footer />
     </main>
   );
