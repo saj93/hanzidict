@@ -1858,3 +1858,168 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   .list-detail-header { flex-direction: column; }
   .list-study-btn { width: 100%; text-align: center; }
 }
+
+/* ── Learn hub (/learn) ──────────────────────────────────────────────────── */
+.lp-wrap {
+  max-width: 600px; margin: 0 auto; padding: 0 20px 80px;
+}
+
+.lp-hero {
+  padding: 56px 0 36px; text-align: center;
+}
+.lp-hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+  font-family: var(--font-body), system-ui, sans-serif; font-weight: 600;
+}
+.lp-hero-title {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: clamp(28px, 5vw, 38px); font-weight: 500; line-height: 1.2;
+  color: var(--fg); margin-bottom: 14px;
+}
+.lp-hero-title em { color: var(--accent); font-style: italic; }
+.lp-hero-sub {
+  font-size: 14px; color: var(--fg2); line-height: 1.7;
+  font-family: var(--font-body), system-ui, sans-serif;
+  max-width: 380px; margin: 0 auto;
+}
+
+/* Level tabs */
+.lp-levels {
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 20px;
+}
+.lp-level-btn {
+  padding: 7px 16px; border-radius: 20px;
+  border: 1px solid var(--border-mid); background: var(--bg2);
+  color: var(--fg2); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+.lp-level-btn:hover:not(.locked) { border-color: var(--accent); color: var(--accent); }
+.lp-level-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.lp-level-btn.locked { color: var(--fg3); }
+
+/* Info card */
+.lp-info-card {
+  background: var(--bg2); border: 1px solid var(--border-mid);
+  border-radius: var(--radius-lg); padding: 26px 26px 22px;
+  box-shadow: var(--shadow); margin-bottom: 36px;
+}
+.lp-info-top {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.lp-info-level {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: 20px; font-weight: 500; color: var(--fg);
+}
+.lp-info-total { font-size: 12px; color: var(--fg3); }
+
+.lp-progress-wrap {
+  height: 6px; background: var(--bg3); border-radius: 3px;
+  overflow: hidden; margin-bottom: 8px;
+}
+.lp-progress-fill {
+  height: 100%; background: var(--accent); border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.lp-progress-label { font-size: 12px; color: var(--fg3); margin-bottom: 18px; }
+
+.lp-streak {
+  font-size: 14px; color: var(--fg2); margin-bottom: 18px; font-weight: 500;
+}
+.lp-streak-val { color: var(--fg); }
+
+.lp-start-btn {
+  display: block; width: 100%; padding: 13px;
+  border-radius: 10px; border: none;
+  background: var(--accent); color: #fff;
+  font-size: 15px; font-weight: 500;
+  font-family: var(--font-body), system-ui, sans-serif;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.lp-start-btn:hover:not(:disabled) { opacity: 0.88; }
+.lp-start-done {
+  background: var(--accent-dim); color: var(--accent-text);
+  border: 1px solid var(--accent); cursor: default;
+}
+.lp-start-locked { background: var(--bg3); color: var(--fg3); cursor: pointer; }
+.lp-login-prompt {
+  margin-top: 12px; text-align: center; font-size: 13px; color: var(--fg3);
+}
+.lp-login-link {
+  color: var(--accent); background: none; border: none; cursor: pointer;
+  font-size: 13px; font-family: var(--font-body), system-ui, sans-serif;
+  padding: 0; text-decoration: underline;
+}
+
+/* How it works */
+.lp-hiw { text-align: center; }
+.lp-hiw-title {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: 18px; font-weight: 500; color: var(--fg2);
+  margin-bottom: 20px;
+}
+.lp-hiw-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.lp-hiw-step {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 14px;
+}
+.lp-hiw-icon { font-size: 22px; margin-bottom: 8px; }
+.lp-hiw-label {
+  font-size: 13px; font-weight: 600; color: var(--fg); margin-bottom: 5px;
+}
+.lp-hiw-desc { font-size: 12px; color: var(--fg3); line-height: 1.5; }
+
+/* ── Learn session topbar ────────────────────────────────────────────────── */
+.lp-session-topbar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 20px; border-bottom: 0.5px solid var(--border);
+  background: var(--bg); position: sticky; top: 0; z-index: 10;
+}
+.lp-session-back {
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; color: var(--fg3); padding: 0; white-space: nowrap;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: color 0.15s;
+}
+.lp-session-back:hover { color: var(--accent); }
+.lp-session-prog-wrap {
+  flex: 1; height: 4px; background: var(--bg3);
+  border-radius: 2px; overflow: hidden;
+}
+.lp-session-prog-fill {
+  height: 100%; background: var(--accent);
+  border-radius: 2px; transition: width 0.3s;
+}
+.lp-session-counter { font-size: 12px; color: var(--fg3); white-space: nowrap; }
+
+/* Phase badge */
+.lp-phase-row {
+  align-self: flex-start; margin-bottom: 16px;
+}
+.lp-phase-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+.lp-phase-discovery { background: #fff4d6; color: #7a5100; }
+html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
+.lp-phase-review { background: var(--accent-dim); color: var(--accent-text); }
+
+/* Done screen streak */
+.lp-done-streak {
+  font-size: 18px; font-weight: 600; color: var(--fg);
+  margin: 8px 0 16px;
+}
+
+@media (max-width: 480px) {
+  .lp-hiw-steps { grid-template-columns: 1fr; gap: 10px; }
+  .lp-levels { gap: 5px; }
+  .lp-level-btn { padding: 6px 12px; font-size: 12px; }
+  .lp-info-card { padding: 20px 18px 18px; }
+}
