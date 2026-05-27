@@ -11,10 +11,10 @@ import situations from '../../../content/phrasebook/situations.json';
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const BADGE_CONFIG = {
-  common:   { label: '🟢 Common',   cls: 'pb-badge-common'   },
-  formal:   { label: '🔵 Formal',   cls: 'pb-badge-formal'   },
-  casual:   { label: '🟡 Casual',   cls: 'pb-badge-casual'   },
-  regional: { label: '🌏 Regional', cls: 'pb-badge-regional' },
+  common:   { label: 'Common',   cls: 'pb-badge-common'   },
+  formal:   { label: 'Formal',   cls: 'pb-badge-formal'   },
+  casual:   { label: 'Casual',   cls: 'pb-badge-casual'   },
+  regional: { label: 'Regional', cls: 'pb-badge-regional' },
 };
 
 const TYPE_CLS = {
