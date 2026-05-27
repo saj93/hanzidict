@@ -220,7 +220,7 @@ export default function FlashcardsPage() {
               </div>
               {user && (
                 <button className="fc-settings-btn" onClick={() => setShowSettings(o => !o)} title="Settings">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                     <line x1="2" y1="5" x2="14" y2="5"/>
                     <line x1="2" y1="11" x2="14" y2="11"/>
                     <circle cx="6" cy="5" r="1.75" fill="currentColor" stroke="none"/>

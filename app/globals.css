@@ -1174,9 +1174,9 @@ html.dark .drop-row:hover { background: var(--bg3); }
 .fc-settings-btn {
   background: none; border: none; cursor: pointer;
   padding: 7px 8px; border-radius: 8px; line-height: 0;
-  color: var(--fg3); transition: background 0.15s, color 0.15s;
+  color: var(--fg2); transition: background 0.15s, color 0.15s;
 }
-.fc-settings-btn:hover { color: var(--fg); }
+.fc-settings-btn:hover { background: var(--bg3); color: var(--fg); }
 .fc-settings-btn:hover { background: var(--bg3); }
 .fc-settings-panel {
   background: var(--bg2); border: 1px solid var(--border);
