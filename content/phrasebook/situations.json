@@ -1,0 +1,1164 @@
+[
+  {
+    "id": "situation-1",
+    "title": "Greetings & Politeness",
+    "titleChinese": "问候与礼貌",
+    "pinyin": "Wènhòu yǔ lǐmào",
+    "free": true,
+    "phraseCount": 21,
+    "freePhraseCount": 21,
+    "sections": [
+      {
+        "title": "Saying hello",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q/A",
+            "hanzi": "你好！",
+            "pinyin": "Nǐ hǎo!",
+            "english": "Hello!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q/A",
+            "hanzi": "早上好！",
+            "pinyin": "Zǎoshang hǎo!",
+            "english": "Good morning!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q/A",
+            "hanzi": "下午好！",
+            "pinyin": "Xiàwǔ hǎo!",
+            "english": "Good afternoon!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q/A",
+            "hanzi": "晚上好！",
+            "pinyin": "Wǎnshang hǎo!",
+            "english": "Good evening!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "How are you?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "最近怎么样？",
+            "pinyin": "Zuìjìn zěnme yàng?",
+            "english": "How have you been lately?",
+            "badge": "common",
+            "badgeNote": "More natural",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你好吗？",
+            "pinyin": "Nǐ hǎo ma?",
+            "english": "How are you?",
+            "badge": "formal",
+            "badgeNote": "Less common in daily speech",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "吃了吗？",
+            "pinyin": "Chī le ma?",
+            "english": "Have you eaten?",
+            "badge": "common",
+            "badgeNote": "Traditional greeting",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "还不错。",
+            "pinyin": "Hái bùcuò.",
+            "english": "Not bad.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "还行。",
+            "pinyin": "Hái xíng.",
+            "english": "So-so / Getting by.",
+            "badge": "casual",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我很好，谢谢。",
+            "pinyin": "Wǒ hěn hǎo, xièxie.",
+            "english": "I'm fine, thank you.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "Thank you / Sorry / Please",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A",
+            "hanzi": "谢谢！",
+            "pinyin": "Xièxie!",
+            "english": "Thank you!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "非常感谢。",
+            "pinyin": "Fēicháng gǎnxiè.",
+            "english": "Thank you very much.",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "不客气。",
+            "pinyin": "Bù kèqi.",
+            "english": "You're welcome.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "没事。",
+            "pinyin": "Méishì.",
+            "english": "No worries.",
+            "badge": "casual",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "不好意思。",
+            "pinyin": "Bù hǎoyìsi.",
+            "english": "Excuse me / Sorry to bother you.",
+            "badge": "common",
+            "badgeNote": "More common than 对不起 in daily life",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "对不起。",
+            "pinyin": "Duìbuqǐ.",
+            "english": "I'm sorry.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "没关系。",
+            "pinyin": "Méi guānxi.",
+            "english": "It's okay / No problem.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "请。",
+            "pinyin": "Qǐng.",
+            "english": "Please. / After you.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "Saying goodbye",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A/Q",
+            "hanzi": "再见！",
+            "pinyin": "Zàijiàn!",
+            "english": "Goodbye!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A/Q",
+            "hanzi": "拜拜！",
+            "pinyin": "Bāibāi!",
+            "english": "Bye bye!",
+            "badge": "casual",
+            "badgeNote": "Very common",
+            "free": true
+          },
+          {
+            "type": "A/Q",
+            "hanzi": "明天见！",
+            "pinyin": "Míngtiān jiàn!",
+            "english": "See you tomorrow!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-2",
+    "title": "Introducing Yourself",
+    "titleChinese": "自我介绍",
+    "pinyin": "Zìwǒ jièshào",
+    "free": true,
+    "phraseCount": 25,
+    "freePhraseCount": 22,
+    "sections": [
+      {
+        "title": "What's your name?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你叫什么(名字)？",
+            "pinyin": "Nǐ jiào shénme (míngzì)?",
+            "english": "What's your name?",
+            "badge": "common",
+            "badgeNote": "名字 is optional",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "您贵姓？",
+            "pinyin": "Nín guì xìng?",
+            "english": "What is your surname?",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我叫…",
+            "pinyin": "Wǒ jiào…",
+            "english": "My name is…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我的名字是…",
+            "pinyin": "Wǒ de míngzì shì…",
+            "english": "My name is…",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "Where are you from?",
+        "note": "**Note on 哪 nǎ:** 哪 always signals a question about *which* or *where* — 哪里 (where), 哪个 (which one), 哪国 (which country). Once you recognize it, you'll spot it everywhere.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你是哪里人？",
+            "pinyin": "Nǐ shì nǎlǐ rén?",
+            "english": "Where are you from?",
+            "badge": "common",
+            "badgeNote": "Most common",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你是哪里的？",
+            "pinyin": "Nǐ shì nǎlǐ de?",
+            "english": "Where are you from?",
+            "badge": "casual",
+            "badgeNote": "Casual shortening",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你是哪国人？",
+            "pinyin": "Nǐ shì nǎ guó rén?",
+            "english": "Which country are you from?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我是法国人。",
+            "pinyin": "Wǒ shì fǎguó rén.",
+            "english": "I'm French.",
+            "badge": "common",
+            "badgeNote": "Replace 法国 with your country",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我来自法国。",
+            "pinyin": "Wǒ lái zì fǎguó.",
+            "english": "I'm from France.",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "How old are you?",
+        "note": "**今年 jīnnián** means \"this year\" — optional in speech but makes the question more natural, especially for children. Both 你多大 and 你几岁 are common for adults.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你多大(了)？",
+            "pinyin": "Nǐ duō dà (le)?",
+            "english": "How old are you?",
+            "badge": "common",
+            "badgeNote": "Most common for adults",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你(今年)几岁？",
+            "pinyin": "Nǐ (jīnnián) jǐ suì?",
+            "english": "How old are you?",
+            "badge": "common",
+            "badgeNote": "More natural for children",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我(今年)…岁。",
+            "pinyin": "Wǒ (jīnnián)… suì.",
+            "english": "I'm … years old.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "What do you do?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你是做什么的？",
+            "pinyin": "Nǐ shì zuò shénme de?",
+            "english": "What do you do?",
+            "badge": "common",
+            "badgeNote": "Most natural",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你做什么工作？/ 你的工作是什么？",
+            "pinyin": "Nǐ zuò shénme gōngzuò? / Nǐ de gōngzuò shì shénme?",
+            "english": "What is your job?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我是学生。",
+            "pinyin": "Wǒ shì xuésheng.",
+            "english": "I'm a student.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我在…工作。",
+            "pinyin": "Wǒ zài… gōngzuò.",
+            "english": "I work at/in…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      },
+      {
+        "title": "Are you learning Chinese?",
+        "note": "**The many words for \"Chinese language\":**\n- **中文 Zhōngwén** — most common everyday term, safe default anywhere 🟢\n- **汉语 Hànyǔ** — formal/academic (HSK = 汉语水平考试) 🔵\n- **普通话 Pǔtōnghuà** — specifically standard Mandarin, mainland China 🌏\n- **国语 Guóyǔ** — same as 普通话 but used in Taiwan 🌏\n- **华语 Huáyǔ** — used in Southeast Asia (Singapore, Malaysia) 🌏\n- **中国话 Zhōngguóhuà** — colloquial, informal 🟡\n**说 shuō vs 讲 jiǎng:** Both mean \"to speak.\" 讲 is widely used in southern China, Taiwan, and overseas communities. Both are correct.\n**\"Do you speak Chinese?\" — base structure:**\n你会 **说/讲** + **中文/汉语/普通话/国语/华语** + 吗？\nMost common: 你会说中文吗 and 你会讲中文吗.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你会说中文吗？",
+            "pinyin": "Nǐ huì shuō zhōngwén ma?",
+            "english": "Do you speak Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你在学中文吗？",
+            "pinyin": "Nǐ zài xué zhōngwén ma?",
+            "english": "Are you learning Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我在学中文。",
+            "pinyin": "Wǒ zài xué zhōngwén.",
+            "english": "I'm learning Chinese.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我会说一点儿中文。",
+            "pinyin": "Wǒ huì shuō yīdiǎnr zhōngwén.",
+            "english": "I speak a little Chinese.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你学了多久中文了？",
+            "pinyin": "Nǐ xué le duōjiǔ zhōngwén le?",
+            "english": "How long have you been learning?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我学了…年了。",
+            "pinyin": "Wǒ xué le… nián le.",
+            "english": "I've been learning for … years.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我的中文不太好。",
+            "pinyin": "Wǒ de zhōngwén bù tài hǎo.",
+            "english": "My Chinese isn't very good.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Nice to meet you",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A/Q",
+            "hanzi": "很高兴认识你。",
+            "pinyin": "Hěn gāoxìng rènshi nǐ.",
+            "english": "Nice to meet you.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A/Q",
+            "hanzi": "幸会幸会。",
+            "pinyin": "Xìnghuì xìnghuì.",
+            "english": "Pleased to meet you.",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-3",
+    "title": "When You Don't Understand",
+    "titleChinese": "听不懂",
+    "pinyin": "Tīng bù dǒng",
+    "free": true,
+    "phraseCount": 9,
+    "freePhraseCount": 9,
+    "sections": [
+      {
+        "title": "Essential Phrases",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A",
+            "hanzi": "我听不懂。",
+            "pinyin": "Wǒ tīng bù dǒng.",
+            "english": "I don't understand what I'm hearing.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我不明白。",
+            "pinyin": "Wǒ bù míngbái.",
+            "english": "I don't understand.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你能再说一遍吗？",
+            "pinyin": "Nǐ néng zài shuō yībiàn ma?",
+            "english": "Could you say that again?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "请说慢一点。",
+            "pinyin": "Qǐng shuō màn yīdiǎn.",
+            "english": "Please speak more slowly.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "这是什么意思？",
+            "pinyin": "Zhè shì shénme yìsi?",
+            "english": "What does this mean?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "用英文怎么说？",
+            "pinyin": "Yòng yīngwén zěnme shuō?",
+            "english": "How do you say it in English?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "用中文怎么说…？",
+            "pinyin": "Yòng zhōngwén zěnme shuō…?",
+            "english": "How do you say … in Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "请写下来。",
+            "pinyin": "Qǐng xiě xiàlái.",
+            "english": "Please write it down.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你会说英文吗？",
+            "pinyin": "Nǐ huì shuō yīngwén ma?",
+            "english": "Do you speak English?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-4",
+    "title": "What Natives Always Ask You",
+    "titleChinese": "老外必备",
+    "pinyin": "Lǎowài bìbèi",
+    "free": false,
+    "phraseCount": 43,
+    "freePhraseCount": 18,
+    "sections": [
+      {
+        "title": "You speak Chinese?!",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你会说中文？！",
+            "pinyin": "Nǐ huì shuō zhōngwén?!",
+            "english": "You speak Chinese?!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你的中文真好！",
+            "pinyin": "Nǐ de zhōngwén zhēn hǎo!",
+            "english": "Your Chinese is really good!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我只会说一点点。",
+            "pinyin": "Wǒ zhǐ huì shuō yīdiǎndiǎn.",
+            "english": "I only know a little bit.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "还在学呢。",
+            "pinyin": "Hái zài xué ne.",
+            "english": "Still learning.",
+            "badge": "casual",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你会中文？！",
+            "pinyin": "Nǐ huì zhōngwén?!",
+            "english": "You know Chinese?!",
+            "badge": "casual",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你懂中文？",
+            "pinyin": "Nǐ dǒng zhōngwén?",
+            "english": "You understand Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你中文说得这么流利！",
+            "pinyin": "Nǐ zhōngwén shuō de zhème liúlì!",
+            "english": "Your Chinese is so fluent!",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "哪里哪里，还差得远呢。",
+            "pinyin": "Nǎlǐ nǎlǐ, hái chà de yuǎn ne.",
+            "english": "Not at all, I still have a long way to go.",
+            "badge": "common",
+            "badgeNote": "Most natural humble response",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "谢谢，你过奖了。",
+            "pinyin": "Xièxie, nǐ guòjiǎng le.",
+            "english": "Thank you, you're too kind.",
+            "badge": "formal",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Are you Chinese?",
+        "note": "**华人 vs 华裔 — what's the difference?**\n- **中国人 Zhōngguórén** — citizen of China (nationality)\n- **华人 Huárén** — ethnic Chinese person, regardless of nationality. A Chinese-Canadian is 华人 but not 中国人.\n- **华裔 Huáyì** — person of Chinese descent, often second/third generation overseas Chinese. More specific than 华人.\nNatives may ask 你是华人吗 or 你是华裔吗 if they suspect Chinese heritage — not offensive, just curious.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你是中国人吗？",
+            "pinyin": "Nǐ shì Zhōngguórén ma?",
+            "english": "Are you Chinese (from China)?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "不是，我是法国人。",
+            "pinyin": "Bù shì, wǒ shì fǎguó rén.",
+            "english": "No, I'm French.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你是华人吗？",
+            "pinyin": "Nǐ shì Huárén ma?",
+            "english": "Are you ethnically Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你是华裔吗？",
+            "pinyin": "Nǐ shì Huáyì ma?",
+            "english": "Do you have Chinese ancestry?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "是的，我是华裔。",
+            "pinyin": "Shì de, wǒ shì Huáyì.",
+            "english": "Yes, I have Chinese ancestry.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "不是，但我对中国文化很感兴趣。",
+            "pinyin": "Bù shì, dàn wǒ duì Zhōngguó wénhuà hěn gǎn xìngqù.",
+            "english": "No, but I'm very interested in Chinese culture.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Where did you learn Chinese?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你在哪里学的中文？",
+            "pinyin": "Nǐ zài nǎlǐ xué de zhōngwén?",
+            "english": "Where did you learn Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我自学的。",
+            "pinyin": "Wǒ zìxué de.",
+            "english": "I'm self-taught.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我在网上/用app学的。",
+            "pinyin": "Wǒ zài wǎngshàng / yòng app xué de.",
+            "english": "I learned online / with an app.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你是自学的吗？",
+            "pinyin": "Nǐ shì zìxué de ma?",
+            "english": "Are you self-taught?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你有老师吗？",
+            "pinyin": "Nǐ yǒu lǎoshī ma?",
+            "english": "Do you have a teacher?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我在大学学过一点。",
+            "pinyin": "Wǒ zài dàxué xuéguò yīdiǎn.",
+            "english": "I studied a little at university.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我去过中国，在那里学的。",
+            "pinyin": "Wǒ qùguò Zhōngguó, zài nàlǐ xué de.",
+            "english": "I went to China and learned there.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Why are you learning Chinese?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你为什么学中文？",
+            "pinyin": "Nǐ wèishénme xué zhōngwén?",
+            "english": "Why are you learning Chinese?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "因为我觉得中文很有意思。",
+            "pinyin": "Yīnwèi wǒ juédé zhōngwén hěn yǒu yìsi.",
+            "english": "Because I find Chinese really interesting.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "因为工作需要。",
+            "pinyin": "Yīnwèi gōngzuò xūyào.",
+            "english": "Because of work.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "是因为工作吗？",
+            "pinyin": "Shì yīnwèi gōngzuò ma?",
+            "english": "Is it for work?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "因为我喜欢中国文化。",
+            "pinyin": "Yīnwèi wǒ xǐhuān Zhōngguó wénhuà.",
+            "english": "Because I love Chinese culture.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "就是觉得好玩。",
+            "pinyin": "Jiùshì juédé hǎowán.",
+            "english": "Just because I find it fun.",
+            "badge": "casual",
+            "badgeNote": "Very natural",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "因为我想去中国旅游。",
+            "pinyin": "Yīnwèi wǒ xiǎng qù Zhōngguó lǚyóu.",
+            "english": "Because I want to travel to China.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "因为我喜欢挑战。",
+            "pinyin": "Yīnwèi wǒ xǐhuān tiǎozhàn.",
+            "english": "Because I like challenges.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Do you find Chinese difficult?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你觉得中文难吗？",
+            "pinyin": "Nǐ juédé zhōngwén nán ma?",
+            "english": "Do you find Chinese difficult?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "挺难的，但是很有意思。",
+            "pinyin": "Tǐng nán de, dànshì hěn yǒu yìsi.",
+            "english": "Pretty difficult, but very interesting.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "声调对我来说最难。",
+            "pinyin": "Shēngdiào duì wǒ lái shuō zuì nán.",
+            "english": "Tones are the hardest part for me.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "声调难不难？",
+            "pinyin": "Shēngdiào nán bu nán?",
+            "english": "Are the tones hard?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "汉字难写吗？",
+            "pinyin": "Hànzì nán xiě ma?",
+            "english": "Are characters hard to write?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "比我想象的难。",
+            "pinyin": "Bǐ wǒ xiǎngxiàng de nán.",
+            "english": "Harder than I imagined.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "没有我以为的那么难。",
+            "pinyin": "Méiyǒu wǒ yǐwéi de nàme nán.",
+            "english": "Not as hard as I thought.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Have you been to China?",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你去过中国吗？",
+            "pinyin": "Nǐ qùguò Zhōngguó ma?",
+            "english": "Have you been to China?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "还没有，但我很想去。",
+            "pinyin": "Hái méiyǒu, dàn wǒ hěn xiǎng qù.",
+            "english": "Not yet, but I really want to.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "去过一次，非常喜欢。",
+            "pinyin": "Qùguò yīcì, fēicháng xǐhuān.",
+            "english": "I went once, I loved it.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你去过哪些地方？",
+            "pinyin": "Nǐ qùguò nǎxiē dìfāng?",
+            "english": "Which places have you been to?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你喜欢中国吗？",
+            "pinyin": "Nǐ xǐhuān Zhōngguó ma?",
+            "english": "Do you like China?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "去过，我去过北京和上海。",
+            "pinyin": "Qùguò, wǒ qùguò Běijīng hé Shànghǎi.",
+            "english": "Yes, I've been to Beijing and Shanghai.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-5",
+    "title": "Talking About Your Likes",
+    "titleChinese": "表达喜好",
+    "pinyin": "Biǎodá xǐhào",
+    "free": false,
+    "phraseCount": 13,
+    "freePhraseCount": 5,
+    "sections": [
+      {
+        "title": "Expressing Likes and Preferences",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你喜欢…吗？",
+            "pinyin": "Nǐ xǐhuān… ma?",
+            "english": "Do you like…?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你最喜欢什么？",
+            "pinyin": "Nǐ zuì xǐhuān shénme?",
+            "english": "What do you like the most?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我喜欢… / 我不喜欢…",
+            "pinyin": "Wǒ xǐhuān… / Wǒ bù xǐhuān…",
+            "english": "I like… / I don't like…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我最喜欢…",
+            "pinyin": "Wǒ zuì xǐhuān…",
+            "english": "My favorite…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我更喜欢…",
+            "pinyin": "Wǒ gèng xǐhuān…",
+            "english": "I prefer…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你对…感兴趣吗？",
+            "pinyin": "Nǐ duì… gǎn xìngqù ma?",
+            "english": "Are you interested in…?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "…怎么样？",
+            "pinyin": "… zěnme yàng?",
+            "english": "What do you think of…?",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我对…感兴趣。",
+            "pinyin": "Wǒ duì… gǎn xìngqù.",
+            "english": "I'm interested in…",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我觉得…很有意思。",
+            "pinyin": "Wǒ juédé… hěn yǒu yìsi.",
+            "english": "I find … very interesting.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我觉得…没意思。",
+            "pinyin": "Wǒ juédé… méi yìsi.",
+            "english": "I find … boring.",
+            "badge": "casual",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "都行。/ 随便。",
+            "pinyin": "Dōu xíng. / Suíbiàn.",
+            "english": "Either is fine. / Whatever.",
+            "badge": "casual",
+            "badgeNote": "Very natural",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我无所谓。",
+            "pinyin": "Wǒ wúsuǒwèi.",
+            "english": "I don't mind.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "看情况。",
+            "pinyin": "Kàn qíngkuàng.",
+            "english": "Depends on the situation.",
+            "badge": "common",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ]
+  }
+]

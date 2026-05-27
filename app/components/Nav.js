@@ -39,6 +39,7 @@ export default function Nav() {
     { label: 'Dictionary', path: '/' },
     { label: 'Flashcards', path: '/flashcards' },
     { label: 'Learn', path: '/learn' },
+    { label: 'Phrasebook', path: '/phrasebook' },
     { label: 'Lists', path: '/lists' },
     { label: 'Blog', path: '/blog' },
     { label: 'About', path: '/about' },

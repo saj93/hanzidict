@@ -2024,3 +2024,169 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   .lp-level-btn { padding: 6px 12px; font-size: 12px; }
   .lp-info-card { padding: 20px 18px 18px; }
 }
+
+/* ── Phrasebook ──────────────────────────────────────────────────────────── */
+.pb-wrap {
+  max-width: 900px; margin: 0 auto; padding: 40px 20px 60px;
+}
+.pb-hero { text-align: center; margin-bottom: 40px; }
+.pb-hero-title {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: clamp(26px, 4vw, 36px); font-weight: 600;
+  color: var(--fg); margin-bottom: 10px;
+}
+.pb-hero-sub { font-size: 15px; color: var(--fg3); max-width: 500px; margin: 0 auto; }
+
+/* Grid of situation cards */
+.pb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.pb-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 22px 20px 18px;
+  cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+  text-align: left; display: flex; flex-direction: column; gap: 4px;
+  position: relative;
+}
+.pb-card:hover { border-color: var(--border-mid); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.pb-card.locked { cursor: default; opacity: 0.75; }
+.pb-card.locked:hover { border-color: var(--border); box-shadow: none; }
+.pb-card-lock {
+  position: absolute; top: 14px; right: 14px;
+  font-size: 16px; color: var(--fg3);
+}
+.pb-card-chinese {
+  font-size: 20px; font-weight: 700; color: var(--fg);
+  font-family: var(--font-display), Georgia, serif;
+}
+.pb-card-title {
+  font-size: 13px; font-weight: 600; color: var(--fg2); margin-top: 2px;
+}
+.pb-card-pinyin { font-size: 12px; color: var(--fg3); }
+.pb-card-meta {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 10px;
+}
+.pb-card-count { font-size: 11px; color: var(--fg3); }
+.pb-badge-free {
+  font-size: 10px; font-weight: 600; letter-spacing: .03em;
+  background: var(--accent-dim); color: var(--accent-text);
+  border-radius: 4px; padding: 2px 6px;
+}
+.pb-badge-premium {
+  font-size: 10px; font-weight: 600; letter-spacing: .03em;
+  background: var(--bg3); color: var(--fg3);
+  border-radius: 4px; padding: 2px 6px;
+}
+.pb-badge-partial {
+  font-size: 10px; font-weight: 600; letter-spacing: .03em;
+  background: #fff4d6; color: #7a5100;
+  border-radius: 4px; padding: 2px 6px;
+}
+html.dark .pb-badge-partial { background: #2d2007; color: #d4a040; }
+
+/* ── Phrasebook situation page ───────────────────────────────────────────── */
+.pb-sit-wrap {
+  max-width: 760px; margin: 0 auto; padding: 32px 20px 60px;
+}
+.pb-sit-back {
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; color: var(--fg3); padding: 0;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: color 0.15s; margin-bottom: 28px; display: block;
+}
+.pb-sit-back:hover { color: var(--accent); }
+.pb-sit-header { margin-bottom: 32px; }
+.pb-sit-chinese {
+  font-size: 32px; font-weight: 700; color: var(--fg);
+  font-family: var(--font-display), Georgia, serif;
+  margin-bottom: 6px;
+}
+.pb-sit-title {
+  font-size: 20px; font-weight: 600; color: var(--fg2); margin-bottom: 4px;
+}
+.pb-sit-pinyin { font-size: 14px; color: var(--fg3); }
+
+/* Section */
+.pb-section { margin-bottom: 36px; }
+.pb-section-title {
+  font-size: 14px; font-weight: 700; color: var(--fg);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.pb-note {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 16px;
+  font-size: 13px; color: var(--fg2); line-height: 1.7;
+  margin-bottom: 14px;
+}
+.pb-note p { margin: 0 0 6px; }
+.pb-note p:last-child { margin-bottom: 0; }
+.pb-note ul { margin: 4px 0 4px 16px; padding: 0; }
+.pb-note li { margin-bottom: 3px; }
+.pb-note strong { color: var(--fg); }
+
+/* Phrase rows */
+.pb-phrase {
+  display: grid; grid-template-columns: 36px 1fr auto;
+  align-items: start; gap: 10px 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pb-phrase:last-child { border-bottom: none; }
+.pb-phrase.premium-locked { opacity: 0.45; pointer-events: none; }
+.pb-phrase-type {
+  font-size: 10px; font-weight: 700; color: var(--fg3);
+  letter-spacing: .06em; padding-top: 3px;
+  text-align: center;
+}
+.pb-phrase-body { display: flex; flex-direction: column; gap: 2px; }
+.pb-phrase-hanzi { font-size: 18px; color: var(--fg); font-weight: 500; line-height: 1.3; }
+.pb-phrase-pinyin { font-size: 12px; color: var(--accent); }
+.pb-phrase-english { font-size: 13px; color: var(--fg2); margin-top: 2px; }
+.pb-phrase-badge {
+  font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  font-weight: 600; white-space: nowrap; margin-top: 4px;
+}
+.pb-badge-common { background: var(--accent-dim); color: var(--accent-text); }
+.pb-badge-formal { background: #dbeafe; color: #1e40af; }
+html.dark .pb-badge-formal { background: #1e3a5f; color: #93c5fd; }
+.pb-badge-casual { background: #fef9c3; color: #713f12; }
+html.dark .pb-badge-casual { background: #2d2a08; color: #fbbf24; }
+.pb-badge-regional { background: #f0fdf4; color: #166534; }
+html.dark .pb-badge-regional { background: #052e16; color: #4ade80; }
+.pb-phrase-badge-note { font-size: 11px; color: var(--fg3); margin-top: 2px; }
+
+/* Lock overlay for premium phrases */
+.pb-phrase-lock { font-size: 14px; padding-top: 4px; color: var(--fg3); }
+
+/* Premium upgrade prompt */
+.pb-upgrade-banner {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 24px;
+  text-align: center; margin-top: 28px;
+}
+.pb-upgrade-title {
+  font-size: 15px; font-weight: 600; color: var(--fg); margin-bottom: 6px;
+}
+.pb-upgrade-sub { font-size: 13px; color: var(--fg3); margin-bottom: 16px; }
+.pb-upgrade-btn {
+  background: var(--accent); color: var(--accent-text);
+  border: none; border-radius: var(--radius); padding: 9px 22px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: opacity 0.15s;
+}
+.pb-upgrade-btn:hover { opacity: 0.85; }
+
+@media (max-width: 600px) {
+  .pb-grid { grid-template-columns: 1fr 1fr; }
+  .pb-phrase { grid-template-columns: 30px 1fr auto; gap: 8px 10px; }
+  .pb-phrase-hanzi { font-size: 16px; }
+}
+@media (max-width: 400px) {
+  .pb-grid { grid-template-columns: 1fr; }
+}
