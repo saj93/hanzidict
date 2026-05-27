@@ -1,11 +1,13 @@
-import { getFlashcards } from '../lib/db';
+import { getRepresentativeEntries } from '../lib/db';
 import { convertPinyin } from '../lib/pinyin';
 import HomeClient from './components/HomeClient';
 
 export default async function Home() {
   let chips: [string, string][] = [];
   try {
-    const all = await getFlashcards(1);
+    // getRepresentativeEntries deduplicates by simplified character so that
+    // duoyinzi (多音字) always show their most common reading here.
+    const all = await getRepresentativeEntries(1);
     chips = all
       .slice(0, 5)
       .filter((e: any) => e.simplified && e.pinyin)

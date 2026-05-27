@@ -1,4 +1,4 @@
-import { getHskPage, getFlashcards } from '@/lib/db';
+import { getHskPage, getRepresentativeEntries } from '@/lib/db';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -10,7 +10,7 @@ export async function GET(request) {
   if (level < 1 || level > 7) return Response.json({ entries: [], total: 0 });
 
   if (sample > 0) {
-    const all = await getFlashcards(level);
+    const all = await getRepresentativeEntries(level);
     return Response.json({ entries: all.slice(0, sample) });
   }
 
