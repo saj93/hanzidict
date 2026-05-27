@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import { createClient } from '@/lib/supabase';
@@ -8,7 +8,13 @@ import { createClient } from '@/lib/supabase';
 export default function UserMenu() {
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState('');
   const router = useRouter();
+
+  // Pick up username from user_metadata whenever user changes
+  useEffect(() => {
+    setUsername(user?.user_metadata?.username ?? '');
+  }, [user]);
 
   if (loading) return <div style={{ width: 32 }} />;
 
@@ -21,9 +27,10 @@ export default function UserMenu() {
     );
   }
 
-  const initial = (user.email?.[0] ?? '?').toUpperCase();
   const email = user.email ?? '';
   const displayEmail = email.length > 18 ? email.slice(0, 15) + '…' : email;
+  const initial = (username?.[0] ?? email?.[0] ?? '?').toUpperCase();
+  const displayName = username || displayEmail;
 
   async function logout() {
     const supabase = createClient();
@@ -46,7 +53,17 @@ export default function UserMenu() {
         <>
           <div style={{ position: 'fixed', inset: 0, zIndex: 199 }} onClick={() => setOpen(false)} />
           <div className="user-dropdown">
-            <div className="user-dropdown-email">{displayEmail}</div>
+            <div className="user-dropdown-header">
+              <div className="user-dropdown-avatar">{initial}</div>
+              <div className="user-dropdown-info">
+                <div className="user-dropdown-name">{username || 'Set a username'}</div>
+                <div className="user-dropdown-email">{displayEmail}</div>
+              </div>
+            </div>
+            <div className="user-dropdown-divider" />
+            <button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/profile'); }}>
+              Profile
+            </button>
             <button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/flashcards'); }}>
               Flashcards
             </button>

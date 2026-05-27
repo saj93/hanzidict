@@ -1315,12 +1315,27 @@ html.dark .auth-error { background: #2d1515; }
   position: absolute; right: 0; top: calc(100% + 8px);
   background: var(--bg2); border: 0.5px solid var(--border-mid);
   border-radius: 10px; box-shadow: var(--shadow);
-  min-width: 180px; z-index: 200; overflow: hidden;
+  min-width: 200px; z-index: 200; overflow: hidden;
+}
+.user-dropdown-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+}
+.user-dropdown-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 14px; font-weight: 600; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+.user-dropdown-info { min-width: 0; }
+.user-dropdown-name {
+  font-size: 13px; font-weight: 600; color: var(--fg);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .user-dropdown-email {
-  font-size: 12px; color: var(--fg3);
-  padding: 10px 14px 8px;
-  border-bottom: 0.5px solid var(--border);
+  font-size: 11px; color: var(--fg3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .user-dropdown-item {
   display: block; width: 100%; text-align: left;
@@ -1334,6 +1349,54 @@ html.dark .auth-error { background: #2d1515; }
 .user-dropdown-item.danger:hover { background: #fff5f5; }
 html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .user-dropdown-divider { height: 0.5px; background: var(--border); }
+
+/* ── Profile page ────────────────────────────────────────────────────────── */
+.up-wrap {
+  max-width: 520px; margin: 0 auto; padding: 48px 20px 80px;
+}
+.up-hero {
+  display: flex; align-items: center; gap: 18px; margin-bottom: 36px;
+}
+.up-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 26px; font-weight: 700; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+.up-hero-name {
+  font-size: 18px; font-weight: 600; color: var(--fg); margin-bottom: 3px;
+}
+.up-hero-since { font-size: 13px; color: var(--fg3); }
+.up-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+}
+.up-field { margin-bottom: 20px; }
+.up-field:last-of-type { margin-bottom: 0; }
+.up-label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--fg2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em;
+}
+.up-input {
+  width: 100%; height: 40px; padding: 0 12px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 14px; color: var(--fg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: border-color 0.15s; box-sizing: border-box;
+}
+.up-input:focus { outline: none; border-color: var(--accent); }
+.up-input:disabled { opacity: 0.5; cursor: default; }
+.up-hint { font-size: 12px; color: var(--fg3); margin-top: 5px; }
+.up-actions { margin-top: 24px; }
+.up-save-btn {
+  height: 40px; padding: 0 24px;
+  background: var(--accent); color: #fff; border: none;
+  border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: var(--font-body), system-ui, sans-serif; transition: opacity 0.15s;
+}
+.up-save-btn:hover:not(:disabled) { opacity: 0.87; }
+.up-save-btn:disabled { opacity: 0.6; cursor: default; }
 
 /* Flashcard login banner */
 .fc-login-banner {
