@@ -2292,7 +2292,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .pb-quiz-feedback strong { font-weight: 800; }
 .pb-quiz-next {
   align-self: flex-end;
-  background: var(--accent); color: var(--accent-text);
+  background: var(--accent); color: #fff;
   border: none; border-radius: var(--radius); padding: 10px 26px;
   font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
   transition: opacity 0.15s;
@@ -2311,7 +2311,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .pb-quiz-done-msg { font-size: 16px; color: var(--fg2); margin-bottom: 32px; }
 .pb-quiz-done-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .pb-quiz-retry {
-  background: var(--accent); color: var(--accent-text);
+  background: var(--accent); color: #fff;
   border: none; border-radius: var(--radius); padding: 11px 26px;
   font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
   transition: opacity 0.15s;
