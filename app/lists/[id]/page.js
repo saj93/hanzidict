@@ -113,18 +113,21 @@ export default function ListDetailPage() {
         ) : (
           <div className="list-words">
             {list.words.map(word => (
-              <div key={word.simplified} className="list-word-row">
-                <button
-                  className="list-word-hz"
-                  onClick={() => router.push(`/word/${encodeURIComponent(word.simplified)}`)}
-                >
-                  {displayHanzi(word)}
-                </button>
+              <div
+                key={word.simplified}
+                className="list-word-row"
+                onClick={() => router.push(`/word/${encodeURIComponent(word.simplified)}`)}
+              >
+                <span className="list-word-hz">{displayHanzi(word)}</span>
                 <div className="list-word-info">
                   <span className="list-word-py">{convertPinyin(word.pinyin)}</span>
                   <span className="list-word-def">{(word.definitions || '').split(' | ').filter(d => !d.startsWith('CL:') && !/\bCL:/.test(d))[0] ?? ''}</span>
                 </div>
-                <button className="list-word-remove" onClick={() => removeWord(word.simplified)} title="Remove from list">✕</button>
+                <button
+                  className="list-word-remove"
+                  onClick={e => { e.stopPropagation(); removeWord(word.simplified); }}
+                  title="Remove from list"
+                >✕</button>
               </div>
             ))}
           </div>

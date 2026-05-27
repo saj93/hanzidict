@@ -1778,14 +1778,13 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .list-word-row {
   display: flex; align-items: center; gap: 12px; padding: 12px 16px;
   background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
-  transition: background 0.12s;
+  transition: background 0.12s; cursor: pointer;
 }
 .list-word-row:hover { background: var(--hover-bg); }
 .list-word-hz {
-  font-size: 20px; font-weight: 600; color: var(--fg); background: none; border: none;
-  cursor: pointer; padding: 0; flex-shrink: 0; min-width: 36px;
+  font-size: 20px; font-weight: 600; color: var(--fg);
+  flex-shrink: 0; min-width: 36px;
 }
-.list-word-hz:hover { color: var(--accent); }
 .list-word-info { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .list-word-py { font-size: 13px; color: var(--accent); font-style: italic; }
 .list-word-def { font-size: 13px; color: var(--fg3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
