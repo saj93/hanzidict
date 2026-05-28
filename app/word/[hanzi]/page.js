@@ -191,6 +191,13 @@ export default function WordPage() {
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
   const isTraditional = script === 'traditional';
   const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
+
+  // Dynamic page title
+  useEffect(() => {
+    const char = primary?.simplified || hanzi;
+    if (char) document.title = `${char} — HanziDict`;
+    return () => { document.title = 'HanziDict — Chinese Dictionary'; };
+  }, [primary?.simplified, hanzi]);
   const writerChar = displayHanzi[strokeCharIdx] ?? displayHanzi[0] ?? '';
   const multiChar = displayHanzi.length > 1;
 
@@ -413,7 +420,7 @@ export default function WordPage() {
               <div className="pos-line">{posLine}</div>
               <div className="badges">
                 <span className="badge green">
-                  {isTraditional ? 'Traditional' : 'Simplified'}: {displayHanzi}
+                  {isTraditional ? 'Traditional' : 'Simplified'}
                 </span>
               </div>
             </div>

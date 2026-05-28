@@ -20,6 +20,10 @@ export default function ListsPage() {
   const [newName, setNewName] = useState('');
   const [creating, setCreating] = useState(false);
   const [upgradeNeeded, setUpgradeNeeded] = useState(false);
+  const [renamingId, setRenamingId] = useState(null);
+  const [renameValue, setRenameValue] = useState('');
+
+  useEffect(() => { document.title = 'My Lists — HanziDict'; }, []);
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -60,6 +64,32 @@ export default function ListsPage() {
     } finally {
       setCreating(false);
     }
+  }
+
+  function startRename(list, e) {
+    e.stopPropagation();
+    setRenamingId(list.id);
+    setRenameValue(list.name);
+  }
+
+  async function saveRename(id) {
+    const trimmed = renameValue.trim();
+    if (!trimmed || trimmed === lists.find(l => l.id === id)?.name) {
+      setRenamingId(null);
+      return;
+    }
+    setLists(prev => prev.map(l => l.id === id ? { ...l, name: trimmed } : l));
+    setRenamingId(null);
+    await fetch(`/api/lists/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify({ name: trimmed }),
+    });
+  }
+
+  function onRenameKeyDown(e, id) {
+    if (e.key === 'Enter') { e.preventDefault(); saveRename(id); }
+    if (e.key === 'Escape') setRenamingId(null);
   }
 
   async function deleteList(id, e) {
@@ -169,8 +199,28 @@ export default function ListsPage() {
         ) : (
           <div className="lists-grid">
             {lists.map(list => (
-              <div key={list.id} className="list-card" onClick={() => router.push(`/lists/${list.id}`)}>
-                <div className="list-card-name">{list.name}</div>
+              <div
+                key={list.id}
+                className="list-card"
+                onClick={() => renamingId !== list.id && router.push(`/lists/${list.id}`)}
+              >
+                <div className="list-card-name-row">
+                  {renamingId === list.id ? (
+                    <input
+                      className="list-card-name-input"
+                      value={renameValue}
+                      onChange={e => setRenameValue(e.target.value)}
+                      onKeyDown={e => onRenameKeyDown(e, list.id)}
+                      onBlur={() => saveRename(list.id)}
+                      autoFocus
+                      maxLength={60}
+                      onClick={e => e.stopPropagation()}
+                    />
+                  ) : (
+                    <div className="list-card-name">{list.name}</div>
+                  )}
+                  <button className="list-card-rename" onClick={e => startRename(list, e)} title="Rename list">✏</button>
+                </div>
                 <div className="list-card-meta">
                   <span>{list.word_count} {list.word_count === 1 ? 'word' : 'words'}</span>
                   <span>{new Date(list.created_at).toLocaleDateString()}</span>

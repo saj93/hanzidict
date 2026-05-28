@@ -33,6 +33,8 @@ export default function LearnPage() {
   const [info, setInfo] = useState({ streak: 0, today_done: false, words_learned: 0 });
   const [infoLoading, setInfoLoading] = useState(false);
 
+  useEffect(() => { document.title = 'Learn — HanziDict'; }, []);
+
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     fetch('/api/flashcards?counts=1', { cache: 'no-store' })

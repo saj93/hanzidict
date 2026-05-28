@@ -13,6 +13,8 @@ export default function AboutPage() {
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => { document.title = 'About — HanziDict'; }, []);
+
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}

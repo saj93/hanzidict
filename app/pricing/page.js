@@ -16,6 +16,8 @@ export default function PricingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(null); // 'monthly' | 'annual' | null
 
+  useEffect(() => { document.title = 'Pricing — HanziDict'; }, []);
+
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
   }, []);

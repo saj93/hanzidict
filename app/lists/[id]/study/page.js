@@ -35,6 +35,10 @@ export default function ListStudyPage() {
   }, []);
 
   useEffect(() => {
+    if (listName) document.title = `Study: ${listName} — HanziDict`;
+  }, [listName]);
+
+  useEffect(() => {
     if (!session) return;
     Promise.all([
       fetch(`/api/lists/${id}`, { headers: { Authorization: `Bearer ${session.access_token}` } }).then(r => r.json()),

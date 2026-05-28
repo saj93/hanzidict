@@ -37,6 +37,11 @@ export default function LearnSessionPage() {
   }, []);
 
   useEffect(() => {
+    const label = HSK_LABEL[hskLevel] || `HSK ${hskLevel}`;
+    document.title = `Learn ${label} — HanziDict`;
+  }, [hskLevel]);
+
+  useEffect(() => {
     if (authLoading) return;
     if (!user || !session) {
       router.replace(`/login?next=/learn/session/${level}`);

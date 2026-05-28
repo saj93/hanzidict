@@ -28,6 +28,11 @@ export default function HskLevelPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const label = HSK_LABEL[level] || `HSK ${level}`;
+    document.title = `${label} Vocabulary — HanziDict`;
+  }, [level]);
+
+  useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
   }, []);

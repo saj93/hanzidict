@@ -15,6 +15,8 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => { document.title = 'Profile — HanziDict'; }, []);
+
   useEffect(() => {
     if (!loading && !user) router.replace('/login?next=/profile');
   }, [loading, user, router]);

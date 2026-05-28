@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
+import { createClient } from '@/lib/supabase';
 
 const POPOVER_W = 230;
 
@@ -19,7 +20,57 @@ export default function AddToListButton({ simplified }) {
   const [popStyle, setPopStyle] = useState({});
   const btnRef = useRef(null);
 
+  // Check membership directly via browser Supabase client — no API cold start,
+  // no server-side token re-validation. Requires RLS on lists + list_entries.
+  useEffect(() => {
+    if (!session) return;
+    const supabase = createClient();
+    supabase
+      .from('list_entries')
+      .select('list_id', { count: 'exact', head: true })
+      .eq('simplified', simplified)
+      .then(({ count }) => {
+        if ((count ?? 0) > 0) {
+          // Word is saved — mark it so the icon fills immediately
+          setLists([{ __savedCheck: true, contains: true }]);
+        }
+      })
+      .catch(() => {});
+  }, [simplified, session?.access_token]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const saved = lists.some(l => l.contains);
+
+  async function loadLists() {
+    if (!user || !session) return;
+    setLoading(true);
+    try {
+      // Also use browser client here — same benefit: no cold start
+      const supabase = createClient();
+      const { data: listsData } = await supabase
+        .from('lists')
+        .select('id, name, created_at, list_entries(count)')
+        .order('created_at', { ascending: false });
+
+      const ids = (listsData || []).map(l => l.id);
+      let containingSet = new Set();
+      if (ids.length) {
+        const { data: containing } = await supabase
+          .from('list_entries')
+          .select('list_id')
+          .in('list_id', ids)
+          .eq('simplified', simplified);
+        containingSet = new Set((containing || []).map(r => r.list_id));
+      }
+
+      setLists((listsData || []).map(l => ({
+        id: l.id, name: l.name, created_at: l.created_at,
+        word_count: l.list_entries?.[0]?.count ?? 0,
+        contains: containingSet.has(l.id),
+      })));
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function openPanel() {
     if (open) { close(); return; }
@@ -27,14 +78,10 @@ export default function AddToListButton({ simplified }) {
     if (btnRef.current) {
       const r = btnRef.current.getBoundingClientRect();
       const mobile = window.innerWidth < 640;
-      // clamp left so popover never overflows either edge
       const left = Math.max(8, Math.min(r.left, window.innerWidth - POPOVER_W - 8));
       if (mobile) {
-        // Mobile: open above the button (badges/definitions are below)
         setPopStyle({ bottom: window.innerHeight - r.top + 6, left, width: POPOVER_W });
       } else {
-        // Desktop: below the button, constrained to stay inside the entry column
-        // so it never bleeds into the right sidebar/canvas.
         const col = document.querySelector('.entry-col');
         const maxRight = col ? col.getBoundingClientRect().right : window.innerWidth - 16;
         const dLeft = Math.max(8, Math.min(r.left, maxRight - POPOVER_W));
@@ -43,16 +90,7 @@ export default function AddToListButton({ simplified }) {
     }
 
     setOpen(true);
-    if (!user || !session) return;
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/lists?simplified=${encodeURIComponent(simplified)}`, {
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      });
-      setLists((await res.json()).lists || []);
-    } finally {
-      setLoading(false);
-    }
+    await loadLists();
   }
 
   function close() { setOpen(false); setShowNew(false); setUpgradeNeeded(false); }
@@ -116,9 +154,11 @@ export default function AddToListButton({ simplified }) {
             ) : (
               <>
                 <div className="atl-header">Save "{simplified}"</div>
-                {lists.length === 0 && !showNew && <div className="atl-empty">No lists yet</div>}
+                {lists.filter(l => !l.__savedCheck).length === 0 && !showNew && (
+                  <div className="atl-empty">No lists yet</div>
+                )}
                 <div className="atl-list-items">
-                  {lists.map(list => (
+                  {lists.filter(l => !l.__savedCheck).map(list => (
                     <button key={list.id}
                       className={`atl-list-item${list.contains ? ' atl-in-list' : ''}`}
                       onClick={() => toggle(list.id)}>

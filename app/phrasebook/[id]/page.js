@@ -309,6 +309,11 @@ export default function SituationPage() {
 
   const situation = situations.find(s => s.id === id);
 
+  useEffect(() => {
+    if (situation) document.title = `${situation.title} — HanziDict`;
+    return () => { document.title = 'HanziDict — Chinese Dictionary'; };
+  }, [situation?.title]);
+
   const quiz = useMemo(
     () => situation ? buildQuiz(situation) : null,
     [situation]

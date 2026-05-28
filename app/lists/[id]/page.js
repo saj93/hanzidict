@@ -17,11 +17,17 @@ export default function ListDetailPage() {
   const [list, setList] = useState(null);
   const [loading, setLoading] = useState(true);
   const [script, setScript] = useState('simplified');
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [renameValue, setRenameValue] = useState('');
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
   }, []);
+
+  useEffect(() => {
+    if (list?.name) document.title = `${list.name} — HanziDict`;
+  }, [list?.name]);
 
   useEffect(() => {
     if (!session) { setLoading(false); return; }
@@ -36,6 +42,28 @@ export default function ListDetailPage() {
     const isDark = document.documentElement.classList.toggle('dark');
     try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
     setDark(isDark);
+  }
+
+  function startRename() {
+    setRenameValue(list.name);
+    setIsRenaming(true);
+  }
+
+  async function saveRename() {
+    const trimmed = renameValue.trim();
+    setIsRenaming(false);
+    if (!trimmed || trimmed === list.name) return;
+    setList(prev => ({ ...prev, name: trimmed }));
+    await fetch(`/api/lists/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify({ name: trimmed }),
+    });
+  }
+
+  function onRenameKeyDown(e) {
+    if (e.key === 'Enter') { e.preventDefault(); saveRename(); }
+    if (e.key === 'Escape') setIsRenaming(false);
   }
 
   async function removeWord(simplified) {
@@ -94,7 +122,22 @@ export default function ListDetailPage() {
         <div className="list-detail-header">
           <div>
             <button className="list-detail-back" onClick={() => router.push('/lists')}>← My Lists</button>
-            <h1 className="list-detail-title">{list.name}</h1>
+            {isRenaming ? (
+              <input
+                className="list-detail-rename-input"
+                value={renameValue}
+                onChange={e => setRenameValue(e.target.value)}
+                onKeyDown={onRenameKeyDown}
+                onBlur={saveRename}
+                autoFocus
+                maxLength={60}
+              />
+            ) : (
+              <div className="list-detail-title-wrap">
+                <h1 className="list-detail-title">{list.name}</h1>
+                <button className="list-detail-rename-btn" onClick={startRename} title="Rename list">✏</button>
+              </div>
+            )}
             <p className="list-detail-sub">{list.words.length} {list.words.length === 1 ? 'word' : 'words'}</p>
           </div>
           <button

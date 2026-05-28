@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -7,15 +8,23 @@ import NewsletterForm from '../components/NewsletterForm';
 import { useSubscription } from '../hooks/useSubscription';
 import situations from '../../content/phrasebook/situations.json';
 
-const BADGE_LABELS = {
-  free: 'Free',
-  premium: 'Premium',
-  partial: 'Partial',
-};
+// Sort: fully-free first, then partial (free: true but has locked phrases), then fully-premium (free: false)
+function sortSituations(sits) {
+  return [...sits].sort((a, b) => {
+    const tier = s => {
+      if (!s.free) return 2;                          // fully premium
+      if (s.freePhraseCount < s.phraseCount) return 1; // partial
+      return 0;                                       // fully free
+    };
+    return tier(a) - tier(b);
+  });
+}
 
 export default function PhrasebookPage() {
   const router = useRouter();
   const { isPremium } = useSubscription();
+
+  useEffect(() => { document.title = 'Phrasebook — HanziDict'; }, []);
 
   function handleCardClick(sit) {
     if (!sit.free && !isPremium) {
@@ -25,12 +34,7 @@ export default function PhrasebookPage() {
     router.push(`/phrasebook/${sit.id}`);
   }
 
-  function badgeInfo(sit) {
-    const hasLocked = sit.phraseCount > sit.freePhraseCount;
-    if (sit.free && !hasLocked) return { label: 'Free', cls: 'pb-badge-free' };
-    if (sit.freePhraseCount > 0) return { label: 'Partial', cls: 'pb-badge-partial' };
-    return { label: 'Premium', cls: 'pb-badge-premium' };
-  }
+  const sorted = sortSituations(situations);
 
   return (
     <main>
@@ -45,8 +49,7 @@ export default function PhrasebookPage() {
         </div>
 
         <div className="pb-grid">
-          {situations.map(sit => {
-            const { label, cls } = badgeInfo(sit);
+          {sorted.map(sit => {
             const locked = !sit.free && !isPremium;
 
             return (
@@ -61,7 +64,6 @@ export default function PhrasebookPage() {
                 <div className="pb-card-pinyin">{sit.pinyin}</div>
                 <div className="pb-card-meta">
                   <span className="pb-card-count">{sit.phraseCount} phrases</span>
-                  <span className={cls}>{label}</span>
                 </div>
               </button>
             );

@@ -72,6 +72,7 @@ function SearchResults() {
 
   useEffect(() => {
     const q = searchParams.get('q') || '';
+    document.title = q.trim() ? `"${q.trim()}" — HanziDict` : 'Search — HanziDict';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     if (!q.trim()) { setResults([]); setTotal(0); return; }
     setLoading(true);

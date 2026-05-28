@@ -6,7 +6,7 @@
     "pinyin": "Wènhòu yǔ lǐmào",
     "free": true,
     "phraseCount": 21,
-    "freePhraseCount": 21,
+    "freePhraseCount": 13,
     "sections": [
       {
         "title": "Saying hello",
@@ -61,7 +61,7 @@
             "english": "How have you been lately?",
             "badge": "common",
             "badgeNote": "More natural",
-            "free": true
+            "free": false
           },
           {
             "type": "Q",
@@ -79,7 +79,7 @@
             "english": "Have you eaten?",
             "badge": "common",
             "badgeNote": "Traditional greeting",
-            "free": true
+            "free": false
           },
           {
             "type": "A",
@@ -97,7 +97,7 @@
             "english": "So-so / Getting by.",
             "badge": "casual",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "A",
@@ -130,7 +130,7 @@
             "english": "Thank you very much.",
             "badge": "formal",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "A",
@@ -148,7 +148,7 @@
             "english": "No worries.",
             "badge": "casual",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "A",
@@ -157,7 +157,7 @@
             "english": "Excuse me / Sorry to bother you.",
             "badge": "common",
             "badgeNote": "More common than 对不起 in daily life",
-            "free": true
+            "free": false
           },
           {
             "type": "A",
@@ -208,7 +208,7 @@
             "english": "Bye bye!",
             "badge": "casual",
             "badgeNote": "Very common",
-            "free": true
+            "free": false
           },
           {
             "type": "A/Q",
@@ -217,7 +217,7 @@
             "english": "See you tomorrow!",
             "badge": "common",
             "badgeNote": null,
-            "free": true
+            "free": false
           }
         ]
       }
@@ -502,7 +502,7 @@
     "pinyin": "Tīng bù dǒng",
     "free": true,
     "phraseCount": 9,
-    "freePhraseCount": 9,
+    "freePhraseCount": 6,
     "sections": [
       {
         "title": "Essential Phrases",
@@ -560,7 +560,7 @@
             "english": "How do you say it in English?",
             "badge": "common",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "Q",
@@ -569,7 +569,7 @@
             "english": "How do you say … in Chinese?",
             "badge": "common",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "Q",
@@ -578,7 +578,7 @@
             "english": "Please write it down.",
             "badge": "common",
             "badgeNote": null,
-            "free": true
+            "free": false
           },
           {
             "type": "Q",

@@ -53,6 +53,8 @@ export default function FlashcardsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  useEffect(() => { document.title = 'Flashcards — HanziDict'; }, []);
+
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
     try {
