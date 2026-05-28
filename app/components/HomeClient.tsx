@@ -20,7 +20,7 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showDrop, setShowDrop] = useState(false);
   const router = useRouter();
-  const { user } = useAuth();
+  const { user } = (useAuth() as any) ?? {};
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
