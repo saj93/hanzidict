@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import UserMenu from './UserMenu';
+import { useAuth } from './AuthProvider';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
 import NewsletterForm from './NewsletterForm';
 
 export default function BlogIndexClient({ posts }) {
   const router = useRouter();
+  const { user } = useAuth();
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -49,6 +51,9 @@ export default function BlogIndexClient({ posts }) {
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link active">Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          {!user && (
+            <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/login'); }}>Log in</button>
+          )}
         </div>
       )}
 

@@ -6,6 +6,7 @@ import SearchDropdown from './SearchDropdown';
 import DrawCanvas from './DrawCanvas';
 import RadicalSearch from './RadicalSearch';
 import UserMenu from './UserMenu';
+import { useAuth } from './AuthProvider';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
 import NewsletterForm from './NewsletterForm';
@@ -19,6 +20,7 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showDrop, setShowDrop] = useState(false);
   const router = useRouter();
+  const { user } = useAuth();
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -110,6 +112,9 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          {!user && (
+            <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/login'); }}>Log in</button>
+          )}
         </div>
       )}
 

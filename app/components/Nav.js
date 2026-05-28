@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import UserMenu from './UserMenu';
+import { useAuth } from './AuthProvider';
 
 export default function Nav() {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuth();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -90,6 +92,9 @@ export default function Nav() {
               {label}
             </button>
           ))}
+          {!user && (
+            <button className="mobile-menu-link" onClick={() => go('/login')}>Log in</button>
+          )}
           <div className="mobile-menu-actions">
             <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
             <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>

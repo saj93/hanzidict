@@ -3,12 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
+import { useAuth } from '../components/AuthProvider';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
 import NavSearch from '../components/NavSearch';
 
 export default function AboutPage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,6 +62,9 @@ export default function AboutPage() {
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link active">About</button>
+          {!user && (
+            <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/login'); }}>Log in</button>
+          )}
         </div>
       )}
 

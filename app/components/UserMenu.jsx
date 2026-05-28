@@ -20,8 +20,7 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <button className="nav-link" onClick={() => router.push('/login')}
-        style={{ fontWeight: 500, color: 'var(--accent)' }}>
+      <button className="nav-login-btn" onClick={() => router.push('/login')}>
         Login
       </button>
     );

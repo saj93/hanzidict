@@ -108,6 +108,14 @@ body {
 }
 .nav-link:hover { color: var(--fg); }
 .nav-link.active { color: var(--fg); font-weight: 500; }
+/* Login button — always visible, even on mobile where .nav-link is hidden */
+.nav-login-btn {
+  font-size: 13px; font-weight: 500; color: var(--accent);
+  cursor: pointer; background: none; border: none;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: opacity 0.15s;
+}
+.nav-login-btn:hover { opacity: 0.8; }
 .theme-btn {
   width: 32px; height: 32px; border-radius: 50%;
   border: 0.5px solid var(--border-mid);
