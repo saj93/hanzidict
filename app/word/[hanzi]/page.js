@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
-import { isVariantEntry } from '../../../lib/utils';
+import { isVariantEntry, cleanDefinitions } from '../../../lib/utils';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
@@ -344,7 +344,7 @@ export default function WordPage() {
     );
   }
 
-  const allDefs = (primary.definitions || '').split(' | ').filter(Boolean);
+  const allDefs = (cleanDefinitions(primary.definitions) || primary.definitions || '').split(' | ').filter(Boolean);
 
   function parseClassifiers(clStr) {
     return clStr.split(',').map(s => {
@@ -435,7 +435,7 @@ export default function WordPage() {
               {alternates.map((alt, i) => (
                 <span key={i} className="alt-inline-item">
                   <span className="alt-py">{convertPinyin(alt.pinyin)}</span>
-                  <span className="alt-def">{(alt.definitions || '').split(' | ')[0]}</span>
+                  <span className="alt-def">{(cleanDefinitions(alt.definitions) || alt.definitions || '').split(' | ')[0]}</span>
                   {i < alternates.length - 1 && <span className="alt-sep">·</span>}
                 </span>
               ))}
@@ -501,7 +501,7 @@ export default function WordPage() {
                     <div className="decomp-hanzi">{isTraditional && entry.traditional ? entry.traditional : entry.simplified}</div>
                     <div className="decomp-info">
                       {entry.pinyin
-                        ? `${convertPinyin(entry.pinyin)} · ${(entry.definitions || '').split(' | ')[0]?.slice(0, 24)}`
+                        ? `${convertPinyin(entry.pinyin)} · ${(cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ')[0]?.slice(0, 24)}`
                         : '—'}
                     </div>
                   </button>
@@ -556,7 +556,7 @@ export default function WordPage() {
                   <div className="related-hz">{isTraditional && r.traditional ? r.traditional : r.simplified}</div>
                   <div className="related-info">
                     <div className="related-py">{convertPinyin(r.pinyin)}</div>
-                    <div className="related-def">{(r.definitions || '').split(' | ')[0]}</div>
+                    <div className="related-def">{(cleanDefinitions(r.definitions) || r.definitions || '').split(' | ')[0]}</div>
                   </div>
                 </button>
               ))
