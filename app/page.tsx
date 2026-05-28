@@ -3,7 +3,7 @@ import { convertPinyin } from '../lib/pinyin';
 import HomeClient from './components/HomeClient';
 
 export default async function Home() {
-  let chips: [string, string, string][] = [];
+  let chips: [string, string][] = [];
   try {
     // getRepresentativeEntries deduplicates by simplified character so that
     // duoyinzi (多音字) always show their most common reading here.
@@ -11,7 +11,7 @@ export default async function Home() {
     chips = all
       .slice(0, 5)
       .filter((e: any) => e.simplified && e.pinyin)
-      .map((e: any) => [e.simplified, e.traditional || e.simplified, convertPinyin(e.pinyin)] as [string, string, string]);
+      .map((e: any) => [e.simplified, convertPinyin(e.pinyin)] as [string, string]);
   } catch {
     // chips stays empty — HomeClient handles this gracefully
   }

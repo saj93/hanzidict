@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import * as OpenCC from 'opencc-js';
 import SearchDropdown from './SearchDropdown';
 import DrawCanvas from './DrawCanvas';
 import RadicalSearch from './RadicalSearch';
@@ -11,7 +12,9 @@ import Footer from './Footer';
 import FeatureCards from './FeatureCards';
 import NewsletterForm from './NewsletterForm';
 
-export default function HomeClient({ initialChips }: { initialChips: [string, string, string][] }) {
+const toTraditional = OpenCC.Converter({ from: 'cn', to: 'tw' });
+
+export default function HomeClient({ initialChips }: { initialChips: [string, string][] }) {
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
@@ -158,8 +161,8 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         </div>
         {initialChips.length > 0 && (
           <div className="chips">
-            {initialChips.map(([simp, trad, py]) => {
-              const display = script === 'traditional' ? trad : simp;
+            {initialChips.map(([simp, py]) => {
+              const display = script === 'traditional' ? toTraditional(simp) : simp;
               return (
                 <button key={simp} className="chip" onClick={() => router.push(`/word/${encodeURIComponent(simp)}`)}>
                   <span className="chip-hanzi">{display}</span> {py}
