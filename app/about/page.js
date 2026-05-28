@@ -42,6 +42,7 @@ export default function AboutPage() {
         <div className="nav-right">
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link active">About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
@@ -56,6 +57,7 @@ export default function AboutPage() {
         <div className="mobile-menu">
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link active">About</button>
         </div>
