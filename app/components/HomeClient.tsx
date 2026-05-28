@@ -158,11 +158,11 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         </div>
         {initialChips.length > 0 && (
           <div className="chips">
-            {initialChips.map(([simp, trad, py]) => {
+            {initialChips.map(([simp, trad]) => {
               const display = script === 'traditional' ? trad : simp;
               return (
                 <button key={simp} className="chip" onClick={() => router.push(`/word/${encodeURIComponent(simp)}`)}>
-                  <span className="chip-hanzi">{display}</span> {py}
+                  {display}
                 </button>
               );
             })}
