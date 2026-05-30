@@ -193,6 +193,13 @@ export default function WordPage() {
   const isTraditional = script === 'traditional';
   const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
 
+  // Determine if this character is itself one of the 214 Kangxi radicals
+  const radicalChar = KANGXI_RADICALS.has(primary?.traditional)
+    ? primary.traditional
+    : KANGXI_RADICALS.has(primary?.simplified)
+      ? primary.simplified
+      : KANGXI_RADICALS.has(hanzi) ? hanzi : null;
+
   // Dynamic page title
   useEffect(() => {
     const char = primary?.simplified || hanzi;
@@ -492,6 +499,18 @@ export default function WordPage() {
             ))}
           </ul>
 
+          {radicalChar && (
+            <div className="kangxi-line">
+              {displayHanzi} is a Kangxi radical.{' '}
+              <button
+                className="kangxi-line-link"
+                onClick={() => router.push(`/radical/${encodeURIComponent(radicalChar)}`)}
+              >
+                See all characters that contain it →
+              </button>
+            </div>
+          )}
+
           {primary.simplified.length > 1 && decomp.length > 0 && (
             <>
               <div className="sec-label">Decomposition</div>
@@ -565,24 +584,6 @@ export default function WordPage() {
           </div>
         </div>
       </div>
-
-      {(() => {
-        const radicalChar = KANGXI_RADICALS.has(primary?.traditional)
-          ? primary.traditional
-          : KANGXI_RADICALS.has(hanzi) ? hanzi : null;
-        if (!radicalChar) return null;
-        return (
-          <div className="kangxi-line">
-            {displayHanzi} is a Kangxi radical.{' '}
-            <button
-              className="kangxi-line-link"
-              onClick={() => router.push(`/radical/${encodeURIComponent(radicalChar)}`)}
-            >
-              See all characters that contain it →
-            </button>
-          </div>
-        );
-      })()}
 
       {footer}
     </main>
