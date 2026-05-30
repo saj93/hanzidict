@@ -389,7 +389,7 @@ export default function WordPage() {
                   <div className="cb-row">
                     <span className="cb-label">Radical</span>
                     {entry.radical
-                      ? <button className="cb-radical" onClick={() => router.push(`/word/${encodeURIComponent(entry.radical)}`)}>{entry.radical}</button>
+                      ? <button className="cb-radical" onClick={() => router.push(`/radical/${encodeURIComponent(entry.radical)}`)}>{entry.radical}</button>
                       : <span className="cb-na">—</span>}
                   </div>
                   <div className="cb-row">
