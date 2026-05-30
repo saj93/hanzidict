@@ -83,6 +83,7 @@ export default function WordPage() {
   const [strokeCharIdx, setStrokeCharIdx] = useState(0);
   const [examples, setExamples] = useState([]);
   const [exampleIdx, setExampleIdx] = useState(0);
+  const [chengyu, setChengyu] = useState([]);
   const hwRef = useRef(null);
   const router = useRouter();
 
@@ -129,6 +130,7 @@ export default function WordPage() {
     setStrokeCharIdx(0);
     setExamples([]);
     setExampleIdx(0);
+    setChengyu([]);
     hwRef.current = null;
   }, [hanzi]);
 
@@ -168,6 +170,14 @@ export default function WordPage() {
           .then(r => r.ok ? r.json() : null)
           .then(d => { if (d?.results?.length) { setExamples(d.results); setExampleIdx(0); } })
           .catch(() => {});
+
+        // Chengyu containing this character (single-char entries only)
+        if (primary.simplified.length === 1) {
+          fetch(`/api/chengyu?char=${encodeURIComponent(primary.simplified)}`)
+            .then(r => r.json())
+            .then(d => setChengyu(d.results || []))
+            .catch(() => {});
+        }
 
         // Decomposition: one tile per character (no dedup, preserves position)
         if (primary.simplified.length > 1) {
@@ -509,6 +519,26 @@ export default function WordPage() {
                 See all characters that contain it →
               </button>
             </div>
+          )}
+
+          {chengyu.length > 0 && (
+            <>
+              <div className="sec-label">成语 Chengyu containing {displayHanzi}</div>
+              <div className="chengyu-list">
+                {chengyu.map((cy, i) => (
+                  <button key={i} className="chengyu-row"
+                    onClick={() => router.push(`/word/${encodeURIComponent(cy.simplified)}`)}>
+                    <span className="chengyu-hz">{cy.simplified}</span>
+                    <span className="chengyu-right">
+                      <span className="chengyu-py">{convertPinyin(cy.pinyin)}</span>
+                      <span className="chengyu-def">
+                        {(cleanDefinitions(cy.definitions) || cy.definitions || '').split(' | ')[0]}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </>
           )}
 
           {primary.simplified.length > 1 && decomp.length > 0 && (
