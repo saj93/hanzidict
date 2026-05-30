@@ -9,7 +9,7 @@ export async function GET(request) {
 
   try {
     if (char) {
-      const results = await getChengyuByChar(char, 6);
+      const results = await getChengyuByChar(char, 5);
       return Response.json({ results });
     }
     const { entries, total } = await getChengyuPage(page, limit, search);

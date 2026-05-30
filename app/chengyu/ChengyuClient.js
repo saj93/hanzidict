@@ -143,9 +143,6 @@ export default function ChengyuPage() {
                 >
                   <div className="chengyu-card-top">
                     <span className="chengyu-card-hz">{entry.simplified}</span>
-                    {entry.hsk_level && (
-                      <span className="hsk-wc-badge">{HSK_LABEL[entry.hsk_level] || `HSK ${entry.hsk_level}`}</span>
-                    )}
                   </div>
                   <div className="chengyu-card-py">{convertPinyin(entry.pinyin || '')}</div>
                   <div className="chengyu-card-def">{def}</div>

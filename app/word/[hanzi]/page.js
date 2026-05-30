@@ -84,6 +84,7 @@ export default function WordPage() {
   const [examples, setExamples] = useState([]);
   const [exampleIdx, setExampleIdx] = useState(0);
   const [chengyu, setChengyu] = useState([]);
+  const [sideView, setSideView] = useState('related'); // 'related' | 'chengyu'
   const hwRef = useRef(null);
   const router = useRouter();
 
@@ -131,6 +132,7 @@ export default function WordPage() {
     setExamples([]);
     setExampleIdx(0);
     setChengyu([]);
+    setSideView('related');
     hwRef.current = null;
   }, [hanzi]);
 
@@ -521,26 +523,6 @@ export default function WordPage() {
             </div>
           )}
 
-          {chengyu.length > 0 && (
-            <>
-              <div className="sec-label">成语 Chengyu containing {displayHanzi}</div>
-              <div className="chengyu-list">
-                {chengyu.map((cy, i) => (
-                  <button key={i} className="chengyu-row"
-                    onClick={() => router.push(`/word/${encodeURIComponent(cy.simplified)}`)}>
-                    <span className="chengyu-hz">{cy.simplified}</span>
-                    <span className="chengyu-right">
-                      <span className="chengyu-py">{convertPinyin(cy.pinyin)}</span>
-                      <span className="chengyu-def">
-                        {(cleanDefinitions(cy.definitions) || cy.definitions || '').split(' | ')[0]}
-                      </span>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-
           {primary.simplified.length > 1 && decomp.length > 0 && (
             <>
               <div className="sec-label">Decomposition</div>
@@ -597,20 +579,42 @@ export default function WordPage() {
           </div>
 
           <div className="side-card">
-            <div className="side-card-title">Related words</div>
-            {related.length === 0
-              ? <div style={{ fontSize: 13, color: 'var(--fg3)', padding: '4px 0' }}>Loading…</div>
-              : related.map((r, i) => (
+            <div className="stroke-card-header">
+              {chengyu.length > 0 && (
+                <button className="sbtn stroke-nav-btn" onClick={() => setSideView('related')} disabled={sideView === 'related'}>‹</button>
+              )}
+              <span className="side-card-title" style={{ flex: 1, textAlign: chengyu.length > 0 ? 'center' : 'left', margin: 0 }}>
+                {sideView === 'related' ? 'Related words' : '成语 Chengyu'}
+              </span>
+              {chengyu.length > 0 && (
+                <button className="sbtn stroke-nav-btn" onClick={() => setSideView('chengyu')} disabled={sideView === 'chengyu'}>›</button>
+              )}
+            </div>
+            {sideView === 'related' ? (
+              related.length === 0
+                ? <div style={{ fontSize: 13, color: 'var(--fg3)', padding: '4px 0' }}>Loading…</div>
+                : related.map((r, i) => (
+                  <button key={i} className="related-row"
+                    onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
+                    <div className="related-hz">{isTraditional && r.traditional ? r.traditional : r.simplified}</div>
+                    <div className="related-info">
+                      <div className="related-py">{convertPinyin(r.pinyin)}</div>
+                      <div className="related-def">{(cleanDefinitions(r.definitions) || r.definitions || '').split(' | ')[0]}</div>
+                    </div>
+                  </button>
+                ))
+            ) : (
+              chengyu.map((cy, i) => (
                 <button key={i} className="related-row"
-                  onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
-                  <div className="related-hz">{isTraditional && r.traditional ? r.traditional : r.simplified}</div>
+                  onClick={() => router.push(`/word/${encodeURIComponent(cy.simplified)}`)}>
+                  <div className="related-hz">{cy.simplified}</div>
                   <div className="related-info">
-                    <div className="related-py">{convertPinyin(r.pinyin)}</div>
-                    <div className="related-def">{(cleanDefinitions(r.definitions) || r.definitions || '').split(' | ')[0]}</div>
+                    <div className="related-py">{convertPinyin(cy.pinyin)}</div>
+                    <div className="related-def">{(cleanDefinitions(cy.definitions) || cy.definitions || '').split(' | ')[0]}</div>
                   </div>
                 </button>
               ))
-            }
+            )}
           </div>
         </div>
       </div>
