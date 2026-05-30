@@ -98,7 +98,10 @@ export default function AddToListButton({ simplified }) {
   async function toggle(listId) {
     if (!session) return;
     const isIn = lists.find(l => l.id === listId)?.contains;
-    setLists(prev => prev.map(l => l.id === listId ? { ...l, contains: !l.contains } : l));
+    setLists(prev => prev.map(l => l.id === listId
+      ? { ...l, contains: !l.contains, word_count: (l.word_count ?? 0) + (isIn ? -1 : 1) }
+      : l
+    ));
     await fetch(`/api/lists/${listId}/entries`, {
       method: isIn ? 'DELETE' : 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
