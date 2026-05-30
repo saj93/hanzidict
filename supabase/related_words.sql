@@ -15,23 +15,29 @@ AS $$
     SELECT regexp_split_to_table(query_simplified, '') AS ch
   ),
   hsk_matches AS (
-    SELECT DISTINCT e.simplified, e.traditional, e.pinyin, e.definitions, e.hsk_level
-    FROM entries e
-    JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
-    WHERE e.simplified != excluded_simplified
-      AND e.hsk_level IS NOT NULL
-      AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
+    SELECT simplified, traditional, pinyin, definitions, hsk_level
+    FROM (
+      SELECT DISTINCT e.simplified, e.traditional, e.pinyin, e.definitions, e.hsk_level
+      FROM entries e
+      JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
+      WHERE e.simplified != excluded_simplified
+        AND e.hsk_level IS NOT NULL
+        AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
+    ) sub
     ORDER BY random()
     LIMIT 5
   ),
   fallback AS (
-    SELECT DISTINCT e.simplified, e.traditional, e.pinyin, e.definitions, e.hsk_level
-    FROM entries e
-    JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
-    WHERE e.simplified != excluded_simplified
-      AND e.hsk_level IS NULL
-      AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
-      AND e.simplified NOT IN (SELECT simplified FROM hsk_matches)
+    SELECT simplified, traditional, pinyin, definitions, hsk_level
+    FROM (
+      SELECT DISTINCT e.simplified, e.traditional, e.pinyin, e.definitions, e.hsk_level
+      FROM entries e
+      JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
+      WHERE e.simplified != excluded_simplified
+        AND e.hsk_level IS NULL
+        AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
+        AND e.simplified NOT IN (SELECT simplified FROM hsk_matches)
+    ) sub
     ORDER BY random()
     LIMIT (5 - (SELECT COUNT(*) FROM hsk_matches))
   )
