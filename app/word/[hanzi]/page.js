@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import { isVariantEntry, cleanDefinitions } from '../../../lib/utils';
+import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
@@ -564,6 +565,24 @@ export default function WordPage() {
           </div>
         </div>
       </div>
+
+      {(() => {
+        const radicalChar = KANGXI_RADICALS.has(primary?.traditional)
+          ? primary.traditional
+          : KANGXI_RADICALS.has(hanzi) ? hanzi : null;
+        if (!radicalChar) return null;
+        return (
+          <div className="kangxi-line">
+            {displayHanzi} is a Kangxi radical.{' '}
+            <button
+              className="kangxi-line-link"
+              onClick={() => router.push(`/radical/${encodeURIComponent(radicalChar)}`)}
+            >
+              See all characters that contain it →
+            </button>
+          </div>
+        );
+      })()}
 
       {footer}
     </main>

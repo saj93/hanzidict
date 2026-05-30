@@ -1,8 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { convertPinyin } from '../../lib/pinyin';
 
 const RADICALS = [
   { strokes: 1,  chars: ['一','丨','丶','丿','乙','亅'] },
@@ -26,24 +24,6 @@ const RADICALS = [
 
 export default function RadicalSearch() {
   const router = useRouter();
-  const [selected, setSelected] = useState(null);
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const pickRadical = useCallback(async (char) => {
-    setSelected(char);
-    setLoading(true);
-    setResults([]);
-    try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(char)}&limit=50`);
-      const data = await res.json();
-      setResults(data.results || []);
-    } catch {
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
   return (
     <div className="rad-wrap">
@@ -57,8 +37,9 @@ export default function RadicalSearch() {
               {chars.map(ch => (
                 <button
                   key={ch}
-                  className={`rad-tile${selected === ch ? ' selected' : ''}`}
-                  onClick={() => pickRadical(ch)}
+                  className="rad-tile"
+                  onClick={() => router.push(`/radical/${encodeURIComponent(ch)}`)}
+                  title={`Characters with radical ${ch}`}
                 >
                   {ch}
                 </button>
@@ -67,32 +48,6 @@ export default function RadicalSearch() {
           </div>
         ))}
       </div>
-
-      {selected && (
-        <div className="rad-results-panel">
-          <div className="rad-results-header">
-            Words containing <span className="rad-results-char">{selected}</span>
-            {!loading && <span className="rad-results-count">{results.length} found</span>}
-          </div>
-          {loading && <div className="rad-loading">Searching…</div>}
-          {!loading && results.length === 0 && (
-            <div className="rad-empty">No results found</div>
-          )}
-          {!loading && results.map((entry, i) => (
-            <button
-              key={i}
-              className="rad-result-row"
-              onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
-            >
-              <span className="rad-res-hanzi">{entry.simplified}</span>
-              <span className="rad-res-pinyin">{convertPinyin(entry.pinyin || '')}</span>
-              <span className="rad-res-def">
-                {(entry.definitions || '').split(' | ')[0]}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
