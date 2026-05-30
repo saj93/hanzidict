@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchDropdown from './SearchDropdown';
+import HistoryDropdown from './HistoryDropdown';
 import DrawCanvas from './DrawCanvas';
 import RadicalSearch from './RadicalSearch';
 import UserMenu from './UserMenu';
@@ -10,6 +11,7 @@ import { useAuth } from './AuthProvider';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
 import NewsletterForm from './NewsletterForm';
+import { useSearchHistory } from '../hooks/useSearchHistory';
 
 export default function HomeClient({ initialChips }: { initialChips: [string, string][] }) {
   const [query, setQuery] = useState('');
@@ -19,10 +21,12 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
   const [script, setScript] = useState<'simplified' | 'traditional'>('simplified');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [showDrop, setShowDrop] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const router = useRouter();
   const { user } = (useAuth() as any) ?? {};
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { history, add: addHistory, remove: removeHistory, clear: clearHistory } = useSearchHistory();
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -54,6 +58,7 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
     function handler(e: MouseEvent) {
       if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
         setShowDrop(false);
+        setShowHistory(false);
       }
     }
     document.addEventListener('mousedown', handler);
@@ -67,19 +72,40 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
   }
 
   function go(simplified: string) {
+    const q = query.trim();
+    if (q) addHistory(q);
     setShowDrop(false);
+    setShowHistory(false);
     router.push(`/word/${encodeURIComponent(simplified)}`);
   }
 
   function handleSearch() {
-    if (!query.trim()) return;
+    const q = query.trim();
+    if (!q) return;
+    addHistory(q);
     setShowDrop(false);
-    router.push(`/word/${encodeURIComponent(query.trim())}`);
+    setShowHistory(false);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === 'Escape') { setShowDrop(false); return; }
+    if (e.key === 'Escape') { setShowDrop(false); setShowHistory(false); return; }
     if (e.key === 'Enter') handleSearch();
+  }
+
+  function handleFocus() {
+    if (!query.trim() && history.length > 0) {
+      setShowHistory(true);
+    } else if (suggestions.length > 0 && query.trim()) {
+      setShowDrop(true);
+    }
+  }
+
+  function selectFromHistory(q: string) {
+    setQuery(q);
+    addHistory(q);
+    setShowHistory(false);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
   }
 
   return (
@@ -132,13 +158,30 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
             <input
               placeholder="Search: 你好, nǐ hǎo, hello…"
               value={query}
-              onChange={e => setQuery(e.target.value)}
-              onFocus={() => suggestions.length > 0 && setShowDrop(true)}
+              onChange={e => {
+                const val = e.target.value;
+                setQuery(val);
+                if (val.trim()) {
+                  setShowHistory(false);
+                } else {
+                  setShowDrop(false);
+                  if (history.length > 0) setShowHistory(true);
+                }
+              }}
+              onFocus={handleFocus}
               onKeyDown={handleKeyDown}
               autoComplete="off"
             />
             <button className="search-go" onClick={handleSearch}>→</button>
             {showDrop && <SearchDropdown suggestions={suggestions} query={query} onSelect={go} />}
+            {showHistory && !showDrop && (
+              <HistoryDropdown
+                history={history.slice(0, 10)}
+                onSelect={selectFromHistory}
+                onRemove={removeHistory}
+                onClear={clearHistory}
+              />
+            )}
           </div>
           <div className="search-tabs">
             <button className={`stab${searchTab === 'text' ? ' on' : ''}`} onClick={() => setSearchTab('text')}>Text</button>

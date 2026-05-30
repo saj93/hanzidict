@@ -78,7 +78,7 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
     addHistory(q);
     setShowDrop(false);
     setShowHistory(false);
-    if (onSubmit) { onSubmit(q); } else { router.push(`/word/${encodeURIComponent(q)}`); }
+    if (onSubmit) { onSubmit(q); } else { router.push(`/search?q=${encodeURIComponent(q)}`); }
   }
 
   function onKeyDown(e) {
@@ -98,7 +98,7 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
     setQuery(q);
     addHistory(q);
     setShowHistory(false);
-    if (onSubmit) { onSubmit(q); } else { router.push(`/word/${encodeURIComponent(q)}`); }
+    if (onSubmit) { onSubmit(q); } else { router.push(`/search?q=${encodeURIComponent(q)}`); }
   }
 
   return (
@@ -111,7 +111,12 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
         onChange={e => {
           userTypedRef.current = true;
           setQuery(e.target.value);
-          if (e.target.value.trim()) setShowHistory(false);
+          if (e.target.value.trim()) {
+            setShowHistory(false);
+          } else {
+            setShowDrop(false);
+            if (history.length > 0) setShowHistory(true);
+          }
         }}
         onFocus={handleFocus}
         onKeyDown={onKeyDown}
