@@ -149,14 +149,15 @@ export default function ListStudyPage() {
       {topBar}
       <div className="fc-study-area">
         <div className={`fc-card${flipped ? ' fc-flipped' : ''}`} onClick={() => !flipped && setFlipped(true)}>
-          <div className="fc-card-front">
-            <div className="fc-hanzi">{displayHanzi(card)}</div>
-            {card?.is_new && <span className="fc-new-badge">New</span>}
-            <div className="fc-tap-hint">tap to reveal</div>
-          </div>
-          {flipped && (
+          {!flipped ? (
+            <div className="fc-card-front">
+              <div className="fc-hanzi">{displayHanzi(card)}</div>
+              {card?.is_new && <span className="fc-new-badge">New</span>}
+              <div className="fc-tap-hint">tap to reveal</div>
+            </div>
+          ) : (
             <div className="fc-card-back">
-              <div className="fc-hanzi-sm">{displayHanzi(card)}</div>
+              <div className="fc-hanzi">{displayHanzi(card)}</div>
               <div className="fc-pinyin">{convertPinyin(card?.pinyin ?? '')}</div>
               <div className="fc-back-row">
                 <AudioButton text={card?.simplified ?? ''} />
@@ -171,9 +172,9 @@ export default function ListStudyPage() {
           )}
         </div>
         {flipped && (
-          <div className="fc-rating-row">
+          <div className="fc-ratings visible">
             {RATINGS.map(r => (
-              <button key={r.key} className="fc-rating-btn" style={{ '--rating-color': r.color }} onClick={() => rate(r.key)}>
+              <button key={r.key} className="fc-rate-btn" style={{ '--rate-color': r.color }} onClick={() => rate(r.key)}>
                 {r.label}
               </button>
             ))}
