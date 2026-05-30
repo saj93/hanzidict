@@ -20,6 +20,7 @@ AS $$
     JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
     WHERE e.simplified != excluded_simplified
       AND e.hsk_level IS NOT NULL
+      AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
     ORDER BY random()
     LIMIT 5
   ),
@@ -29,6 +30,7 @@ AS $$
     JOIN chars c ON e.simplified LIKE '%' || c.ch || '%'
     WHERE e.simplified != excluded_simplified
       AND e.hsk_level IS NULL
+      AND (e.is_chengyu IS NULL OR e.is_chengyu = FALSE)
       AND e.simplified NOT IN (SELECT simplified FROM hsk_matches)
     ORDER BY random()
     LIMIT (5 - (SELECT COUNT(*) FROM hsk_matches))
