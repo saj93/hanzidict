@@ -17,7 +17,7 @@
             "hanzi": "你好！",
             "pinyin": "Nǐ hǎo!",
             "english": "Hello!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -26,7 +26,7 @@
             "hanzi": "早上好！",
             "pinyin": "Zǎoshang hǎo!",
             "english": "Good morning!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -35,7 +35,7 @@
             "hanzi": "下午好！",
             "pinyin": "Xiàwǔ hǎo!",
             "english": "Good afternoon!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -44,7 +44,7 @@
             "hanzi": "晚上好！",
             "pinyin": "Wǎnshang hǎo!",
             "english": "Good evening!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -59,7 +59,7 @@
             "hanzi": "最近怎么样？",
             "pinyin": "Zuìjìn zěnme yàng?",
             "english": "How have you been lately?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "More natural",
             "free": false
           },
@@ -68,7 +68,7 @@
             "hanzi": "你好吗？",
             "pinyin": "Nǐ hǎo ma?",
             "english": "How are you?",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": "Less common in daily speech",
             "free": true
           },
@@ -77,7 +77,7 @@
             "hanzi": "吃了吗？",
             "pinyin": "Chī le ma?",
             "english": "Have you eaten?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Traditional greeting",
             "free": false
           },
@@ -86,7 +86,7 @@
             "hanzi": "还不错。",
             "pinyin": "Hái bùcuò.",
             "english": "Not bad.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -95,7 +95,7 @@
             "hanzi": "还行。",
             "pinyin": "Hái xíng.",
             "english": "So-so / Getting by.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": null,
             "free": false
           },
@@ -104,7 +104,7 @@
             "hanzi": "我很好，谢谢。",
             "pinyin": "Wǒ hěn hǎo, xièxie.",
             "english": "I'm fine, thank you.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -119,7 +119,7 @@
             "hanzi": "谢谢！",
             "pinyin": "Xièxie!",
             "english": "Thank you!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -128,7 +128,7 @@
             "hanzi": "非常感谢。",
             "pinyin": "Fēicháng gǎnxiè.",
             "english": "Thank you very much.",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": false
           },
@@ -137,7 +137,7 @@
             "hanzi": "不客气。",
             "pinyin": "Bù kèqi.",
             "english": "You're welcome.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -146,7 +146,7 @@
             "hanzi": "没事。",
             "pinyin": "Méishì.",
             "english": "No worries.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": null,
             "free": false
           },
@@ -155,7 +155,7 @@
             "hanzi": "不好意思。",
             "pinyin": "Bù hǎoyìsi.",
             "english": "Excuse me / Sorry to bother you.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "More common than 对不起 in daily life",
             "free": false
           },
@@ -164,7 +164,7 @@
             "hanzi": "对不起。",
             "pinyin": "Duìbuqǐ.",
             "english": "I'm sorry.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -173,7 +173,7 @@
             "hanzi": "没关系。",
             "pinyin": "Méi guānxi.",
             "english": "It's okay / No problem.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -182,7 +182,7 @@
             "hanzi": "请。",
             "pinyin": "Qǐng.",
             "english": "Please. / After you.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -197,7 +197,7 @@
             "hanzi": "再见！",
             "pinyin": "Zàijiàn!",
             "english": "Goodbye!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -206,7 +206,7 @@
             "hanzi": "拜拜！",
             "pinyin": "Bāibāi!",
             "english": "Bye bye!",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": "Very common",
             "free": false
           },
@@ -215,7 +215,7 @@
             "hanzi": "明天见！",
             "pinyin": "Míngtiān jiàn!",
             "english": "See you tomorrow!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -241,7 +241,7 @@
             "hanzi": "你叫什么(名字)？",
             "pinyin": "Nǐ jiào shénme (míngzì)?",
             "english": "What's your name?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "名字 is optional",
             "free": true
           },
@@ -250,7 +250,7 @@
             "hanzi": "您贵姓？",
             "pinyin": "Nín guì xìng?",
             "english": "What is your surname?",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": true
           },
@@ -259,7 +259,7 @@
             "hanzi": "我叫…",
             "pinyin": "Wǒ jiào…",
             "english": "My name is…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -268,7 +268,7 @@
             "hanzi": "我的名字是…",
             "pinyin": "Wǒ de míngzì shì…",
             "english": "My name is…",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": true
           }
@@ -283,7 +283,7 @@
             "hanzi": "你是哪里人？",
             "pinyin": "Nǐ shì nǎlǐ rén?",
             "english": "Where are you from?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Most common",
             "free": true
           },
@@ -292,8 +292,8 @@
             "hanzi": "你是哪里的？",
             "pinyin": "Nǐ shì nǎlǐ de?",
             "english": "Where are you from?",
-            "badge": "casual",
-            "badgeNote": "Casual shortening",
+            "badge": "colloquial",
+            "badgeNote": "Colloquial shortening",
             "free": true
           },
           {
@@ -301,7 +301,7 @@
             "hanzi": "你是哪国人？",
             "pinyin": "Nǐ shì nǎ guó rén?",
             "english": "Which country are you from?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -310,7 +310,7 @@
             "hanzi": "我是法国人。",
             "pinyin": "Wǒ shì fǎguó rén.",
             "english": "I'm French.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Replace 法国 with your country",
             "free": true
           },
@@ -319,7 +319,7 @@
             "hanzi": "我来自法国。",
             "pinyin": "Wǒ lái zì fǎguó.",
             "english": "I'm from France.",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": true
           }
@@ -334,7 +334,7 @@
             "hanzi": "你多大(了)？",
             "pinyin": "Nǐ duō dà (le)?",
             "english": "How old are you?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Most common for adults",
             "free": true
           },
@@ -343,7 +343,7 @@
             "hanzi": "你(今年)几岁？",
             "pinyin": "Nǐ (jīnnián) jǐ suì?",
             "english": "How old are you?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "More natural for children",
             "free": true
           },
@@ -352,7 +352,7 @@
             "hanzi": "我(今年)…岁。",
             "pinyin": "Wǒ (jīnnián)… suì.",
             "english": "I'm … years old.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -367,7 +367,7 @@
             "hanzi": "你是做什么的？",
             "pinyin": "Nǐ shì zuò shénme de?",
             "english": "What do you do?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Most natural",
             "free": true
           },
@@ -376,7 +376,7 @@
             "hanzi": "你做什么工作？/ 你的工作是什么？",
             "pinyin": "Nǐ zuò shénme gōngzuò? / Nǐ de gōngzuò shì shénme?",
             "english": "What is your job?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -385,7 +385,7 @@
             "hanzi": "我是学生。",
             "pinyin": "Wǒ shì xuésheng.",
             "english": "I'm a student.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -394,7 +394,7 @@
             "hanzi": "我在…工作。",
             "pinyin": "Wǒ zài… gōngzuò.",
             "english": "I work at/in…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -409,7 +409,7 @@
             "hanzi": "你会说中文吗？",
             "pinyin": "Nǐ huì shuō zhōngwén ma?",
             "english": "Do you speak Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -418,7 +418,7 @@
             "hanzi": "你在学中文吗？",
             "pinyin": "Nǐ zài xué zhōngwén ma?",
             "english": "Are you learning Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -427,7 +427,7 @@
             "hanzi": "我在学中文。",
             "pinyin": "Wǒ zài xué zhōngwén.",
             "english": "I'm learning Chinese.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -436,7 +436,7 @@
             "hanzi": "我会说一点儿中文。",
             "pinyin": "Wǒ huì shuō yīdiǎnr zhōngwén.",
             "english": "I speak a little Chinese.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -445,7 +445,7 @@
             "hanzi": "你学了多久中文了？",
             "pinyin": "Nǐ xué le duōjiǔ zhōngwén le?",
             "english": "How long have you been learning?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -454,7 +454,7 @@
             "hanzi": "我学了…年了。",
             "pinyin": "Wǒ xué le… nián le.",
             "english": "I've been learning for … years.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -463,7 +463,7 @@
             "hanzi": "我的中文不太好。",
             "pinyin": "Wǒ de zhōngwén bù tài hǎo.",
             "english": "My Chinese isn't very good.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -478,7 +478,7 @@
             "hanzi": "很高兴认识你。",
             "pinyin": "Hěn gāoxìng rènshi nǐ.",
             "english": "Nice to meet you.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -487,7 +487,7 @@
             "hanzi": "幸会幸会。",
             "pinyin": "Xìnghuì xìnghuì.",
             "english": "Pleased to meet you.",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": true
           }
@@ -513,7 +513,7 @@
             "hanzi": "我听不懂。",
             "pinyin": "Wǒ tīng bù dǒng.",
             "english": "I don't understand what I'm hearing.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -522,7 +522,7 @@
             "hanzi": "我不明白。",
             "pinyin": "Wǒ bù míngbái.",
             "english": "I don't understand.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -531,7 +531,7 @@
             "hanzi": "你能再说一遍吗？",
             "pinyin": "Nǐ néng zài shuō yībiàn ma?",
             "english": "Could you say that again?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -540,7 +540,7 @@
             "hanzi": "请说慢一点。",
             "pinyin": "Qǐng shuō màn yīdiǎn.",
             "english": "Please speak more slowly.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -549,7 +549,7 @@
             "hanzi": "这是什么意思？",
             "pinyin": "Zhè shì shénme yìsi?",
             "english": "What does this mean?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -558,7 +558,7 @@
             "hanzi": "用英文怎么说？",
             "pinyin": "Yòng yīngwén zěnme shuō?",
             "english": "How do you say it in English?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -567,7 +567,7 @@
             "hanzi": "用中文怎么说…？",
             "pinyin": "Yòng zhōngwén zěnme shuō…?",
             "english": "How do you say … in Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -576,7 +576,7 @@
             "hanzi": "请写下来。",
             "pinyin": "Qǐng xiě xiàlái.",
             "english": "Please write it down.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -585,7 +585,7 @@
             "hanzi": "你会说英文吗？",
             "pinyin": "Nǐ huì shuō yīngwén ma?",
             "english": "Do you speak English?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           }
@@ -611,7 +611,7 @@
             "hanzi": "你会说中文？！",
             "pinyin": "Nǐ huì shuō zhōngwén?!",
             "english": "You speak Chinese?!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -620,7 +620,7 @@
             "hanzi": "你的中文真好！",
             "pinyin": "Nǐ de zhōngwén zhēn hǎo!",
             "english": "Your Chinese is really good!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -629,7 +629,7 @@
             "hanzi": "我只会说一点点。",
             "pinyin": "Wǒ zhǐ huì shuō yīdiǎndiǎn.",
             "english": "I only know a little bit.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -638,7 +638,7 @@
             "hanzi": "还在学呢。",
             "pinyin": "Hái zài xué ne.",
             "english": "Still learning.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": null,
             "free": true
           },
@@ -647,7 +647,7 @@
             "hanzi": "你会中文？！",
             "pinyin": "Nǐ huì zhōngwén?!",
             "english": "You know Chinese?!",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": null,
             "free": false
           },
@@ -656,7 +656,7 @@
             "hanzi": "你懂中文？",
             "pinyin": "Nǐ dǒng zhōngwén?",
             "english": "You understand Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -665,7 +665,7 @@
             "hanzi": "你中文说得这么流利！",
             "pinyin": "Nǐ zhōngwén shuō de zhème liúlì!",
             "english": "Your Chinese is so fluent!",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -674,7 +674,7 @@
             "hanzi": "哪里哪里，还差得远呢。",
             "pinyin": "Nǎlǐ nǎlǐ, hái chà de yuǎn ne.",
             "english": "Not at all, I still have a long way to go.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": "Most natural humble response",
             "free": false
           },
@@ -683,7 +683,7 @@
             "hanzi": "谢谢，你过奖了。",
             "pinyin": "Xièxie, nǐ guòjiǎng le.",
             "english": "Thank you, you're too kind.",
-            "badge": "formal",
+            "badge": "textbook",
             "badgeNote": null,
             "free": false
           }
@@ -698,7 +698,7 @@
             "hanzi": "你是中国人吗？",
             "pinyin": "Nǐ shì Zhōngguórén ma?",
             "english": "Are you Chinese (from China)?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -707,7 +707,7 @@
             "hanzi": "不是，我是法国人。",
             "pinyin": "Bù shì, wǒ shì fǎguó rén.",
             "english": "No, I'm French.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -716,7 +716,7 @@
             "hanzi": "你是华人吗？",
             "pinyin": "Nǐ shì Huárén ma?",
             "english": "Are you ethnically Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -725,7 +725,7 @@
             "hanzi": "你是华裔吗？",
             "pinyin": "Nǐ shì Huáyì ma?",
             "english": "Do you have Chinese ancestry?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -734,7 +734,7 @@
             "hanzi": "是的，我是华裔。",
             "pinyin": "Shì de, wǒ shì Huáyì.",
             "english": "Yes, I have Chinese ancestry.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -743,7 +743,7 @@
             "hanzi": "不是，但我对中国文化很感兴趣。",
             "pinyin": "Bù shì, dàn wǒ duì Zhōngguó wénhuà hěn gǎn xìngqù.",
             "english": "No, but I'm very interested in Chinese culture.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -758,7 +758,7 @@
             "hanzi": "你在哪里学的中文？",
             "pinyin": "Nǐ zài nǎlǐ xué de zhōngwén?",
             "english": "Where did you learn Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -767,7 +767,7 @@
             "hanzi": "我自学的。",
             "pinyin": "Wǒ zìxué de.",
             "english": "I'm self-taught.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -776,7 +776,7 @@
             "hanzi": "我在网上/用app学的。",
             "pinyin": "Wǒ zài wǎngshàng / yòng app xué de.",
             "english": "I learned online / with an app.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -785,7 +785,7 @@
             "hanzi": "你是自学的吗？",
             "pinyin": "Nǐ shì zìxué de ma?",
             "english": "Are you self-taught?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -794,7 +794,7 @@
             "hanzi": "你有老师吗？",
             "pinyin": "Nǐ yǒu lǎoshī ma?",
             "english": "Do you have a teacher?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -803,7 +803,7 @@
             "hanzi": "我在大学学过一点。",
             "pinyin": "Wǒ zài dàxué xuéguò yīdiǎn.",
             "english": "I studied a little at university.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -812,7 +812,7 @@
             "hanzi": "我去过中国，在那里学的。",
             "pinyin": "Wǒ qùguò Zhōngguó, zài nàlǐ xué de.",
             "english": "I went to China and learned there.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -827,7 +827,7 @@
             "hanzi": "你为什么学中文？",
             "pinyin": "Nǐ wèishénme xué zhōngwén?",
             "english": "Why are you learning Chinese?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -836,7 +836,7 @@
             "hanzi": "因为我觉得中文很有意思。",
             "pinyin": "Yīnwèi wǒ juédé zhōngwén hěn yǒu yìsi.",
             "english": "Because I find Chinese really interesting.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -845,7 +845,7 @@
             "hanzi": "因为工作需要。",
             "pinyin": "Yīnwèi gōngzuò xūyào.",
             "english": "Because of work.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -854,7 +854,7 @@
             "hanzi": "是因为工作吗？",
             "pinyin": "Shì yīnwèi gōngzuò ma?",
             "english": "Is it for work?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -863,7 +863,7 @@
             "hanzi": "因为我喜欢中国文化。",
             "pinyin": "Yīnwèi wǒ xǐhuān Zhōngguó wénhuà.",
             "english": "Because I love Chinese culture.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -872,7 +872,7 @@
             "hanzi": "就是觉得好玩。",
             "pinyin": "Jiùshì juédé hǎowán.",
             "english": "Just because I find it fun.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": "Very natural",
             "free": false
           },
@@ -881,7 +881,7 @@
             "hanzi": "因为我想去中国旅游。",
             "pinyin": "Yīnwèi wǒ xiǎng qù Zhōngguó lǚyóu.",
             "english": "Because I want to travel to China.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -890,7 +890,7 @@
             "hanzi": "因为我喜欢挑战。",
             "pinyin": "Yīnwèi wǒ xǐhuān tiǎozhàn.",
             "english": "Because I like challenges.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -905,7 +905,7 @@
             "hanzi": "你觉得中文难吗？",
             "pinyin": "Nǐ juédé zhōngwén nán ma?",
             "english": "Do you find Chinese difficult?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -914,7 +914,7 @@
             "hanzi": "挺难的，但是很有意思。",
             "pinyin": "Tǐng nán de, dànshì hěn yǒu yìsi.",
             "english": "Pretty difficult, but very interesting.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -923,7 +923,7 @@
             "hanzi": "声调对我来说最难。",
             "pinyin": "Shēngdiào duì wǒ lái shuō zuì nán.",
             "english": "Tones are the hardest part for me.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -932,7 +932,7 @@
             "hanzi": "声调难不难？",
             "pinyin": "Shēngdiào nán bu nán?",
             "english": "Are the tones hard?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -941,7 +941,7 @@
             "hanzi": "汉字难写吗？",
             "pinyin": "Hànzì nán xiě ma?",
             "english": "Are characters hard to write?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -950,7 +950,7 @@
             "hanzi": "比我想象的难。",
             "pinyin": "Bǐ wǒ xiǎngxiàng de nán.",
             "english": "Harder than I imagined.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -959,7 +959,7 @@
             "hanzi": "没有我以为的那么难。",
             "pinyin": "Méiyǒu wǒ yǐwéi de nàme nán.",
             "english": "Not as hard as I thought.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -974,7 +974,7 @@
             "hanzi": "你去过中国吗？",
             "pinyin": "Nǐ qùguò Zhōngguó ma?",
             "english": "Have you been to China?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -983,7 +983,7 @@
             "hanzi": "还没有，但我很想去。",
             "pinyin": "Hái méiyǒu, dàn wǒ hěn xiǎng qù.",
             "english": "Not yet, but I really want to.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -992,7 +992,7 @@
             "hanzi": "去过一次，非常喜欢。",
             "pinyin": "Qùguò yīcì, fēicháng xǐhuān.",
             "english": "I went once, I loved it.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1001,7 +1001,7 @@
             "hanzi": "你去过哪些地方？",
             "pinyin": "Nǐ qùguò nǎxiē dìfāng?",
             "english": "Which places have you been to?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1010,7 +1010,7 @@
             "hanzi": "你喜欢中国吗？",
             "pinyin": "Nǐ xǐhuān Zhōngguó ma?",
             "english": "Do you like China?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1019,7 +1019,7 @@
             "hanzi": "去过，我去过北京和上海。",
             "pinyin": "Qùguò, wǒ qùguò Běijīng hé Shànghǎi.",
             "english": "Yes, I've been to Beijing and Shanghai.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
@@ -1045,7 +1045,7 @@
             "hanzi": "你喜欢…吗？",
             "pinyin": "Nǐ xǐhuān… ma?",
             "english": "Do you like…?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1054,7 +1054,7 @@
             "hanzi": "你最喜欢什么？",
             "pinyin": "Nǐ zuì xǐhuān shénme?",
             "english": "What do you like the most?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1063,7 +1063,7 @@
             "hanzi": "我喜欢… / 我不喜欢…",
             "pinyin": "Wǒ xǐhuān… / Wǒ bù xǐhuān…",
             "english": "I like… / I don't like…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1072,7 +1072,7 @@
             "hanzi": "我最喜欢…",
             "pinyin": "Wǒ zuì xǐhuān…",
             "english": "My favorite…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1081,7 +1081,7 @@
             "hanzi": "我更喜欢…",
             "pinyin": "Wǒ gèng xǐhuān…",
             "english": "I prefer…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": true
           },
@@ -1090,7 +1090,7 @@
             "hanzi": "你对…感兴趣吗？",
             "pinyin": "Nǐ duì… gǎn xìngqù ma?",
             "english": "Are you interested in…?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1099,7 +1099,7 @@
             "hanzi": "…怎么样？",
             "pinyin": "… zěnme yàng?",
             "english": "What do you think of…?",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1108,7 +1108,7 @@
             "hanzi": "我对…感兴趣。",
             "pinyin": "Wǒ duì… gǎn xìngqù.",
             "english": "I'm interested in…",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1117,7 +1117,7 @@
             "hanzi": "我觉得…很有意思。",
             "pinyin": "Wǒ juédé… hěn yǒu yìsi.",
             "english": "I find … very interesting.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1126,7 +1126,7 @@
             "hanzi": "我觉得…没意思。",
             "pinyin": "Wǒ juédé… méi yìsi.",
             "english": "I find … boring.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": null,
             "free": false
           },
@@ -1135,7 +1135,7 @@
             "hanzi": "都行。/ 随便。",
             "pinyin": "Dōu xíng. / Suíbiàn.",
             "english": "Either is fine. / Whatever.",
-            "badge": "casual",
+            "badge": "colloquial",
             "badgeNote": "Very natural",
             "free": false
           },
@@ -1144,7 +1144,7 @@
             "hanzi": "我无所谓。",
             "pinyin": "Wǒ wúsuǒwèi.",
             "english": "I don't mind.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           },
@@ -1153,7 +1153,7 @@
             "hanzi": "看情况。",
             "pinyin": "Kàn qíngkuàng.",
             "english": "Depends on the situation.",
-            "badge": "common",
+            "badge": "everyday",
             "badgeNote": null,
             "free": false
           }
