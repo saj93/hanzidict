@@ -10,6 +10,7 @@ import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
 import AudioButton from '../../components/AudioButton';
 import AddToListButton from '../../components/AddToListButton';
+import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
 import * as OpenCC from 'opencc-js';
 
@@ -495,7 +496,7 @@ export default function WordPage() {
                     const ex = examples[exampleIdx];
                     return (
                       <div className="example-block">
-                        <div className="example-zh">{isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)}</div>
+                        <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
                         {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
                         <div className="example-en">{ex.english}</div>
                         {examples.length > 1 && (

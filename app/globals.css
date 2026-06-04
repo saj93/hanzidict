@@ -796,6 +796,98 @@ html.dark .history-footer { background: var(--bg3); }
 .example-nav { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .example-counter { font-size: 12px; color: var(--fg3); min-width: 32px; text-align: center; }
 
+/* ── Clickable characters ──────────────────────────────────────────────────── */
+.char-clickable {
+  display: inline;
+  background: none;
+  border: none;
+  border-bottom: 1px dotted var(--fg3);
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  vertical-align: baseline;
+  transition: color 0.12s, border-color 0.12s;
+}
+.char-clickable:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Character popover ─────────────────────────────────────────────────────── */
+.char-pop {
+  background: var(--bg2);
+  border: 1px solid var(--border-mid);
+  border-radius: 12px;
+  padding: 12px 14px 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.char-pop-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.char-pop-hz {
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--fg);
+  flex-shrink: 0;
+}
+.char-pop-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.char-pop-py {
+  font-size: 15px;
+  color: var(--accent);
+  font-weight: 500;
+  line-height: 1;
+}
+.char-pop-defs {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.char-pop-def {
+  font-size: 12px;
+  color: var(--fg2);
+  line-height: 1.45;
+}
+.char-pop-def-num {
+  color: var(--fg3);
+  font-size: 11px;
+}
+.char-pop-link {
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 2px 0 0;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+}
+.char-pop-link:hover { text-decoration: underline; }
+.char-pop-loading {
+  font-size: 13px;
+  color: var(--fg3);
+  padding: 10px 4px;
+  text-align: center;
+  min-width: 120px;
+}
+
 .decomp-row { display: flex; gap: 12px; flex-wrap: wrap; }
 .decomp-tile {
   text-align: center; padding: 14px 18px;
