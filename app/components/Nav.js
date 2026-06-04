@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import UserMenu from './UserMenu';
+import NavSearch from './NavSearch';
 import { useAuth } from './AuthProvider';
 
 export default function Nav() {
@@ -51,6 +52,7 @@ export default function Nav() {
         <button className="nav-logo" onClick={() => go('/')}>
           <span className="logo-mark">汉</span>HanziDict
         </button>
+        <div className="nav-search-center"><NavSearch /></div>
         <div className="nav-right">
           {links.map(({ label, path }) => (
             <button
