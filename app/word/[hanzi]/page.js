@@ -105,6 +105,7 @@ export default function WordPage() {
   const [exampleIdx, setExampleIdx] = useState(0);
   const [chengyu, setChengyu] = useState([]);
   const [sideView, setSideView] = useState('related'); // 'related' | 'chengyu'
+  const [showAllDefs, setShowAllDefs] = useState(false);
   const hwRef = useRef(null);
   const router = useRouter();
 
@@ -153,6 +154,7 @@ export default function WordPage() {
     setExampleIdx(0);
     setChengyu([]);
     setSideView('related');
+    setShowAllDefs(false);
     hwRef.current = null;
   }, [hanzi]);
 
@@ -506,7 +508,7 @@ export default function WordPage() {
 
           <div className="sec-label">Definitions</div>
           <ul className="defs">
-            {defs.map((def, i) => (
+            {(showAllDefs ? defs : defs.slice(0, 6)).map((def, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
                 <div>
@@ -532,6 +534,11 @@ export default function WordPage() {
               </li>
             ))}
           </ul>
+          {defs.length > 6 && (
+            <button className="defs-show-more" onClick={() => setShowAllDefs(v => !v)}>
+              {showAllDefs ? 'Show less' : `Show ${defs.length - 6} more`}
+            </button>
+          )}
 
           {radicalChar && (
             <div className="kangxi-line">
