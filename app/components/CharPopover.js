@@ -53,9 +53,13 @@ export default function CharPopover({ char, anchorRect, onClose }) {
     ? { top: anchorRect.bottom + 6, left, width: POPOVER_W }
     : { bottom: window.innerHeight - anchorRect.top + 6, left, width: POPOVER_W };
 
+  const CL_RE = /\(?CL:[^)]+\)?/g;
   const defs = data
     ? (cleanDefinitions(data.definitions) || data.definitions || '')
-        .split(' | ').filter(Boolean).slice(0, 2)
+        .split(' | ')
+        .map(d => d.replace(CL_RE, '').replace(/\s{2,}/g, ' ').trim())
+        .filter(Boolean)
+        .slice(0, 2)
     : [];
 
   return (
