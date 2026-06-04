@@ -21,6 +21,7 @@ RETURNS TABLE (
 )
 LANGUAGE sql
 STABLE
+SET search_path = public
 AS $$
   SELECT
     simplified, traditional, pinyin, definitions, hsk_level,

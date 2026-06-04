@@ -1,5 +1,7 @@
 CREATE OR REPLACE FUNCTION bulk_update_radical_strokes(updates JSONB)
-RETURNS void LANGUAGE plpgsql AS $$
+RETURNS void LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
   UPDATE entries e
   SET radical = u.radical,

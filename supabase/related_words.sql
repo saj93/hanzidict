@@ -9,6 +9,7 @@ RETURNS TABLE (
 )
 LANGUAGE sql
 STABLE
+SET search_path = public
 AS $$
   -- HSK words sharing at least one character, random order, limit 5
   WITH chars AS (

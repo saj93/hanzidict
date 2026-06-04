@@ -5,6 +5,7 @@ CREATE OR REPLACE FUNCTION search_pinyin_normalized(query_normalized text)
 RETURNS SETOF entries
 LANGUAGE sql
 STABLE
+SET search_path = public
 AS $$
   SELECT *
   FROM entries
