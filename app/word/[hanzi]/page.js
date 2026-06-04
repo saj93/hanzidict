@@ -52,14 +52,33 @@ function sortByHskPinyin(entries) {
 
 function processExactMatches(entries) {
   const sorted = sortByHskPinyin(entries);
-  // Merge same-pinyin groups: keep best (non-variant) per unique pinyin
-  const seen = new Map();
+
+  // Group all entries by normalized pinyin (preserves sorted order within each group)
+  const groups = new Map();
   for (const e of sorted) {
     const key = normalizePy(e.pinyin);
-    if (!seen.has(key)) seen.set(key, e);
-    else if (isVariant(seen.get(key)) && !isVariant(e)) seen.set(key, e);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(e);
   }
-  const deduped = [...seen.values()];
+
+  // For each group: pick the best representative, merge ALL non-variant definitions
+  const deduped = [];
+  for (const group of groups.values()) {
+    const best = group.find(e => !isVariant(e)) ?? group[0];
+    const seenDefs = new Set();
+    const mergedDefs = [];
+    for (const e of group.filter(g => !isVariant(g))) {
+      for (const raw of (e.definitions || '').split(' | ')) {
+        const d = raw.trim();
+        if (d && !seenDefs.has(d)) { seenDefs.add(d); mergedDefs.push(d); }
+      }
+    }
+    deduped.push({
+      ...best,
+      definitions: mergedDefs.length ? mergedDefs.join(' | ') : best.definitions,
+    });
+  }
+
   const primary = deduped.find(e => !isVariant(e)) ?? deduped[0] ?? null;
   const alternates = deduped.filter(e => e !== primary);
   return { primary, alternates, deduped };
