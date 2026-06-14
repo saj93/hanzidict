@@ -249,40 +249,63 @@ export default function TonesPage() {
 
           <h2>Tips for Learning Tones</h2>
 
-          <h3>1. Learn tones with vocabulary, not in isolation</h3>
+          <h3>1. Listen and repeat — a lot</h3>
           <p>
-            Don't practise tones on meaningless syllables. Learn each new word with its tone baked in
-            from the start — "mā means mother" not "mā is first tone." The meaning gives you a memory hook.
+            Tones are acquired through listening above all else. Repeat each word as many times as you
+            need until your intonation is as close as possible to the original. There's no shortcut here:
+            the ear has to train the mouth.
           </p>
 
           <h3>2. Exaggerate at first</h3>
           <p>
-            Native speakers' tones are smaller and faster than textbook examples. When you're starting,
-            make your tones large and deliberate. Exaggerated tones are always intelligible; flat,
-            uniform tones are not.
+            Native speakers' tones are compressed and fast. When you're starting out, make your tones
+            large and deliberate — it will feel theatrical, but it becomes natural with practice.
+            Exaggerated tones are always intelligible; flat, uniform tones often aren't.
           </p>
 
-          <h3>3. Record yourself</h3>
+          <h3>3. Always mark tones when you take notes</h3>
           <p>
-            Your internal perception of your own voice is unreliable. What sounds like a clear rising
-            tone to you might sound flat to a listener. Recording and listening back — even just on your
-            phone — reveals discrepancies you'd never catch otherwise.
+            When you write down a new word in pinyin, always include the tone marks. If you write <em>ma</em>
+            instead of <em>mā</em>, you've noted the sound but not the word. Make it a rule from day one.
+            If you've forgotten a tone, look it up — even if it's the fiftieth time. Repeated checking
+            builds both auditory and visual memory for the tones.
           </p>
 
-          <h3>4. Tones matter most for content words</h3>
+          <h3>4. Practise tones in words and phrases, not in isolation</h3>
           <p>
-            In real speech, context carries a lot of weight. Tonal errors on common words in predictable
-            contexts (ordering food, introducing yourself) are usually understood. Where tones matter most
-            is in content words used out of context — new vocabulary, names, or words you're introducing
-            into a conversation for the first time.
+            Drilling the four tones on abstract syllables is less effective than learning them attached
+            to real vocabulary. When you learn 买 <em>mǎi</em> (to buy), you learn the third tone through
+            a word you actually want to use. The meaning gives you a memory hook the syllable alone doesn't.
           </p>
 
-          <h3>5. Neutral tone words sound different in different contexts</h3>
+          <h3>5. Context carries more weight than you think</h3>
           <p>
-            The neutral tone (short and unstressed, written without a tone mark) adapts its pitch to
-            the tone that precedes it. 吗 *ma* after a first tone sounds different from 吗 *ma* after
-            a fourth tone. This isn't something to analyse — it happens automatically when you listen
-            and imitate enough native speech.
+            As a beginner, tone errors are not always a barrier to communication. In a restaurant, your
+            listener knows you're probably ordering food — context helps them fill in the gaps. But as you
+            advance, correct tones become the difference between someone who can introduce themselves in
+            Chinese and someone who can hold a real conversation. The better your tones, the closer your
+            accent is to a native speaker's.
+          </p>
+
+          <h3>6. Use colours to distinguish tones</h3>
+          <p>
+            A simple trick: assign a colour to each tone (first tone blue, second green, third orange,
+            fourth red — as used on this page) and use those colours when writing flashcards or notes.
+            Over time, you start to see the colour when you hear the tone.
+          </p>
+
+          <h2>Why Does Chinese Have Tones at All?</h2>
+          <p>
+            Linguists broadly agree that Old Chinese — spoken roughly from 1300 BCE to the early centuries
+            CE — was <strong>not a tonal language</strong>. Tones appear to have emerged during the Middle
+            Chinese period (6th–12th centuries), developing to replace consonants that once appeared at
+            the ends of syllables. Those final consonants survive today in many southern Chinese dialects,
+            including Cantonese — but they disappeared from Mandarin and were replaced by tonal distinctions.
+          </p>
+          <p>
+            In other words, the tones aren't arbitrary: they're the descendants of sounds that were once
+            there. Cantonese preserves 6–9 tones for the same reason — it retained more of those original
+            final consonants in a different form.
           </p>
 
         </div>
