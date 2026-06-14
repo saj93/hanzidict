@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
-import { isVariantEntry, cleanDefinitions } from '../../../lib/utils';
+import { isVariantEntry, isTruePointer, cleanDefinitions } from '../../../lib/utils';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
@@ -25,29 +25,49 @@ function normalizePy(pinyin) {
   return (pinyin || '').toLowerCase().trim();
 }
 
+function sortByHskDefs(a, b) {
+  // Variants/surnames last
+  const av = isVariant(a) ? 1 : 0, bv = isVariant(b) ? 1 : 0;
+  if (av !== bv) return av - bv;
+  // HSK-tagged before untagged
+  const aIsHSK = a.hsk_level !== null && a.hsk_level !== undefined;
+  const bIsHSK = b.hsk_level !== null && b.hsk_level !== undefined;
+  if (aIsHSK && !bIsHSK) return -1;
+  if (!aIsHSK && bIsHSK) return 1;
+  // Lower HSK level first
+  const aHsk = a.hsk_level ?? 999;
+  const bHsk = b.hsk_level ?? 999;
+  if (aHsk !== bHsk) return aHsk - bHsk;
+  // More definitions first
+  const aDefs = (a.definitions || '').split(' | ').filter(Boolean).length;
+  const bDefs = (b.definitions || '').split(' | ').filter(Boolean).length;
+  if (aDefs !== bDefs) return bDefs - aDefs;
+  // Alphabetical pinyin
+  return (a.pinyin || '').localeCompare(b.pinyin || '');
+}
+
 function sortByHskPinyin(entries) {
-  return [...entries].sort((a, b) => {
-    // frequency_rank first (lower = more common), nulls last
-    const aFreq = a.frequency_rank ?? Infinity;
-    const bFreq = b.frequency_rank ?? Infinity;
-    if (aFreq !== bFreq) return aFreq - bFreq;
-    // Then HSK-tagged before untagged, lower level first
-    const aIsHSK = a.hsk_level !== null && a.hsk_level !== undefined;
-    const bIsHSK = b.hsk_level !== null && b.hsk_level !== undefined;
-    if (aIsHSK && !bIsHSK) return -1;
-    if (!aIsHSK && bIsHSK) return 1;
-    if (aIsHSK && bIsHSK) return a.hsk_level - b.hsk_level;
-    // Both non-HSK: non-variants before variants/surnames
-    const av = isVariant(a) ? 1 : 0, bv = isVariant(b) ? 1 : 0;
-    if (av !== bv) return av - bv;
-    const aUpper = /^[A-Z]/.test(a.pinyin || '');
-    const bUpper = /^[A-Z]/.test(b.pinyin || '');
-    if (aUpper !== bUpper) return aUpper ? 1 : -1;
-    const aDefCount = (a.definitions || '').split(' | ').length;
-    const bDefCount = (b.definitions || '').split(' | ').length;
-    if (aDefCount !== bDefCount) return bDefCount - aDefCount;
-    return (a.pinyin || '').localeCompare(b.pinyin || '');
-  });
+  return [...entries].sort(sortByHskDefs);
+}
+
+// Group consecutive short defs (≤ 2 words) into semicolon-joined runs of up to 5.
+// Longer defs always get their own numbered item. Applied at display time.
+function groupShortDefs(defs) {
+  const MAX = 5;
+  const groups = [];
+  let run = [];
+  for (const d of defs) {
+    const words = d.trim().split(/\s+/).length;
+    if (words <= 2 && run.length < MAX) {
+      run.push(d);
+    } else {
+      if (run.length) { groups.push(run.join('; ')); run = []; }
+      if (words <= 2) run.push(d);
+      else groups.push(d);
+    }
+  }
+  if (run.length) groups.push(run.join('; '));
+  return groups;
 }
 
 function processExactMatches(entries) {
@@ -61,16 +81,16 @@ function processExactMatches(entries) {
     groups.get(key).push(e);
   }
 
-  // For each group: pick the best representative, merge ALL non-variant definitions
+  // For each group: flat-merge defs from all non-pointer entries (including surname entries).
+  // Individual pointer defs ("variant of X") are filtered inline.
   const deduped = [];
   for (const group of groups.values()) {
     const best = group.find(e => !isVariant(e)) ?? group[0];
     const seenDefs = new Set();
     const mergedDefs = [];
-    for (const e of group.filter(g => !isVariant(g))) {
-      for (const raw of (e.definitions || '').split(' | ')) {
-        const d = raw.trim();
-        if (d && !seenDefs.has(d)) { seenDefs.add(d); mergedDefs.push(d); }
+    for (const e of group.filter(g => !isTruePointer(g.definitions))) {
+      for (const d of (e.definitions || '').split(' | ').map(d => d.trim()).filter(Boolean)) {
+        if (!seenDefs.has(d) && !isTruePointer(d)) { seenDefs.add(d); mergedDefs.push(d); }
       }
     }
     deduped.push({
@@ -78,6 +98,9 @@ function processExactMatches(entries) {
       definitions: mergedDefs.length ? mergedDefs.join(' | ') : best.definitions,
     });
   }
+
+  // Re-sort using merged def counts — more accurate than per-row counts used above
+  deduped.sort(sortByHskDefs);
 
   const primary = deduped.find(e => !isVariant(e)) ?? deduped[0] ?? null;
   const alternates = deduped.filter(e => e !== primary);
@@ -88,7 +111,8 @@ export default function WordPage() {
   const params = useParams();
   const hanzi = decodeURIComponent(params.hanzi || '');
   const [results, setResults] = useState(null);
-  const [alternates, setAlternates] = useState([]);
+  const [pronunciations, setPronunciations] = useState([]);
+  const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [related, setRelated] = useState([]);
   const [decomp, setDecomp] = useState([]);
@@ -155,8 +179,16 @@ export default function WordPage() {
     setChengyu([]);
     setSideView('related');
     setShowAllDefs(false);
+    setPronunciations([]);
+    setActiveTabIdx(0);
     hwRef.current = null;
   }, [hanzi]);
+
+  // Reset per-tab display state when switching pronunciation tabs
+  useEffect(() => {
+    setShowAllDefs(false);
+    setExampleIdx(0);
+  }, [activeTabIdx]);
 
   // Reset stroke when script toggles
   useEffect(() => {
@@ -171,7 +203,7 @@ export default function WordPage() {
     setLoading(true);
     setRelated([]);
     setDecomp([]);
-    fetch(`/api/search?q=${encodeURIComponent(hanzi)}`)
+    fetch(`/api/search?q=${encodeURIComponent(hanzi)}&raw=1`)
       .then(r => r.json())
       .then(data => {
         const entries = data.results || [];
@@ -179,7 +211,7 @@ export default function WordPage() {
         const { primary, alternates, deduped } = processExactMatches(exactMatches);
         const otherEntries = entries.filter(e => e.simplified !== hanzi && e.traditional !== hanzi);
         setResults([...(primary ? [primary] : []), ...alternates, ...otherEntries]);
-        setAlternates(alternates);
+        setPronunciations(deduped);
         setLoading(false);
         if (!primary) return;
 
@@ -221,8 +253,7 @@ export default function WordPage() {
   }, [hanzi]);
 
 
-  const exactMatches = results?.filter(e => e.simplified === hanzi || e.traditional === hanzi) ?? [];
-  const primary = (processExactMatches(exactMatches).primary ?? results?.[0]) ?? null;
+  const primary = pronunciations[activeTabIdx] ?? results?.[0] ?? null;
   const hasTraditional = !!(primary?.traditional && primary.traditional !== primary.simplified);
   const isTraditional = script === 'traditional';
   const displayHanzi = (isTraditional && hasTraditional) ? primary.traditional : (primary?.simplified ?? '');
@@ -388,7 +419,10 @@ export default function WordPage() {
     );
   }
 
-  const allDefs = (cleanDefinitions(primary.definitions) || primary.definitions || '').split(' | ').filter(Boolean);
+  const allDefs = (cleanDefinitions(primary.definitions) || primary.definitions || '')
+    .split(' | ')
+    .filter(Boolean)
+    .map(d => d.replace(/^\(bound form\)\s*|^bound form:\s*/i, ''));
 
   function parseClassifiers(clStr) {
     return clStr.split(',').map(s => {
@@ -413,7 +447,8 @@ export default function WordPage() {
       defs.push(d);
     }
   }
-  const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : 'CC-CEDICT';
+  const groupedDefs = groupShortDefs(defs);
+  const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
 
   return (
@@ -453,35 +488,51 @@ export default function WordPage() {
         {/* ── Left: Entry ── */}
         <div className="entry-col">
 
-          <div className="hanzi-row">
-            <div className="hanzi-glyph">{displayHanzi}</div>
-            <div className="hanzi-meta">
-              <div className="pinyin-row">
-                <div className="pinyin-line">{pinyin}</div>
+          {(primary.simplified || hanzi).length >= 3 ? (
+            /* 3+ characters: stacked layout */
+            <div className="hanzi-block">
+              <div
+                className="hanzi-glyph"
+                style={{ fontSize: `clamp(28px, calc(85vw / ${displayHanzi.length}), 90px)` }}
+              >
+                {displayHanzi}
+              </div>
+              <div className="pinyin-line">{pinyin}</div>
+              {posLine && <div className="pos-line">{posLine}</div>}
+              <div className="hanzi-badges-row">
+                <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
                 <AudioButton text={primary?.simplified || hanzi} />
                 <AddToListButton simplified={primary?.simplified || hanzi} />
               </div>
-              <div className="pos-line">{posLine}</div>
-              <div className="badges">
-                <span className="badge green">
-                  {isTraditional ? 'Traditional' : 'Simplified'}
-                </span>
+            </div>
+          ) : (
+            /* 1–2 characters: original compact layout */
+            <div className="hanzi-row">
+              <div className="hanzi-glyph">{displayHanzi}</div>
+              <div className="hanzi-meta">
+                <div className="pinyin-row">
+                  <div className="pinyin-line">{pinyin}</div>
+                  <AudioButton text={primary?.simplified || hanzi} />
+                  <AddToListButton simplified={primary?.simplified || hanzi} />
+                </div>
+                {posLine && <div className="pos-line">{posLine}</div>}
+                <div className="badges">
+                  <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
-          {alternates.length > 0 && (
-            <div className="alt-inline">
-              <span className="alt-also-label">
-                Also:
-                <span className="alt-tooltip">This character has multiple pronunciations (多音字)</span>
-              </span>
-              {alternates.map((alt, i) => (
-                <span key={i} className="alt-inline-item">
-                  <span className="alt-py">{convertPinyin(alt.pinyin)}</span>
-                  <span className="alt-def">{(cleanDefinitions(alt.definitions) || alt.definitions || '').split(' | ')[0]}</span>
-                  {i < alternates.length - 1 && <span className="alt-sep">·</span>}
-                </span>
+          {pronunciations.length > 1 && (
+            <div className="pron-tabs">
+              {pronunciations.map((pron, i) => (
+                <button
+                  key={i}
+                  className={`pron-tab${activeTabIdx === i ? ' active' : ''}`}
+                  onClick={() => setActiveTabIdx(i)}
+                >
+                  {convertPinyin(pron.pinyin)}
+                </button>
               ))}
             </div>
           )}
@@ -508,7 +559,7 @@ export default function WordPage() {
 
           <div className="sec-label">Definitions</div>
           <ul className="defs">
-            {(showAllDefs ? defs : defs.slice(0, 6)).map((def, i) => (
+            {(showAllDefs ? groupedDefs : groupedDefs.slice(0, 6)).map((def, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
                 <div>
@@ -534,9 +585,9 @@ export default function WordPage() {
               </li>
             ))}
           </ul>
-          {defs.length > 6 && (
+          {groupedDefs.length > 6 && (
             <button className="defs-show-more" onClick={() => setShowAllDefs(v => !v)}>
-              {showAllDefs ? 'Show less' : `Show ${defs.length - 6} more`}
+              {showAllDefs ? 'Show less' : `Show ${groupedDefs.length - 6} more`}
             </button>
           )}
 

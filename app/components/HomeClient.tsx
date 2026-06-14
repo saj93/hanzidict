@@ -10,6 +10,7 @@ import UserMenu from './UserMenu';
 import { useAuth } from './AuthProvider';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
+import LearningPath from './LearningPath';
 import NewsletterForm from './NewsletterForm';
 import { useSearchHistory } from '../hooks/useSearchHistory';
 
@@ -218,6 +219,8 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
           </div>
         ))}
       </div>
+
+      <LearningPath />
 
       <FeatureCards
         onTryDraw={() => { setSearchTab('draw'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}

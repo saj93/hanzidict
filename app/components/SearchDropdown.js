@@ -15,7 +15,9 @@ export default function SearchDropdown({ suggestions, query, onSelect }) {
           <button key={i} className="drop-row" onMouseDown={e => { e.preventDefault(); onSelect(s.simplified); }}>
             <span className="drop-hz">{s.simplified}</span>
             <div className="drop-right">
-              <span className="drop-py">{convertPinyin(s.pinyin)}</span>
+              <span className="drop-py">
+                {s.pinyin_all ? s.pinyin_all.map(p => convertPinyin(p)).join(' / ') : convertPinyin(s.pinyin)}
+              </span>
               <span className="drop-def">{def}</span>
             </div>
           </button>

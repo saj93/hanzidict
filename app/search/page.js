@@ -107,6 +107,7 @@ function SearchResults() {
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
@@ -141,7 +142,9 @@ function SearchResults() {
                   onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
                   <div className="sr-hz">{script === 'traditional' && r.traditional ? r.traditional : r.simplified}</div>
                   <div className="sr-body">
-                    <div className="sr-py">{convertPinyin(r.pinyin)}</div>
+                    <div className="sr-py">
+                      {r.pinyin_all ? r.pinyin_all.map(p => convertPinyin(p)).join(' / ') : convertPinyin(r.pinyin)}
+                    </div>
                     <div className="sr-def">{(r.definitions || '').split(' | ')[0]}</div>
                   </div>
                   <div className="sr-arrow">›</div>

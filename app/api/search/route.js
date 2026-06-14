@@ -10,6 +10,7 @@ export async function GET(request) {
     return Response.json({ results: [], total: 0 });
   }
 
-  const { results, total } = await searchEntries(query, page, limit);
+  const raw = searchParams.get('raw') === '1';
+  const { results, total } = await searchEntries(query, page, limit, raw);
   return Response.json({ results, total });
 }

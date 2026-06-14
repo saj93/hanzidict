@@ -52,6 +52,7 @@ export default function FlashcardsPage() {
   const [sessionNew, setSessionNew] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [pronIdx, setPronIdx] = useState(0);
 
   useEffect(() => { document.title = 'Flashcards — HanziDict'; }, []);
 
@@ -122,6 +123,7 @@ export default function FlashcardsPage() {
         setIdx(0);
         setFlipped(false);
         setRatings({});
+        setPronIdx(0);
         setView('study');
       })
       .catch(() => setView('decks'));
@@ -151,6 +153,7 @@ export default function FlashcardsPage() {
     } else {
       setIdx(i => i + 1);
       setFlipped(false);
+      setPronIdx(0);
     }
   }
 
@@ -371,7 +374,9 @@ export default function FlashcardsPage() {
   }
 
   // ── Study ──
-  const defs = (card?.definitions || '').split(' | ').filter(Boolean);
+  const defs = (card?.definitions || '').split(' | ').filter(d => d && !d.startsWith('CL:'));
+  const cardPinyins = card?.pinyin_all ?? (card?.pinyin ? [card.pinyin] : []);
+  const currentPinyin = cardPinyins[pronIdx] ?? card?.pinyin ?? '';
 
   return (
     <main>
@@ -404,7 +409,13 @@ export default function FlashcardsPage() {
             <div className="fc-face fc-back">
               <div className="fc-char fc-char-sm">{displayHanzi(card)}</div>
               <div className="fc-pinyin-row">
-                <div className="fc-pinyin">{convertPinyin(card?.pinyin || '')}</div>
+                {cardPinyins.length > 1 && (
+                  <button className="fc-pron-arrow" onClick={() => setPronIdx(i => (i - 1 + cardPinyins.length) % cardPinyins.length)}>‹</button>
+                )}
+                <div className="fc-pinyin">{convertPinyin(currentPinyin)}</div>
+                {cardPinyins.length > 1 && (
+                  <button className="fc-pron-arrow" onClick={() => setPronIdx(i => (i + 1) % cardPinyins.length)}>›</button>
+                )}
                 <AudioButton text={card?.simplified || ''} />
               </div>
               <div className="fc-defs">
