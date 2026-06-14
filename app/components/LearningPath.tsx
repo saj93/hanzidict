@@ -58,6 +58,11 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     desc: 'Unlock the full advanced deck with a premium account.',
     href: '/pricing', cta: 'Unlock →', locked: true,
   });
+  const tones: Step = {
+    icon: '🎵', title: 'Guide: Mandarin Tones',
+    desc: 'Hear the four tones with audio examples and minimal pairs — the essential foundation for everything else.',
+    href: '/blog/tones', cta: 'Read →',
+  };
   const blog = (slug: string, title: string, desc: string): Step => ({
     icon: '📖', title, desc, href: `/blog/${slug}`, cta: 'Read →',
   });
@@ -73,23 +78,26 @@ function buildSteps(level: Level, goal: Goal): Step[] {
 
   if (level === 'beginner0') {
     if (goal === 'travel') return [
+      tones,
       phrase('greetings', 'Phrasebook: Greetings', 'Master basic hellos, goodbyes and pleasantries.'),
       phrase('introductions', 'Phrasebook: Introducing Yourself', "Say your name, where you're from, and more."),
-      phrase('misunderstandings', "Phrasebook: When You Don't Understand", 'Essential rescue phrases for any situation.'),
       fc(1),
     ];
     if (goal === 'culture' || goal === 'interest') return [
+      tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Understand how characters work before you learn them.'),
       phrase('greetings', 'Phrasebook: Greetings', 'Start speaking from day one.'),
       fc(1),
     ];
     if (goal === 'hsk') return [
+      tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'The building blocks of every HSK level.'),
       fc(1),
       fc(2),
     ];
     // business
     return [
+      tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Build a solid foundation first.'),
       fc(1),
       bizPhrase,
@@ -105,8 +113,8 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     ];
     if (goal === 'hsk') return [
       fc(1),
-      fc(2),
       blog('asking-questions-chinese', 'Guide: Asking Questions in Chinese', 'Question patterns essential for HSK 2.'),
+      fc(2),
     ];
     if (goal === 'business') return [
       fc(2),
@@ -115,9 +123,9 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     ];
     // culture / interest
     return [
-      fc(1),
+      tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Discover the stories behind the characters.'),
-      fc(2),
+      fc(1),
     ];
   }
 
@@ -125,8 +133,8 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     if (goal === 'business') return [bizPhrase, fc(4), fc(5)];
     if (goal === 'hsk') return [
       fc(3),
-      fc(4),
       blog('asking-questions-chinese', 'Guide: Asking Questions in Chinese', 'Patterns you\'ll encounter on HSK 3–4.'),
+      fc(4),
     ];
     return [
       fc(3),
