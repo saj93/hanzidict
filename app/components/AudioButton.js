@@ -16,9 +16,13 @@ const SpeakingIcon = () => (
 function getChineseVoice() {
   if (typeof window === 'undefined' || !window.speechSynthesis) return null;
   const voices = window.speechSynthesis.getVoices();
+  // zh-CN = Mandarin simplified, zh-TW = Mandarin traditional — both fine
+  // zh-HK = Cantonese — exclude
   return (
     voices.find(v => v.lang === 'zh-CN') ||
-    voices.find(v => v.lang.startsWith('zh')) ||
+    voices.find(v => v.lang === 'zh_CN') ||
+    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('HK') && !v.lang.includes('Yue')) ||
+    voices.find(v => v.lang === 'zh-TW') ||
     null
   );
 }
