@@ -191,7 +191,7 @@ export default function LearningPath() {
         sb.from('user_profiles').upsert(
           { user_id: user.id, level: full.level, goal: full.goal, daily_time: full.time },
           { onConflict: 'user_id' }
-        ).then(() => {}).catch(() => {});
+        ).then(() => {}, () => {});
       }
     }
   }
