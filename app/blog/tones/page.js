@@ -84,7 +84,7 @@ function TonedPinyin({ pinyin, tone }) {
 
 export default function TonesPage() {
   const router = useRouter();
-  const { user } = (useAuth() as any) ?? {};
+  const { user } = useAuth() ?? {};
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
 

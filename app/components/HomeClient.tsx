@@ -211,15 +211,6 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
         )}
       </section>
 
-      <div className="stats-strip">
-        {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['19,294','Example sentences']].map(([n, l]) => (
-          <div key={n} className="stat-cell">
-            <div className="stat-n">{n}</div>
-            <div className="stat-l">{l}</div>
-          </div>
-        ))}
-      </div>
-
       <LearningPath />
 
       <FeatureCards
@@ -228,6 +219,15 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
       />
 
       <NewsletterForm />
+
+      <div className="stats-strip">
+        {[['124,000','Dictionary entries'],['CC-CEDICT','Open source data'],['HSK 1–9','Level tagging'],['19,294','Example sentences']].map(([n, l]) => (
+          <div key={n} className="stat-cell">
+            <div className="stat-n">{n}</div>
+            <div className="stat-l">{l}</div>
+          </div>
+        ))}
+      </div>
 
       <Footer />
     </main>
