@@ -137,7 +137,7 @@ body {
 
 /* ── HOME HERO ── */
 .hero {
-  padding: 80px 24px 60px;
+  padding: 80px 24px 36px;
   display: flex; flex-direction: column; align-items: center; text-align: center;
   background: var(--bg);
 }
@@ -302,7 +302,7 @@ html.dark .cand { background: var(--bg3); }
 /* ── Learning Path ── */
 .lp-section {
   background: var(--bg); border-bottom: 0.5px solid var(--border);
-  padding: 56px 24px;
+  padding: 32px 24px;
 }
 .lp-inner { max-width: 560px; margin: 0 auto; }
 
