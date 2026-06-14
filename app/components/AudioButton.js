@@ -13,16 +13,22 @@ const SpeakingIcon = () => (
   </svg>
 );
 
+const CANTONESE = ['hk', 'yue', 'cantonese', 'sin-ji', 'sinji'];
+const MANDARIN_LANGS = ['zh-cn', 'zh_cn', 'zh-tw', 'zh_tw', 'zh-sg', 'zh-hans', 'zh-hant'];
+
+function isCantonese(v) {
+  const lang = v.lang.toLowerCase();
+  const name = v.name.toLowerCase();
+  return CANTONESE.some(c => lang.includes(c) || name.includes(c));
+}
+
 function getChineseVoice() {
   if (typeof window === 'undefined' || !window.speechSynthesis) return null;
   const voices = window.speechSynthesis.getVoices();
-  // zh-CN = Mandarin simplified, zh-TW = Mandarin traditional — both fine
-  // zh-HK = Cantonese — exclude
+  // Prefer explicit Mandarin lang codes; never fall back to Cantonese
   return (
-    voices.find(v => v.lang === 'zh-CN') ||
-    voices.find(v => v.lang === 'zh_CN') ||
-    voices.find(v => v.lang.startsWith('zh') && !v.lang.includes('HK') && !v.lang.includes('Yue')) ||
-    voices.find(v => v.lang === 'zh-TW') ||
+    voices.find(v => MANDARIN_LANGS.includes(v.lang.toLowerCase())) ||
+    voices.find(v => v.lang.toLowerCase().startsWith('zh') && !isCantonese(v)) ||
     null
   );
 }
