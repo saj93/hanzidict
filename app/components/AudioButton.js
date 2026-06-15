@@ -62,7 +62,6 @@ export default function AudioButton({ text }) {
     utterance.rate = 0.9;
 
     const voice = pickVoice(voices);
-    console.log('[Audio] voices loaded:', voices.length, '| picked:', voice?.name, voice?.lang);
     if (voice) utterance.voice = voice;
 
     utterance.onstart = () => setPlaying(true);
