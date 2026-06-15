@@ -22,9 +22,14 @@ function isCantonese(v) {
   return CANTONESE.some(c => lang.includes(c) || name.includes(c));
 }
 
+// Preferred voices by name — quality Mandarin voices on macOS/iOS
+const PREFERRED = ['tingting', 'meijia', 'mei-jia'];
+
 function pickVoice(voices) {
   return (
-    voices.find(v => MANDARIN_LANGS.includes(v.lang.toLowerCase())) ||
+    voices.find(v => PREFERRED.includes(v.name.toLowerCase())) ||
+    voices.find(v => v.lang === 'zh-CN' && !isCantonese(v)) ||
+    voices.find(v => MANDARIN_LANGS.includes(v.lang.toLowerCase()) && !isCantonese(v)) ||
     voices.find(v => v.lang.toLowerCase().startsWith('zh') && !isCantonese(v)) ||
     null
   );
