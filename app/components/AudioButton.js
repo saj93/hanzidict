@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 const SpeakerIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
@@ -22,10 +22,7 @@ function isCantonese(v) {
   return CANTONESE.some(c => lang.includes(c) || name.includes(c));
 }
 
-function getChineseVoice() {
-  if (typeof window === 'undefined' || !window.speechSynthesis) return null;
-  const voices = window.speechSynthesis.getVoices();
-  // Prefer explicit Mandarin lang codes; never fall back to Cantonese
+function pickVoice(voices) {
   return (
     voices.find(v => MANDARIN_LANGS.includes(v.lang.toLowerCase())) ||
     voices.find(v => v.lang.toLowerCase().startsWith('zh') && !isCantonese(v)) ||
@@ -36,21 +33,20 @@ function getChineseVoice() {
 export default function AudioButton({ text }) {
   const [supported, setSupported] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const voiceReadyRef = useRef(false);
+  const [voices, setVoices] = useState([]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.speechSynthesis) {
       setSupported(false);
       return;
     }
-    // Voices may not be loaded yet on first render (Chrome behaviour)
-    if (window.speechSynthesis.getVoices().length > 0) {
-      voiceReadyRef.current = true;
-    } else {
-      window.speechSynthesis.onvoiceschanged = () => {
-        voiceReadyRef.current = true;
-      };
+    function loadVoices() {
+      const v = window.speechSynthesis.getVoices();
+      if (v.length > 0) setVoices(v);
     }
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    return () => { window.speechSynthesis.onvoiceschanged = null; };
   }, []);
 
   function speak() {
@@ -61,12 +57,12 @@ export default function AudioButton({ text }) {
     utterance.lang = 'zh-CN';
     utterance.rate = 0.9;
 
-    const voice = getChineseVoice();
+    const voice = pickVoice(voices);
     if (voice) utterance.voice = voice;
 
-    utterance.onstart  = () => setPlaying(true);
-    utterance.onend    = () => setPlaying(false);
-    utterance.onerror  = () => setPlaying(false);
+    utterance.onstart = () => setPlaying(true);
+    utterance.onend   = () => setPlaying(false);
+    utterance.onerror = () => setPlaying(false);
 
     window.speechSynthesis.speak(utterance);
   }
