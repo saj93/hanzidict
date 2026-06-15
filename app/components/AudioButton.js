@@ -22,12 +22,11 @@ function isCantonese(v) {
   return CANTONESE.some(c => lang.includes(c) || name.includes(c));
 }
 
-// Preferred voices by name — quality Mandarin voices on macOS/iOS
-const PREFERRED = ['tingting', 'meijia', 'mei-jia'];
-
 function pickVoice(voices) {
+  // Prefer Tingting (mainland Mandarin) specifically before any array-order fallback
   return (
-    voices.find(v => PREFERRED.includes(v.name.toLowerCase())) ||
+    voices.find(v => v.name === 'Tingting') ||
+    voices.find(v => v.name === 'Meijia') ||
     voices.find(v => v.lang === 'zh-CN' && !isCantonese(v)) ||
     voices.find(v => MANDARIN_LANGS.includes(v.lang.toLowerCase()) && !isCantonese(v)) ||
     voices.find(v => v.lang.toLowerCase().startsWith('zh') && !isCantonese(v)) ||
@@ -63,6 +62,7 @@ export default function AudioButton({ text }) {
     utterance.rate = 0.9;
 
     const voice = pickVoice(voices);
+    console.log('[Audio] voices loaded:', voices.length, '| picked:', voice?.name, voice?.lang);
     if (voice) utterance.voice = voice;
 
     utterance.onstart = () => setPlaying(true);
