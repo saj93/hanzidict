@@ -424,7 +424,7 @@ html.dark .cand { background: var(--bg3); }
 .tone-pair-pinyin { font-size: 17px; font-weight: 600; }
 .tone-pair-meaning { font-size: 13px; color: var(--fg2); }
 .tone-pair-vs { font-size: 14px; color: var(--fg3); font-weight: 600; flex-shrink: 0; }
-.tone-pair-note { font-size: 13px; color: var(--fg2); margin: 0; font-style: italic; }
+.tone-pair-note { font-size: 13px; color: var(--fg2); margin: 0; font-style: italic; text-align: center; }
 
 .sandhi-block {
   display: flex;
