@@ -70,7 +70,7 @@ The simplification wasn't arbitrary — it used several systematic methods:
 
 **4. Analogical simplification.** When a radical was simplified, all characters using that radical were updated.
 
-> When 言 (speech) was simplified to 讠, every character with the speech radical changed: 说→说, 话→话, 请→请, etc.
+> When 言 (speech) was simplified to 讠, every character with the speech radical changed: 說→说, 話→话, 請→请, etc.
 
 ---
 
