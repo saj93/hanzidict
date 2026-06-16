@@ -2108,6 +2108,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .blog-post-body blockquote p {
   margin: 0; white-space: pre-line; line-height: 2.2; color: var(--fg2);
 }
+.blog-post-body img { max-width: 100%; height: auto; display: block; margin: 1.8em auto; border-radius: 10px; }
 .blog-post-body blockquote p + p {
   margin-top: 1em; padding-top: 1em; border-top: 0.5px solid var(--border);
 }

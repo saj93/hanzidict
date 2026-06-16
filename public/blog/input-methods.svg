@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" width="600" height="240" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <!-- Background -->
+  <rect width="600" height="240" rx="12" fill="#1a1916"/>
+
+  <!-- Panel 1: Pinyin (x=15, w=180, center=105) -->
+  <rect x="15" y="15" width="180" height="212" rx="10" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <!-- Keyboard body -->
+  <rect x="33" y="30" width="144" height="90" rx="8" fill="#1a1916" stroke="#2e2d29" stroke-width="1.5"/>
+  <!-- Row 1 keys: Z H O N G -->
+  <rect x="41" y="40" width="20" height="16" rx="3" fill="#2a2926"/>
+  <rect x="65" y="40" width="20" height="16" rx="3" fill="#2a2926"/>
+  <rect x="89" y="40" width="20" height="16" rx="3" fill="#2a2926"/>
+  <rect x="113" y="40" width="20" height="16" rx="3" fill="#2a2926"/>
+  <rect x="137" y="40" width="20" height="16" rx="3" fill="#2a2926"/>
+  <text x="51" y="51" fill="#1D9E75" font-size="9" font-weight="700" text-anchor="middle">Z</text>
+  <text x="75" y="51" fill="#1D9E75" font-size="9" font-weight="700" text-anchor="middle">H</text>
+  <text x="99" y="51" fill="#1D9E75" font-size="9" font-weight="700" text-anchor="middle">O</text>
+  <text x="123" y="51" fill="#1D9E75" font-size="9" font-weight="700" text-anchor="middle">N</text>
+  <text x="147" y="51" fill="#1D9E75" font-size="9" font-weight="700" text-anchor="middle">G</text>
+  <!-- Row 2: faded keys -->
+  <rect x="41" y="60" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="65" y="60" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="89" y="60" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="113" y="60" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="137" y="60" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <!-- Row 3: faded keys -->
+  <rect x="53" y="80" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="77" y="80" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <rect x="101" y="80" width="20" height="16" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+  <!-- Spacebar -->
+  <rect x="65" y="99" width="80" height="14" rx="3" fill="#232220" stroke="#2e2d29" stroke-width="0.5"/>
+
+  <!-- Example -->
+  <text x="105" y="148" fill="#9a9791" font-size="13" text-anchor="middle">zhōng</text>
+  <text x="105" y="167" fill="#f0ede6" font-size="18" text-anchor="middle">→ 中</text>
+  <!-- Label -->
+  <text x="105" y="195" fill="#f0ede6" font-size="14" font-weight="700" text-anchor="middle">拼音 Pinyin</text>
+  <rect x="42" y="204" width="126" height="18" rx="9" fill="#0d2e22"/>
+  <text x="105" y="217" fill="#1D9E75" font-size="10" font-weight="600" text-anchor="middle">Most popular method</text>
+
+  <!-- Panel 2: Handwriting (x=210, w=180, center=300) -->
+  <rect x="210" y="15" width="180" height="212" rx="10" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <!-- Character -->
+  <text x="300" y="118" fill="#1D9E75" font-size="68" text-anchor="middle" opacity="0.55">中</text>
+  <!-- Stylus path (drawing the character) -->
+  <polyline points="296,65 296,120" stroke="#9a9791" stroke-width="1.5" stroke-dasharray="4,3" stroke-linecap="round"/>
+  <!-- Stylus body -->
+  <line x1="325" y1="70" x2="300" y2="68" stroke="#f0ede6" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="299" cy="68" r="3.5" fill="#1D9E75"/>
+  <ellipse cx="334" cy="70" rx="10" ry="5" fill="#5e5c57" transform="rotate(-15 334 70)"/>
+
+  <text x="300" y="155" fill="#9a9791" font-size="11" text-anchor="middle">Draw on screen</text>
+  <text x="300" y="170" fill="#9a9791" font-size="11" text-anchor="middle">IME recognises the character</text>
+  <text x="300" y="195" fill="#f0ede6" font-size="14" font-weight="700" text-anchor="middle">手写 Handwriting</text>
+  <rect x="228" y="204" width="144" height="18" rx="9" fill="#0d2e22"/>
+  <text x="300" y="217" fill="#1D9E75" font-size="10" font-weight="600" text-anchor="middle">No pinyin needed</text>
+
+  <!-- Panel 3: Zhuyin (x=405, w=180, center=495) -->
+  <rect x="405" y="15" width="180" height="212" rx="10" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <!-- Bopomofo constellation -->
+  <text x="462" y="100" fill="#1D9E75" font-size="48" text-anchor="middle">ㄅ</text>
+  <text x="524" y="83" fill="#9a9791" font-size="32" text-anchor="middle">ㄆ</text>
+  <text x="530" y="118" fill="#9a9791" font-size="28" text-anchor="middle">ㄇ</text>
+  <text x="492" y="126" fill="#5e5c57" font-size="20" text-anchor="middle">ㄈ</text>
+
+  <text x="495" y="155" fill="#9a9791" font-size="11" text-anchor="middle">37 phonetic symbols</text>
+  <text x="495" y="170" fill="#9a9791" font-size="11" text-anchor="middle">Taiwan standard</text>
+  <text x="495" y="195" fill="#f0ede6" font-size="14" font-weight="700" text-anchor="middle">注音 Zhuyin</text>
+  <rect x="423" y="204" width="144" height="18" rx="9" fill="#0d2e22"/>
+  <text x="495" y="217" fill="#1D9E75" font-size="10" font-weight="600" text-anchor="middle">Taiwan / Traditional Chinese</text>
+</svg>

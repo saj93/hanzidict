@@ -12,8 +12,8 @@ export default async function Home() {
       .slice(0, 5)
       .filter((e: any) => e.simplified && e.pinyin)
       .map((e: any) => [e.simplified, convertPinyin(e.pinyin)] as [string, string]);
-  } catch {
-    // chips stays empty — HomeClient handles this gracefully
+  } catch (err) {
+    console.error('[Home] failed to load chips:', err);
   }
 
   return <HomeClient initialChips={chips} />;

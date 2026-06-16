@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 185" width="600" height="185" font-family="system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <rect width="600" height="185" rx="12" fill="#1a1916"/>
+
+  <!-- Platform label -->
+  <rect x="15" y="12" width="108" height="18" rx="9" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <text x="69" y="25" fill="#9a9791" font-size="10" font-weight="600" text-anchor="middle">iPhone / iPad</text>
+
+  <!-- Steps: x=12,160,308,456 width=132 height=148 y=33 centers=78,226,374,522 -->
+
+  <!-- Step 1 -->
+  <rect x="12" y="33" width="132" height="144" rx="8" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <circle cx="78" cy="65" r="18" fill="#1D9E75"/>
+  <text x="78" y="71" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">1</text>
+  <!-- Settings gear icon (simplified) -->
+  <circle cx="78" cy="95" r="8" fill="none" stroke="#9a9791" stroke-width="1.5"/>
+  <circle cx="78" cy="95" r="3" fill="#9a9791"/>
+  <rect x="76.5" y="84" width="3" height="4" rx="1" fill="#9a9791"/>
+  <rect x="76.5" y="103" width="3" height="4" rx="1" fill="#9a9791"/>
+  <rect x="84" y="93.5" width="4" height="3" rx="1" fill="#9a9791"/>
+  <rect x="65" y="93.5" width="4" height="3" rx="1" fill="#9a9791"/>
+  <text x="78" y="122" fill="#f0ede6" font-size="12" font-weight="600" text-anchor="middle">Settings</text>
+  <text x="78" y="137" fill="#9a9791" font-size="10" text-anchor="middle">General →</text>
+  <text x="78" y="150" fill="#9a9791" font-size="10" text-anchor="middle">Keyboard →</text>
+  <text x="78" y="163" fill="#9a9791" font-size="10" text-anchor="middle">Keyboards</text>
+
+  <!-- Arrow -->
+  <path d="M150 107 L156 107 M153 104 L156 107 L153 110" stroke="#3a3830" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Step 2 -->
+  <rect x="160" y="33" width="132" height="144" rx="8" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <circle cx="226" cy="65" r="18" fill="#1D9E75"/>
+  <text x="226" y="71" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">2</text>
+  <!-- Plus icon -->
+  <rect x="221" y="87" width="10" height="2.5" rx="1.25" fill="#9a9791"/>
+  <rect x="225.25" y="83" width="2.5" height="10" rx="1.25" fill="#9a9791"/>
+  <text x="226" y="122" fill="#f0ede6" font-size="12" font-weight="600" text-anchor="middle">Add Keyboard</text>
+  <text x="226" y="137" fill="#9a9791" font-size="10" text-anchor="middle">Tap "Add New</text>
+  <text x="226" y="151" fill="#9a9791" font-size="10" text-anchor="middle">Keyboard…"</text>
+
+  <!-- Arrow -->
+  <path d="M298 107 L304 107 M301 104 L304 107 L301 110" stroke="#3a3830" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Step 3 -->
+  <rect x="308" y="33" width="132" height="144" rx="8" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <circle cx="374" cy="65" r="18" fill="#1D9E75"/>
+  <text x="374" y="71" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">3</text>
+  <!-- Chinese character -->
+  <text x="374" y="105" fill="#9a9791" font-size="22" text-anchor="middle">中</text>
+  <text x="374" y="122" fill="#f0ede6" font-size="12" font-weight="600" text-anchor="middle">Select Chinese</text>
+  <text x="374" y="137" fill="#9a9791" font-size="10" text-anchor="middle">Simplified or</text>
+  <text x="374" y="151" fill="#9a9791" font-size="10" text-anchor="middle">Traditional → Pinyin</text>
+
+  <!-- Arrow -->
+  <path d="M446 107 L452 107 M449 104 L452 107 L449 110" stroke="#3a3830" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Step 4 -->
+  <rect x="456" y="33" width="132" height="144" rx="8" fill="#232220" stroke="#2e2d29" stroke-width="1"/>
+  <circle cx="522" cy="65" r="18" fill="#1D9E75"/>
+  <text x="522" y="71" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">4</text>
+  <!-- Globe icon -->
+  <circle cx="522" cy="95" r="9" fill="none" stroke="#9a9791" stroke-width="1.5"/>
+  <ellipse cx="522" cy="95" rx="4.5" ry="9" fill="none" stroke="#9a9791" stroke-width="1"/>
+  <line x1="513" y1="95" x2="531" y2="95" stroke="#9a9791" stroke-width="1"/>
+  <text x="522" y="122" fill="#f0ede6" font-size="12" font-weight="600" text-anchor="middle">Switch Input</text>
+  <text x="522" y="137" fill="#9a9791" font-size="10" text-anchor="middle">Tap 🌐 globe</text>
+  <text x="522" y="151" fill="#9a9791" font-size="10" text-anchor="middle">while typing</text>
+</svg>
