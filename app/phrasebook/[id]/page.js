@@ -300,6 +300,32 @@ function Quiz({ questions: initialQuestions, onDone }) {
   );
 }
 
+// ── Vocab cards ──────────────────────────────────────────────────────────────
+
+function VocabSection({ vocabCards }) {
+  if (!vocabCards || !vocabCards.length) return null;
+  return (
+    <div className="pb-vocab-section">
+      <div className="pb-vocab-section-title">Vocabulary Cards</div>
+      {vocabCards.map((group, gi) => (
+        <div key={gi} className="pb-vocab-group">
+          <div className="pb-vocab-group-title">{group.title}</div>
+          <div className="pb-vocab-grid">
+            {group.items.map((item, ii) => (
+              <div key={ii} className="pb-vocab-card">
+                <div className="pb-vocab-hanzi">{item.hanzi}</div>
+                <div className="pb-vocab-pinyin">{item.pinyin}</div>
+                <div className="pb-vocab-english">{item.english}</div>
+                <div className="pb-vocab-audio"><AudioButton text={item.hanzi} /></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ── Main page ────────────────────────────────────────────────────────────────
 
 export default function SituationPage() {
@@ -382,6 +408,11 @@ export default function SituationPage() {
                 onUpgrade={upgrade}
               />
             ))}
+
+            {/* Vocab cards — free for all users */}
+            {situation.vocabCards && (
+              <VocabSection vocabCards={situation.vocabCards} />
+            )}
 
             {/* Bottom upgrade CTA */}
             {hasPremiumContent && !isPremium && (

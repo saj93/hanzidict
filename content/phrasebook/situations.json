@@ -1160,5 +1160,1774 @@
         ]
       }
     ]
+  },
+  {
+    "id": "situation-6",
+    "title": "At the Restaurant",
+    "titleChinese": "餐厅",
+    "pinyin": "Cāntīng",
+    "free": true,
+    "phraseCount": 22,
+    "freePhraseCount": 9,
+    "sections": [
+      {
+        "title": "Getting seated & ordering basics",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "几位？",
+            "pinyin": "Jǐ wèi?",
+            "english": "How many people?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "两位。/ 三位。",
+            "pinyin": "Liǎng wèi. / Sān wèi.",
+            "english": "Two / Three people.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有菜单？",
+            "pinyin": "Yǒu méiyǒu càidān?",
+            "english": "Do you have a menu?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你们有什么推荐？",
+            "pinyin": "Nǐmen yǒu shénme tuījiàn?",
+            "english": "What do you recommend?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我要这个。",
+            "pinyin": "Wǒ yào zhège.",
+            "english": "I'll have this one.",
+            "badge": "everyday",
+            "badgeNote": "Point at menu",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我要一份…",
+            "pinyin": "Wǒ yào yī fèn…",
+            "english": "I'd like one portion of…",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "好吃！",
+            "pinyin": "Hǎochī!",
+            "english": "Delicious!",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有素食？",
+            "pinyin": "Yǒu méiyǒu sùshí?",
+            "english": "Do you have vegetarian options?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有清真食品？",
+            "pinyin": "Yǒu méiyǒu qīngzhēn shípǐn?",
+            "english": "Do you have halal food?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "不要辣。",
+            "pinyin": "Bùyào là.",
+            "english": "No spice please.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "少放盐/油。",
+            "pinyin": "Shǎo fàng yán/yóu.",
+            "english": "Less salt/oil please.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我对…过敏。",
+            "pinyin": "Wǒ duì…guòmǐn.",
+            "english": "I'm allergic to…",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以加辣吗？",
+            "pinyin": "Kěyǐ jiā là ma?",
+            "english": "Can you make it spicy?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "再来一份。",
+            "pinyin": "Zài lái yī fèn.",
+            "english": "One more portion please.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "打包。",
+            "pinyin": "Dǎbāo.",
+            "english": "To go / takeaway.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Paying",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A",
+            "hanzi": "买单！",
+            "pinyin": "Mǎidān!",
+            "english": "Check please!",
+            "badge": "everyday",
+            "badgeNote": "Most common",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "一共多少钱？",
+            "pinyin": "Yīgòng duōshao qián?",
+            "english": "How much is it in total?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以刷卡吗？",
+            "pinyin": "Kěyǐ shuākǎ ma?",
+            "english": "Can I pay by card?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以用微信支付/支付宝吗？",
+            "pinyin": "Kěyǐ yòng Wēixìn zhīfù / Zhīfùbǎo ma?",
+            "english": "Can I pay with WeChat Pay / Alipay?",
+            "badge": "everyday",
+            "badgeNote": "Essential in China",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以AA制吗？",
+            "pinyin": "Kěyǐ AA zhì ma?",
+            "english": "Can we split the bill?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我请客。",
+            "pinyin": "Wǒ qǐngkè.",
+            "english": "It's on me.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "下次你请。",
+            "pinyin": "Xià cì nǐ qǐng.",
+            "english": "Next time it's your treat.",
+            "badge": "colloquial",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Types of cuisine 菜系",
+        "items": [
+          {
+            "hanzi": "川菜",
+            "pinyin": "Chuāncài",
+            "english": "Sichuan cuisine"
+          },
+          {
+            "hanzi": "粤菜",
+            "pinyin": "Yuècài",
+            "english": "Cantonese cuisine"
+          },
+          {
+            "hanzi": "北京菜",
+            "pinyin": "Běijīng cài",
+            "english": "Beijing cuisine"
+          },
+          {
+            "hanzi": "素菜",
+            "pinyin": "Sùcài",
+            "english": "Vegetarian dish"
+          },
+          {
+            "hanzi": "海鲜",
+            "pinyin": "Hǎixiān",
+            "english": "Seafood"
+          }
+        ]
+      },
+      {
+        "title": "Flavors 口味",
+        "items": [
+          {
+            "hanzi": "辣",
+            "pinyin": "Là",
+            "english": "Spicy"
+          },
+          {
+            "hanzi": "甜",
+            "pinyin": "Tián",
+            "english": "Sweet"
+          },
+          {
+            "hanzi": "咸",
+            "pinyin": "Xián",
+            "english": "Salty"
+          },
+          {
+            "hanzi": "酸",
+            "pinyin": "Suān",
+            "english": "Sour"
+          },
+          {
+            "hanzi": "苦",
+            "pinyin": "Kǔ",
+            "english": "Bitter"
+          },
+          {
+            "hanzi": "淡",
+            "pinyin": "Dàn",
+            "english": "Bland / mild"
+          }
+        ]
+      },
+      {
+        "title": "Useful nouns 常用词",
+        "items": [
+          {
+            "hanzi": "菜单",
+            "pinyin": "Càidān",
+            "english": "Menu"
+          },
+          {
+            "hanzi": "筷子",
+            "pinyin": "Kuàizi",
+            "english": "Chopsticks"
+          },
+          {
+            "hanzi": "勺子",
+            "pinyin": "Sháozi",
+            "english": "Spoon"
+          },
+          {
+            "hanzi": "叉子",
+            "pinyin": "Chāzi",
+            "english": "Fork"
+          },
+          {
+            "hanzi": "服务员",
+            "pinyin": "Fúwùyuán",
+            "english": "Waiter/waitress"
+          },
+          {
+            "hanzi": "账单",
+            "pinyin": "Zhàngdān",
+            "english": "Bill"
+          },
+          {
+            "hanzi": "收据",
+            "pinyin": "Shōujù",
+            "english": "Receipt"
+          },
+          {
+            "hanzi": "外卖",
+            "pinyin": "Wàimài",
+            "english": "Takeaway/delivery"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-7",
+    "title": "Daily Life",
+    "titleChinese": "日常生活",
+    "pinyin": "Rìcháng shēnghuó",
+    "free": true,
+    "phraseCount": 28,
+    "freePhraseCount": 13,
+    "sections": [
+      {
+        "title": "Weather",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "今天天气怎么样？",
+            "pinyin": "Jīntiān tiānqì zěnme yàng?",
+            "english": "What's the weather like today?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "今天很热/冷。",
+            "pinyin": "Jīntiān hěn rè/lěng.",
+            "english": "It's hot/cold today.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "要下雨了。",
+            "pinyin": "Yào xià yǔ le.",
+            "english": "It's going to rain.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "天气很好。",
+            "pinyin": "Tiānqì hěn hǎo.",
+            "english": "The weather is great.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "热死了。",
+            "pinyin": "Rè sǐ le.",
+            "english": "It's scorching hot.",
+            "badge": "colloquial",
+            "badgeNote": "Very colloquial",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "冷死了。",
+            "pinyin": "Lěng sǐ le.",
+            "english": "It's freezing cold.",
+            "badge": "colloquial",
+            "badgeNote": "Very colloquial",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "今天几度？",
+            "pinyin": "Jīntiān jǐ dù?",
+            "english": "What's the temperature today?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "下大雨了。",
+            "pinyin": "Xià dà yǔ le.",
+            "english": "It's raining heavily.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "空气质量不好。",
+            "pinyin": "Kōngqì zhìliàng bù hǎo.",
+            "english": "The air quality is bad.",
+            "badge": "everyday",
+            "badgeNote": "Common in China",
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Family",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你有兄弟姐妹吗？",
+            "pinyin": "Nǐ yǒu xiōngdì jiěmèi ma?",
+            "english": "Do you have siblings?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我有一个哥哥/弟弟/姐姐/妹妹。",
+            "pinyin": "Wǒ yǒu yīgè gēge/dìdi/jiějie/mèimei.",
+            "english": "I have an older/younger brother/sister.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你结婚了吗？",
+            "pinyin": "Nǐ jiéhūn le ma?",
+            "english": "Are you married?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我结婚了。/ 我没结婚。",
+            "pinyin": "Wǒ jiéhūn le. / Wǒ méi jiéhūn.",
+            "english": "I'm married. / I'm not married.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你家有几口人？",
+            "pinyin": "Nǐ jiā yǒu jǐ kǒu rén?",
+            "english": "How many people are in your family?",
+            "badge": "everyday",
+            "badgeNote": "口 is the classifier for family members",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我家有三口人。",
+            "pinyin": "Wǒ jiā yǒu sān kǒu rén.",
+            "english": "There are three people in my family.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你有孩子吗？",
+            "pinyin": "Nǐ yǒu háizi ma?",
+            "english": "Do you have children?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我有一个孩子。",
+            "pinyin": "Wǒ yǒu yīgè háizi.",
+            "english": "I have one child.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你跟父母住在一起吗？",
+            "pinyin": "Nǐ gēn fùmǔ zhù zài yīqǐ ma?",
+            "english": "Do you live with your parents?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我一个人住。",
+            "pinyin": "Wǒ yīgè rén zhù.",
+            "english": "I live alone.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我跟室友住。",
+            "pinyin": "Wǒ gēn shìyǒu zhù.",
+            "english": "I live with roommates.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Hobbies & free time",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你有什么爱好？",
+            "pinyin": "Nǐ yǒu shénme àihào?",
+            "english": "What are your hobbies?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我喜欢… / 我的爱好是…",
+            "pinyin": "Wǒ xǐhuān… / Wǒ de àihào shì…",
+            "english": "I like… / My hobby is…",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你周末一般做什么？",
+            "pinyin": "Nǐ zhōumò yībān zuò shénme?",
+            "english": "What do you usually do on weekends?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我喜欢刷手机。",
+            "pinyin": "Wǒ xǐhuān shuā shǒujī.",
+            "english": "I like scrolling on my phone.",
+            "badge": "colloquial",
+            "badgeNote": "Very common",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我喜欢追剧。",
+            "pinyin": "Wǒ xǐhuān zhuī jù.",
+            "english": "I like binge-watching series.",
+            "badge": "colloquial",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我在健身。",
+            "pinyin": "Wǒ zài jiànshēn.",
+            "english": "I'm working out / going to the gym.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你打游戏吗？",
+            "pinyin": "Nǐ dǎ yóuxì ma?",
+            "english": "Do you play video games?",
+            "badge": "colloquial",
+            "badgeNote": "More natural than 玩游戏 for video games",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我最近很忙，没有时间。",
+            "pinyin": "Wǒ zuìjìn hěn máng, méi shíjiān.",
+            "english": "I've been really busy lately, no time.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Weather 天气",
+        "items": [
+          {
+            "hanzi": "晴天",
+            "pinyin": "Qíngtiān",
+            "english": "Sunny day"
+          },
+          {
+            "hanzi": "阴天",
+            "pinyin": "Yīntiān",
+            "english": "Cloudy day"
+          },
+          {
+            "hanzi": "下雨",
+            "pinyin": "Xià yǔ",
+            "english": "Raining"
+          },
+          {
+            "hanzi": "下雪",
+            "pinyin": "Xià xuě",
+            "english": "Snowing"
+          },
+          {
+            "hanzi": "刮风",
+            "pinyin": "Guā fēng",
+            "english": "Windy"
+          },
+          {
+            "hanzi": "雾霾",
+            "pinyin": "Wùmái",
+            "english": "Smog/haze"
+          },
+          {
+            "hanzi": "温度",
+            "pinyin": "Wēndù",
+            "english": "Temperature"
+          }
+        ]
+      },
+      {
+        "title": "Family members 家庭成员",
+        "items": [
+          {
+            "hanzi": "父母",
+            "pinyin": "Fùmǔ",
+            "english": "Parents"
+          },
+          {
+            "hanzi": "爸爸/爹",
+            "pinyin": "Bàba/Diē",
+            "english": "Father/Dad"
+          },
+          {
+            "hanzi": "妈妈",
+            "pinyin": "Māma",
+            "english": "Mother/Mom"
+          },
+          {
+            "hanzi": "哥哥",
+            "pinyin": "Gēge",
+            "english": "Older brother"
+          },
+          {
+            "hanzi": "弟弟",
+            "pinyin": "Dìdi",
+            "english": "Younger brother"
+          },
+          {
+            "hanzi": "姐姐",
+            "pinyin": "Jiějie",
+            "english": "Older sister"
+          },
+          {
+            "hanzi": "妹妹",
+            "pinyin": "Mèimei",
+            "english": "Younger sister"
+          },
+          {
+            "hanzi": "爷爷",
+            "pinyin": "Yéye",
+            "english": "Paternal grandfather"
+          },
+          {
+            "hanzi": "奶奶",
+            "pinyin": "Nǎinai",
+            "english": "Paternal grandmother"
+          },
+          {
+            "hanzi": "外公",
+            "pinyin": "Wàigōng",
+            "english": "Maternal grandfather"
+          },
+          {
+            "hanzi": "外婆",
+            "pinyin": "Wàipó",
+            "english": "Maternal grandmother"
+          }
+        ]
+      },
+      {
+        "title": "Hobbies 爱好",
+        "items": [
+          {
+            "hanzi": "看书",
+            "pinyin": "Kàn shū",
+            "english": "Reading"
+          },
+          {
+            "hanzi": "听音乐",
+            "pinyin": "Tīng yīnyuè",
+            "english": "Listening to music"
+          },
+          {
+            "hanzi": "看电影",
+            "pinyin": "Kàn diànyǐng",
+            "english": "Watching movies"
+          },
+          {
+            "hanzi": "追剧",
+            "pinyin": "Zhuī jù",
+            "english": "Binge-watching series"
+          },
+          {
+            "hanzi": "健身",
+            "pinyin": "Jiànshēn",
+            "english": "Working out"
+          },
+          {
+            "hanzi": "做饭",
+            "pinyin": "Zuò fàn",
+            "english": "Cooking"
+          },
+          {
+            "hanzi": "旅游",
+            "pinyin": "Lǚyóu",
+            "english": "Traveling"
+          },
+          {
+            "hanzi": "打游戏",
+            "pinyin": "Dǎ yóuxì",
+            "english": "Playing video games"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-8",
+    "title": "Travel",
+    "titleChinese": "旅游",
+    "pinyin": "Lǚyóu",
+    "free": true,
+    "phraseCount": 26,
+    "freePhraseCount": 10,
+    "sections": [
+      {
+        "title": "Transportation",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "去…怎么走？",
+            "pinyin": "Qù… zěnme zǒu?",
+            "english": "How do I get to…?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "附近有地铁站吗？",
+            "pinyin": "Fùjìn yǒu dìtiě zhàn ma?",
+            "english": "Is there a subway station nearby?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "直走。",
+            "pinyin": "Zhí zǒu.",
+            "english": "Go straight.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "左转/右转。",
+            "pinyin": "Zuǒ zhuǎn / Yòu zhuǎn.",
+            "english": "Turn left / Turn right.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "打车去…要多少钱？",
+            "pinyin": "Dǎchē qù… yào duōshao qián?",
+            "english": "How much is a taxi to…?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以叫滴滴吗？",
+            "pinyin": "Kěyǐ jiào Dīdī ma?",
+            "english": "Can we get a Didi (Chinese Uber)?",
+            "badge": "regional",
+            "badgeNote": "Mainland China",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "去…要多长时间？",
+            "pinyin": "Qù… yào duō cháng shíjiān?",
+            "english": "How long does it take to get to…?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我迷路了。",
+            "pinyin": "Wǒ mílù le.",
+            "english": "I'm lost.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "这趟车到…吗？",
+            "pinyin": "Zhè tàng chē dào… ma?",
+            "english": "Does this bus/train go to…?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "在哪里买票？",
+            "pinyin": "Zài nǎlǐ mǎi piào?",
+            "english": "Where do I buy tickets?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Hotel",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A",
+            "hanzi": "我有预订。",
+            "pinyin": "Wǒ yǒu yùdìng.",
+            "english": "I have a reservation.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "几点可以入住？",
+            "pinyin": "Jǐ diǎn kěyǐ rùzhù?",
+            "english": "What time is check-in?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "几点退房？",
+            "pinyin": "Jǐ diǎn tuì fáng?",
+            "english": "What time is check-out?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有空房间？",
+            "pinyin": "Yǒu méiyǒu kōng fángjiān?",
+            "english": "Do you have any available rooms?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以提前入住吗？",
+            "pinyin": "Kěyǐ tíqián rùzhù ma?",
+            "english": "Can I check in early?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有免费Wi-Fi？",
+            "pinyin": "Yǒu méiyǒu miǎnfèi WiFi?",
+            "english": "Is there free Wi-Fi?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "空调怎么用？",
+            "pinyin": "Kōngtiáo zěnme yòng?",
+            "english": "How do I use the air conditioning?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "房间里有点问题。",
+            "pinyin": "Fángjiān lǐ yǒu diǎn wèntí.",
+            "english": "There's a problem with the room.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Sightseeing",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "这里附近有什么好玩的？",
+            "pinyin": "Zhèlǐ fùjìn yǒu shénme hǎowán de?",
+            "english": "What's fun to do nearby?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "几点开门/关门？",
+            "pinyin": "Jǐ diǎn kāimén / guānmén?",
+            "english": "What time does it open/close?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "门票多少钱？",
+            "pinyin": "Ménpiào duōshao qián?",
+            "english": "How much is the entrance fee?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以帮我拍张照吗？",
+            "pinyin": "Kěyǐ bāng wǒ pāi zhāng zhào ma?",
+            "english": "Could you take a photo of me?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "好看！",
+            "pinyin": "Hǎokàn!",
+            "english": "Beautiful! / Looks great!",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "这是什么地方？",
+            "pinyin": "Zhè shì shénme dìfāng?",
+            "english": "What place is this?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "值得去。",
+            "pinyin": "Zhídé qù.",
+            "english": "Worth going.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "不值得去。",
+            "pinyin": "Bù zhídé qù.",
+            "english": "Not worth going.",
+            "badge": "colloquial",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Transport 交通",
+        "items": [
+          {
+            "hanzi": "地铁",
+            "pinyin": "Dìtiě",
+            "english": "Subway/metro"
+          },
+          {
+            "hanzi": "公交车",
+            "pinyin": "Gōngjiāochē",
+            "english": "Bus"
+          },
+          {
+            "hanzi": "出租车",
+            "pinyin": "Chūzūchē",
+            "english": "Taxi"
+          },
+          {
+            "hanzi": "滴滴",
+            "pinyin": "Dīdī",
+            "english": "Didi (Chinese Uber)"
+          },
+          {
+            "hanzi": "高铁",
+            "pinyin": "Gāotiě",
+            "english": "High-speed train"
+          },
+          {
+            "hanzi": "火车",
+            "pinyin": "Huǒchē",
+            "english": "Train"
+          },
+          {
+            "hanzi": "飞机",
+            "pinyin": "Fēijī",
+            "english": "Airplane"
+          },
+          {
+            "hanzi": "机场",
+            "pinyin": "Jīchǎng",
+            "english": "Airport"
+          },
+          {
+            "hanzi": "火车站",
+            "pinyin": "Huǒchē zhàn",
+            "english": "Train station"
+          }
+        ]
+      },
+      {
+        "title": "Hotel 酒店",
+        "items": [
+          {
+            "hanzi": "前台",
+            "pinyin": "Qiántái",
+            "english": "Front desk/reception"
+          },
+          {
+            "hanzi": "房间",
+            "pinyin": "Fángjiān",
+            "english": "Room"
+          },
+          {
+            "hanzi": "钥匙",
+            "pinyin": "Yàoshi",
+            "english": "Key"
+          },
+          {
+            "hanzi": "行李",
+            "pinyin": "Xíngli",
+            "english": "Luggage"
+          },
+          {
+            "hanzi": "早餐",
+            "pinyin": "Zǎocān",
+            "english": "Breakfast"
+          },
+          {
+            "hanzi": "空调",
+            "pinyin": "Kōngtiáo",
+            "english": "Air conditioning"
+          },
+          {
+            "hanzi": "入住",
+            "pinyin": "Rùzhù",
+            "english": "Check-in"
+          },
+          {
+            "hanzi": "退房",
+            "pinyin": "Tuì fáng",
+            "english": "Check-out"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-9",
+    "title": "Shopping",
+    "titleChinese": "购物",
+    "pinyin": "Gòuwù",
+    "free": true,
+    "phraseCount": 11,
+    "freePhraseCount": 4,
+    "sections": [
+      {
+        "title": "Basics",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "这个多少钱？",
+            "pinyin": "Zhège duōshao qián?",
+            "english": "How much is this?",
+            "badge": "everyday",
+            "badgeNote": "Most useful",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我只是看看。",
+            "pinyin": "Wǒ zhǐshì kànkan.",
+            "english": "I'm just looking.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我要买这个。",
+            "pinyin": "Wǒ yào mǎi zhège.",
+            "english": "I want to buy this.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "太贵了。",
+            "pinyin": "Tài guì le.",
+            "english": "Too expensive.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "能便宜一点吗？",
+            "pinyin": "Néng piányí yīdiǎn ma?",
+            "english": "Can you lower the price?",
+            "badge": "everyday",
+            "badgeNote": "For markets",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有别的颜色/尺码？",
+            "pinyin": "Yǒu méiyǒu bié de yánsè / chǐmǎ?",
+            "english": "Do you have other colors/sizes?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以试穿吗？",
+            "pinyin": "Kěyǐ shì chuān ma?",
+            "english": "Can I try it on?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有折扣？",
+            "pinyin": "Yǒu méiyǒu zhékòu?",
+            "english": "Is there a discount?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以退换吗？",
+            "pinyin": "Kěyǐ tuìhuàn ma?",
+            "english": "Can I return or exchange this?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "打包一下。",
+            "pinyin": "Dǎbāo yīxià.",
+            "english": "Please wrap it up.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有发票吗？",
+            "pinyin": "Yǒu fāpiào ma?",
+            "english": "Can I get a receipt/invoice?",
+            "badge": "everyday",
+            "badgeNote": "Important in China",
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "价格",
+            "pinyin": "Jiàgé",
+            "english": "Price"
+          },
+          {
+            "hanzi": "折扣",
+            "pinyin": "Zhékòu",
+            "english": "Discount"
+          },
+          {
+            "hanzi": "打折",
+            "pinyin": "Dǎzhé",
+            "english": "On sale"
+          },
+          {
+            "hanzi": "便宜",
+            "pinyin": "Piányí",
+            "english": "Cheap/inexpensive"
+          },
+          {
+            "hanzi": "贵",
+            "pinyin": "Guì",
+            "english": "Expensive"
+          },
+          {
+            "hanzi": "尺码",
+            "pinyin": "Chǐmǎ",
+            "english": "Size (clothing)"
+          },
+          {
+            "hanzi": "颜色",
+            "pinyin": "Yánsè",
+            "english": "Color"
+          },
+          {
+            "hanzi": "收银台",
+            "pinyin": "Shōuyíntái",
+            "english": "Cashier/checkout"
+          },
+          {
+            "hanzi": "试衣间",
+            "pinyin": "Shì yī jiān",
+            "english": "Fitting room"
+          },
+          {
+            "hanzi": "发票",
+            "pinyin": "Fāpiào",
+            "english": "Official receipt/invoice"
+          },
+          {
+            "hanzi": "退换",
+            "pinyin": "Tuìhuàn",
+            "english": "Return/exchange"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-10",
+    "title": "Business",
+    "titleChinese": "商务",
+    "pinyin": "Shāngwù",
+    "free": true,
+    "phraseCount": 19,
+    "freePhraseCount": 7,
+    "sections": [
+      {
+        "title": "Introductions & meetings",
+        "note": null,
+        "phrases": [
+          {
+            "type": "A",
+            "hanzi": "这是我的名片。",
+            "pinyin": "Zhè shì wǒ de míngpiàn.",
+            "english": "Here is my business card.",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "幸会幸会。/ 幸会。",
+            "pinyin": "Xìnghuì xìnghuì. / Xìnghuì.",
+            "english": "Pleased to meet you.",
+            "badge": "polite",
+            "badgeNote": "Formal — you'll hear it more than say it",
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我在…公司工作。",
+            "pinyin": "Wǒ zài… gōngsī gōngzuò.",
+            "english": "I work at… company.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "我是…部门的…",
+            "pinyin": "Wǒ shì… bùmén de…",
+            "english": "I'm in the… department.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "我们可以开始了吗？",
+            "pinyin": "Wǒmen kěyǐ kāishǐ le ma?",
+            "english": "Shall we get started?",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "久仰大名。",
+            "pinyin": "Jiǔ yǎng dà míng.",
+            "english": "I've heard a lot about you.",
+            "badge": "polite",
+            "badgeNote": "Formal compliment, very impressive in business",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "这次会议的议题是什么？",
+            "pinyin": "Zhè cì huìyì de yìtí shì shénme?",
+            "english": "What's the agenda for this meeting?",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我需要请示一下上级。",
+            "pinyin": "Wǒ xūyào qǐngshì yīxià shàngjí.",
+            "english": "I need to check with my supervisor.",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我们考虑一下。",
+            "pinyin": "Wǒmen kǎolǜ yīxià.",
+            "english": "We'll think about it.",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "可以发给我邮件吗？",
+            "pinyin": "Kěyǐ fā gěi wǒ yóujiàn ma?",
+            "english": "Could you send me an email?",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我们下次再谈。",
+            "pinyin": "Wǒmen xià cì zài tán.",
+            "english": "Let's discuss this next time.",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "合同什么时候可以签？",
+            "pinyin": "Hétong shénme shíhòu kěyǐ qiān?",
+            "english": "When can we sign the contract?",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "期待我们的合作。",
+            "pinyin": "Qīdài wǒmen de hézuò.",
+            "english": "Looking forward to our cooperation.",
+            "badge": "polite",
+            "badgeNote": "Very common closing",
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Small talk with colleagues/clients",
+        "note": null,
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你们公司在哪里？",
+            "pinyin": "Nǐmen gōngsī zài nǎlǐ?",
+            "english": "Where is your company based?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你在这个行业做多久了？",
+            "pinyin": "Nǐ zài zhège hángyè zuò duōjiǔ le?",
+            "english": "How long have you been in this industry?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你们公司主要做什么业务？",
+            "pinyin": "Nǐmen gōngsī zhǔyào zuò shénme yèwù?",
+            "english": "What does your company mainly do?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我们专注于…领域。",
+            "pinyin": "Wǒmen zhuānzhù yú… lǐngyù.",
+            "english": "We focus on the… sector.",
+            "badge": "polite",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你经常出差吗？",
+            "pinyin": "Nǐ jīngcháng chūchāi ma?",
+            "english": "Do you travel for work often?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "最近市场竞争很激烈。",
+            "pinyin": "Zuìjìn shìchǎng jìngzhēng hěn jīliè.",
+            "english": "The market competition has been fierce lately.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "会议",
+            "pinyin": "Huìyì",
+            "english": "Meeting"
+          },
+          {
+            "hanzi": "合同",
+            "pinyin": "Hétong",
+            "english": "Contract"
+          },
+          {
+            "hanzi": "名片",
+            "pinyin": "Míngpiàn",
+            "english": "Business card"
+          },
+          {
+            "hanzi": "合作",
+            "pinyin": "Hézuò",
+            "english": "Cooperation/partnership"
+          },
+          {
+            "hanzi": "客户",
+            "pinyin": "Kèhù",
+            "english": "Client/customer"
+          },
+          {
+            "hanzi": "谈判",
+            "pinyin": "Tánpàn",
+            "english": "Negotiation"
+          },
+          {
+            "hanzi": "项目",
+            "pinyin": "Xiàngmù",
+            "english": "Project"
+          },
+          {
+            "hanzi": "方案",
+            "pinyin": "Fāng'àn",
+            "english": "Proposal/plan"
+          },
+          {
+            "hanzi": "报价",
+            "pinyin": "Bàojià",
+            "english": "Quote/price offer"
+          },
+          {
+            "hanzi": "签合同",
+            "pinyin": "Qiān hétong",
+            "english": "Sign a contract"
+          },
+          {
+            "hanzi": "出差",
+            "pinyin": "Chūchāi",
+            "english": "Business trip"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "situation-11",
+    "title": "Tech & Social Media",
+    "titleChinese": "科技与社交",
+    "pinyin": "Kējì yǔ shèjiāo",
+    "free": true,
+    "phraseCount": 10,
+    "freePhraseCount": 3,
+    "sections": [
+      {
+        "title": "Chinese apps & internet",
+        "note": "China uses its own ecosystem of apps. WeChat (微信), Weibo (微博), Douyin (抖音, the Chinese TikTok), Alipay (支付宝), and Didi (滴滴) are essential to know. The \"Great Firewall\" (防火长城 fánghuǒ chángchéng) blocks Google, Facebook, Instagram, and most Western platforms.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "你用微信吗？",
+            "pinyin": "Nǐ yòng Wēixìn ma?",
+            "english": "Do you use WeChat?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "加我微信吧。",
+            "pinyin": "Jiā wǒ Wēixìn ba.",
+            "english": "Add me on WeChat.",
+            "badge": "everyday",
+            "badgeNote": "Equivalent of \"add me on WhatsApp\"",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以扫我的二维码吗？",
+            "pinyin": "Kěyǐ sǎo wǒ de èrwéimǎ ma?",
+            "english": "Can you scan my QR code?",
+            "badge": "everyday",
+            "badgeNote": "Common in China",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "你刷什么？",
+            "pinyin": "Nǐ shuā shénme?",
+            "english": "What do you scroll? (what apps?)",
+            "badge": "colloquial",
+            "badgeNote": "Very colloquial",
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "我在刷抖音。",
+            "pinyin": "Wǒ zài shuā Dǒuyīn.",
+            "english": "I'm on Douyin (TikTok).",
+            "badge": "colloquial",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "你有微博吗？",
+            "pinyin": "Nǐ yǒu Wēibó ma?",
+            "english": "Do you have Weibo?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "WiFi密码是多少？",
+            "pinyin": "WiFi mìmǎ shì duōshao?",
+            "english": "What's the WiFi password?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "没有信号。",
+            "pinyin": "Méiyǒu xìnhào.",
+            "english": "No signal.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "手机没电了。",
+            "pinyin": "Shǒujī méi diàn le.",
+            "english": "My phone is dead.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以充电吗？",
+            "pinyin": "Kěyǐ chōng diàn ma?",
+            "english": "Can I charge my phone?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Chinese apps 中国应用",
+        "items": [
+          {
+            "hanzi": "微信",
+            "pinyin": "Wēixìn",
+            "english": "WeChat — messaging, payments, everything"
+          },
+          {
+            "hanzi": "抖音",
+            "pinyin": "Dǒuyīn",
+            "english": "Douyin — Chinese TikTok, dominant video app"
+          },
+          {
+            "hanzi": "支付宝",
+            "pinyin": "Zhīfùbǎo",
+            "english": "Alipay — mobile payments"
+          },
+          {
+            "hanzi": "小红书",
+            "pinyin": "Xiǎohóngshū",
+            "english": "Xiaohongshu (RedNote) — lifestyle, shopping"
+          },
+          {
+            "hanzi": "哔哩哔哩",
+            "pinyin": "Bìlìbìlì",
+            "english": "Bilibili (B站) — long-form video, popular with youth"
+          },
+          {
+            "hanzi": "美团",
+            "pinyin": "Měituán",
+            "english": "Meituan — food delivery, reservations"
+          },
+          {
+            "hanzi": "拼多多",
+            "pinyin": "Pīnduōduō",
+            "english": "Pinduoduo — e-commerce, very popular"
+          },
+          {
+            "hanzi": "滴滴",
+            "pinyin": "Dīdī",
+            "english": "Didi — Chinese Uber"
+          },
+          {
+            "hanzi": "百度",
+            "pinyin": "Bǎidù",
+            "english": "Baidu — Chinese search engine"
+          },
+          {
+            "hanzi": "微博",
+            "pinyin": "Wēibó",
+            "english": "Weibo — social/news, declining but still used"
+          }
+        ]
+      },
+      {
+        "title": "General tech 科技词汇",
+        "items": [
+          {
+            "hanzi": "手机",
+            "pinyin": "Shǒujī",
+            "english": "Mobile phone"
+          },
+          {
+            "hanzi": "充电",
+            "pinyin": "Chōngdiàn",
+            "english": "Charge (battery)"
+          },
+          {
+            "hanzi": "密码",
+            "pinyin": "Mìmǎ",
+            "english": "Password"
+          },
+          {
+            "hanzi": "二维码",
+            "pinyin": "Èrwéimǎ",
+            "english": "QR code"
+          },
+          {
+            "hanzi": "信号",
+            "pinyin": "Xìnhào",
+            "english": "Signal"
+          },
+          {
+            "hanzi": "下载",
+            "pinyin": "Xiàzài",
+            "english": "Download"
+          },
+          {
+            "hanzi": "上传",
+            "pinyin": "Shàngchuán",
+            "english": "Upload"
+          },
+          {
+            "hanzi": "流量",
+            "pinyin": "Liúliàng",
+            "english": "Mobile data"
+          },
+          {
+            "hanzi": "网络",
+            "pinyin": "Wǎngluò",
+            "english": "Internet / network"
+          }
+        ]
+      }
+    ]
   }
 ]
