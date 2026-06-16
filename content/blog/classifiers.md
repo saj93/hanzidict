@@ -6,8 +6,6 @@ level: "Beginner–Intermediate"
 description: "Why does Chinese need a special word between a number and a noun? What even is a classifier? This guide covers everything — from the universal 个 to the ones that will actually make you sound natural."
 ---
 
-# Chinese Classifiers (量词): The Complete Guide
-
 In English, you can say "three cars" or "five books" without any extra words. In Chinese, you can't. Between the number and the noun, you need a **classifier** — a small word that categorizes the noun being counted.
 
 Three cars isn't 三车 *sān chē* — it's 三**辆**车 *sān liàng chē*.

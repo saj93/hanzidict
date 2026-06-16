@@ -6,8 +6,6 @@ level: "Beginner–Intermediate"
 description: "Setting up Chinese input is easier than most learners expect. Here's how to do it on every major device, and which input method — pinyin, handwriting, or Zhuyin — actually makes sense for you."
 ---
 
-# How to Type Chinese on Your Phone and Computer
-
 One of the first practical problems every Chinese learner faces: how do you actually type in Chinese? The answer depends on your device, your level, and whether you know pinyin — but the setup is simpler than most people expect.
 
 ---

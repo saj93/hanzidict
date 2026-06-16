@@ -2082,6 +2082,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .blog-post-body {
   font-size: 17px; line-height: 1.75; color: var(--fg2);
 }
+.blog-post-body h1 { display: none; }
 .blog-post-body h2 {
   font-size: 21px; font-weight: 700; color: var(--fg);
   margin: 2.5rem 0 .75em; border-bottom: 0.5px solid var(--border); padding-bottom: .4em;
