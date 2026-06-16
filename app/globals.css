@@ -2892,37 +2892,39 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .pb-quiz-browse:hover { border-color: var(--border-mid); }
 
 /* ── Vocab table ── */
-.pb-vocab-section {
-  margin-top: 52px;
-  border-top: 2px solid var(--border);
-  padding-top: 28px;
-}
+.pb-vocab-section { margin-top: 52px; padding-top: 28px; border-top: 1px solid var(--border); }
 .pb-vocab-header {
-  font-size: 13px; font-weight: 700; color: var(--fg2);
-  margin-bottom: 16px;
+  font-size: 20px; font-weight: 700; color: var(--fg);
+  margin-bottom: 20px;
 }
 .pb-vocab-table {
   width: 100%;
   border-collapse: collapse;
   font-family: inherit;
+  border: 1px solid var(--border-mid);
+  border-radius: 8px;
+  overflow: hidden;
 }
 .pb-vocab-th {
   text-align: left;
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: .07em; color: var(--fg3);
-  padding: 0 12px 10px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-mid);
+  border-right: 1px solid var(--border);
 }
-.pb-vocab-th:last-child { padding-right: 0; }
+.pb-vocab-th:last-child { border-right: none; }
 .pb-vocab-row { transition: background 0.1s; }
-.pb-vocab-row:hover { background: rgba(0,0,0,.025); }
-html.dark .pb-vocab-row:hover { background: rgba(255,255,255,.04); }
+.pb-vocab-row:hover { background: var(--accent-dim); }
 .pb-vocab-td {
-  padding: 9px 12px 9px 0;
+  padding: 10px 16px;
   border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   vertical-align: middle;
 }
-.pb-vocab-td:last-child { padding-right: 0; }
+.pb-vocab-td:last-child { border-right: none; }
+.pb-vocab-row:last-child .pb-vocab-td { border-bottom: none; }
 .pb-vocab-td-hanzi { width: 1%; white-space: nowrap; }
 .pb-vocab-td-pinyin { width: 1%; white-space: nowrap; }
 .pb-vocab-link {
