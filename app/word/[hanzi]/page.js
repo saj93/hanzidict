@@ -12,6 +12,7 @@ import AudioButton from '../../components/AudioButton';
 import AddToListButton from '../../components/AddToListButton';
 import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
+import { useAuth } from '../../components/AuthProvider';
 import * as OpenCC from 'opencc-js';
 
 const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
@@ -130,8 +131,13 @@ export default function WordPage() {
   const [chengyu, setChengyu] = useState([]);
   const [sideView, setSideView] = useState('related'); // 'related' | 'chengyu'
   const [showAllDefs, setShowAllDefs] = useState(false);
+  const [localDefinitions, setLocalDefinitions] = useState(null);
+  const [editingDefIdx, setEditingDefIdx] = useState(null);
+  const [editVal, setEditVal] = useState('');
+  const [editSaving, setEditSaving] = useState(false);
   const hwRef = useRef(null);
   const router = useRouter();
+  const { isAdmin, session } = useAuth() ?? {};
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains('dark');
@@ -179,6 +185,8 @@ export default function WordPage() {
     setChengyu([]);
     setSideView('related');
     setShowAllDefs(false);
+    setLocalDefinitions(null);
+    setEditingDefIdx(null);
     setPronunciations([]);
     setActiveTabIdx(0);
     hwRef.current = null;
@@ -188,6 +196,8 @@ export default function WordPage() {
   useEffect(() => {
     setShowAllDefs(false);
     setExampleIdx(0);
+    setLocalDefinitions(null);
+    setEditingDefIdx(null);
   }, [activeTabIdx]);
 
   // Reset stroke when script toggles
@@ -419,7 +429,8 @@ export default function WordPage() {
     );
   }
 
-  const allDefs = (cleanDefinitions(primary.definitions) || primary.definitions || '')
+  const rawDefs = localDefinitions ?? primary.definitions ?? '';
+  const allDefs = (cleanDefinitions(rawDefs) || rawDefs || '')
     .split(' | ')
     .filter(Boolean)
     .map(d => d.replace(/^\(bound form\)\s*|^bound form:\s*/i, ''));
@@ -450,6 +461,41 @@ export default function WordPage() {
   const groupedDefs = groupShortDefs(defs);
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
+
+  async function saveDefEdit() {
+    if (editingDefIdx === null || !primary?.id || !session) return;
+    setEditSaving(true);
+    const newDefs = defs.map((d, i) => i === editingDefIdx ? editVal.trim() : d);
+    let cursor = 0;
+    const newAllDefs = allDefs.map(d => {
+      const m = d.match(clRegex);
+      if (m) {
+        const cleaned = d.replace(clRegex, '').replace(/\s{2,}/g, ' ').trim();
+        if (!cleaned) return d; // pure CL entry — preserve
+        return `${newDefs[cursor++]} ${m[0]}`.trim();
+      }
+      return newDefs[cursor++] ?? d;
+    });
+    const newDefinitions = newAllDefs.join(' | ');
+    try {
+      const resp = await fetch(`/api/entries/${primary.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ definitions: newDefinitions }),
+      });
+      if (resp.ok) {
+        setLocalDefinitions(newDefinitions);
+        setEditingDefIdx(null);
+        setEditVal('');
+      } else {
+        const err = await resp.json().catch(() => ({}));
+        console.error('Save failed:', err);
+      }
+    } catch (e) {
+      console.error('Save failed:', e);
+    }
+    setEditSaving(false);
+  }
 
   return (
     <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
@@ -559,33 +605,55 @@ export default function WordPage() {
 
           <div className="sec-label">Definitions</div>
           <ul className="defs">
-            {(showAllDefs ? groupedDefs : groupedDefs.slice(0, 6)).map((def, i) => (
+            {(isAdmin ? defs : (showAllDefs ? groupedDefs : groupedDefs.slice(0, 6))).map((def, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
-                <div>
-                  {convertPinyinInText(def)}
-                  {i === 0 && examples.length > 0 && (() => {
-                    const ex = examples[exampleIdx];
-                    return (
-                      <div className="example-block">
-                        <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
-                        {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
-                        <div className="example-en">{ex.english}</div>
-                        {examples.length > 1 && (
-                          <div className="example-nav">
-                            <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i - 1)} disabled={exampleIdx === 0}>‹</button>
-                            <span className="example-counter">{exampleIdx + 1} / {examples.length}</span>
-                            <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i + 1)} disabled={exampleIdx === examples.length - 1}>›</button>
-                          </div>
-                        )}
+                <div style={{ flex: 1 }}>
+                  {isAdmin && editingDefIdx === i ? (
+                    <div className="def-edit-wrap">
+                      <textarea
+                        className="def-edit-input"
+                        value={editVal}
+                        onChange={e => setEditVal(e.target.value)}
+                        rows={2}
+                        autoFocus
+                        onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) saveDefEdit(); if (e.key === 'Escape') { setEditingDefIdx(null); setEditVal(''); } }}
+                      />
+                      <div className="def-edit-actions">
+                        <button className="def-edit-save" onClick={saveDefEdit} disabled={editSaving}>{editSaving ? 'Saving…' : 'Save'}</button>
+                        <button className="def-edit-cancel" onClick={() => { setEditingDefIdx(null); setEditVal(''); }}>Cancel</button>
                       </div>
-                    );
-                  })()}
+                    </div>
+                  ) : (
+                    <>
+                      {convertPinyinInText(def)}
+                      {isAdmin && (
+                        <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(def); }} title="Edit definition">✎</button>
+                      )}
+                      {i === 0 && examples.length > 0 && (() => {
+                        const ex = examples[exampleIdx];
+                        return (
+                          <div className="example-block">
+                            <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
+                            {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
+                            <div className="example-en">{ex.english}</div>
+                            {examples.length > 1 && (
+                              <div className="example-nav">
+                                <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i - 1)} disabled={exampleIdx === 0}>‹</button>
+                                <span className="example-counter">{exampleIdx + 1} / {examples.length}</span>
+                                <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i + 1)} disabled={exampleIdx === examples.length - 1}>›</button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
+                    </>
+                  )}
                 </div>
               </li>
             ))}
           </ul>
-          {groupedDefs.length > 6 && (
+          {!isAdmin && groupedDefs.length > 6 && (
             <button className="defs-show-more" onClick={() => setShowAllDefs(v => !v)}>
               {showAllDefs ? 'Show less' : `Show ${groupedDefs.length - 6} more`}
             </button>

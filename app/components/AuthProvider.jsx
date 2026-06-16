@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -27,8 +28,16 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (!user) { setIsAdmin(false); return; }
+    const supabase = createClient();
+    supabase.from('admins').select('user_id').eq('user_id', user.id).maybeSingle()
+      .then(({ data }) => setIsAdmin(!!data))
+      .catch(() => setIsAdmin(false));
+  }, [user?.id]);
+
   return (
-    <AuthContext.Provider value={{ user, session, loading }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
