@@ -309,17 +309,28 @@ function VocabSection({ vocabCards }) {
   return (
     <div className="pb-vocab-section">
       <div className="pb-vocab-header">Useful vocabulary</div>
-      <ul className="pb-vocab-list">
-        {items.map((item, i) => (
-          <li key={i}>
-            <Link href={`/word/${encodeURIComponent(item.hanzi)}`} className="pb-vocab-item">
-              <span className="pb-vocab-hanzi">{item.hanzi}</span>
-              <span className="pb-vocab-pinyin">{item.pinyin}</span>
-              <span className="pb-vocab-english">{item.english}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <table className="pb-vocab-table">
+        <thead>
+          <tr>
+            <th className="pb-vocab-th">Chinese</th>
+            <th className="pb-vocab-th">Pinyin</th>
+            <th className="pb-vocab-th">English</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item, i) => (
+            <tr key={i} className="pb-vocab-row">
+              <td className="pb-vocab-td pb-vocab-td-hanzi">
+                <Link href={`/word/${encodeURIComponent(item.hanzi)}`} className="pb-vocab-link">
+                  {item.hanzi}
+                </Link>
+              </td>
+              <td className="pb-vocab-td pb-vocab-td-pinyin">{item.pinyin}</td>
+              <td className="pb-vocab-td pb-vocab-td-en">{item.english}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
