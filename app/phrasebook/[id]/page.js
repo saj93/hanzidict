@@ -308,6 +308,7 @@ function VocabSection({ vocabCards }) {
   const items = vocabCards.flatMap(g => g.items);
   return (
     <div className="pb-vocab-section">
+      <div className="pb-vocab-header">Useful vocabulary</div>
       <ul className="pb-vocab-list">
         {items.map((item, i) => (
           <li key={i}>
