@@ -2143,7 +2143,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 /* Three visual levels: Chinese (bold/white) > pinyin (green) > translation (muted) */
 .blog-post-body blockquote strong {
-  color: var(--fg); font-size: 1.15em; font-weight: 600;
+  color: var(--fg); font-weight: 600;
 }
 .blog-post-body blockquote em {
   color: var(--accent); font-style: normal; font-size: .92em;
@@ -2169,7 +2169,6 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   .blog-post-body { font-size: 15px; line-height: 1.7; }
   .blog-post-body h2 { font-size: 18px; }
   .blog-post-body h3 { font-size: 15px; }
-  .blog-post-body blockquote strong { font-size: 1.1em; }
 }
 
 @media (max-width: 760px) {
