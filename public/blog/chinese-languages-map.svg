@@ -1,94 +1,99 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 480" width="700" height="480">
-  <rect width="700" height="480" fill="#1a1916"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 450" width="680" height="450">
+  <rect width="680" height="450" fill="#1a1916"/>
 
-  <!-- ===== CHINA LANDMASS (simplified outline) ===== -->
-  <!-- Northwest / Xinjiang -->
-  <polygon points="80,50 200,40 240,80 260,110 230,150 190,170 140,160 90,140 70,100" fill="#8a7a6a" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Tibetan Plateau -->
-  <polygon points="140,160 190,170 230,150 260,110 290,120 310,150 300,200 260,230 210,240 170,220 140,200" fill="#b0a898" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Inner Mongolia / Gansu / Ningxia / Shaanxi — Mandarin North -->
-  <polygon points="200,40 320,30 380,50 390,90 370,120 340,130 310,150 290,120 260,110 240,80" fill="#5b7fa6" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Northeast Mandarin (Heilongjiang, Jilin, Liaoning) -->
-  <polygon points="320,30 420,25 450,60 440,100 400,110 380,90 380,50" fill="#4a7098" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- North China Plain / Hebei / Shandong / Henan — Mandarin -->
-  <polygon points="380,50 450,60 460,100 440,130 410,150 380,160 360,140 370,120 390,90" fill="#5b7fa6" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Sichuan / Chongqing / Yunnan / Guizhou — SW Mandarin -->
-  <polygon points="260,230 300,200 310,150 340,130 370,120 360,140 350,180 330,210 320,250 290,270 260,260" fill="#4d6e92" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Hunan / Hubei / Jiangxi partial — Gan/Xiang + transition -->
-  <polygon points="360,140 410,150 430,180 420,210 390,230 360,240 340,220 330,210 350,180" fill="#5b7fa6" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Jiangxi / partial -->
-  <polygon points="390,230 420,210 450,220 450,250 430,270 400,270 380,250" fill="#5b7fa6" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Wu (Shanghai, Zhejiang, S. Jiangsu) -->
-  <polygon points="440,130 460,100 490,110 500,140 490,170 470,185 450,175 430,160 440,150" fill="#d4842a" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Fujian (Min) -->
-  <polygon points="450,175 470,185 490,170 510,180 520,210 500,240 470,250 450,240 445,215 450,195" fill="#8a52a0" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Guangdong partial Hakka -->
-  <polygon points="380,250 400,270 430,270 450,260 450,240 430,280 400,300 370,290 360,270" fill="#c9a820" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Guangdong main / Cantonese -->
-  <polygon points="430,280 450,260 470,250 500,240 520,250 530,270 510,300 480,310 450,310 420,300" fill="#1D9E75" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Guangxi (Zhuang + Cantonese south) -->
-  <polygon points="320,250 360,240 360,270 370,290 400,300 420,300 420,330 380,340 340,330 310,300 290,280 290,270" fill="#2a8f65" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Hainan (Min) -->
-  <ellipse cx="430" cy="365" rx="30" ry="20" fill="#8a52a0" stroke="#1a1916" stroke-width="1.5"/>
-  <!-- Taiwan (Min) -->
-  <ellipse cx="560" cy="270" rx="18" ry="30" fill="#8a52a0" stroke="#1a1916" stroke-width="1.5"/>
+  <!-- China outer border (realistic simplified outline, clockwise from NW) -->
+  <!-- Scale: x=(lon-73)*9.68+40, y=(53-lat)*11.71+20 -->
+  <path d="
+    M 50,172
+    L 185,67
+    Q 225,73 272,79
+    Q 325,95 379,114
+    L 456,149
+    L 514,79
+    L 573,32
+    L 630,79
+    L 601,137
+    L 573,172
+    L 504,172
+    Q 504,186 514,207
+    L 504,254
+    Q 510,265 514,278
+    Q 508,289 504,301
+    L 485,336
+    L 456,383
+    L 427,383
+    L 388,395
+    Q 360,390 330,383
+    L 301,383
+    Q 285,360 272,336
+    L 272,301
+    L 127,301
+    Q 110,270 98,242
+    Q 76,222 59,207
+    Q 52,190 50,172 Z
+  " fill="#141812" stroke="#1D9E75" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
 
-  <!-- ===== LEGENDS ===== -->
-  <rect x="14" y="270" width="160" height="198" rx="6" fill="#0f0e0c" fill-opacity="0.82" stroke="#333" stroke-width="0.5"/>
+  <!-- Hainan island -->
+  <ellipse cx="392" cy="416" rx="22" ry="13" fill="#141812" stroke="#1D9E75" stroke-width="1.6"/>
 
-  <rect x="24" y="282" width="12" height="12" rx="2" fill="#5b7fa6"/>
-  <text x="42" y="293" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Mandarin</text>
+  <!-- Taiwan island -->
+  <ellipse cx="543" cy="330" rx="11" ry="21" fill="#141812" stroke="#1D9E75" stroke-width="1.6"/>
 
-  <rect x="24" y="300" width="12" height="12" rx="2" fill="#1D9E75"/>
-  <text x="42" y="311" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Cantonese / Yue</text>
+  <!-- ===== LANGUAGE LABELS ===== -->
 
-  <rect x="24" y="318" width="12" height="12" rx="2" fill="#d4842a"/>
-  <text x="42" y="329" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Wu</text>
+  <!-- Mandarin — North/Central (dominant, large area) -->
+  <text x="312" y="160" fill="#7ab2d8" font-size="13.5" font-weight="700" font-family="system-ui,sans-serif">Mandarin</text>
+  <text x="312" y="175" fill="#7ab2d8" font-size="10" font-family="system-ui,sans-serif">普通话 · most of China</text>
 
-  <rect x="24" y="336" width="12" height="12" rx="2" fill="#8a52a0"/>
-  <text x="42" y="347" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Min</text>
+  <!-- Mandarin NE hint -->
+  <text x="550" y="105" fill="#7ab2d8" font-size="9.5" font-family="system-ui,sans-serif" opacity="0.75">NE Mandarin</text>
 
-  <rect x="24" y="354" width="12" height="12" rx="2" fill="#c9a820"/>
-  <text x="42" y="365" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Hakka</text>
+  <!-- Mandarin SW (Sichuan) -->
+  <text x="180" y="272" fill="#7ab2d8" font-size="9" font-family="system-ui,sans-serif" text-anchor="middle">Sichuan</text>
+  <text x="180" y="284" fill="#7ab2d8" font-size="9" font-family="system-ui,sans-serif" text-anchor="middle">Mandarin</text>
 
-  <rect x="24" y="372" width="12" height="12" rx="2" fill="#b0a898"/>
-  <text x="42" y="383" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Tibetan</text>
+  <!-- Wu — Shanghai / Zhejiang -->
+  <circle cx="510" cy="250" r="3.5" fill="#e8954a"/>
+  <line x1="513" y1="248" x2="540" y2="236" stroke="#e8954a" stroke-width="0.9" opacity="0.7"/>
+  <text x="543" y="233" fill="#e8954a" font-size="11" font-weight="600" font-family="system-ui,sans-serif">Wu</text>
+  <text x="543" y="246" fill="#e8954a" font-size="9" font-family="system-ui,sans-serif">吴语</text>
 
-  <rect x="24" y="390" width="12" height="12" rx="2" fill="#8a7a6a"/>
-  <text x="42" y="401" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Uyghur / Xinjiang</text>
+  <!-- Min — Fujian + Taiwan -->
+  <circle cx="481" cy="312" r="3.5" fill="#a87ec0"/>
+  <line x1="484" y1="310" x2="540" y2="298" stroke="#a87ec0" stroke-width="0.9" opacity="0.7"/>
+  <text x="543" y="295" fill="#a87ec0" font-size="11" font-weight="600" font-family="system-ui,sans-serif">Min</text>
+  <text x="543" y="308" fill="#a87ec0" font-size="9" font-family="system-ui,sans-serif">闽语</text>
 
-  <rect x="24" y="408" width="12" height="12" rx="2" fill="#2a8f65"/>
-  <text x="42" y="419" fill="#ccc" font-size="11" font-family="system-ui,sans-serif">Cantonese / Zhuang mix</text>
+  <!-- Cantonese — Guangdong -->
+  <circle cx="432" cy="362" r="3.5" fill="#1D9E75"/>
+  <text x="360" y="358" fill="#1D9E75" font-size="11" font-weight="600" font-family="system-ui,sans-serif">Cantonese</text>
+  <text x="360" y="371" fill="#1D9E75" font-size="9" font-family="system-ui,sans-serif">粤语</text>
 
-  <text x="24" y="452" fill="#888" font-size="9" font-family="system-ui,sans-serif">Simplified. Hakka is scattered across</text>
-  <text x="24" y="463" fill="#888" font-size="9" font-family="system-ui,sans-serif">Guangdong, Fujian &amp; Jiangxi.</text>
+  <!-- Taiwan label -->
+  <text x="560" y="333" fill="#888" font-size="9" font-family="system-ui,sans-serif">Taiwan</text>
+  <text x="560" y="344" fill="#a87ec0" font-size="9" font-family="system-ui,sans-serif">(Min)</text>
 
-  <!-- ===== REGION LABELS ===== -->
-  <!-- Xinjiang -->
-  <text x="120" y="100" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Xinjiang</text>
-  <!-- Tibet -->
-  <text x="210" y="200" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Tibet</text>
-  <!-- NE -->
-  <text x="390" y="65" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Northeast</text>
-  <!-- North -->
-  <text x="415" y="120" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">N. China</text>
-  <!-- Sichuan -->
-  <text x="300" y="240" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Sichuan</text>
-  <!-- Shanghai / Wu -->
-  <text x="472" y="150" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Shanghai</text>
-  <text x="472" y="162" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.7">(Wu)</text>
-  <!-- Fujian -->
-  <text x="487" y="210" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Fujian</text>
-  <!-- Guangdong -->
-  <text x="475" y="290" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Guangdong</text>
-  <!-- Guangxi -->
-  <text x="355" y="305" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Guangxi</text>
-  <!-- Hainan -->
-  <text x="430" y="368" fill="#fff" font-size="9" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.85">Hainan</text>
-  <!-- Taiwan -->
-  <text x="582" y="265" fill="#fff" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle" opacity="0.9">Taiwan</text>
-  <line x1="562" y1="265" x2="578" y2="265" stroke="#888" stroke-width="0.8"/>
+  <!-- Hainan label -->
+  <text x="392" y="420" fill="#888" font-size="9" font-family="system-ui,sans-serif" text-anchor="middle">Hainan</text>
 
-  <!-- Title -->
-  <text x="530" y="430" fill="#666" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle">Approximate distribution only</text>
+  <!-- ===== LEGEND ===== -->
+  <rect x="14" y="270" width="150" height="142" rx="5" fill="#0f0e0c" fill-opacity="0.88" stroke="#2a2926" stroke-width="0.5"/>
+  <text x="24" y="289" fill="#bbb" font-size="10.5" font-weight="600" font-family="system-ui,sans-serif">Chinese language families</text>
+
+  <circle cx="29" cy="305" r="4" fill="#7ab2d8"/>
+  <text x="39" y="309" fill="#ccc" font-size="10.5" font-family="system-ui,sans-serif">Mandarin</text>
+
+  <circle cx="29" cy="323" r="4" fill="#1D9E75"/>
+  <text x="39" y="327" fill="#ccc" font-size="10.5" font-family="system-ui,sans-serif">Cantonese / Yue</text>
+
+  <circle cx="29" cy="341" r="4" fill="#e8954a"/>
+  <text x="39" y="345" fill="#ccc" font-size="10.5" font-family="system-ui,sans-serif">Wu</text>
+
+  <circle cx="29" cy="359" r="4" fill="#a87ec0"/>
+  <text x="39" y="363" fill="#ccc" font-size="10.5" font-family="system-ui,sans-serif">Min</text>
+
+  <circle cx="29" cy="377" r="4" fill="#d4b84a"/>
+  <text x="39" y="381" fill="#ccc" font-size="10.5" font-family="system-ui,sans-serif">Hakka (scattered)</text>
+
+  <text x="24" y="402" fill="#555" font-size="9" font-family="system-ui,sans-serif">Approximate distribution only</text>
 </svg>
