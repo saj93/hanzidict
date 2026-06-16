@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -300,28 +301,24 @@ function Quiz({ questions: initialQuestions, onDone }) {
   );
 }
 
-// ── Vocab cards ──────────────────────────────────────────────────────────────
+// ── Vocab list ────────────────────────────────────────────────────────────────
 
 function VocabSection({ vocabCards }) {
   if (!vocabCards || !vocabCards.length) return null;
+  const items = vocabCards.flatMap(g => g.items);
   return (
     <div className="pb-vocab-section">
-      <div className="pb-vocab-section-title">Vocabulary Cards</div>
-      {vocabCards.map((group, gi) => (
-        <div key={gi} className="pb-vocab-group">
-          <div className="pb-vocab-group-title">{group.title}</div>
-          <div className="pb-vocab-grid">
-            {group.items.map((item, ii) => (
-              <div key={ii} className="pb-vocab-card">
-                <div className="pb-vocab-hanzi">{item.hanzi}</div>
-                <div className="pb-vocab-pinyin">{item.pinyin}</div>
-                <div className="pb-vocab-english">{item.english}</div>
-                <div className="pb-vocab-audio"><AudioButton text={item.hanzi} /></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      <ul className="pb-vocab-list">
+        {items.map((item, i) => (
+          <li key={i}>
+            <Link href={`/word/${encodeURIComponent(item.hanzi)}`} className="pb-vocab-item">
+              <span className="pb-vocab-hanzi">{item.hanzi}</span>
+              <span className="pb-vocab-pinyin">{item.pinyin}</span>
+              <span className="pb-vocab-english">{item.english}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
