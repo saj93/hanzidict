@@ -1824,8 +1824,8 @@
             "english": "Parents"
           },
           {
-            "hanzi": "爸爸/爹",
-            "pinyin": "Bàba/Diē",
+            "hanzi": "爸爸",
+            "pinyin": "Bàba",
             "english": "Father/Dad"
           },
           {
@@ -2703,8 +2703,8 @@
             "english": "Quote/price offer"
           },
           {
-            "hanzi": "签合同",
-            "pinyin": "Qiān hétong",
+            "hanzi": "签约",
+            "pinyin": "Qiānyuē",
             "english": "Sign a contract"
           },
           {
@@ -2850,11 +2850,6 @@
             "hanzi": "哔哩哔哩",
             "pinyin": "Bìlìbìlì",
             "english": "Bilibili (B站) — long-form video, popular with youth"
-          },
-          {
-            "hanzi": "美团",
-            "pinyin": "Měituán",
-            "english": "Meituan — food delivery, reservations"
           },
           {
             "hanzi": "拼多多",
