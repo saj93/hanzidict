@@ -2082,7 +2082,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 
 /* ── Blog post ── */
 .blog-post {
-  max-width: 660px; margin: 0 auto; padding: 48px 28px 80px; overflow-x: hidden;
+  max-width: 660px; margin: 0 auto; padding: 48px 28px 80px;
 }
 .blog-post-header { margin-bottom: 36px; }
 .blog-post-title { font-size: 30px; font-weight: 700; color: var(--fg); margin: 12px 0 12px; line-height: 1.25; }
@@ -2120,10 +2120,9 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .blog-post-body img { max-width: 100%; height: auto; display: block; margin: 1.8em auto; border-radius: 10px; }
 @media (min-width: 800px) {
   .blog-post-body img[src$=".svg"] {
-    width: calc(100% + 240px);
-    max-width: calc(100% + 240px);
-    margin-left: -120px;
-    margin-right: -120px;
+    width: min(900px, 100vw - 40px);
+    max-width: min(900px, 100vw - 40px);
+    margin-left: calc(50% - min(450px, (100vw - 40px) / 2));
     border-radius: 0;
   }
 }
