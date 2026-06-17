@@ -110,7 +110,7 @@ export default function ProfilePage() {
             {/* Streak + summary */}
             <div className="prof-top-row">
               <div className="prof-streak-card">
-                <div className="prof-streak-flame">🔥</div>
+                <div className="prof-streak-flame">⚡</div>
                 <div className="prof-streak-num">{stats.streak}</div>
                 <div className="prof-streak-label">day streak</div>
               </div>
