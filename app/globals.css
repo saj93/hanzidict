@@ -1816,6 +1816,60 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .up-save-btn:hover:not(:disabled) { opacity: 0.87; }
 .up-save-btn:disabled { opacity: 0.6; cursor: default; }
 
+/* ── Profile stats page ── */
+.prof-wrap {
+  max-width: 560px; margin: 0 auto; padding: 48px 20px 80px;
+}
+.prof-loading { color: var(--fg3); font-size: 14px; margin-bottom: 28px; }
+/* Streak + summary row */
+.prof-top-row { display: flex; gap: 14px; margin-bottom: 20px; align-items: stretch; }
+.prof-streak-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px 28px; flex-shrink: 0; min-width: 120px;
+}
+.prof-streak-flame { font-size: 28px; line-height: 1; margin-bottom: 4px; }
+.prof-streak-num { font-size: 42px; font-weight: 800; color: var(--fg); line-height: 1; }
+.prof-streak-label { font-size: 12px; color: var(--fg3); margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
+.prof-summary-cards { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.prof-summary-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 20px; flex: 1;
+}
+.prof-summary-num { font-size: 28px; font-weight: 700; color: var(--fg); line-height: 1; }
+.prof-summary-label { font-size: 12px; color: var(--fg3); margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
+/* Level breakdown */
+.prof-levels-card { margin-bottom: 20px; }
+.prof-settings-card { margin-bottom: 0; }
+.prof-levels-title, .prof-settings-title {
+  font-size: 13px; font-weight: 700; color: var(--fg2);
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 18px;
+}
+.prof-level-row { margin-bottom: 14px; }
+.prof-level-row:last-child { margin-bottom: 0; }
+.prof-level-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.prof-level-name { font-size: 13px; font-weight: 600; color: var(--fg); }
+.prof-level-count { font-size: 12px; color: var(--fg3); }
+.prof-bar-track {
+  height: 6px; background: var(--border-mid); border-radius: 99px; overflow: hidden;
+}
+.prof-bar-fill {
+  height: 100%; background: var(--accent); border-radius: 99px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+/* Empty state */
+.prof-empty {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 48px 24px; text-align: center; margin-bottom: 20px;
+}
+.prof-empty-icon { font-size: 36px; margin-bottom: 14px; }
+.prof-empty-title { font-size: 17px; font-weight: 600; color: var(--fg); margin-bottom: 8px; }
+.prof-empty-sub { font-size: 14px; color: var(--fg3); margin-bottom: 24px; line-height: 1.5; }
+@media (max-width: 480px) {
+  .prof-top-row { flex-direction: column; }
+  .prof-summary-cards { flex-direction: row; }
+}
+
 /* Flashcard login banner */
 .fc-login-banner {
   background: var(--accent-dim); color: var(--accent-text);
