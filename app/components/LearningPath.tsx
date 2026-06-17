@@ -19,30 +19,30 @@ const QUESTIONS = [
     q: "What's your current level?",
     field: 'level' as keyof Answers,
     options: [
-      { value: 'beginner0',    label: 'Complete beginner', sub: 'I know nothing'            },
-      { value: 'beginner1',    label: 'Beginner',          sub: 'I know a few words/phrases' },
-      { value: 'intermediate', label: 'Intermediate',      sub: 'HSK 2–4'                   },
-      { value: 'advanced',     label: 'Advanced',          sub: 'HSK 5+'                    },
+      { value: 'beginner0',    emoji: '🌱', label: 'Complete beginner', sub: 'I know nothing'            },
+      { value: 'beginner1',    emoji: '🌿', label: 'Beginner',          sub: 'I know a few words/phrases' },
+      { value: 'intermediate', emoji: '🌳', label: 'Intermediate',      sub: 'HSK 2–4'                   },
+      { value: 'advanced',     emoji: '🎋', label: 'Advanced',          sub: 'HSK 5+'                    },
     ],
   },
   {
     q: "What's your main goal?",
     field: 'goal' as keyof Answers,
     options: [
-      { value: 'travel',   label: 'Travel to China/Taiwan'        },
-      { value: 'business', label: 'Business & professional use'   },
-      { value: 'culture',  label: 'Chinese culture & entertainment'},
-      { value: 'hsk',      label: 'Pass the HSK exam'             },
-      { value: 'interest', label: 'General interest'              },
+      { value: 'travel',   emoji: '✈️',  label: 'Travel to China/Taiwan'         },
+      { value: 'business', emoji: '💼',  label: 'Business & professional use'    },
+      { value: 'culture',  emoji: '🎬',  label: 'Chinese culture & entertainment'},
+      { value: 'hsk',      emoji: '📝',  label: 'Pass the HSK exam'              },
+      { value: 'interest', emoji: '💡',  label: 'General interest'               },
     ],
   },
   {
     q: 'How much time can you dedicate daily?',
     field: 'time' as keyof Answers,
     options: [
-      { value: '5',  label: '5 minutes',   sub: 'Quick daily habit' },
-      { value: '15', label: '15 minutes',  sub: 'Steady progress'   },
-      { value: '30', label: '30 minutes+', sub: 'Fast track'        },
+      { value: '5',  emoji: '⚡', label: '5 minutes',   sub: 'Quick daily habit' },
+      { value: '15', emoji: '📈', label: '15 minutes',  sub: 'Steady progress'   },
+      { value: '30', emoji: '🚀', label: '30 minutes+', sub: 'Fast track'        },
     ],
   },
 ];
@@ -243,6 +243,10 @@ export default function LearningPath() {
   return (
     <section className="lp-section">
       <div className="lp-inner">
+        <div className="lp-intro">
+          <h2 className="lp-intro-title">Get a personalized learning plan</h2>
+          <p className="lp-intro-sub">Answer 3 quick questions to find your starting point.</p>
+        </div>
         <div className={`lp-card${visible ? ' lp-card-in' : ''}`}>
           <div className="lp-progress">
             <div className="lp-dots">
@@ -260,10 +264,13 @@ export default function LearningPath() {
                 className="lp-option"
                 onClick={() => pick(q.field, opt.value)}
               >
-                <span className="lp-option-label">{opt.label}</span>
-                {'sub' in opt && (opt as any).sub && (
-                  <span className="lp-option-sub">{(opt as any).sub}</span>
-                )}
+                <span className="lp-option-emoji">{(opt as any).emoji}</span>
+                <span className="lp-option-text">
+                  <span className="lp-option-label">{opt.label}</span>
+                  {'sub' in opt && (opt as any).sub && (
+                    <span className="lp-option-sub">{(opt as any).sub}</span>
+                  )}
+                </span>
               </button>
             ))}
           </div>

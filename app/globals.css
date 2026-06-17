@@ -301,21 +301,27 @@ html.dark .cand { background: var(--bg3); }
 
 /* ── Learning Path ── */
 .lp-section {
-  background: var(--bg); border-bottom: 0.5px solid var(--border);
-  padding: 32px 24px;
+  background: var(--bg);
+  border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
+  padding: 48px 24px 40px;
 }
-.lp-inner { max-width: 560px; margin: 0 auto; }
+.lp-inner { max-width: 520px; margin: 0 auto; }
+
+/* Intro heading (quiz view only) */
+.lp-intro { text-align: center; margin-bottom: 20px; }
+.lp-intro-title { font-size: 20px; font-weight: 700; color: var(--fg); margin-bottom: 5px; }
+.lp-intro-sub { font-size: 13px; color: var(--fg3); }
 
 /* Quiz card */
 .lp-card {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 36px 32px;
+  border-radius: 16px; padding: 24px 24px 20px;
   opacity: 0; transform: translateY(10px);
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
 .lp-card.lp-card-in { opacity: 1; transform: translateY(0); }
 
-.lp-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.lp-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .lp-dots { display: flex; gap: 6px; }
 .lp-dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -327,20 +333,21 @@ html.dark .cand { background: var(--bg3); }
 
 .lp-q {
   font-family: var(--font-display), 'Lora', Georgia, serif;
-  font-size: 22px; font-weight: 400; color: var(--fg);
-  margin-bottom: 24px; line-height: 1.35;
+  font-size: 20px; font-weight: 400; color: var(--fg);
+  margin-bottom: 14px; line-height: 1.35;
 }
-.lp-options { display: flex; flex-direction: column; gap: 10px; }
+.lp-options { display: flex; flex-direction: column; gap: 8px; }
 .lp-option {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px; padding: 11px 14px;
   background: var(--bg); border: 1px solid var(--border);
-  border-radius: 12px; cursor: pointer; text-align: left;
+  border-radius: 10px; cursor: pointer; text-align: left;
   transition: border-color 0.15s, background 0.15s;
 }
 .lp-option:hover { border-color: var(--accent); background: var(--accent-dim); }
+.lp-option-emoji { font-size: 18px; flex-shrink: 0; line-height: 1; }
+.lp-option-text  { display: flex; flex-direction: column; gap: 1px; }
 .lp-option-label { font-size: 14px; font-weight: 500; color: var(--fg); }
-.lp-option-sub   { font-size: 12px; color: var(--fg3); white-space: nowrap; }
+.lp-option-sub   { font-size: 12px; color: var(--fg3); }
 
 /* Plan view */
 .lp-plan-header { text-align: center; margin-bottom: 28px; }
@@ -1303,8 +1310,8 @@ html.dark .history-footer { background: var(--bg3); }
   .stat-cell:nth-child(odd) { border-right: 0.5px solid var(--border); }
   .stat-cell:nth-child(3), .stat-cell:nth-child(4) { border-bottom: none; }
   .stat-n { font-size: 20px; }
-  .lp-section { padding: 36px 16px; }
-  .lp-card { padding: 24px 20px; }
+  .lp-section { padding: 40px 16px 32px; }
+  .lp-card { padding: 20px 18px 18px; }
   .lp-q { font-size: 18px; }
   .lp-step { flex-wrap: wrap; gap: 10px; }
   .lp-step-body { flex: 1 1 100%; order: 3; }
