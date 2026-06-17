@@ -2915,7 +2915,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   border-right: 1px solid var(--border);
 }
 .pb-vocab-th:last-child { border-right: none; }
-.pb-vocab-row { transition: background 0.1s; }
+.pb-vocab-row { transition: background 0.1s; cursor: pointer; }
 .pb-vocab-row:hover { background: var(--accent-dim); }
 .pb-vocab-td {
   padding: 10px 16px;
@@ -2925,14 +2925,9 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 }
 .pb-vocab-td:last-child { border-right: none; }
 .pb-vocab-row:last-child .pb-vocab-td { border-bottom: none; }
-.pb-vocab-td-hanzi { width: 1%; white-space: nowrap; }
-.pb-vocab-td-pinyin { width: 1%; white-space: nowrap; }
-.pb-vocab-link {
-  font-size: 20px; font-weight: 500;
-  color: var(--fg); text-decoration: none;
-}
-.pb-vocab-row:hover .pb-vocab-link { color: var(--accent); }
-.pb-vocab-td-pinyin { font-size: 13px; color: var(--accent); }
+.pb-vocab-td-hanzi { width: 1%; white-space: nowrap; font-size: 20px; font-weight: 500; color: var(--fg); }
+.pb-vocab-td-pinyin { width: 1%; white-space: nowrap; font-size: 13px; color: var(--accent); }
+.pb-vocab-row:hover .pb-vocab-td-hanzi { color: var(--accent); }
 .pb-vocab-td-en { font-size: 14px; color: var(--fg2); }
 
 @media (max-width: 600px) {

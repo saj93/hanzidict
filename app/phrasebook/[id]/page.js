@@ -304,6 +304,7 @@ function Quiz({ questions: initialQuestions, onDone }) {
 // ── Vocab list ────────────────────────────────────────────────────────────────
 
 function VocabSection({ vocabCards }) {
+  const router = useRouter();
   if (!vocabCards || !vocabCards.length) return null;
   const items = vocabCards.flatMap(g => g.items);
   return (
@@ -319,12 +320,12 @@ function VocabSection({ vocabCards }) {
         </thead>
         <tbody>
           {items.map((item, i) => (
-            <tr key={i} className="pb-vocab-row">
-              <td className="pb-vocab-td pb-vocab-td-hanzi">
-                <Link href={`/word/${encodeURIComponent(item.hanzi)}`} className="pb-vocab-link">
-                  {item.hanzi}
-                </Link>
-              </td>
+            <tr
+              key={i}
+              className="pb-vocab-row"
+              onClick={() => router.push(`/word/${encodeURIComponent(item.hanzi)}`)}
+            >
+              <td className="pb-vocab-td pb-vocab-td-hanzi">{item.hanzi}</td>
               <td className="pb-vocab-td pb-vocab-td-pinyin">{item.pinyin}</td>
               <td className="pb-vocab-td pb-vocab-td-en">{item.english}</td>
             </tr>
