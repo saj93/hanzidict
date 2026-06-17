@@ -7,6 +7,7 @@ import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import AudioButton from '../../components/AudioButton';
 import { useSubscription } from '../../hooks/useSubscription';
+import { useAuth } from '../../components/AuthProvider';
 import situations from '../../../content/phrasebook/situations.json';
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -98,28 +99,69 @@ function NoteBlock({ note }) {
 
 // ── Phrase row ───────────────────────────────────────────────────────────────
 
-function PhraseRow({ phrase }) {
-  const badge = BADGE_CONFIG[phrase.badge] || BADGE_CONFIG.common;
-  const typeCls = TYPE_CLS[phrase.type] || 'pb-type-qa';
+function PhraseRow({
+  phrase, phraseKey, override,
+  isAdmin, editingKey, editFields, setEditFields, editSaving,
+  onStartEdit, onSave, onCancel,
+}) {
+  const display = override ? { ...phrase, ...override } : phrase;
+  const badge = BADGE_CONFIG[display.badge] || BADGE_CONFIG.common;
+  const typeCls = TYPE_CLS[display.type] || 'pb-type-qa';
+  const isEditing = isAdmin && editingKey === phraseKey;
 
   return (
     <div className="pb-phrase">
-      <div className={`pb-type-pill ${typeCls}`}>{phrase.type}</div>
+      <div className={`pb-type-pill ${typeCls}`}>{display.type}</div>
 
-      <div className="pb-phrase-body">
-        <div className="pb-phrase-hanzi">{phrase.hanzi}</div>
-        <div className="pb-phrase-pinyin">{phrase.pinyin}</div>
-        <div className="pb-phrase-english">{phrase.english}</div>
-        <div className="pb-phrase-pills">
-          <span className={`pb-phrase-badge ${badge.cls}`}>{badge.label}</span>
-          {phrase.badgeNote && (
-            <span className="pb-phrase-badge-note">{phrase.badgeNote}</span>
-          )}
+      {isEditing ? (
+        <div className="pb-phrase-body">
+          <input
+            className="pb-phrase-edit-input pb-phrase-edit-hanzi"
+            value={editFields.hanzi}
+            onChange={e => setEditFields(f => ({ ...f, hanzi: e.target.value }))}
+            placeholder="Hanzi"
+          />
+          <input
+            className="pb-phrase-edit-input pb-phrase-edit-pinyin"
+            value={editFields.pinyin}
+            onChange={e => setEditFields(f => ({ ...f, pinyin: e.target.value }))}
+            placeholder="Pinyin"
+          />
+          <input
+            className="pb-phrase-edit-input pb-phrase-edit-english"
+            value={editFields.english}
+            onChange={e => setEditFields(f => ({ ...f, english: e.target.value }))}
+            placeholder="English"
+          />
+          <div className="def-edit-actions">
+            <button className="def-edit-save" onClick={onSave} disabled={editSaving}>
+              {editSaving ? 'Saving…' : 'Save'}
+            </button>
+            <button className="def-edit-cancel" onClick={onCancel}>Cancel</button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="pb-phrase-body">
+          <div className="pb-phrase-hanzi">{display.hanzi}</div>
+          <div className="pb-phrase-pinyin">{display.pinyin}</div>
+          <div className="pb-phrase-english">{display.english}</div>
+          <div className="pb-phrase-pills">
+            <span className={`pb-phrase-badge ${badge.cls}`}>{badge.label}</span>
+            {display.badgeNote && (
+              <span className="pb-phrase-badge-note">{display.badgeNote}</span>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className="pb-phrase-audio">
-        <AudioButton text={phrase.hanzi} />
+        {!isEditing && <AudioButton text={display.hanzi} />}
+        {isAdmin && !isEditing && (
+          <button
+            className="pb-phrase-edit-btn"
+            onClick={() => onStartEdit(phraseKey, display)}
+          >✎</button>
+        )}
       </div>
     </div>
   );
@@ -151,19 +193,39 @@ function LockedBlock({ phrases, onUpgrade }) {
 
 // ── Section ──────────────────────────────────────────────────────────────────
 
-function Section({ section, isPremium, onUpgrade }) {
+function Section({
+  section, sectionIdx, isPremium, onUpgrade,
+  isAdmin, editingKey, editFields, setEditFields, editSaving, overrides,
+  onStartEdit, onSave, onCancel,
+}) {
   const freePhrases = section.phrases.filter(p => p.free);
   const lockedPhrases = section.phrases.filter(p => !p.free);
-  const shownPhrases = isPremium ? section.phrases : freePhrases;
+  const shownPhrases = (isPremium || isAdmin) ? section.phrases : freePhrases;
 
   return (
     <div className="pb-section">
       <div className="pb-section-title">{section.title}</div>
       {section.note && <NoteBlock note={section.note} />}
-      {shownPhrases.map((phrase, i) => (
-        <PhraseRow key={i} phrase={phrase} />
-      ))}
-      {!isPremium && lockedPhrases.length > 0 && (
+      {shownPhrases.map((phrase, pi) => {
+        const key = `s${sectionIdx}p${section.phrases.indexOf(phrase)}`;
+        return (
+          <PhraseRow
+            key={pi}
+            phrase={phrase}
+            phraseKey={key}
+            override={overrides[key]}
+            isAdmin={isAdmin}
+            editingKey={editingKey}
+            editFields={editFields}
+            setEditFields={setEditFields}
+            editSaving={editSaving}
+            onStartEdit={onStartEdit}
+            onSave={onSave}
+            onCancel={onCancel}
+          />
+        );
+      })}
+      {!isPremium && !isAdmin && lockedPhrases.length > 0 && (
         <LockedBlock phrases={lockedPhrases} onUpgrade={onUpgrade} />
       )}
     </div>
@@ -342,9 +404,49 @@ export default function SituationPage() {
   const { id }    = useParams();
   const router    = useRouter();
   const { isPremium } = useSubscription();
+  const { isAdmin, session } = useAuth() ?? {};
   const [mode, setMode] = useState('browse'); // 'browse' | 'quiz'
+  const [editingKey, setEditingKey] = useState(null);
+  const [editFields, setEditFields] = useState({ hanzi: '', pinyin: '', english: '' });
+  const [editSaving, setEditSaving] = useState(false);
+  const [overrides, setOverrides] = useState({});
 
   const situation = situations.find(s => s.id === id);
+
+  function startEdit(key, phrase) {
+    setEditingKey(key);
+    setEditFields({ hanzi: phrase.hanzi, pinyin: phrase.pinyin, english: phrase.english });
+  }
+
+  function cancelEdit() {
+    setEditingKey(null);
+    setEditFields({ hanzi: '', pinyin: '', english: '' });
+  }
+
+  async function saveEdit() {
+    if (!editingKey || !session) return;
+    setEditSaving(true);
+    try {
+      const resp = await fetch(`/api/phrasebook/${id}/${editingKey}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(editFields),
+      });
+      if (resp.ok) {
+        setOverrides(o => ({ ...o, [editingKey]: { ...editFields } }));
+        setEditingKey(null);
+      } else {
+        const err = await resp.json().catch(() => ({}));
+        console.error('Save failed:', err);
+      }
+    } catch (e) {
+      console.error('Save failed:', e);
+    }
+    setEditSaving(false);
+  }
 
   useEffect(() => {
     if (situation) document.title = `${situation.title} — HanziDict`;
@@ -414,8 +516,18 @@ export default function SituationPage() {
               <Section
                 key={si}
                 section={section}
+                sectionIdx={si}
                 isPremium={isPremium}
                 onUpgrade={upgrade}
+                isAdmin={isAdmin}
+                editingKey={editingKey}
+                editFields={editFields}
+                setEditFields={setEditFields}
+                editSaving={editSaving}
+                overrides={overrides}
+                onStartEdit={startEdit}
+                onSave={saveEdit}
+                onCancel={cancelEdit}
               />
             ))}
 
