@@ -135,6 +135,9 @@ export default function WordPage() {
   const [editingDefIdx, setEditingDefIdx] = useState(null);
   const [editVal, setEditVal] = useState('');
   const [editSaving, setEditSaving] = useState(false);
+  const [editingExampleId, setEditingExampleId] = useState(null);
+  const [editExFields, setEditExFields] = useState({ chinese: '', pinyin: '', english: '' });
+  const [editExSaving, setEditExSaving] = useState(false);
   const hwRef = useRef(null);
   const router = useRouter();
   const { isAdmin, session } = useAuth() ?? {};
@@ -187,6 +190,7 @@ export default function WordPage() {
     setShowAllDefs(false);
     setLocalDefinitions(null);
     setEditingDefIdx(null);
+    setEditingExampleId(null);
     setPronunciations([]);
     setActiveTabIdx(0);
     hwRef.current = null;
@@ -497,6 +501,33 @@ export default function WordPage() {
     setEditSaving(false);
   }
 
+  function startExEdit(ex) {
+    setEditingExampleId(ex.id);
+    setEditExFields({ chinese: ex.chinese, pinyin: ex.pinyin || '', english: ex.english });
+  }
+
+  async function saveExEdit() {
+    if (!editingExampleId || !session) return;
+    setEditExSaving(true);
+    try {
+      const resp = await fetch(`/api/examples/${editingExampleId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify(editExFields),
+      });
+      if (resp.ok) {
+        setExamples(exs => exs.map(e => e.id === editingExampleId ? { ...e, ...editExFields } : e));
+        setEditingExampleId(null);
+      } else {
+        const err = await resp.json().catch(() => ({}));
+        console.error('Save failed:', err);
+      }
+    } catch (e) {
+      console.error('Save failed:', e);
+    }
+    setEditExSaving(false);
+  }
+
   return (
     <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
     <main>
@@ -632,18 +663,57 @@ export default function WordPage() {
                       )}
                       {i === 0 && examples.length > 0 && (() => {
                         const ex = examples[exampleIdx];
+                        const isEditingEx = isAdmin && editingExampleId === ex.id;
                         return (
                           <div className="example-block">
-                            <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
-                            {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
-                            <div className="example-en">{ex.english}</div>
-                            {examples.length > 1 && (
-                              <div className="example-nav">
-                                <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i - 1)} disabled={exampleIdx === 0}>‹</button>
-                                <span className="example-counter">{exampleIdx + 1} / {examples.length}</span>
-                                <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(i => i + 1)} disabled={exampleIdx === examples.length - 1}>›</button>
-                              </div>
+                            {isEditingEx ? (
+                              <>
+                                <input
+                                  className="def-edit-input"
+                                  value={editExFields.chinese}
+                                  onChange={e => setEditExFields(f => ({ ...f, chinese: e.target.value }))}
+                                  placeholder="Chinese"
+                                />
+                                <input
+                                  className="def-edit-input"
+                                  value={editExFields.pinyin}
+                                  onChange={e => setEditExFields(f => ({ ...f, pinyin: e.target.value }))}
+                                  placeholder="Pinyin (optional)"
+                                  style={{ marginTop: 4 }}
+                                />
+                                <input
+                                  className="def-edit-input"
+                                  value={editExFields.english}
+                                  onChange={e => setEditExFields(f => ({ ...f, english: e.target.value }))}
+                                  placeholder="English"
+                                  style={{ marginTop: 4 }}
+                                />
+                                <div className="def-edit-actions" style={{ marginTop: 6 }}>
+                                  <button className="def-edit-save" onClick={saveExEdit} disabled={editExSaving}>
+                                    {editExSaving ? 'Saving…' : 'Save'}
+                                  </button>
+                                  <button className="def-edit-cancel" onClick={() => setEditingExampleId(null)}>Cancel</button>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
+                                {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
+                                <div className="example-en">{ex.english}</div>
+                              </>
                             )}
+                            <div className="example-block-footer">
+                              {examples.length > 1 && !isEditingEx && (
+                                <div className="example-nav">
+                                  <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(n => n - 1)} disabled={exampleIdx === 0}>‹</button>
+                                  <span className="example-counter">{exampleIdx + 1} / {examples.length}</span>
+                                  <button className="sbtn stroke-nav-btn" onClick={() => setExampleIdx(n => n + 1)} disabled={exampleIdx === examples.length - 1}>›</button>
+                                </div>
+                              )}
+                              {isAdmin && ex.id && !isEditingEx && (
+                                <button className="example-edit-btn" onClick={() => startExEdit(ex)}>✎</button>
+                              )}
+                            </div>
                           </div>
                         );
                       })()}
