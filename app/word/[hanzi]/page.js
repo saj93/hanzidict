@@ -138,6 +138,7 @@ export default function WordPage() {
   const [editingExampleId, setEditingExampleId] = useState(null);
   const [editExFields, setEditExFields] = useState({ chinese: '', pinyin: '', english: '' });
   const [editExSaving, setEditExSaving] = useState(false);
+  const [confirmDeleteExId, setConfirmDeleteExId] = useState(null);
   const hwRef = useRef(null);
   const router = useRouter();
   const { isAdmin, session } = useAuth() ?? {};
@@ -528,6 +529,29 @@ export default function WordPage() {
     setEditExSaving(false);
   }
 
+  async function confirmDeleteExample(id) {
+    if (!session) return;
+    try {
+      const resp = await fetch(`/api/examples/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${session.access_token}` },
+      });
+      if (resp.ok) {
+        setExamples(exs => {
+          const next = exs.filter(e => e.id !== id);
+          setExampleIdx(idx => Math.min(idx, Math.max(0, next.length - 1)));
+          return next;
+        });
+        setConfirmDeleteExId(null);
+      } else {
+        const err = await resp.json().catch(() => ({}));
+        console.error('Delete failed:', err);
+      }
+    } catch (e) {
+      console.error('Delete failed:', e);
+    }
+  }
+
   return (
     <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
     <main>
@@ -711,7 +735,20 @@ export default function WordPage() {
                                 </div>
                               )}
                               {isAdmin && ex.id && !isEditingEx && (
-                                <button className="example-edit-btn" onClick={() => startExEdit(ex)}>✎</button>
+                                <div className="example-admin-btns">
+                                  {confirmDeleteExId === ex.id ? (
+                                    <>
+                                      <span className="example-delete-confirm-label">Delete this example?</span>
+                                      <button className="example-delete-yes" onClick={() => confirmDeleteExample(ex.id)}>Yes</button>
+                                      <button className="def-edit-cancel" onClick={() => setConfirmDeleteExId(null)}>No</button>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <button className="example-edit-btn" onClick={() => startExEdit(ex)}>✎</button>
+                                      <button className="example-delete-btn" onClick={() => setConfirmDeleteExId(ex.id)}>✕</button>
+                                    </>
+                                  )}
+                                </div>
                               )}
                             </div>
                           </div>

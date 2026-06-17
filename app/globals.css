@@ -965,8 +965,13 @@ html.dark .history-footer { background: var(--bg3); }
 .example-nav { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .example-counter { font-size: 12px; color: var(--fg3); min-width: 32px; text-align: center; }
 .example-block-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; min-height: 24px; }
-.example-edit-btn { padding: 1px 5px; font-size: 11px; color: var(--fg3); background: none; border: 0.5px solid var(--border-mid); border-radius: 4px; cursor: pointer; opacity: 0; transition: opacity 0.15s; }
-.example-block:hover .example-edit-btn { opacity: 1; }
+.example-admin-btns { display: flex; align-items: center; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+.example-block:hover .example-admin-btns { opacity: 1; }
+.example-edit-btn { padding: 1px 5px; font-size: 11px; color: var(--fg3); background: none; border: 0.5px solid var(--border-mid); border-radius: 4px; cursor: pointer; }
+.example-delete-btn { padding: 1px 5px; font-size: 11px; color: var(--fg3); background: none; border: 0.5px solid var(--border-mid); border-radius: 4px; cursor: pointer; }
+.example-delete-btn:hover { color: #e05555; border-color: #e05555; }
+.example-delete-confirm-label { font-size: 11px; color: var(--fg2); }
+.example-delete-yes { padding: 2px 8px; font-size: 11px; font-weight: 600; color: #fff; background: #e05555; border: none; border-radius: 4px; cursor: pointer; }
 
 /* ── Clickable characters ──────────────────────────────────────────────────── */
 .char-clickable {
