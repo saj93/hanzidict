@@ -34,7 +34,7 @@ These radicals appear in hundreds of common characters. Recognizing them pays of
 Three dots on the left side of a character. Appears in anything related to liquid, water, or flow.
 > 河 *hé* (river), 海 *hǎi* (sea), 洗 *xǐ* (wash), 泳 *yǒng* (swim), 汤 *tāng* (soup/broth), 流 *liú* (flow), 油 *yóu* (oil)
 
-### 灬 (fire)
+### 灬 / 火 (fire)
 Four dots along the bottom — a stylized flame. Characters related to heat or cooking.
 > 热 *rè* (hot), 烤 *kǎo* (roast/bake), 煮 *zhǔ* (boil/cook), 然 *rán* (like that / so)
 
