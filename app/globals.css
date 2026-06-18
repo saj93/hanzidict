@@ -2170,6 +2170,9 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .blog-post-body th { background: var(--bg2); color: var(--fg); font-weight: 600; text-align: left; padding: .55em .9em; border: 0.5px solid var(--border); }
 .blog-post-body td { padding: .5em .9em; border: 0.5px solid var(--border); color: var(--fg2); }
 .blog-post-body tr:nth-child(even) td { background: var(--bg2); }
+.blog-post-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.blog-post-body a:visited { color: #157a5b; }
+.blog-post-body a:hover { opacity: 0.8; }
 .blog-post-body blockquote {
   border-left: 3px solid var(--accent);
   margin: 1.2em 0; padding: .7em 1.2em;
