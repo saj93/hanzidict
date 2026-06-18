@@ -57,7 +57,7 @@ Chengyu are best learned the way they're best used: in context. Reading Chinese 
 
 If you want to study them deliberately, focus on the story behind each one. Knowing that 马到成功 comes from the image of a general's horse arriving in victory makes it stick. Pure memorization of the characters and meaning, without the story, tends not to last.
 
-HanziDict shows chengyu directly on character pages — if you look up 马, you'll find all the chengyu that contain it, including 马到成功. The /chengyu page lets you browse and search the full collection.
+HanziDict shows chengyu directly on character pages — if you look up 马, you'll find all the chengyu that contain it, including 马到成功. The [成语 page](/chengyu) lets you browse and search the full collection.
 
 ## When to Use Them (and When Not To)
 
@@ -70,3 +70,7 @@ Chengyu are formal. Using them in casual text messages or everyday conversation 
 In casual conversation, native speakers do use chengyu, but selectively. Using one at the right moment feels natural and precise. Using too many sounds affected.
 
 As a learner, the safest approach is to recognize and understand them first, and use them actively only when you're confident of the context. A well-placed 一目了然 lands well. A forced one doesn't.
+
+---
+
+Ready to explore? HanziDict's [成语 collection](/chengyu) lets you browse all entries, search by character or keyword, and click through to full definitions and stroke order. It's a good place to find the next few worth adding to your vocabulary.
