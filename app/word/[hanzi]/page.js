@@ -475,19 +475,26 @@ export default function WordPage() {
   async function saveDefEdit() {
     if (editingDefIdx === null || !primary?.id || !session) return;
     setEditSaving(true);
-    const newDefs = defs.map((d, i) => i === editingDefIdx ? editVal.trim() : d);
-    let cursor = 0;
-    const newAllDefs = allDefs.map(d => {
-      if (TAIWAN_PR_RE.test(d)) return d; // preserve Taiwan pr. annotation unchanged
-      const m = d.match(clRegex);
-      if (m) {
-        const cleaned = d.replace(clRegex, '').replace(/\s{2,}/g, ' ').trim();
-        if (!cleaned) return d; // pure CL entry — preserve
-        return `${newDefs[cursor++]} ${m[0]}`.trim();
-      }
-      return newDefs[cursor++] ?? d;
-    });
-    const newDefinitions = newAllDefs.join(' | ');
+    let newDefinitions;
+    if (defs.length === 0 && editingDefIdx === 0) {
+      // Adding a first definition when all existing defs were filtered (pointer/Taiwan pr. only)
+      const trimmed = editVal.trim();
+      newDefinitions = trimmed ? (rawDefs ? `${trimmed} | ${rawDefs}` : trimmed) : rawDefs;
+    } else {
+      const newDefs = defs.map((d, i) => i === editingDefIdx ? editVal.trim() : d);
+      let cursor = 0;
+      const newAllDefs = allDefs.map(d => {
+        if (TAIWAN_PR_RE.test(d)) return d; // preserve Taiwan pr. annotation unchanged
+        const m = d.match(clRegex);
+        if (m) {
+          const cleaned = d.replace(clRegex, '').replace(/\s{2,}/g, ' ').trim();
+          if (!cleaned) return d; // pure CL entry — preserve
+          return `${newDefs[cursor++]} ${m[0]}`.trim();
+        }
+        return newDefs[cursor++] ?? d;
+      });
+      newDefinitions = newAllDefs.join(' | ');
+    }
     try {
       const resp = await fetch(`/api/entries/${primary.id}`, {
         method: 'PATCH',
@@ -667,6 +674,22 @@ export default function WordPage() {
           )}
 
           <div className="sec-label">Definitions</div>
+          {isAdmin && defs.length === 0 && (
+            <button className="def-edit-btn" style={{ display: 'block', marginBottom: 8 }}
+              onClick={() => { setEditingDefIdx(0); setEditVal(''); }}
+              title="Add definition">✎ Add definition</button>
+          )}
+          {isAdmin && editingDefIdx === 0 && defs.length === 0 && (
+            <div className="def-edit-wrap" style={{ marginBottom: 12 }}>
+              <textarea className="def-edit-input" value={editVal} onChange={e => setEditVal(e.target.value)}
+                rows={2} autoFocus
+                onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) saveDefEdit(); if (e.key === 'Escape') { setEditingDefIdx(null); setEditVal(''); } }} />
+              <div className="def-edit-actions">
+                <button className="def-edit-save" onClick={saveDefEdit} disabled={editSaving}>{editSaving ? 'Saving…' : 'Save'}</button>
+                <button className="def-edit-cancel" onClick={() => { setEditingDefIdx(null); setEditVal(''); }}>Cancel</button>
+              </div>
+            </div>
+          )}
           <ul className="defs">
             {(isAdmin ? defs : (showAllDefs ? groupedDefs : groupedDefs.slice(0, 6))).map((def, i) => (
               <li key={i} className="def-row">
