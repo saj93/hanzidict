@@ -842,7 +842,7 @@ export default function WordPage() {
                     <div className="decomp-hanzi">{isTraditional && entry.traditional ? entry.traditional : entry.simplified}</div>
                     <div className="decomp-info">
                       {entry.pinyin
-                        ? `${convertPinyin(entry.pinyin)} · ${(cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ')[0]?.slice(0, 24)}`
+                        ? `${convertPinyin(entry.pinyin)} · ${((cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ').find(d => !/^Taiwan pr\./i.test(d)) ?? '').replace(/^\(bound form\)\s*|^bound form:\s*/i, '').slice(0, 24)}`
                         : '—'}
                     </div>
                   </button>
