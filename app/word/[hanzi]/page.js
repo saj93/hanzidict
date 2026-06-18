@@ -646,10 +646,8 @@ export default function WordPage() {
               >
                 {displayHanzi}
               </div>
-              <div className="pinyin-line">
-                {pinyin}
-                {taiwanPinyin && <span className="taiwan-pr-inline"> · <em>{taiwanPinyin} in Taiwan</em></span>}
-              </div>
+              <div className="pinyin-line">{pinyin}</div>
+              {taiwanPinyin && <div className="taiwan-pr-below">also {taiwanPinyin} in Taiwan</div>}
               {posLine && <div className="pos-line">{posLine}</div>}
               <div className="hanzi-badges-row">
                 <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
@@ -663,13 +661,11 @@ export default function WordPage() {
               <div className="hanzi-glyph">{displayHanzi}</div>
               <div className="hanzi-meta">
                 <div className="pinyin-row">
-                  <div className="pinyin-line">
-                    {pinyin}
-                    {taiwanPinyin && <span className="taiwan-pr-inline"> · <em>{taiwanPinyin} in Taiwan</em></span>}
-                  </div>
+                  <div className="pinyin-line">{pinyin}</div>
                   <AudioButton text={primary?.simplified || hanzi} />
                   <AddToListButton simplified={primary?.simplified || hanzi} />
                 </div>
+                {taiwanPinyin && <div className="taiwan-pr-below">also {taiwanPinyin} in Taiwan</div>}
                 {posLine && <div className="pos-line">{posLine}</div>}
                 <div className="badges">
                   <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
