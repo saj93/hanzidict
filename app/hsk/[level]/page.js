@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
+import { firstDef } from '../../../lib/utils';
 import UserMenu from '../../components/UserMenu';
 import Footer from '../../components/Footer';
 import NewsletterForm from '../../components/NewsletterForm';
@@ -127,22 +128,17 @@ export default function HskLevelPage() {
           <div className="hsk-loading">Loading…</div>
         ) : (
           <div className="hsk-word-grid">
-            {entries.map(entry => {
-              const firstDef = (entry.definitions || '').split(' | ')[0];
-              return (
-                <button
-                  key={entry.simplified}
-                  className="hsk-word-card"
-                  onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
-                >
-                  <span className="hsk-wc-hanzi">{displayHanzi(entry)}</span>
-                  <span className="hsk-wc-pinyin">
-                    {entry.pinyin_all ? entry.pinyin_all.map(p => convertPinyin(p)).join(' / ') : convertPinyin(entry.pinyin || '')}
-                  </span>
-                  <span className="hsk-wc-def">{firstDef}</span>
-                </button>
-              );
-            })}
+            {entries.map(entry => (
+              <button
+                key={entry.simplified}
+                className="hsk-word-card"
+                onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
+              >
+                <span className="hsk-wc-hanzi">{displayHanzi(entry)}</span>
+                <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
+                <span className="hsk-wc-def">{firstDef(entry.definitions)}</span>
+              </button>
+            ))}
           </div>
         )}
 

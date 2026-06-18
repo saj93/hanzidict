@@ -441,10 +441,12 @@ export default function WordPage() {
   }
 
   const rawDefs = localDefinitions ?? primary.definitions ?? '';
+  const IDIOM_STRIP_RE = /\s*\(idiom\)[;,]?\s*/gi;
   const allDefs = (cleanDefinitions(rawDefs) || rawDefs || '')
     .split(' | ')
     .filter(Boolean)
-    .map(d => d.replace(/^\(bound form\)\s*|^bound form:\s*/i, ''));
+    .map(d => d.replace(/^\(bound form\)\s*|^bound form:\s*/i, '').replace(IDIOM_STRIP_RE, '').trim())
+    .filter(Boolean);
 
   function parseClassifiers(clStr) {
     return clStr.split(',').map(s => {
@@ -476,7 +478,13 @@ export default function WordPage() {
       defIndices.push(ai);
     }
   }
-  const groupedDefs = groupShortDefs(defs);
+  // Sort: multi-word groups first (stable), single-word groups last.
+  // Prevents a bare noun like "heel" appearing as #1 when verbal meanings exist.
+  const groupedDefs = groupShortDefs(defs).sort((a, b) => {
+    const aShort = a.text.trim().split(/\s+/).filter(Boolean).length < 2 ? 1 : 0;
+    const bShort = b.text.trim().split(/\s+/).filter(Boolean).length < 2 ? 1 : 0;
+    return aShort - bShort;
+  });
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
   const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
@@ -638,8 +646,10 @@ export default function WordPage() {
               >
                 {displayHanzi}
               </div>
-              <div className="pinyin-line">{pinyin}</div>
-              {taiwanPinyin && <div className="taiwan-pr-note">also {taiwanPinyin} in Taiwan</div>}
+              <div className="pinyin-line">
+                {pinyin}
+                {taiwanPinyin && <span className="taiwan-pr-inline"> · <em>{taiwanPinyin} in Taiwan</em></span>}
+              </div>
               {posLine && <div className="pos-line">{posLine}</div>}
               <div className="hanzi-badges-row">
                 <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
@@ -653,11 +663,13 @@ export default function WordPage() {
               <div className="hanzi-glyph">{displayHanzi}</div>
               <div className="hanzi-meta">
                 <div className="pinyin-row">
-                  <div className="pinyin-line">{pinyin}</div>
+                  <div className="pinyin-line">
+                    {pinyin}
+                    {taiwanPinyin && <span className="taiwan-pr-inline"> · <em>{taiwanPinyin} in Taiwan</em></span>}
+                  </div>
                   <AudioButton text={primary?.simplified || hanzi} />
                   <AddToListButton simplified={primary?.simplified || hanzi} />
                 </div>
-                {taiwanPinyin && <div className="taiwan-pr-note">also {taiwanPinyin} in Taiwan</div>}
                 {posLine && <div className="pos-line">{posLine}</div>}
                 <div className="badges">
                   <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
