@@ -75,11 +75,17 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     desc: 'Professional Chinese phrases for meetings and networking — coming soon.',
     href: '/phrasebook/business', cta: 'Coming soon', locked: true,
   };
+  const verbs: Step = {
+    icon: '⚡', title: 'Learn the 100 most common verbs',
+    desc: 'The highest-frequency action words in Chinese, ranked by real usage — essential for building sentences.',
+    href: '/verbs', cta: 'Start →',
+  };
 
   if (level === 'beginner0') {
     if (goal === 'travel') return [
       tones,
       phrase('greetings', 'Phrasebook: Greetings', 'Master basic hellos, goodbyes and pleasantries.'),
+      verbs,
       phrase('introductions', 'Phrasebook: Introducing Yourself', "Say your name, where you're from, and more."),
       fc(1),
     ];
@@ -87,11 +93,13 @@ function buildSteps(level: Level, goal: Goal): Step[] {
       tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Understand how characters work before you learn them.'),
       phrase('greetings', 'Phrasebook: Greetings', 'Start speaking from day one.'),
+      verbs,
       fc(1),
     ];
     if (goal === 'hsk') return [
       tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'The building blocks of every HSK level.'),
+      verbs,
       fc(1),
       fc(2),
     ];
@@ -99,6 +107,7 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     return [
       tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Build a solid foundation first.'),
+      verbs,
       fc(1),
       bizPhrase,
     ];
@@ -108,23 +117,27 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     if (goal === 'travel') return [
       phrase('greetings', 'Phrasebook: Greetings', 'Refresh and expand your greeting vocabulary.'),
       phrase('introductions', 'Phrasebook: Introducing Yourself', 'Go beyond basics with richer self-introductions.'),
+      verbs,
       fc(1),
       phrase('natives', 'What Natives Ask You', 'Common questions locals will ask — advanced phrases.', true),
     ];
     if (goal === 'hsk') return [
       fc(1),
       blog('asking-questions-chinese', 'Guide: Asking Questions in Chinese', 'Question patterns essential for HSK 2.'),
+      verbs,
       fc(2),
     ];
     if (goal === 'business') return [
       fc(2),
       bizPhrase,
+      verbs,
       fc(3),
     ];
     // culture / interest
     return [
       tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Discover the stories behind the characters.'),
+      verbs,
       fc(1),
     ];
   }
@@ -133,6 +146,7 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     if (goal === 'business') return [bizPhrase, fc(4), fc(5)];
     if (goal === 'hsk') return [
       fc(3),
+      verbs,
       blog('asking-questions-chinese', 'Guide: Asking Questions in Chinese', 'Patterns you\'ll encounter on HSK 3–4.'),
       fc(4),
     ];
