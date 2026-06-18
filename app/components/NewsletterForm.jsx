@@ -54,8 +54,8 @@ export default function NewsletterForm({ compact = false }) {
   return (
     <section className="nl-section">
       <div className="nl-inner">
-        <h2 className="nl-heading">Learn something new every week</h2>
-        <p className="nl-sub">One character, one grammar point — delivered weekly.</p>
+        <h2 className="nl-heading">Learn something new every day</h2>
+        <p className="nl-sub">One character, one grammar point — delivered daily.</p>
         {status === 'success' ? (
           <p className="nl-success">You're in! Check your inbox.</p>
         ) : (
