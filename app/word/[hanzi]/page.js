@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
-import { isVariantEntry, isTruePointer, cleanDefinitions } from '../../../lib/utils';
+import { isVariantEntry, isTruePointer, cleanDefinitions, firstDef } from '../../../lib/utils';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
@@ -842,7 +842,7 @@ export default function WordPage() {
                     <div className="decomp-hanzi">{isTraditional && entry.traditional ? entry.traditional : entry.simplified}</div>
                     <div className="decomp-info">
                       {entry.pinyin
-                        ? `${convertPinyin(entry.pinyin)} · ${((cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ').find(d => !/^Taiwan pr\./i.test(d)) ?? '').replace(/^\(bound form\)\s*|^bound form:\s*/i, '').slice(0, 24)}`
+                        ? `${convertPinyin(entry.pinyin)} · ${firstDef(entry.definitions).slice(0, 24)}`
                         : '—'}
                     </div>
                   </button>
@@ -908,7 +908,7 @@ export default function WordPage() {
                     <div className="related-hz">{isTraditional && r.traditional ? r.traditional : r.simplified}</div>
                     <div className="related-info">
                       <div className="related-py">{convertPinyin(r.pinyin)}</div>
-                      <div className="related-def">{(cleanDefinitions(r.definitions) || r.definitions || '').split(' | ')[0]}</div>
+                      <div className="related-def">{firstDef(r.definitions)}</div>
                     </div>
                   </button>
                 ))
@@ -919,7 +919,7 @@ export default function WordPage() {
                   <div className="related-hz">{cy.simplified}</div>
                   <div className="related-info">
                     <div className="related-py">{convertPinyin(cy.pinyin)}</div>
-                    <div className="related-def">{(cleanDefinitions(cy.definitions) || cy.definitions || '').split(' | ')[0]}</div>
+                    <div className="related-def">{firstDef(cy.definitions)}</div>
                   </div>
                 </button>
               ))

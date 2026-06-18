@@ -1,6 +1,6 @@
 'use client';
 import { convertPinyin } from '../../lib/pinyin';
-import { cleanDefinitions } from '../../lib/utils';
+import { firstDef } from '../../lib/utils';
 import { useRouter } from 'next/navigation';
 
 export default function SearchDropdown({ suggestions, query, onSelect }) {
@@ -9,9 +9,7 @@ export default function SearchDropdown({ suggestions, query, onSelect }) {
   return (
     <div className="search-drop">
       {suggestions.map((s, i) => {
-        const cleaned = cleanDefinitions(s.definitions) || s.definitions || '';
-        const def = (cleaned.split(' | ').find(d => !d.startsWith('CL:') && !d.match(/\bCL:/) && !/^Taiwan pr\./i.test(d)) ?? '')
-          .replace(/^\(bound form\)\s*|^bound form:\s*/i, '');
+        const def = firstDef(s.definitions);
         return (
           <button key={i} className="drop-row" onMouseDown={e => { e.preventDefault(); onSelect(s.simplified); }}>
             <span className="drop-hz">{s.simplified}</span>

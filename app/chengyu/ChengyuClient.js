@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
-import { cleanDefinitions } from '../../lib/utils';
+import { firstDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
 import NavSearch from '../components/NavSearch';
 import Footer from '../components/Footer';
@@ -134,7 +134,7 @@ export default function ChengyuPage() {
         ) : (
           <div className="chengyu-grid">
             {entries.map(entry => {
-              const def = (cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ')[0];
+              const def = firstDef(entry.definitions);
               return (
                 <button
                   key={entry.simplified}
