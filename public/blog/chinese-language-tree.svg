@@ -1,64 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" width="900" height="330">
+<svg xmlns="http://www.w3.org/2000/svg" id="chinese-lang-tree" viewBox="0 0 900 330" width="900" height="330">
 <style>
-  .bg          { fill: transparent; }
-  .root-rect   { fill: #f5f5f3; stroke: #bbb; stroke-width: 1.2; }
-  .sinitic-rect{ fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.8; }
-  .tb-rect     { fill: #f0f0ee; stroke: #aaa; stroke-width: 1.2; }
+  #chinese-lang-tree .bg          { fill: #faf9f6; }
+  #chinese-lang-tree .root-rect   { fill: #f5f5f3; stroke: #bbb; stroke-width: 1.2; }
+  #chinese-lang-tree .sinitic-rect{ fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.8; }
+  #chinese-lang-tree .tb-rect     { fill: #f0f0ee; stroke: #aaa; stroke-width: 1.2; }
 
-  .mand-rect   { fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.4; }
-  .wu-rect     { fill: #fdf0e5; stroke: #e8954a; stroke-width: 1.4; }
-  .cant-rect   { fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.4; }
-  .min-rect    { fill: #f2eaf7; stroke: #a87ec0; stroke-width: 1.4; }
-  .hakka-rect  { fill: #fdf8e5; stroke: #d4b84a; stroke-width: 1.4; }
-  .gan-rect    { fill: #e8f0f7; stroke: #7ab2d8; stroke-width: 1.4; }
-  .xiang-rect  { fill: #e8f0f7; stroke: #7ab2d8; stroke-width: 1.4; }
+  #chinese-lang-tree .mand-rect   { fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.4; }
+  #chinese-lang-tree .wu-rect     { fill: #fdf0e5; stroke: #e8954a; stroke-width: 1.4; }
+  #chinese-lang-tree .cant-rect   { fill: #e8f5ef; stroke: #1D9E75; stroke-width: 1.4; }
+  #chinese-lang-tree .min-rect    { fill: #f2eaf7; stroke: #a87ec0; stroke-width: 1.4; }
+  #chinese-lang-tree .hakka-rect  { fill: #fdf8e5; stroke: #d4b84a; stroke-width: 1.4; }
+  #chinese-lang-tree .gan-rect    { fill: #e8f0f7; stroke: #7ab2d8; stroke-width: 1.4; }
+  #chinese-lang-tree .xiang-rect  { fill: #e8f0f7; stroke: #7ab2d8; stroke-width: 1.4; }
 
-  .t-base      { fill: #1a1916; }
-  .t-dim       { fill: #666; }
-  .t-dimmer    { fill: #999; }
-  .t-footnote  { fill: #bbb; }
-  .t-tb        { fill: #555; }
-  .t-tb-sub    { fill: #999; }
-  .t-green     { fill: #1D9E75; }
-  .t-green-sub { fill: #0d7a50; }
-  .t-orange    { fill: #c46a10; }
-  .t-purple    { fill: #8050a8; }
-  .t-yellow    { fill: #907218; }
-  .t-blue      { fill: #4882b0; }
+  #chinese-lang-tree .t-base      { fill: #1a1916; }
+  #chinese-lang-tree .t-dim       { fill: #666; }
+  #chinese-lang-tree .t-dimmer    { fill: #999; }
+  #chinese-lang-tree .t-footnote  { fill: #777; }
+  #chinese-lang-tree .t-tb        { fill: #555; }
+  #chinese-lang-tree .t-tb-sub    { fill: #999; }
+  #chinese-lang-tree .t-green     { fill: #1D9E75; }
+  #chinese-lang-tree .t-green-sub { fill: #0d7a50; }
+  #chinese-lang-tree .t-orange    { fill: #c46a10; }
+  #chinese-lang-tree .t-purple    { fill: #8050a8; }
+  #chinese-lang-tree .t-yellow    { fill: #907218; }
+  #chinese-lang-tree .t-blue      { fill: #4882b0; }
 
-  .c-green  { stroke: #1D9E75; }
-  .c-gray   { stroke: #bbb; }
+  #chinese-lang-tree .c-green  { stroke: #1D9E75; }
+  #chinese-lang-tree .c-gray   { stroke: #bbb; }
 
-  @media (prefers-color-scheme: dark) {
-    .bg          { fill: #1a1916; }
-    .root-rect   { fill: #2a2926; stroke: #444; }
-    .sinitic-rect{ fill: #142d20; stroke: #1D9E75; }
-    .tb-rect     { fill: #222220; stroke: #555; }
+  html.dark #chinese-lang-tree .bg          { fill: #171614; }
+  html.dark #chinese-lang-tree .root-rect   { fill: #2a2926; stroke: #444; }
+  html.dark #chinese-lang-tree .sinitic-rect{ fill: #142d20; stroke: #1D9E75; }
+  html.dark #chinese-lang-tree .tb-rect     { fill: #222220; stroke: #555; }
 
-    .mand-rect   { fill: #142d20; stroke: #1D9E75; }
-    .wu-rect     { fill: #2c1e10; stroke: #e8954a; }
-    .cant-rect   { fill: #142d20; stroke: #1D9E75; }
-    .min-rect    { fill: #231630; stroke: #a87ec0; }
-    .hakka-rect  { fill: #2a2410; stroke: #d4b84a; }
-    .gan-rect    { fill: #1e2630; stroke: #7ab2d8; }
-    .xiang-rect  { fill: #1e2630; stroke: #7ab2d8; }
+  html.dark #chinese-lang-tree .mand-rect   { fill: #142d20; stroke: #1D9E75; }
+  html.dark #chinese-lang-tree .wu-rect     { fill: #2c1e10; stroke: #e8954a; }
+  html.dark #chinese-lang-tree .cant-rect   { fill: #142d20; stroke: #1D9E75; }
+  html.dark #chinese-lang-tree .min-rect    { fill: #231630; stroke: #a87ec0; }
+  html.dark #chinese-lang-tree .hakka-rect  { fill: #2a2410; stroke: #d4b84a; }
+  html.dark #chinese-lang-tree .gan-rect    { fill: #1e2630; stroke: #7ab2d8; }
+  html.dark #chinese-lang-tree .xiang-rect  { fill: #1e2630; stroke: #7ab2d8; }
 
-    .t-base      { fill: #fff; }
-    .t-dim       { fill: #bbb; }
-    .t-dimmer    { fill: #777; }
-    .t-footnote  { fill: #444; }
-    .t-tb        { fill: #bbb; }
-    .t-tb-sub    { fill: #777; }
-    .t-green     { fill: #1D9E75; }
-    .t-green-sub { fill: #4fc89a; }
-    .t-orange    { fill: #e8954a; }
-    .t-purple    { fill: #a87ec0; }
-    .t-yellow    { fill: #d4b84a; }
-    .t-blue      { fill: #7ab2d8; }
+  html.dark #chinese-lang-tree .t-base      { fill: #fff; }
+  html.dark #chinese-lang-tree .t-dim       { fill: #bbb; }
+  html.dark #chinese-lang-tree .t-dimmer    { fill: #777; }
+  html.dark #chinese-lang-tree .t-footnote  { fill: #ccc; }
+  html.dark #chinese-lang-tree .t-tb        { fill: #bbb; }
+  html.dark #chinese-lang-tree .t-tb-sub    { fill: #777; }
+  html.dark #chinese-lang-tree .t-green     { fill: #1D9E75; }
+  html.dark #chinese-lang-tree .t-green-sub { fill: #4fc89a; }
+  html.dark #chinese-lang-tree .t-orange    { fill: #e8954a; }
+  html.dark #chinese-lang-tree .t-purple    { fill: #a87ec0; }
+  html.dark #chinese-lang-tree .t-yellow    { fill: #d4b84a; }
+  html.dark #chinese-lang-tree .t-blue      { fill: #7ab2d8; }
 
-    .c-green  { stroke: #1D9E75; }
-    .c-gray   { stroke: #666; }
-  }
+  html.dark #chinese-lang-tree .c-green  { stroke: #1D9E75; }
+  html.dark #chinese-lang-tree .c-gray   { stroke: #666; }
 </style>
 
   <!-- Background -->
@@ -146,5 +144,5 @@
   <text x="700" y="272" class="t-dimmer" font-size="9" font-family="system-ui,sans-serif" text-anchor="middle">~38M speakers</text>
 
   <!-- Footnote -->
-  <text x="450" y="314" class="t-footnote" font-size="10" font-family="system-ui,sans-serif" text-anchor="middle">Branches share a writing system but are largely mutually unintelligible in speech</text>
+  <text x="450" y="314" class="t-footnote" font-size="11.5" font-family="system-ui,sans-serif" text-anchor="middle">Branches share a writing system but are largely mutually unintelligible in speech</text>
 </svg>

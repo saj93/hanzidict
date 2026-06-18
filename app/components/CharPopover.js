@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
-import { cleanDefinitions } from '../../lib/utils';
+import { cleanDefinitions, isTruePointer, isVariantEntry } from '../../lib/utils';
 import AudioButton from './AudioButton';
 
 const POPOVER_W = 224;
@@ -17,16 +17,28 @@ export default function CharPopover({ char, anchorRect, onClose }) {
 
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
 
-  // Fetch entry for this character
+  // Fetch entry for this character — use raw=1 to get individual rows, then
+  // pick the primary the same way the word page does (lowest HSK, most defs, not a variant).
   useEffect(() => {
     setLoading(true);
     setData(null);
-    fetch(`/api/search?q=${encodeURIComponent(char)}&limit=6`)
+    fetch(`/api/search?q=${encodeURIComponent(char)}&limit=10&raw=1`)
       .then(r => r.json())
       .then(d => {
         const results = d.results || [];
-        const exact = results.find(e => e.simplified === char || e.traditional === char);
-        setData(exact || results[0] || null);
+        const exact = results.filter(e => e.simplified === char || e.traditional === char);
+        const candidates = exact.length ? exact : results;
+        const sorted = [...candidates].sort((a, b) => {
+          if (a.hsk_level && !b.hsk_level) return -1;
+          if (!a.hsk_level && b.hsk_level) return 1;
+          if (a.hsk_level && b.hsk_level && a.hsk_level !== b.hsk_level) return a.hsk_level - b.hsk_level;
+          const aCount = (a.definitions || '').split(' | ').filter(Boolean).length;
+          const bCount = (b.definitions || '').split(' | ').filter(Boolean).length;
+          if (aCount !== bCount) return bCount - aCount;
+          return (b.definitions || '').length - (a.definitions || '').length;
+        });
+        const primary = sorted.find(e => !isVariantEntry(e.definitions)) ?? sorted[0] ?? null;
+        setData(primary);
         setLoading(false);
       })
       .catch(() => setLoading(false));

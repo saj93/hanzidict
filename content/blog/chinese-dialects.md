@@ -40,15 +40,19 @@ Mandarin itself has significant regional variation. The Beijing dialect is the b
 
 Spoken in Guangdong province, Hong Kong, and Macao, as well as large overseas Chinese communities. Many of the earliest Chinese immigrant communities came from Guangdong, which is why Cantonese historically dominated in overseas communities.
 
-The standard greeting 你好 sounds very different here: *nei5 hou2* in Jyutping — though in everyday Hong Kong speech you'll more often hear *lei5 hou3*.
+The standard greeting 你好 sounds very different here: *nei5 hou2* in Jyutping — though in everyday Hong Kong speech you'll more often hear *lei5 hou2* (a well-documented shift where *nei* becomes *lei*).
+
+One variety worth knowing about: **Taishanese** (台山话 Tāishānhuà), spoken in Taishan county in western Guangdong. It's part of the Yue family — related to but clearly distinct from Standard Cantonese, with different tones, vocabulary, and enough pronunciation differences that speakers can't always understand each other. Historically, Taishanese was the dominant language of overseas Chinese communities in North America: for much of the 19th and early 20th century, Chinese immigrants to the US and Canada came predominantly from the Taishan region, not from Guangzhou or Hong Kong.
 
 **Wu (吴语 Wúyǔ)**
 
 Spoken in Shanghai, Zhejiang, and parts of Jiangsu. Shanghainese (上海话 Shànghǎihuà) is the most widely known Wu variety. Wu languages are known for their complex tone systems and softer consonants. In Shanghainese, hello is roughly *nóng hó*.
 
+Another notable Wu variety is 温州话 Wēnzhōuhuà, spoken in Wenzhou city in southern Zhejiang. It's so distinct that even other Wu speakers struggle to understand it — sometimes called the most impenetrable dialect in China.
+
 **Min (闽语 Mǐnyǔ)**
 
-The most geographically scattered family. Min varieties include Hokkien (spoken in Fujian, Taiwan, Singapore, Malaysia, and the Philippines), Teochew, and Hainanese. Taiwanese Hokkien, often simply called Taiwanese (台語), is widely spoken in Taiwan alongside Mandarin. In Hokkien: hello is *lí hó* (你好).
+The most geographically scattered family. Min varieties include Hokkien (spoken in Fujian, Taiwan, Singapore, Malaysia, and the Philippines), Teochew, and Hainanese. Taiwanese Hokkien, often simply called Taiwanese (台語 *Táiyǔ*), is widely spoken in Taiwan alongside Mandarin. In Hokkien: hello is *lí hó* (你好).
 
 **Hakka (客家话 Kèjiāhuà)**
 
@@ -75,7 +79,7 @@ Here's how 你好 sounds across a few varieties — same characters, completely 
 | Language | Written | Romanization | Notes |
 |----------|---------|--------------|-------|
 | Mandarin | 你好 | Nǐ hǎo | The most widely known |
-| Cantonese | 你好 | nei5 hou2 (Jyutping) | Colloquially *lei5 hou3* in Hong Kong |
+| Cantonese | 你好 | nei5 hou2 (Jyutping) | Colloquially *lei5 hou2* in Hong Kong |
 | Shanghainese | 你好 | Nóng hó | Very different from Mandarin |
 | Hokkien | 你好 | Lí hó | Common in Taiwan and SE Asia |
 

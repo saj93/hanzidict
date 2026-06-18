@@ -38,6 +38,8 @@ Three dots on the left side of a character. Appears in anything related to liqui
 Four dots along the bottom — a stylized flame. Characters related to heat or cooking.
 > 热 *rè* (hot), 烤 *kǎo* (roast/bake), 煮 *zhǔ* (boil/cook), 然 *rán* (like that / so)
 
+灬 is 火 (*huǒ*, fire) in disguise. When the fire radical sits beneath a character, it flattens into four dots. In some characters — like 烧 *shāo* (burn) and 炒 *chǎo* (stir-fry) — 火 appears on the left side instead, in its original form. Same radical, different position, different shape.
+
 ### 亻 (person)
 A single vertical stroke with a horizontal lean — a simplified person shape. Characters related to people and human actions.
 > 他 *tā* (he), 你 *nǐ* (you), 们 *men* (plural suffix), 做 *zuò* (do), 住 *zhù* (live/reside), 借 *jiè* (borrow)

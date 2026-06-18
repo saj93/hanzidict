@@ -169,7 +169,7 @@ In practice, 本 *běn* is by far the most common for books. The others appear i
 When using classifiers with the number two, use **两 *liǎng*** instead of 二 *èr* before classifiers at 百 (hundred) and above, and generally in spoken Chinese:
 
 > 两辆车 *liǎng liàng chē* — ✓ two cars
-> ~~二辆车~~ — ✗
+> ~~二辆车~~ *èr liàng chē* — ✗
 
 > 两本书 *liǎng běn shū* — ✓ two books
 

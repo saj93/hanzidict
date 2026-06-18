@@ -75,8 +75,8 @@ Be careful: without 是, the sentence looks like a plain statement with a nomina
 
 是…的 is used only with actions that have already occurred. Using it with future or ongoing actions is a mistake:
 
-> ✓ 你**是**怎么来**的**？*Nǐ shì zěnme lái de?* — How did you get here?
-> ✗ 你**是**怎么来**的**？ (about a future trip)
+> ✓ 你**是**怎么来**的**？*Nǐ shì zěnme lái de?* — How did you get here? (asking about a trip that's already happened)
+> ✗ 你明天**是**怎么来**的**？ — Wrong if the trip hasn't happened yet; use 你明天打算怎么来？*Nǐ míngtiān dǎsuàn zěnme lái?* instead
 
 If the event hasn't happened yet, you can't use 是…的 to ask about the circumstances.
 

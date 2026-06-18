@@ -52,7 +52,7 @@ The verb in a 把 sentence almost always needs something after it — a result c
 - When the verb has no result or complement (a bare verb with no outcome)
 - In passive constructions (use 被 instead)
 
-> ✗ 我把他喜欢。
+> ✗ 我把他喜欢。*Wǒ bǎ tā xǐhuān.*
 > ✓ 我喜欢他。*Wǒ xǐhuān tā.* — I like him.
 
 ---
@@ -111,7 +111,7 @@ The verb needs a complement. Without one, the sentence is grammatically incomple
 
 **Indefinite object with 把**
 
-> ✗ 我把一本书看完了。
+> ✗ 我把一本书看完了。*Wǒ bǎ yī běn shū kàn wán le.*
 > ✓ 我把那本书看完了。*Wǒ bǎ nà běn shū kàn wán le.* — I finished reading that book.
 
 把 requires a specific, definite object.

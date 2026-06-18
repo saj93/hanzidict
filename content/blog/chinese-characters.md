@@ -18,7 +18,7 @@ Characters are also part of the *essence* of Chinese — the culture, the histor
 
 Let's start with two characters that are good to know:
 
-> **汉** *hàn* — refers to the Han Chinese people, and to the Han Dynasty, considered the golden age of Chinese history
+> **汉** *hàn* — refers to the Han Chinese people, and to the Han Dynasty, one of China's great early empires — so formative that the ethnic majority took their name from it
 
 > **字** *zì* — means "character" or "word"
 

@@ -2179,12 +2179,12 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   margin: 0; white-space: pre-line; line-height: 2.2; color: var(--fg2);
 }
 .blog-post-body img { max-width: 100%; height: auto; display: block; margin: 1.8em auto; border-radius: 10px; }
+.blog-inline-svg { display: block; margin: 1.8em 0; }
+.blog-inline-svg svg { width: 100%; max-width: 900px; height: auto; display: block; }
 @media (min-width: 800px) {
-  .blog-post-body img[src$=".svg"] {
+  .blog-inline-svg svg {
     width: min(900px, 100vw - 40px);
-    max-width: min(900px, 100vw - 40px);
     margin-left: calc(50% - min(450px, (100vw - 40px) / 2));
-    border-radius: 0;
   }
 }
 
@@ -2269,7 +2269,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .atl-backdrop { position: fixed; inset: 0; z-index: 9998; }
 
 .atl-popover {
-  background: var(--card-bg); border: 1px solid var(--border);
+  background: var(--bg2); border: 1px solid var(--border-mid);
   border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.18);
   padding: 8px 0; z-index: 9999;
 }

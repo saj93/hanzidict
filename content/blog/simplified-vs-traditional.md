@@ -101,7 +101,7 @@ Where traditional can be *easier*:
 - **Phonetic components are clearer.** Simplified sometimes collapsed the phonetic component, making it harder to guess pronunciation from structure.
 - **Semantic components are clearer.** Some simplifications obscured the radical, making meaning harder to infer.
 
-> 爱 (simplified) vs 愛 (traditional): The traditional form contains 心 (heart) in the middle — you can *see* the emotion. The simplified version removed it.
+> 爱 (simplified) vs 愛 (traditional): The traditional form contains 心 (heart) in the middle — you can **see** the emotion. The simplified version removed it.
 
 ---
 

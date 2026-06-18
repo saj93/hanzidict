@@ -35,9 +35,9 @@ Think of 吗 as the Chinese equivalent of "do you...?" or "is it...?" — but pl
 
 **Answering:** Chinese doesn't have universal yes/no words. Echo the verb instead.
 
-> 你是老师吗？— Are you a teacher?  
-> **是**，我是老师。— Yes, I am.  
-> **不是**，我是学生。— No, I'm a student.
+> 你是老师吗？*Nǐ shì lǎoshī ma?* — Are you a teacher?  
+> **是**，我是老师。*Shì, wǒ shì lǎoshī.* — Yes, I am.  
+> **不是**，我是学生。*Bú shì, wǒ shì xuésheng.* — No, I'm a student.
 
 ---
 
@@ -56,8 +56,8 @@ You could drop the 呢 here and the sentence still works. But 呢 adds a slight 
 
 呢 is also used in a short "where is...?" sense when something is missing:
 
-> 我的手机**呢**？— Where's my phone?  
-> 他人**呢**？— Where is he?
+> 我的手机**呢**？*Wǒ de shǒujī ne?* — Where's my phone?  
+> 他人**呢**？*Tā rén ne?* — Where is he?
 
 ---
 
@@ -137,12 +137,12 @@ Literally: 为 *wèi* (for, in order to) + 什么 *shénme* (what). Comes before
 
 > 你在**哪里**？*Nǐ zài nǎlǐ?* — Where are you?  
 > 你是**哪里**人？*Nǐ shì nǎlǐ rén?* — Where are you from?  
-> 洗手间在**哪里**？— Where is the bathroom?
+> 洗手间 / 厕所在**哪里**？*Xǐshǒujiān / cèsuǒ zài nǎlǐ?* — Where is the bathroom?
 
 ### 怎么 zěnme — How
 
-> 这个字**怎么**写？— How do you write this character?  
-> 你**怎么**来的？— How did you get here?  
+> 这个字**怎么**写？*Zhège zì zěnme xiě?* — How do you write this character?  
+> 你**怎么**来的？*Nǐ zěnme lái de?* — How did you get here?  
 > 你最近**怎么样**？*Nǐ zuìjìn zěnme yàng?* — How are you lately?
 
 ### 什么时候 shénme shíhou — When
@@ -171,7 +171,7 @@ Both mean "how many/much" but in different contexts:
 > 我有**几个**。*Wǒ yǒu jǐge.* — I have a few.
 
 **多少** *duōshǎo* — for larger or unknown quantities, and always for prices:
-> 你班上有**多少**学生？— How many students are in your class?  
+> 你班上有**多少**学生？*Nǐ bān shàng yǒu duōshǎo xuésheng?* — How many students are in your class?  
 > 这个**多少钱**？*Zhège duōshǎo qián?* — How much does this cost?
 
 ---

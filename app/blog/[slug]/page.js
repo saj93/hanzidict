@@ -2,6 +2,7 @@ import { getPost, getAllPosts } from '@/lib/blog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import BlogPostClient from '../../components/BlogPostClient';
+import InlineSvgImg from '../../components/InlineSvgImg';
 
 export async function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }));
@@ -50,7 +51,7 @@ export default async function BlogPostPage({ params }) {
     publisher: { '@type': 'Organization', name: 'HanziDict', url: 'https://hanzidict.vercel.app' },
   };
 
-  const mdx = await MDXRemote({ source: content, options: { mdxOptions: { remarkPlugins: [remarkGfm] } } });
+  const mdx = await MDXRemote({ source: content, options: { mdxOptions: { remarkPlugins: [remarkGfm] } }, components: { img: InlineSvgImg } });
   return (
     <>
       <script
