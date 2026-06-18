@@ -84,6 +84,7 @@ export default function Nav() {
       </nav>
       {menuOpen && (
         <div className="mobile-menu">
+          <div className="mobile-menu-search"><NavSearch /></div>
           {links.map(({ label, path }) => (
             <button
               key={path}

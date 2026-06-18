@@ -46,6 +46,7 @@ export default function BlogIndexClient({ posts }) {
       </nav>
       {menuOpen && (
         <div className="mobile-menu">
+          <div className="mobile-menu-search"><NavSearch /></div>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
