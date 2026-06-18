@@ -69,7 +69,9 @@ export default function CharPopover({ char, anchorRect, onClose }) {
   const defs = data
     ? (cleanDefinitions(data.definitions) || data.definitions || '')
         .split(' | ')
+        .filter(d => !/^Taiwan pr\./i.test(d.trim()))
         .map(d => d.replace(CL_RE, '').replace(/\s{2,}/g, ' ').trim())
+        .map(d => d.replace(/^\(bound form\)\s*|^bound form:\s*/i, ''))
         .filter(Boolean)
         .slice(0, 2)
     : [];

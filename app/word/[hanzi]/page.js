@@ -451,9 +451,13 @@ export default function WordPage() {
   }
 
   const clRegex = /\(?CL:([^)]+)\)?/;
+  const TAIWAN_PR_RE = /^Taiwan pr\.\s*\[([^\]]+)\]/;
   const classifiers = [];
   const defs = [];
+  let taiwanPr = null;
   for (const d of allDefs) {
+    const twm = d.match(TAIWAN_PR_RE);
+    if (twm) { taiwanPr = twm[1]; continue; }
     const m = d.match(clRegex);
     if (m) {
       classifiers.push(...parseClassifiers(m[1]));
@@ -466,6 +470,7 @@ export default function WordPage() {
   const groupedDefs = groupShortDefs(defs);
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
+  const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
 
   async function saveDefEdit() {
     if (editingDefIdx === null || !primary?.id || !session) return;
@@ -473,6 +478,7 @@ export default function WordPage() {
     const newDefs = defs.map((d, i) => i === editingDefIdx ? editVal.trim() : d);
     let cursor = 0;
     const newAllDefs = allDefs.map(d => {
+      if (TAIWAN_PR_RE.test(d)) return d; // preserve Taiwan pr. annotation unchanged
       const m = d.match(clRegex);
       if (m) {
         const cleaned = d.replace(clRegex, '').replace(/\s{2,}/g, ' ').trim();
@@ -602,6 +608,7 @@ export default function WordPage() {
               {posLine && <div className="pos-line">{posLine}</div>}
               <div className="hanzi-badges-row">
                 <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
+                {taiwanPinyin && <span className="badge taiwan-pr">🌏 Taiwan: {taiwanPinyin}</span>}
                 <AudioButton text={primary?.simplified || hanzi} />
                 <AddToListButton simplified={primary?.simplified || hanzi} />
               </div>
@@ -619,6 +626,7 @@ export default function WordPage() {
                 {posLine && <div className="pos-line">{posLine}</div>}
                 <div className="badges">
                   <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
+                  {taiwanPinyin && <span className="badge taiwan-pr">🌏 Taiwan: {taiwanPinyin}</span>}
                 </div>
               </div>
             </div>
