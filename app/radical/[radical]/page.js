@@ -111,7 +111,10 @@ export default function RadicalPage() {
         ) : (
           <div className="hsk-word-grid">
             {entries.map(entry => {
-              const def = (cleanDefinitions(entry.definitions) || entry.definitions || '').split(' | ')[0];
+              const def = ((cleanDefinitions(entry.definitions) || entry.definitions || '')
+                .split(' | ')
+                .find(d => !/^Taiwan pr\./i.test(d)) ?? '')
+                .replace(/^\(bound form\)\s*|^bound form:\s*/i, '');
               return (
                 <button
                   key={entry.simplified}
