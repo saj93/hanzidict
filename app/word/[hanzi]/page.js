@@ -713,8 +713,8 @@ export default function WordPage() {
                       {convertPinyinInText(def)}
                       {isAdmin && (
                         <>
-                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(def); setConfirmDeleteDefIdx(null); }} title="Edit definition">✎</button>
-                          <button className="def-edit-btn" onClick={() => setConfirmDeleteDefIdx(i)} title="Delete definition" style={{ color: 'var(--fg3)', marginLeft: 2 }}>✕</button>
+                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(def); setConfirmDeleteDefIdx(null); }}>Edit</button>
+                          <button className="def-edit-btn" onClick={() => setConfirmDeleteDefIdx(i)} style={{ color: '#c0392b' }}>Delete</button>
                         </>
                       )}
                       {i === 0 && examples.length > 0 && (() => {
@@ -809,7 +809,7 @@ export default function WordPage() {
             )}
           </ul>
           {isAdmin && editingDefIdx !== defs.length && (
-            <button className="def-edit-btn" style={{ display: 'block', marginTop: 6 }}
+            <button className="def-edit-btn" style={{ marginLeft: 0, marginTop: 8 }}
               onClick={() => { setEditingDefIdx(defs.length); setEditVal(''); setConfirmDeleteDefIdx(null); }}>
               + Add definition
             </button>
