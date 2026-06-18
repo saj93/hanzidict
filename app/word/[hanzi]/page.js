@@ -52,22 +52,27 @@ function sortByHskPinyin(entries) {
 }
 
 // Group consecutive short defs (≤ 2 words) into semicolon-joined runs of up to 5.
-// Longer defs always get their own numbered item. Applied at display time.
+// Returns objects {text, start, end} where start/end are indices in the defs array.
+// Longer defs always get their own item. Used for both admin and non-admin display
+// so both views are consistent.
 function groupShortDefs(defs) {
   const MAX = 5;
   const groups = [];
   let run = [];
-  for (const d of defs) {
+  let runStart = 0;
+  for (let i = 0; i < defs.length; i++) {
+    const d = defs[i];
     const words = d.trim().split(/\s+/).length;
     if (words <= 2 && run.length < MAX) {
+      if (!run.length) runStart = i;
       run.push(d);
     } else {
-      if (run.length) { groups.push(run.join('; ')); run = []; }
-      if (words <= 2) run.push(d);
-      else groups.push(d);
+      if (run.length) { groups.push({ text: run.join('; '), start: runStart, end: runStart + run.length - 1 }); run = []; }
+      if (words <= 2) { runStart = i; run.push(d); }
+      else groups.push({ text: d, start: i, end: i });
     }
   }
-  if (run.length) groups.push(run.join('; '));
+  if (run.length) groups.push({ text: run.join('; '), start: runStart, end: runStart + run.length - 1 });
   return groups;
 }
 
@@ -481,12 +486,20 @@ export default function WordPage() {
     setEditSaving(true);
     const val = editVal.trim();
     let newAllDefs = [...allDefs];
-    if (editingDefIdx === defs.length) {
+    if (editingDefIdx === groupedDefs.length) {
       // Appending a brand-new definition
       if (val) newAllDefs.push(val);
     } else {
-      // Editing an existing def (identified by its allDefs index)
-      newAllDefs[defIndices[editingDefIdx]] = val;
+      // Editing a grouped def: replace the full range of allDefs entries it spans
+      // with the edited text as a single entry (merges previously split sub-meanings)
+      const group = groupedDefs[editingDefIdx];
+      const firstAllIdx = defIndices[group.start];
+      const lastAllIdx = defIndices[group.end];
+      newAllDefs = [
+        ...allDefs.slice(0, firstAllIdx),
+        ...(val ? [val] : []),
+        ...allDefs.slice(lastAllIdx + 1),
+      ];
     }
     const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
     try {
@@ -509,9 +522,15 @@ export default function WordPage() {
     setEditSaving(false);
   }
 
-  async function deleteDefAt(idx) {
+  async function deleteDefAt(groupIdx) {
     if (!primary?.id || !session) return;
-    const newAllDefs = allDefs.filter((_, ai) => ai !== defIndices[idx]);
+    const group = groupedDefs[groupIdx];
+    const firstAllIdx = defIndices[group.start];
+    const lastAllIdx = defIndices[group.end];
+    const newAllDefs = [
+      ...allDefs.slice(0, firstAllIdx),
+      ...allDefs.slice(lastAllIdx + 1),
+    ];
     const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
     try {
       const resp = await fetch(`/api/entries/${primary.id}`, {
@@ -683,7 +702,7 @@ export default function WordPage() {
 
           <div className="sec-label">Definitions</div>
           <ul className="defs">
-            {(isAdmin ? defs : (showAllDefs ? groupedDefs : groupedDefs.slice(0, 6))).map((def, i) => (
+            {(isAdmin || showAllDefs ? groupedDefs : groupedDefs.slice(0, 6)).map((group, i) => (
               <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
                 <div style={{ flex: 1 }}>
@@ -710,10 +729,10 @@ export default function WordPage() {
                     </div>
                   ) : (
                     <>
-                      {convertPinyinInText(def)}
+                      {convertPinyinInText(group.text)}
                       {isAdmin && (
                         <>
-                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(def); setConfirmDeleteDefIdx(null); }}>Edit</button>
+                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(group.text); setConfirmDeleteDefIdx(null); }}>Edit</button>
                           <button className="def-edit-btn" onClick={() => setConfirmDeleteDefIdx(i)} style={{ color: '#c0392b' }}>Delete</button>
                         </>
                       )}
@@ -791,9 +810,9 @@ export default function WordPage() {
                 </div>
               </li>
             ))}
-            {isAdmin && editingDefIdx === defs.length && (
+            {isAdmin && editingDefIdx === groupedDefs.length && (
               <li className="def-row" key="new">
-                <span className="def-num">{defs.length + 1}</span>
+                <span className="def-num">{groupedDefs.length + 1}</span>
                 <div style={{ flex: 1 }}>
                   <div className="def-edit-wrap">
                     <textarea className="def-edit-input" value={editVal} onChange={e => setEditVal(e.target.value)}
@@ -808,9 +827,9 @@ export default function WordPage() {
               </li>
             )}
           </ul>
-          {isAdmin && editingDefIdx !== defs.length && (
+          {isAdmin && editingDefIdx !== groupedDefs.length && (
             <button className="def-edit-btn" style={{ marginLeft: 0, marginTop: 8 }}
-              onClick={() => { setEditingDefIdx(defs.length); setEditVal(''); setConfirmDeleteDefIdx(null); }}>
+              onClick={() => { setEditingDefIdx(groupedDefs.length); setEditVal(''); setConfirmDeleteDefIdx(null); }}>
               + Add definition
             </button>
           )}
