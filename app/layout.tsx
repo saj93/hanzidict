@@ -18,11 +18,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: 'HanziDict — Chinese Dictionary',
-  description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging, stroke order animations, example sentences, and flashcards. Search by character, pinyin, or English.',
+  description: 'Free Chinese dictionary with 124,000 entries, stroke order animations, and example sentences. HSK 1-9 word tagging with flashcards for every level. Search by character, pinyin, or English.',
   keywords: 'Chinese dictionary, Mandarin, HSK, pinyin, hanzi, stroke order, flashcards, CC-CEDICT',
   openGraph: {
     title: 'HanziDict — Chinese Dictionary',
-    description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging and stroke order animations.',
+    description: 'Free Chinese dictionary with 124,000 entries, stroke order animations, and example sentences. HSK 1-9 word tagging with flashcards for every level. Search by character, pinyin, or English.',
     url: 'https://hanzidict.vercel.app',
     siteName: 'HanziDict',
     locale: 'en_US',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: 'HanziDict — Chinese Dictionary',
-    description: 'Free Chinese dictionary with 124,000 entries, HSK 1-9 tagging and stroke order animations.',
+    description: 'Free Chinese dictionary with 124,000 entries, stroke order animations, and example sentences. HSK 1-9 word tagging with flashcards for every level. Search by character, pinyin, or English.',
   },
   robots: {
     index: true,
