@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
+import { cleanDef } from '../../lib/utils';
 import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
@@ -374,9 +375,16 @@ export default function FlashcardsPage() {
   }
 
   // ── Study ──
-  const defs = (card?.definitions || '').split(' | ').filter(d => d && !d.startsWith('CL:'));
   const cardPinyins = card?.pinyin_all ?? (card?.pinyin ? [card.pinyin] : []);
   const currentPinyin = cardPinyins[pronIdx] ?? card?.pinyin ?? '';
+  const currentDefsRaw = card?.defs_by_pinyin?.[currentPinyin.toLowerCase()]
+    ?? card?.definitions
+    ?? '';
+  const defs = currentDefsRaw
+    .split(' | ')
+    .filter(d => d && !d.startsWith('CL:'))
+    .map(cleanDef)
+    .filter(Boolean);
 
   return (
     <main>
@@ -394,11 +402,11 @@ export default function FlashcardsPage() {
           <div className={`fc-card-inner${flipped ? ' flipped' : ''}`}>
 
             <div className="fc-face fc-front">
+              {card?.is_new && <span className="fc-new-badge">New</span>}
               <div className="fc-char">{displayHanzi(card)}</div>
               <div className="fc-front-audio">
                 <AudioButton text={card?.simplified || ''} />
               </div>
-              {card?.is_new && <span className="fc-new-badge">New</span>}
               {!flipped && (
                 <button className="fc-show-btn" onClick={() => setFlipped(true)}>
                   Show answer

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin } from '../../../../lib/pinyin';
+import { cleanDef } from '../../../../lib/utils';
 import { useAuth } from '../../../components/AuthProvider';
 import AudioButton from '../../../components/AudioButton';
 
@@ -120,7 +121,11 @@ export default function LearnSessionPage() {
     acc[k] = (acc[k] || 0) + 1;
     return acc;
   }, {});
-  const defs = (card?.definitions || '').split(' | ').filter(Boolean);
+  const defs = (card?.definitions || '')
+    .split(' | ')
+    .filter(d => d && !d.startsWith('CL:'))
+    .map(cleanDef)
+    .filter(Boolean);
 
   // Phase tracking
   const discoveryTotal = cards.filter(c => c.is_new).length;
