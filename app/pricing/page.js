@@ -92,15 +92,15 @@ export default function PricingPage() {
 
       <div className="pricing-page">
         <div className="pricing-header">
-          <h1 className="pricing-title">Unlock all HSK levels</h1>
+          <h1 className="pricing-title">Go further with Premium</h1>
           <p className="pricing-sub">
-            Free forever for HSK 1–4. Upgrade to access HSK 5–9 flashcards with full spaced repetition.
+            The dictionary and HSK 1–4 are free forever. Premium unlocks HSK 5–9 flashcards, unlimited word lists, the full phrasebook, and all 100 common verbs.
           </p>
         </div>
 
         {isPremium && (
           <div className="pricing-active-banner">
-            ✓ You're on the <strong>{currentPlan === 'annual' ? 'Annual' : 'Monthly'}</strong> plan — all decks unlocked.
+            ✓ You're on the <strong>{currentPlan === 'annual' ? 'Annual' : 'Monthly'}</strong> plan — premium unlocked.
           </div>
         )}
 
@@ -114,11 +114,16 @@ export default function PricingPage() {
               <span className="pricing-period">forever</span>
             </div>
             <ul className="pricing-features">
-              <li className="pricing-feature">✓ HSK 1–4 flashcards</li>
-              <li className="pricing-feature">✓ Spaced repetition (SRS)</li>
-              <li className="pricing-feature">✓ Progress tracking</li>
               <li className="pricing-feature">✓ Full dictionary (124k entries)</li>
+              <li className="pricing-feature">✓ HSK 1–4 flashcards with spaced repetition</li>
+              <li className="pricing-feature">✓ Progress tracking</li>
+              <li className="pricing-feature">✓ 3 custom word lists</li>
+              <li className="pricing-feature">✓ Core phrasebook phrases</li>
+              <li className="pricing-feature">✓ 35 most common verbs</li>
               <li className="pricing-feature pricing-feature-off">✗ HSK 5–9 flashcards</li>
+              <li className="pricing-feature pricing-feature-off">✗ Unlimited lists</li>
+              <li className="pricing-feature pricing-feature-off">✗ Full phrasebook</li>
+              <li className="pricing-feature pricing-feature-off">✗ All 100 verbs</li>
             </ul>
             <button className="pricing-btn pricing-btn-secondary" onClick={() => router.push('/flashcards')}>
               {user ? 'Go to Flashcards' : 'Get started free'}
@@ -135,8 +140,10 @@ export default function PricingPage() {
             </div>
             <ul className="pricing-features">
               <li className="pricing-feature">✓ Everything in Free</li>
-              <li className="pricing-feature">✓ HSK 5–9 flashcards</li>
-              <li className="pricing-feature">✓ 12,000+ advanced words</li>
+              <li className="pricing-feature">✓ HSK 5–9 flashcards (12,000+ advanced words)</li>
+              <li className="pricing-feature">✓ Unlimited custom lists</li>
+              <li className="pricing-feature">✓ Full phrasebook (all situations, all phrases)</li>
+              <li className="pricing-feature">✓ All 100 common verbs</li>
               <li className="pricing-feature">✓ Cancel any time</li>
             </ul>
             <button
@@ -161,9 +168,11 @@ export default function PricingPage() {
             <div className="pricing-monthly-equiv">$3.33 / month</div>
             <ul className="pricing-features">
               <li className="pricing-feature">✓ Everything in Free</li>
-              <li className="pricing-feature">✓ HSK 5–9 flashcards</li>
-              <li className="pricing-feature">✓ 12,000+ advanced words</li>
-              <li className="pricing-feature">✓ 2 months free vs monthly</li>
+              <li className="pricing-feature">✓ HSK 5–9 flashcards (12,000+ advanced words)</li>
+              <li className="pricing-feature">✓ Unlimited custom lists</li>
+              <li className="pricing-feature">✓ Full phrasebook (all situations, all phrases)</li>
+              <li className="pricing-feature">✓ All 100 common verbs</li>
+              <li className="pricing-feature">✓ Cancel any time</li>
             </ul>
             <button
               className="pricing-btn pricing-btn-primary"
