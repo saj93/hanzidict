@@ -752,6 +752,13 @@ footer:not(.site-footer) {
 .hsk-page-num:hover { border-color: var(--accent); color: var(--accent); }
 .hsk-page-num.active { background: var(--accent); color: white; border-color: var(--accent); }
 .hsk-page-ellipsis { width: 34px; text-align: center; color: var(--fg3); line-height: 34px; }
+.hsk-premium-gate {
+  text-align: center; padding: 48px 24px; margin-top: 16px;
+  border: 1px dashed var(--border); border-radius: 16px;
+}
+.hsk-gate-icon { font-size: 32px; margin-bottom: 12px; }
+.hsk-gate-title { font-size: 18px; font-weight: 700; color: var(--fg1); margin-bottom: 8px; }
+.hsk-gate-sub { font-size: 14px; color: var(--fg3); max-width: 400px; margin: 0 auto 20px; line-height: 1.6; }
 
 /* ── SEARCH DROPDOWN ── */
 .search-drop {

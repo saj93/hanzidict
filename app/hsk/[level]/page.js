@@ -8,8 +8,10 @@ import UserMenu from '../../components/UserMenu';
 import Footer from '../../components/Footer';
 import NewsletterForm from '../../components/NewsletterForm';
 import NavSearch from '../../components/NavSearch';
+import { useSubscription } from '../../hooks/useSubscription';
 
 const HSK_LABEL = { 1: 'HSK 1', 2: 'HSK 2', 3: 'HSK 3', 4: 'HSK 4', 5: 'HSK 5', 6: 'HSK 6', 7: 'HSK 7–9' };
+const FREE_LEVELS = new Set([1, 2, 3, 4]);
 const LIMIT = 50;
 
 export default function HskLevelPage() {
@@ -19,6 +21,16 @@ export default function HskLevelPage() {
 
   const level = parseInt(params.level || '1', 10);
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
+
+  const { isPremium, loading: subLoading } = useSubscription();
+  const isFreeLevel = FREE_LEVELS.has(level);
+  const isLocked = !isFreeLevel && !isPremium;
+
+  useEffect(() => {
+    if (!subLoading && isLocked && page > 1) {
+      router.replace(`/hsk/${level}`);
+    }
+  }, [subLoading, isLocked, page, level, router]);
 
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
@@ -127,52 +139,65 @@ export default function HskLevelPage() {
         {loading ? (
           <div className="hsk-loading">Loading…</div>
         ) : (
-          <div className="hsk-word-grid">
-            {entries.map(entry => (
-              <button
-                key={entry.simplified}
-                className="hsk-word-card"
-                onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
-              >
-                <span className="hsk-wc-hanzi">{displayHanzi(entry)}</span>
-                <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
-                <span className="hsk-wc-def">{firstDef(entry.definitions)}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {pages > 1 && (
-          <div className="hsk-pagination">
-            <button
-              className="hsk-page-btn"
-              onClick={() => goPage(page - 1)}
-              disabled={page <= 1}
-            >← Prev</button>
-            <div className="hsk-page-nums">
-              {Array.from({ length: pages }, (_, i) => i + 1)
-                .filter(p => p === 1 || p === pages || Math.abs(p - page) <= 2)
-                .reduce((acc, p, i, arr) => {
-                  if (i > 0 && p - arr[i - 1] > 1) acc.push('…');
-                  acc.push(p);
-                  return acc;
-                }, [])
-                .map((p, i) =>
-                  p === '…'
-                    ? <span key={`ellipsis-${i}`} className="hsk-page-ellipsis">…</span>
-                    : <button
-                        key={p}
-                        className={`hsk-page-num${p === page ? ' active' : ''}`}
-                        onClick={() => goPage(p)}
-                      >{p}</button>
-                )}
+          <>
+            <div className="hsk-word-grid">
+              {entries.map(entry => (
+                <button
+                  key={entry.simplified}
+                  className="hsk-word-card"
+                  onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
+                >
+                  <span className="hsk-wc-hanzi">{displayHanzi(entry)}</span>
+                  <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
+                  <span className="hsk-wc-def">{firstDef(entry.definitions)}</span>
+                </button>
+              ))}
             </div>
-            <button
-              className="hsk-page-btn"
-              onClick={() => goPage(page + 1)}
-              disabled={page >= pages}
-            >Next →</button>
-          </div>
+
+            {isLocked ? (
+              <div className="hsk-premium-gate">
+                <div className="hsk-gate-icon">🔒</div>
+                <div className="hsk-gate-title">Unlock {label} vocabulary</div>
+                <div className="hsk-gate-sub">
+                  You&apos;re seeing the first {LIMIT} words for free. Upgrade to browse all {total.toLocaleString()} {label} words and study them with flashcards.
+                </div>
+                <button className="pb-unlock-btn" onClick={() => router.push('/pricing')}>
+                  Upgrade to Premium →
+                </button>
+              </div>
+            ) : pages > 1 && (
+              <div className="hsk-pagination">
+                <button
+                  className="hsk-page-btn"
+                  onClick={() => goPage(page - 1)}
+                  disabled={page <= 1}
+                >← Prev</button>
+                <div className="hsk-page-nums">
+                  {Array.from({ length: pages }, (_, i) => i + 1)
+                    .filter(p => p === 1 || p === pages || Math.abs(p - page) <= 2)
+                    .reduce((acc, p, i, arr) => {
+                      if (i > 0 && p - arr[i - 1] > 1) acc.push('…');
+                      acc.push(p);
+                      return acc;
+                    }, [])
+                    .map((p, i) =>
+                      p === '…'
+                        ? <span key={`ellipsis-${i}`} className="hsk-page-ellipsis">…</span>
+                        : <button
+                            key={p}
+                            className={`hsk-page-num${p === page ? ' active' : ''}`}
+                            onClick={() => goPage(p)}
+                          >{p}</button>
+                    )}
+                </div>
+                <button
+                  className="hsk-page-btn"
+                  onClick={() => goPage(page + 1)}
+                  disabled={page >= pages}
+                >Next →</button>
+              </div>
+            )}
+          </>
         )}
       </div>
 
