@@ -5,15 +5,17 @@ import { useAuth } from '../components/AuthProvider';
 
 export function useSubscription() {
   const { user, session, loading: authLoading } = useAuth();
-  const [isPremium, setIsPremium]     = useState(false);
-  const [plan, setPlan]               = useState(null);
+  const [isPremium, setIsPremium]       = useState(false);
+  const [plan, setPlan]                 = useState(null);
   const [premiumUntil, setPremiumUntil] = useState(null);
-  const [loading, setLoading]         = useState(true);
+  const [status, setStatus]             = useState(null);
+  const [loading, setLoading]           = useState(true);
 
   useEffect(() => {
     if (authLoading) return;
     if (!user || !session) {
       setIsPremium(false);
+      setStatus(null);
       setLoading(false);
       return;
     }
@@ -27,10 +29,11 @@ export function useSubscription() {
         setIsPremium(d.isPremium ?? false);
         setPlan(d.plan ?? null);
         setPremiumUntil(d.premiumUntil ?? null);
+        setStatus(d.status ?? null);
       })
       .catch(() => setIsPremium(false))
       .finally(() => setLoading(false));
   }, [user, session, authLoading]);
 
-  return { isPremium, plan, premiumUntil, loading };
+  return { isPremium, plan, premiumUntil, status, loading };
 }

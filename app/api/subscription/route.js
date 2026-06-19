@@ -17,7 +17,7 @@ export async function GET(request) {
 
   const { data } = await supabase
     .from('subscriptions')
-    .select('plan, premium_until')
+    .select('plan, premium_until, status')
     .eq('user_id', user.id)
     .single();
 
@@ -25,6 +25,6 @@ export async function GET(request) {
     return Response.json({ isPremium: false });
   }
 
-  const isPremium = new Date(data.premium_until) > new Date();
-  return Response.json({ isPremium, plan: data.plan, premiumUntil: data.premium_until });
+  const isPremium = data.status !== 'cancelled' && new Date(data.premium_until) > new Date();
+  return Response.json({ isPremium, plan: data.plan, premiumUntil: data.premium_until, status: data.status });
 }

@@ -49,7 +49,7 @@ export async function POST(request) {
     line_items: [{ price: priceId, quantity: 1 }],
     client_reference_id: user.id,
     metadata: { plan },
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/flashcards?upgraded=1`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?upgraded=true`,
     cancel_url:  `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
   });
 

@@ -1,7 +1,9 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
-// Must read raw body for Stripe signature verification
+// Raw body required for Stripe signature verification — disable body parsing
+export const config = { api: { bodyParser: false } };
+
 export async function POST(request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -16,8 +18,6 @@ export async function POST(request) {
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
-  console.log('[webhook] event:', event.type);
-
   try {
     switch (event.type) {
       case 'checkout.session.completed':
@@ -25,6 +25,9 @@ export async function POST(request) {
         break;
       case 'invoice.payment_succeeded':
         await handleInvoicePayment(event.data.object, stripe, supabase);
+        break;
+      case 'customer.subscription.updated':
+        await handleSubscriptionUpdated(event.data.object, supabase);
         break;
       case 'customer.subscription.deleted':
         await handleSubscriptionDeleted(event.data.object, supabase);
@@ -50,6 +53,7 @@ async function handleCheckoutComplete(session, stripe, supabase) {
     user_id:                userId,
     stripe_customer_id:     session.customer,
     stripe_subscription_id: session.subscription,
+    status:                 'active',
     plan,
     premium_until:          premiumUntil,
     updated_at:             new Date().toISOString(),
@@ -64,13 +68,29 @@ async function handleInvoicePayment(invoice, stripe, supabase) {
   const sub = await stripe.subscriptions.retrieve(invoice.subscription);
   const premiumUntil = new Date(sub.current_period_end * 1000).toISOString();
 
-  await supabase.from('subscriptions')
-    .update({ premium_until: premiumUntil, updated_at: new Date().toISOString() })
+  const { error } = await supabase.from('subscriptions')
+    .update({ status: 'active', premium_until: premiumUntil, updated_at: new Date().toISOString() })
     .eq('stripe_subscription_id', invoice.subscription);
+
+  if (error) console.error('[webhook] invoice update error:', error.message);
+}
+
+async function handleSubscriptionUpdated(sub, supabase) {
+  const premiumUntil = new Date(sub.current_period_end * 1000).toISOString();
+  // cancel_at_period_end = user cancelled but still active until period end
+  const status = sub.status === 'active' ? 'active' : sub.status;
+
+  const { error } = await supabase.from('subscriptions')
+    .update({ status, premium_until: premiumUntil, updated_at: new Date().toISOString() })
+    .eq('stripe_subscription_id', sub.id);
+
+  if (error) console.error('[webhook] subscription update error:', error.message);
 }
 
 async function handleSubscriptionDeleted(sub, supabase) {
-  await supabase.from('subscriptions')
-    .update({ stripe_subscription_id: null, updated_at: new Date().toISOString() })
+  const { error } = await supabase.from('subscriptions')
+    .update({ status: 'cancelled', premium_until: new Date().toISOString(), updated_at: new Date().toISOString() })
     .eq('stripe_subscription_id', sub.id);
+
+  if (error) console.error('[webhook] subscription delete error:', error.message);
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../components/AuthProvider';
+import { useSubscription } from '../hooks/useSubscription';
 import { createClient } from '@/lib/supabase';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -19,11 +20,14 @@ function ProgressBar({ learned, total }) {
 export default function ProfilePage() {
   const router = useRouter();
   const { user, session, loading } = useAuth();
+  const { isPremium, plan, premiumUntil, status: subStatus, loading: subLoading } = useSubscription();
   const [username, setUsername] = useState('');
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [stats, setStats] = useState(null);
+  const [portalLoading, setPortalLoading] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
 
   useEffect(() => { document.title = 'Profile — HanziDict'; }, []);
 
@@ -36,6 +40,15 @@ export default function ProfilePage() {
   }, [user]);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('upgraded') === 'true') {
+      setUpgraded(true);
+      window.history.replaceState({}, '', '/profile');
+    }
+  }, []);
+
+  useEffect(() => {
     if (!user || !session) return;
     fetch('/api/profile/stats', {
       headers: { Authorization: `Bearer ${session.access_token}` },
@@ -44,6 +57,22 @@ export default function ProfilePage() {
       .then(d => { if (d.stats) setStats(d.stats); })
       .catch(() => {});
   }, [user, session]);
+
+  async function openPortal() {
+    setPortalLoading(true);
+    try {
+      const res = await fetch('/api/stripe/portal', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+    } catch {
+      // portal failed silently — nothing to recover
+    } finally {
+      setPortalLoading(false);
+    }
+  }
 
   if (loading || !user) return null;
 
@@ -79,10 +108,21 @@ export default function ProfilePage() {
     setTimeout(() => setSaved(false), 2500);
   }
 
+  const renewalLabel = premiumUntil
+    ? new Date(premiumUntil).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    : null;
+
   return (
     <main>
       <Nav />
       <div className="prof-wrap">
+
+        {/* ── Upgrade success banner ── */}
+        {upgraded && (
+          <div className="prof-upgraded-banner">
+            🎉 Welcome to HanziDict Premium! Your subscription is now active.
+          </div>
+        )}
 
         {/* ── Header ── */}
         <div className="up-hero">
@@ -140,6 +180,48 @@ export default function ProfilePage() {
               ))}
             </div>
           </>
+        )}
+
+        {/* ── Subscription ── */}
+        {!subLoading && (
+          <div className="up-card prof-subscription-card">
+            <div className="prof-settings-title">Subscription</div>
+            {isPremium ? (
+              <div className="prof-sub-content">
+                <div className="prof-sub-row">
+                  <span className="prof-sub-badge prof-sub-badge--active">Premium</span>
+                  <span className="prof-sub-plan">{plan === 'yearly' ? 'Annual plan' : 'Monthly plan'}</span>
+                </div>
+                {renewalLabel && (
+                  <div className="prof-sub-renews">Renews {renewalLabel}</div>
+                )}
+                <button
+                  className="prof-portal-btn"
+                  onClick={openPortal}
+                  disabled={portalLoading}
+                >
+                  {portalLoading ? 'Loading…' : 'Manage subscription →'}
+                </button>
+              </div>
+            ) : subStatus === 'cancelled' ? (
+              <div className="prof-sub-content">
+                <div className="prof-sub-row">
+                  <span className="prof-sub-badge prof-sub-badge--cancelled">Cancelled</span>
+                </div>
+                <div className="prof-sub-renews">Your access has ended.</div>
+                <button className="up-save-btn" onClick={() => router.push('/pricing')}>
+                  Resubscribe →
+                </button>
+              </div>
+            ) : (
+              <div className="prof-sub-content">
+                <div className="prof-sub-free">You&apos;re on the free plan.</div>
+                <button className="up-save-btn" onClick={() => router.push('/pricing')}>
+                  Upgrade to Premium →
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
         {/* ── Account settings ── */}

@@ -644,9 +644,9 @@
           },
           {
             "type": "Q",
-            "hanzi": "你会中文？！",
-            "pinyin": "Nǐ huì zhōngwén?!",
-            "english": "You know Chinese?!",
+            "hanzi": "你会讲中文？！",
+            "pinyin": "Nǐ huì jiǎng zhōngwén?!",
+            "english": "You speak Chinese?!",
             "badge": "colloquial",
             "badgeNote": null,
             "free": false
