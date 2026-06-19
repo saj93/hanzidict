@@ -1876,6 +1876,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 .prof-portal-btn:hover { background: var(--accent); color: #fff; }
 .prof-portal-btn:disabled { opacity: .55; cursor: default; }
+.prof-portal-error { font-size: 13px; color: #9b2c2c; margin-top: 4px; }
 .prof-levels-title, .prof-settings-title {
   font-size: 13px; font-weight: 700; color: var(--fg2);
   text-transform: uppercase; letter-spacing: .06em; margin-bottom: 18px;

@@ -26,10 +26,16 @@ export async function POST(request) {
     return Response.json({ error: 'No subscription found' }, { status: 404 });
   }
 
-  const portalSession = await stripe.billingPortal.sessions.create({
-    customer: sub.stripe_customer_id,
-    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile`,
-  });
+  let portalSession;
+  try {
+    portalSession = await stripe.billingPortal.sessions.create({
+      customer: sub.stripe_customer_id,
+      return_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile`,
+    });
+  } catch (err) {
+    console.error('[portal] Stripe error:', err.message);
+    return Response.json({ error: err.message }, { status: 500 });
+  }
 
   return Response.json({ url: portalSession.url });
 }

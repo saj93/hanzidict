@@ -27,6 +27,7 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [stats, setStats] = useState(null);
   const [portalLoading, setPortalLoading] = useState(false);
+  const [portalError, setPortalError] = useState('');
   const [upgraded, setUpgraded] = useState(false);
 
   useEffect(() => { document.title = 'Profile — HanziDict'; }, []);
@@ -60,15 +61,20 @@ export default function ProfilePage() {
 
   async function openPortal() {
     setPortalLoading(true);
+    setPortalError('');
     try {
       const res = await fetch('/api/stripe/portal', {
         method: 'POST',
         headers: { Authorization: `Bearer ${session.access_token}` },
       });
       const data = await res.json();
-      if (data.url) window.location.href = data.url;
-    } catch {
-      // portal failed silently — nothing to recover
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setPortalError(data.error ?? 'Could not open portal. Please try again.');
+      }
+    } catch (err) {
+      setPortalError('Network error. Please try again.');
     } finally {
       setPortalLoading(false);
     }
@@ -202,6 +208,7 @@ export default function ProfilePage() {
                 >
                   {portalLoading ? 'Loading…' : 'Manage subscription →'}
                 </button>
+                {portalError && <div className="prof-portal-error">{portalError}</div>}
               </div>
             ) : subStatus === 'cancelled' ? (
               <div className="prof-sub-content">
