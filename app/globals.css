@@ -1520,7 +1520,7 @@ html.dark .history-footer { background: var(--bg3); }
   padding: 10px 28px;
   background: none;
   border: 1px solid var(--border-mid);
-  border-radius: 6px;
+  border-radius: 3px;
   font-size: 14px; color: var(--fg2);
   cursor: pointer; transition: background 0.15s, color 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
