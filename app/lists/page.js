@@ -113,6 +113,7 @@ export default function ListsPage() {
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
           <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
           <button className="nav-link active">Lists</button>
+          <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
@@ -127,6 +128,7 @@ export default function ListsPage() {
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link active">Lists</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
         </div>
