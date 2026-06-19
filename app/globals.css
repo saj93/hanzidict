@@ -1642,9 +1642,11 @@ html.dark .history-footer { background: var(--bg3); }
 
 /* New badge on card */
 .fc-new-badge {
-  font-size: 11px; font-weight: 600; white-space: nowrap;
-  color: #1D9E75; background: rgba(29,158,117,0.12);
-  border-radius: 6px; padding: 2px 8px; margin-bottom: 8px;
+  font-size: 11px; font-weight: 500; white-space: nowrap;
+  color: var(--accent-text); background: var(--accent-dim);
+  border: 0.5px solid var(--accent);
+  border-radius: 6px; padding: 3px 10px; margin-bottom: 8px;
+  font-family: var(--font-body), system-ui, sans-serif;
 }
 
 .fc-action-btn {
@@ -2493,7 +2495,7 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .fc-card-back { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
 .fc-hanzi { font-size: 64px; line-height: 1; color: var(--fg); font-weight: 500; }
 .fc-hanzi-sm { font-size: 32px; line-height: 1; color: var(--fg); font-weight: 500; }
-.fc-new-badge { font-size: 11px; background: var(--accent); color: #fff; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.fc-new-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 6px; background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent); }
 .fc-tap-hint { font-size: 13px; color: var(--fg3); margin-top: 8px; }
 .fc-pinyin { font-size: 18px; color: var(--accent); font-style: italic; }
 .fc-back-row { display: flex; align-items: center; gap: 8px; }
