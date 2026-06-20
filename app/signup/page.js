@@ -13,6 +13,7 @@ export default function SignupPage() {
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [newsletter, setNewsletter] = useState(true);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,9 +22,20 @@ export default function SignupPage() {
     if (password.length < 8) { setError('Password must be at least 8 characters'); return; }
     setLoading(true);
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { newsletter_subscribed: newsletter } },
+    });
     setLoading(false);
     if (error) { setError(error.message); return; }
+    if (newsletter) {
+      fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      }).catch(() => {});
+    }
     setDone(true);
   }
 
@@ -88,6 +100,16 @@ export default function SignupPage() {
                     autoComplete="new-password"
                   />
                 </div>
+
+                <label className="auth-checkbox-label">
+                  <input
+                    type="checkbox"
+                    className="auth-checkbox"
+                    checked={newsletter}
+                    onChange={e => setNewsletter(e.target.checked)}
+                  />
+                  Send me a free 5-minute Chinese lesson every day
+                </label>
 
                 {error && <div className="auth-error">{error}</div>}
 
