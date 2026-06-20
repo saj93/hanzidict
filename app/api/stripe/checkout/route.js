@@ -35,23 +35,28 @@ export async function POST(request) {
     .single();
 
   let customerId = existing?.stripe_customer_id;
-  if (!customerId) {
-    const customer = await stripe.customers.create({
-      email: user.email,
-      metadata: { supabase_user_id: user.id },
+  try {
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email,
+        metadata: { supabase_user_id: user.id },
+      });
+      customerId = customer.id;
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      customer: customerId,
+      line_items: [{ price: priceId, quantity: 1 }],
+      client_reference_id: user.id,
+      metadata: { plan },
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?upgraded=true`,
+      cancel_url:  `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
     });
-    customerId = customer.id;
+
+    return Response.json({ url: session.url });
+  } catch (err) {
+    console.error('[checkout] Stripe error:', err.message);
+    return Response.json({ error: err.message }, { status: 500 });
   }
-
-  const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    customer: customerId,
-    line_items: [{ price: priceId, quantity: 1 }],
-    client_reference_id: user.id,
-    metadata: { plan },
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/profile?upgraded=true`,
-    cancel_url:  `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
-  });
-
-  return Response.json({ url: session.url });
 }
