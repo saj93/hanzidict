@@ -2922,7 +2922,7 @@ html.dark .pb-badge-partial { background: #2d2007; color: #d4a040; }
 .pb-practice-btn {
   flex-shrink: 0; margin-top: 4px;
   display: inline-flex; align-items: center; gap: 6px;
-  background: var(--accent-dim); color: var(--accent-text);
+  background: var(--accent); color: #fff;
   border: none; border-radius: var(--radius); padding: 9px 18px;
   font-size: 13px; font-weight: 600; cursor: pointer;
   font-family: var(--font-body), system-ui, sans-serif;
