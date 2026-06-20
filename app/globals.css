@@ -3037,7 +3037,7 @@ html.dark .pb-badge-regional   { background: #042f2e; color: #5eead4; border-col
 .pb-upgrade-title { font-size: 15px; font-weight: 700; color: var(--fg); margin-bottom: 6px; }
 .pb-upgrade-sub { font-size: 13px; color: var(--fg3); margin-bottom: 16px; line-height: 1.5; }
 .pb-upgrade-btn {
-  background: var(--accent); color: var(--accent-text);
+  background: var(--accent); color: #fff;
   border: none; border-radius: var(--radius); padding: 10px 24px;
   font-size: 13px; font-weight: 600; cursor: pointer;
   font-family: var(--font-body), system-ui, sans-serif;
