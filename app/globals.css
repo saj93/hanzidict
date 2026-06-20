@@ -1435,7 +1435,7 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-start-btn:hover { opacity: 0.88; }
 .fc-start-btn-locked {
-  background: var(--bg2); color: var(--fg3);
+  background: var(--bg2); color: var(--accent-text);
   border: 1px dashed var(--accent);
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
