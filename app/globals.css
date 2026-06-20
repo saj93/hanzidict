@@ -1435,9 +1435,14 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-start-btn:hover { opacity: 0.88; }
 .fc-start-btn-locked {
-  background: var(--bg3); color: var(--fg3); cursor: default;
+  background: var(--bg2); color: var(--fg3);
+  border: 1px dashed var(--border-mid);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
-.fc-start-btn-locked:hover { opacity: 1; }
+.fc-start-btn-locked:hover {
+  border-color: var(--fg3); color: var(--fg2); background: var(--bg3);
+}
 
 /* Study view */
 .fc-progress-wrap {
