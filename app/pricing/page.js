@@ -151,7 +151,7 @@ export default function PricingPage() {
             <button
               className="pricing-btn pricing-btn-primary"
               onClick={() => subscribe('monthly')}
-              disabled={!!loading || (isPremium && currentPlan === 'monthly')}
+              disabled={loading === 'monthly' || (isPremium && currentPlan === 'monthly')}
             >
               {isPremium && currentPlan === 'monthly'
                 ? '✓ Current plan'
@@ -179,7 +179,7 @@ export default function PricingPage() {
             <button
               className="pricing-btn pricing-btn-primary"
               onClick={() => subscribe('annual')}
-              disabled={!!loading || (isPremium && currentPlan === 'annual')}
+              disabled={loading === 'annual' || (isPremium && currentPlan === 'annual')}
             >
               {isPremium && currentPlan === 'annual'
                 ? '✓ Current plan'
