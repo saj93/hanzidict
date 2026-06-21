@@ -87,6 +87,7 @@ function Toolbar({ editor }) {
 export default function BlogEditor({ initialContent, onSave, onCancel, saving }) {
   const editor = useEditor({
     immediatelyRender: false,
+    injectCSS: false,
     extensions: [
       StarterKit,
       Underline,
