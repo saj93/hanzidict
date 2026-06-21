@@ -1,17 +1,15 @@
-import { getPost, getAllPosts } from '@/lib/blog';
+import { getPost } from '@/lib/blog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import BlogPostClient from '../../components/BlogPostClient';
 import InlineSvgImg from '../../components/InlineSvgImg';
 
-export async function generateStaticParams() {
-  return getAllPosts().map(p => ({ slug: p.slug }));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { frontmatter } = getPost(slug);
-  const url = `https://hanzidict.vercel.app/blog/${slug}`;
+  const { frontmatter } = await getPost(slug);
+  const url = `https://hanzidict.app/blog/${slug}`;
 
   return {
     title: `${frontmatter.title} — HanziDict`,
@@ -38,8 +36,8 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
-  const { frontmatter, content } = getPost(slug);
-  const url = `https://hanzidict.vercel.app/blog/${slug}`;
+  const { frontmatter, content } = await getPost(slug);
+  const url = `https://hanzidict.app/blog/${slug}`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -48,17 +46,24 @@ export default async function BlogPostPage({ params }) {
     description: frontmatter.description,
     datePublished: frontmatter.date,
     url,
-    publisher: { '@type': 'Organization', name: 'HanziDict', url: 'https://hanzidict.vercel.app' },
+    publisher: { '@type': 'Organization', name: 'HanziDict', url: 'https://hanzidict.app' },
   };
 
-  const mdx = await MDXRemote({ source: content, options: { mdxOptions: { remarkPlugins: [remarkGfm] } }, components: { img: InlineSvgImg } });
+  const mdx = await MDXRemote({
+    source: content,
+    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
+    components: { img: InlineSvgImg },
+  });
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogPostClient frontmatter={frontmatter}>{mdx}</BlogPostClient>
+      <BlogPostClient frontmatter={frontmatter} slug={slug} rawContent={content}>
+        {mdx}
+      </BlogPostClient>
     </>
   );
 }

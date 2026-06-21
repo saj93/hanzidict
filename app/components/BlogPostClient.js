@@ -1,18 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import UserMenu from './UserMenu';
 import { useAuth } from './AuthProvider';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
 import NewsletterForm from './NewsletterForm';
+import BlogEditor from './BlogEditor';
 
-export default function BlogPostClient({ frontmatter, children }) {
+export default function BlogPostClient({ frontmatter, children, slug, rawContent }) {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, session, isAdmin } = useAuth() ?? {};
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [editTitle, setEditTitle] = useState(frontmatter.title ?? '');
+  const [editDesc, setEditDesc] = useState(frontmatter.description ?? '');
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -23,6 +28,37 @@ export default function BlogPostClient({ frontmatter, children }) {
     try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
     setDark(isDark);
   }
+
+  function cancelEdit() {
+    setEditTitle(frontmatter.title ?? '');
+    setEditDesc(frontmatter.description ?? '');
+    setEditMode(false);
+  }
+
+  const handleSave = useCallback(async (markdownContent) => {
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/blog/${slug}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`,
+        },
+        body: JSON.stringify({ title: editTitle, description: editDesc, content: markdownContent }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        alert(`Save failed: ${error}`);
+        return;
+      }
+      setEditMode(false);
+      router.refresh();
+    } catch (e) {
+      alert(`Save failed: ${e.message}`);
+    } finally {
+      setSaving(false);
+    }
+  }, [slug, session, editTitle, editDesc, router]);
 
   return (
     <main>
@@ -59,22 +95,55 @@ export default function BlogPostClient({ frontmatter, children }) {
       )}
 
       <article className="blog-post">
-        <div className="blog-post-header">
-          <div className="blog-card-meta">
-            {frontmatter.category && <span className="blog-tag">{frontmatter.category}</span>}
-            {frontmatter.level && <span className="blog-level">{frontmatter.level}</span>}
+        {editMode ? (
+          <div className="blog-edit-wrap">
+            <div className="blog-edit-fields">
+              <label className="blog-edit-label">Title</label>
+              <input
+                className="blog-edit-text-input"
+                value={editTitle}
+                onChange={e => setEditTitle(e.target.value)}
+              />
+              <label className="blog-edit-label">Description</label>
+              <textarea
+                className="blog-edit-text-input blog-edit-desc-input"
+                value={editDesc}
+                onChange={e => setEditDesc(e.target.value)}
+                rows={3}
+              />
+            </div>
+            <BlogEditor
+              initialContent={rawContent}
+              onSave={handleSave}
+              onCancel={cancelEdit}
+              saving={saving}
+            />
           </div>
-          <h1 className="blog-post-title">{frontmatter.title}</h1>
-          {frontmatter.description && (
-            <p className="blog-post-desc">{frontmatter.description}</p>
-          )}
-        </div>
-        <div className="blog-post-body">
-          {children}
-        </div>
-        <div className="blog-post-footer">
-          <button className="blog-back" onClick={() => router.push('/blog')}>← All articles</button>
-        </div>
+        ) : (
+          <>
+            <div className="blog-post-header">
+              <div className="blog-card-meta">
+                {frontmatter.category && <span className="blog-tag">{frontmatter.category}</span>}
+                {frontmatter.level && <span className="blog-level">{frontmatter.level}</span>}
+                {isAdmin && (
+                  <button className="def-edit-btn" onClick={() => setEditMode(true)}>
+                    Edit
+                  </button>
+                )}
+              </div>
+              <h1 className="blog-post-title">{frontmatter.title}</h1>
+              {frontmatter.description && (
+                <p className="blog-post-desc">{frontmatter.description}</p>
+              )}
+            </div>
+            <div className="blog-post-body">
+              {children}
+            </div>
+            <div className="blog-post-footer">
+              <button className="blog-back" onClick={() => router.push('/blog')}>← All articles</button>
+            </div>
+          </>
+        )}
       </article>
 
       <NewsletterForm />
