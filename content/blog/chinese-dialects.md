@@ -42,7 +42,7 @@ Spoken in Guangdong province, Hong Kong, and Macao, as well as large overseas Ch
 
 The standard greeting 你好 sounds very different here: *nei5 hou2* in Jyutping — though in everyday Hong Kong speech you'll more often hear *lei5 hou2* (a well-documented shift where *nei* becomes *lei*).
 
-One variety worth knowing about: **Taishanese** (台山话 Tāishānhuà), spoken in Taishan county in western Guangdong. It's part of the Yue family — related to but clearly distinct from Standard Cantonese, with different tones, vocabulary, and enough pronunciation differences that speakers can't always understand each other. Historically, Taishanese was the dominant language of overseas Chinese communities in North America: for much of the 19th and early 20th century, Chinese immigrants to the US and Canada came predominantly from the Taishan region, not from Guangzhou or Hong Kong.
+Notable sub-variety: **Taishanese** (台山话 Tāishānhuà) from western Guangdong — distinct enough from Standard Cantonese that speakers can't always understand each other, and historically the dominant language of early Chinese communities in North America.
 
 **Wu (吴语 Wúyǔ)**
 
