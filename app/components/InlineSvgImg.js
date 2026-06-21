@@ -1,7 +1,7 @@
 import path from 'path';
 import { readFile } from 'fs/promises';
 
-const INLINE_SVGS = new Set(['chinese-language-tree.svg']);
+const INLINE_SVGS = new Set(['chinese-language-tree.svg', 'chinese-languages-map.svg']);
 
 export default async function InlineSvgImg({ src, alt, ...rest }) {
   const filename = src?.split('/').pop();
