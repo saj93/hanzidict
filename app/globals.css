@@ -2333,14 +2333,6 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   cursor: text; outline: none;
   position: static; overflow: visible;
 }
-/* ProseMirror baseline (replaces Tiptap's injectCSS so we control all positioning) */
-.blog-editor-content .ProseMirror {
-  position: static; word-wrap: break-word;
-  white-space: pre-wrap; white-space: break-spaces;
-  font-variant-ligatures: none; font-feature-settings: "liga" 0;
-}
-.blog-editor-content .ProseMirror-gapcursor { display: none; pointer-events: none; }
-.blog-editor-content .ProseMirror-focused .ProseMirror-gapcursor { display: block; }
 .blog-editor-content .tiptap { outline: none; }
 .blog-editor-content .tiptap > * + * { margin-top: 0.75em; }
 .blog-editor-content .tiptap h2 { font-size: 1.3em; font-weight: 600; margin-top: 1.4em; }
