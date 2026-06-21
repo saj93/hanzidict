@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 
@@ -12,6 +12,22 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [resetOpen, setResetOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetError, setResetError] = useState('');
+  const resetInputRef = useRef(null);
+
+  useEffect(() => {
+    if (resetOpen) {
+      setResetEmail(email);
+      setResetSent(false);
+      setResetError('');
+      setTimeout(() => resetInputRef.current?.focus(), 50);
+    }
+  }, [resetOpen]);
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
@@ -22,6 +38,19 @@ export default function LoginPage() {
     if (error) { setError(error.message); return; }
     router.push('/flashcards');
     router.refresh();
+  }
+
+  async function handleReset(e) {
+    e.preventDefault();
+    setResetError('');
+    setResetLoading(true);
+    const supabase = createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setResetLoading(false);
+    if (error) { setResetError(error.message); return; }
+    setResetSent(true);
   }
 
   return (
@@ -51,7 +80,16 @@ export default function LoginPage() {
               />
             </div>
             <div className="auth-field">
-              <label className="auth-label">Password</label>
+              <div className="auth-label-row">
+                <span className="auth-label">Password</span>
+                <button
+                  type="button"
+                  className="auth-link auth-forgot"
+                  onClick={() => setResetOpen(true)}
+                >
+                  Forgot password?
+                </button>
+              </div>
               <input
                 className="auth-input"
                 type="password"
@@ -78,6 +116,51 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      {resetOpen && (
+        <>
+          <div className="auth-modal-backdrop" onClick={() => setResetOpen(false)} />
+          <div className="auth-modal" role="dialog" aria-modal="true" aria-label="Reset password">
+            <h2 className="auth-modal-title">Reset your password</h2>
+            {resetSent ? (
+              <>
+                <p className="auth-modal-sent">Check your email for a reset link.</p>
+                <button className="auth-submit" style={{ marginTop: 16 }} onClick={() => setResetOpen(false)}>
+                  Done
+                </button>
+              </>
+            ) : (
+              <form onSubmit={handleReset} className="auth-form" style={{ gap: 14 }}>
+                <div className="auth-field">
+                  <label className="auth-label">Email address</label>
+                  <input
+                    ref={resetInputRef}
+                    className="auth-input"
+                    type="email"
+                    value={resetEmail}
+                    onChange={e => setResetEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    autoComplete="email"
+                  />
+                </div>
+                {resetError && <div className="auth-error">{resetError}</div>}
+                <button className="auth-submit" type="submit" disabled={resetLoading}>
+                  {resetLoading ? 'Sending…' : 'Send reset link'}
+                </button>
+                <button
+                  type="button"
+                  className="auth-link"
+                  style={{ display: 'block', width: '100%', textAlign: 'center', marginTop: 4 }}
+                  onClick={() => setResetOpen(false)}
+                >
+                  Cancel
+                </button>
+              </form>
+            )}
+          </div>
+        </>
+      )}
     </main>
   );
 }
