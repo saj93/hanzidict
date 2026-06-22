@@ -5,6 +5,15 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import { Markdown } from 'tiptap-markdown';
 
+// Stable references — must not be recreated inside the component or Tiptap
+// compares them by identity on every render and calls setOptions unnecessarily.
+const markdownExt = Markdown.configure({
+  html: true,
+  tightLists: true,
+  transformPastedText: true,
+});
+const extensions = [StarterKit, Underline, markdownExt];
+
 function ToolbarButton({ onClick, active, title, children }) {
   return (
     <button
@@ -87,15 +96,8 @@ function Toolbar({ editor }) {
 export default function BlogEditor({ initialContent, onSave, onCancel, saving }) {
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [
-      StarterKit,
-      Underline,
-      Markdown.configure({
-        html: true,
-        tightLists: true,
-        transformPastedText: true,
-      }),
-    ],
+    shouldRerenderOnTransaction: true,
+    extensions,
     content: initialContent,
   });
 
