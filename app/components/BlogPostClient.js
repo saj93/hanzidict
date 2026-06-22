@@ -52,7 +52,7 @@ export default function BlogPostClient({ frontmatter, children, slug, rawContent
         return;
       }
       setEditMode(false);
-      router.refresh();
+      setTimeout(() => router.refresh(), 0);
     } catch (e) {
       alert(`Save failed: ${e.message}`);
     } finally {
