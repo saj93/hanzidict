@@ -847,6 +847,7 @@ html.dark .history-footer { background: var(--bg3); }
 }
 /* Mobile-only search bar inside word header */
 .word-mobile-search { display: none; margin-bottom: 10px; }
+.search-mobile-search { display: none; padding: 8px 16px 4px; }
 
 .word-search-row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
 .word-search-wrap { flex: 1; max-width: 600px; position: relative; z-index: 200; }
@@ -1292,6 +1293,8 @@ html.dark .history-footer { background: var(--bg3); }
   .mobile-menu { display: flex; }
   /* Word page: show search bar below tabs on mobile */
   .word-mobile-search { display: block; margin-bottom: 10px; }
+  /* Search page: show search bar at top of content on mobile */
+  .search-mobile-search { display: block; }
   /* Prevent iOS Safari zoom on input focus (requires font-size >= 16px) */
   .nav-search-input { font-size: 16px; }
 

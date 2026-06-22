@@ -52,6 +52,7 @@ function SearchResults() {
   const [loading, setLoading] = useState(false);
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -114,8 +115,27 @@ function SearchResults() {
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
+          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
+            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
+          </button>
         </div>
       </nav>
+      {menuOpen && (
+        <div className="mobile-menu">
+          <div className="mobile-menu-search">
+            <NavSearch initialQuery={q} onSubmit={newQ => { setMenuOpen(false); router.push(`/search?q=${encodeURIComponent(newQ)}`); }} />
+          </div>
+          <button className="mobile-menu-link active" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+        </div>
+      )}
+
+      <div className="search-mobile-search">
+        <NavSearch initialQuery={q} onSubmit={newQ => router.push(`/search?q=${encodeURIComponent(newQ)}`)} />
+      </div>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '24px 28px' }}>
         {q && (
