@@ -286,11 +286,9 @@ export default function FlashcardsPage() {
                   >
                     {unlocked ? 'Start →' : 'Unlock →'}
                   </button>
-                  {unlocked && (
-                    <button className="fc-wordlist-link" onClick={() => router.push(`/hsk/${level}`)}>
-                      View word list
-                    </button>
-                  )}
+                  <button className="fc-wordlist-link" onClick={() => router.push(`/hsk/${level}`)}>
+                    View word list
+                  </button>
                 </div>
               );
             })}
