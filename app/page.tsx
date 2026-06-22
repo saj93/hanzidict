@@ -2,6 +2,8 @@ import { getRepresentativeEntries, getWordOfDay } from '../lib/db';
 import { convertPinyin } from '../lib/pinyin';
 import HomeClient from './components/HomeClient';
 
+export const revalidate = 3600; // re-render homepage at most once per hour
+
 export default async function Home() {
   let chips: [string, string][] = [];
   let wordOfDay: any = null;
