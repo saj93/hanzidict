@@ -90,7 +90,7 @@ export default function LearnPage() {
                 </div>
                 <div className="learn-unit-content">
                   <div className="learn-unit-title">{unit.title}</div>
-                  <div className="learn-unit-meta">{phraseCount} phrases</div>
+                  <div className="learn-unit-meta">{verbCount} verbs · {phraseCount} phrases</div>
                 </div>
                 <button
                   className={`learn-unit-btn${!unit.unlocked ? ' learn-unit-btn--locked' : ''}${unit.completed ? ' learn-unit-btn--done' : ''}`}
