@@ -2327,11 +2327,11 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 .blog-editor-tool-active { background: var(--accent-dim); color: var(--accent-text); }
 .blog-editor-divider { width: 1px; height: 18px; background: var(--border); margin: 0 3px; }
 .blog-editor-content {
-  min-height: 400px; padding: 14px 16px;
+  height: calc(100vh - 360px); min-height: 300px; max-height: 800px;
+  padding: 14px 16px; overflow-y: auto;
   background: var(--bg); border: 1px solid var(--accent); border-radius: 0 0 6px 6px;
   font-size: 15px; line-height: 1.7; color: var(--fg);
   cursor: text; outline: none;
-  position: static; overflow: visible;
 }
 .blog-editor-content .tiptap { outline: none; }
 .blog-editor-content .tiptap > * + * { margin-top: 0.75em; }
