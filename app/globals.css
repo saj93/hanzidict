@@ -1281,7 +1281,7 @@ html.dark .history-footer { background: var(--bg3); }
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   /* ── Nav ── */
-  .nav { padding: 0 16px; height: 50px; gap: 10px; position: relative; }
+  .nav { padding: 0 16px; height: 50px; gap: 10px; position: sticky; top: 0; }
   .nav-right { gap: 10px; }
   .nav-search-center { display: none; }
   /* Hide Dictionary / Flashcards / About; keep theme toggle + hamburger */
