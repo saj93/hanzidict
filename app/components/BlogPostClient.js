@@ -16,8 +16,11 @@ export default function BlogPostClient({ frontmatter, children, slug, rawContent
   const [menuOpen, setMenuOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savedBanner, setSavedBanner] = useState(false);
   const [editTitle, setEditTitle] = useState(frontmatter.title ?? '');
   const [editDesc, setEditDesc] = useState(frontmatter.description ?? '');
+  const [displayTitle, setDisplayTitle] = useState(frontmatter.title ?? '');
+  const [displayDesc, setDisplayDesc] = useState(frontmatter.description ?? '');
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -30,8 +33,8 @@ export default function BlogPostClient({ frontmatter, children, slug, rawContent
   }
 
   function cancelEdit() {
-    setEditTitle(frontmatter.title ?? '');
-    setEditDesc(frontmatter.description ?? '');
+    setEditTitle(displayTitle);
+    setEditDesc(displayDesc);
     setEditMode(false);
   }
 
@@ -51,14 +54,17 @@ export default function BlogPostClient({ frontmatter, children, slug, rawContent
         alert(`Save failed: ${error}`);
         return;
       }
+      setDisplayTitle(editTitle);
+      setDisplayDesc(editDesc);
       setEditMode(false);
-      setTimeout(() => router.refresh(), 0);
+      setSavedBanner(true);
+      setTimeout(() => setSavedBanner(false), 3000);
     } catch (e) {
       alert(`Save failed: ${e.message}`);
     } finally {
       setSaving(false);
     }
-  }, [slug, session, editTitle, editDesc, router]);
+  }, [slug, session, editTitle, editDesc]);
 
   return (
     <main>
@@ -130,10 +136,11 @@ export default function BlogPostClient({ frontmatter, children, slug, rawContent
                     Edit
                   </button>
                 )}
+                {savedBanner && <span className="blog-saved-banner">Saved</span>}
               </div>
-              <h1 className="blog-post-title">{frontmatter.title}</h1>
-              {frontmatter.description && (
-                <p className="blog-post-desc">{frontmatter.description}</p>
+              <h1 className="blog-post-title">{displayTitle}</h1>
+              {displayDesc && (
+                <p className="blog-post-desc">{displayDesc}</p>
               )}
             </div>
             <div className="blog-post-body">

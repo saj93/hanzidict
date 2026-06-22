@@ -2346,6 +2346,10 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 .blog-editor-content .tiptap ul, .blog-editor-content .tiptap ol { padding-left: 1.4em; }
 .blog-editor-actions { margin-top: 12px; }
+.blog-saved-banner {
+  font-size: 12px; font-weight: 500; color: var(--accent);
+  padding: 2px 8px; border: 1px solid var(--accent); border-radius: 4px;
+}
 
 .blog-post-body blockquote p + p {
   margin-top: 1em; padding-top: 1em; border-top: 0.5px solid var(--border);
