@@ -3093,7 +3093,7 @@ html.dark .pb-badge-partial { background: #2d2007; color: #d4a040; }
 .pb-note-body p:last-child { margin-bottom: 0; }
 .pb-note-body ul { margin: 4px 0 4px 18px; padding: 0; }
 .pb-note-body li { margin-bottom: 3px; }
-.pb-note-body strong { color: var(--fg); }
+.pb-note-body strong { color: var(--fg); font-weight: 500; }
 
 /* Phrase rows */
 .pb-phrase {
