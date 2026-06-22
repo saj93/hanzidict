@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import Nav from '../../components/Nav';
+import { toTraditional } from '../../../lib/simp-to-trad';
 import Footer from '../../components/Footer';
 import AudioButton from '../../components/AudioButton';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -102,9 +103,10 @@ function NoteBlock({ note }) {
 function PhraseRow({
   phrase, phraseKey, override,
   isAdmin, editingKey, editFields, setEditFields, editSaving,
-  onStartEdit, onSave, onCancel,
+  onStartEdit, onSave, onCancel, script,
 }) {
   const display = override ? { ...phrase, ...override } : phrase;
+  const displayHanzi = script === 'traditional' ? toTraditional(display.hanzi) : display.hanzi;
   const badge = BADGE_CONFIG[display.badge] || BADGE_CONFIG.common;
   const typeCls = TYPE_CLS[display.type] || 'pb-type-qa';
   const isEditing = isAdmin && editingKey === phraseKey;
@@ -142,7 +144,7 @@ function PhraseRow({
         </div>
       ) : (
         <div className="pb-phrase-body">
-          <div className="pb-phrase-hanzi">{display.hanzi}</div>
+          <div className="pb-phrase-hanzi">{displayHanzi}</div>
           <div className="pb-phrase-pinyin">{display.pinyin}</div>
           <div className="pb-phrase-english">{display.english}</div>
           <div className="pb-phrase-pills">
@@ -155,7 +157,7 @@ function PhraseRow({
       )}
 
       <div className="pb-phrase-audio">
-        {!isEditing && <AudioButton text={display.hanzi} />}
+        {!isEditing && <AudioButton text={displayHanzi} />}
         {isAdmin && !isEditing && (
           <button
             className="pb-phrase-edit-btn"
@@ -196,7 +198,7 @@ function LockedBlock({ phrases, onUpgrade }) {
 function Section({
   section, sectionIdx, isPremium, onUpgrade,
   isAdmin, editingKey, editFields, setEditFields, editSaving, overrides,
-  onStartEdit, onSave, onCancel,
+  onStartEdit, onSave, onCancel, script,
 }) {
   const freePhrases = section.phrases.filter(p => p.free);
   const lockedPhrases = section.phrases.filter(p => !p.free);
@@ -222,6 +224,7 @@ function Section({
             onStartEdit={onStartEdit}
             onSave={onSave}
             onCancel={onCancel}
+            script={script}
           />
         );
       })}
@@ -252,7 +255,7 @@ function QuizDone({ score, total, onRetry, onBrowse }) {
   );
 }
 
-function Quiz({ questions: initialQuestions, onDone }) {
+function Quiz({ questions: initialQuestions, onDone, script }) {
   const [questions, setQuestions] = useState(initialQuestions);
   const [current, setCurrent]     = useState(0);
   const [selected, setSelected]   = useState(null);
@@ -337,7 +340,7 @@ function Quiz({ questions: initialQuestions, onDone }) {
               onClick={() => select(i)}
               disabled={revealed}
             >
-              <div className="pb-quiz-opt-hanzi">{opt.hanzi}</div>
+              <div className="pb-quiz-opt-hanzi">{script === 'traditional' ? toTraditional(opt.hanzi) : opt.hanzi}</div>
               <div className="pb-quiz-opt-pinyin">{opt.pinyin}</div>
             </button>
           );
@@ -351,7 +354,7 @@ function Quiz({ questions: initialQuestions, onDone }) {
             <div className="pb-quiz-feedback correct">✓ Correct!</div>
           ) : (
             <div className="pb-quiz-feedback wrong">
-              ✗ It was: <strong>{q.phrase.hanzi}</strong> — {q.phrase.pinyin}
+              ✗ It was: <strong>{script === 'traditional' ? toTraditional(q.phrase.hanzi) : q.phrase.hanzi}</strong> — {q.phrase.pinyin}
             </div>
           )}
           <button className="pb-quiz-next" onClick={next}>
@@ -365,7 +368,7 @@ function Quiz({ questions: initialQuestions, onDone }) {
 
 // ── Vocab list ────────────────────────────────────────────────────────────────
 
-function VocabSection({ vocabCards }) {
+function VocabSection({ vocabCards, script }) {
   const router = useRouter();
   if (!vocabCards || !vocabCards.length) return null;
   const items = vocabCards.flatMap(g => g.items);
@@ -387,7 +390,7 @@ function VocabSection({ vocabCards }) {
               className="pb-vocab-row"
               onClick={() => router.push(`/word/${encodeURIComponent(item.hanzi)}`)}
             >
-              <td className="pb-vocab-td pb-vocab-td-hanzi">{item.hanzi}</td>
+              <td className="pb-vocab-td pb-vocab-td-hanzi">{script === 'traditional' ? toTraditional(item.hanzi) : item.hanzi}</td>
               <td className="pb-vocab-td pb-vocab-td-pinyin">{item.pinyin}</td>
               <td className="pb-vocab-td pb-vocab-td-en">{item.english}</td>
             </tr>
@@ -410,6 +413,14 @@ export default function SituationPage() {
   const [editFields, setEditFields] = useState({ hanzi: '', pinyin: '', english: '' });
   const [editSaving, setEditSaving] = useState(false);
   const [overrides, setOverrides] = useState({});
+  const [script, setScript] = useState('simplified');
+
+  useEffect(() => {
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
+    const handler = e => setScript(e.detail);
+    window.addEventListener('hanzidict:scriptChange', handler);
+    return () => window.removeEventListener('hanzidict:scriptChange', handler);
+  }, []);
 
   const situation = situations.find(s => s.id === id);
 
@@ -484,7 +495,7 @@ export default function SituationPage() {
         {mode === 'quiz' ? (
           /* ── Quiz mode ── */
           quiz ? (
-            <Quiz questions={quiz} onDone={() => setMode('browse')} />
+            <Quiz questions={quiz} onDone={() => setMode('browse')} script={script} />
           ) : (
             <p style={{ color: 'var(--fg3)' }}>Not enough phrases to build a quiz.</p>
           )
@@ -499,7 +510,7 @@ export default function SituationPage() {
             <div className="pb-sit-header">
               <div className="pb-sit-header-top">
                 <div>
-                  <div className="pb-sit-chinese">{situation.titleChinese}</div>
+                  <div className="pb-sit-chinese">{script === 'traditional' ? toTraditional(situation.titleChinese) : situation.titleChinese}</div>
                   <div className="pb-sit-title">{situation.title}</div>
                   <div className="pb-sit-pinyin">{situation.pinyin}</div>
                 </div>
@@ -528,12 +539,13 @@ export default function SituationPage() {
                 onStartEdit={startEdit}
                 onSave={saveEdit}
                 onCancel={cancelEdit}
+                script={script}
               />
             ))}
 
             {/* Vocab cards — free for all users */}
             {situation.vocabCards && (
-              <VocabSection vocabCards={situation.vocabCards} />
+              <VocabSection vocabCards={situation.vocabCards} script={script} />
             )}
 
             {/* Bottom upgrade CTA */}

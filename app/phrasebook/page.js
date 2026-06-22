@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Nav from '../components/Nav';
+import { toTraditional } from '../../lib/simp-to-trad';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
 import { useSubscription } from '../hooks/useSubscription';
@@ -23,8 +24,16 @@ function sortSituations(sits) {
 export default function PhrasebookPage() {
   const router = useRouter();
   const { isPremium } = useSubscription();
+  const [script, setScript] = useState('simplified');
 
   useEffect(() => { document.title = 'Phrasebook — HanziDict'; }, []);
+
+  useEffect(() => {
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
+    const handler = e => setScript(e.detail);
+    window.addEventListener('hanzidict:scriptChange', handler);
+    return () => window.removeEventListener('hanzidict:scriptChange', handler);
+  }, []);
 
   function handleCardClick(sit) {
     if (!sit.free && !isPremium) {
@@ -59,7 +68,7 @@ export default function PhrasebookPage() {
                 onClick={() => handleCardClick(sit)}
               >
                 {locked && <span className="pb-card-lock">🔒</span>}
-                <div className="pb-card-chinese">{sit.titleChinese}</div>
+                <div className="pb-card-chinese">{script === 'traditional' ? toTraditional(sit.titleChinese) : sit.titleChinese}</div>
                 <div className="pb-card-title">{sit.title}</div>
                 <div className="pb-card-pinyin">{sit.pinyin}</div>
                 <div className="pb-card-meta">

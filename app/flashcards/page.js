@@ -195,6 +195,7 @@ export default function FlashcardsPage() {
       </nav>
       {menuOpen && (
         <div className="mobile-menu">
+          <div className="mobile-menu-search"><NavSearch /></div>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link active">Flashcards</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>

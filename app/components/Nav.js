@@ -29,6 +29,7 @@ export default function Nav() {
     const next = script === 'simplified' ? 'traditional' : 'simplified';
     setScript(next);
     try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('hanzidict:scriptChange', { detail: next }));
   }
 
   function go(path) {
@@ -85,7 +86,7 @@ export default function Nav() {
       {menuOpen && (
         <div className="mobile-menu">
           <div className="mobile-menu-search"><NavSearch /></div>
-          {links.map(({ label, path }) => (
+          {links.filter(l => l.path !== '/verbs').map(({ label, path }) => (
             <button
               key={path}
               className={`mobile-menu-link${isActive(path) ? ' active' : ''}`}
@@ -97,10 +98,6 @@ export default function Nav() {
           {!user && (
             <button className="mobile-menu-link" onClick={() => go('/login')}>Log in</button>
           )}
-          <div className="mobile-menu-actions">
-            <button className="script-btn" onClick={toggleScript}>{script === 'traditional' ? '繁' : '简'}</button>
-            <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>
-          </div>
         </div>
       )}
     </>

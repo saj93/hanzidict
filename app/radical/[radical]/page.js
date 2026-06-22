@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
 import { firstDef } from '../../../lib/utils';
+import { toTraditional } from '../../../lib/simp-to-trad';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
 import Footer from '../../components/Footer';
@@ -21,6 +22,7 @@ export default function RadicalPage() {
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
 
   const [dark, setDark] = useState(false);
+  const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
   const [entries, setEntries] = useState([]);
   const [total, setTotal] = useState(0);
@@ -33,6 +35,7 @@ export default function RadicalPage() {
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
   }, []);
 
   useEffect(() => {
@@ -53,6 +56,12 @@ export default function RadicalPage() {
     const isDark = document.documentElement.classList.toggle('dark');
     try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
     setDark(isDark);
+  }
+
+  function toggleScript() {
+    const next = script === 'simplified' ? 'traditional' : 'simplified';
+    setScript(next);
+    try { localStorage.setItem('hanzidict-script', next); } catch (e) {}
   }
 
   function goPage(p) {
@@ -76,6 +85,7 @@ export default function RadicalPage() {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
@@ -85,6 +95,7 @@ export default function RadicalPage() {
       </nav>
       {menuOpen && (
         <div className="mobile-menu">
+          <div className="mobile-menu-search"><NavSearch /></div>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
@@ -118,7 +129,7 @@ export default function RadicalPage() {
                   className="hsk-word-card"
                   onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
                 >
-                  <span className="hsk-wc-hanzi">{entry.simplified}</span>
+                  <span className="hsk-wc-hanzi">{script === 'traditional' ? toTraditional(entry.simplified) : entry.simplified}</span>
                   <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
                   {entry.hsk_level && (
                     <span className="hsk-wc-badge">{HSK_LABEL[entry.hsk_level] || `HSK ${entry.hsk_level}`}</span>
