@@ -87,7 +87,7 @@ body {
 .nav-search-input {
   flex: 1; height: 36px; min-width: 0;
   border: none; outline: none; background: transparent;
-  font-size: 13px; font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 13px; font-family: var(--font-body), 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif;
   color: var(--fg); padding: 0 8px 0 14px;
 }
 .nav-search-input::placeholder { color: var(--fg3); }
@@ -784,7 +784,7 @@ html.dark .search-drop { background: var(--bg2); }
 .drop-row:first-child { border-top: none; }
 .drop-row:hover { background: var(--bg2); }
 html.dark .drop-row:hover { background: var(--bg3); }
-.drop-hz { font-size: 20px; color: var(--fg); min-width: 28px; flex-shrink: 0; }
+.drop-hz { font-size: 20px; color: var(--fg); min-width: 28px; flex-shrink: 0; font-family: 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; }
 .drop-right {
   flex: 1; min-width: 0;
   display: flex; align-items: baseline; gap: 8px; overflow: hidden;
