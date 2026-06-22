@@ -13,8 +13,9 @@ import FeatureCards from './FeatureCards';
 import LearningPath from './LearningPath';
 import NewsletterForm from './NewsletterForm';
 import { useSearchHistory } from '../hooks/useSearchHistory';
+import WordOfDay from './WordOfDay';
 
-export default function HomeClient({ initialChips }: { initialChips: [string, string][] }) {
+export default function HomeClient({ initialChips, wordOfDay }: { initialChips: [string, string][]; wordOfDay?: any }) {
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
@@ -210,6 +211,8 @@ export default function HomeClient({ initialChips }: { initialChips: [string, st
           </div>
         )}
       </section>
+
+      <WordOfDay wordData={wordOfDay} script={script} />
 
       <LearningPath />
 

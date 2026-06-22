@@ -1,12 +1,12 @@
-import { getRepresentativeEntries } from '../lib/db';
+import { getRepresentativeEntries, getWordOfDay } from '../lib/db';
 import { convertPinyin } from '../lib/pinyin';
 import HomeClient from './components/HomeClient';
 
 export default async function Home() {
   let chips: [string, string][] = [];
+  let wordOfDay: any = null;
+
   try {
-    // getRepresentativeEntries deduplicates by simplified character so that
-    // duoyinzi (多音字) always show their most common reading here.
     const all = await getRepresentativeEntries(1);
     chips = all
       .slice(0, 5)
@@ -16,5 +16,11 @@ export default async function Home() {
     console.error('[Home] failed to load chips:', err);
   }
 
-  return <HomeClient initialChips={chips} />;
+  try {
+    wordOfDay = await getWordOfDay();
+  } catch (err) {
+    console.error('[Home] failed to load word of day:', err);
+  }
+
+  return <HomeClient initialChips={chips} wordOfDay={wordOfDay} />;
 }
