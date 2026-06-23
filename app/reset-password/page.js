@@ -15,16 +15,13 @@ export default function ResetPasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // The /auth/callback route has already exchanged the code and set the session in cookies.
-    // Just verify we have a valid session before showing the form.
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setReady(true);
-      } else {
-        setError('Reset link is invalid or has expired. Please request a new one.');
-      }
+    // Implicit flow: Supabase puts #access_token=...&type=recovery in the URL fragment.
+    // The SDK picks it up and fires PASSWORD_RECOVERY via onAuthStateChange.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') setReady(true);
     });
+    return () => subscription.unsubscribe();
   }, []);
 
   async function handleSubmit(e) {
@@ -59,7 +56,7 @@ export default function ResetPasswordPage() {
             </p>
           ) : !ready ? (
             <p className="auth-sub" style={{ marginBottom: 0 }}>
-              {error || 'Verifying your reset link…'}
+              Verifying your reset link…
             </p>
           ) : (
             <>
