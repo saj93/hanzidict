@@ -42,7 +42,7 @@ export default function SignupPage() {
 
   return (
     <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Nav />
+      <Nav hideScript />
 
       <div className="auth-wrap">
         <div className="auth-card">

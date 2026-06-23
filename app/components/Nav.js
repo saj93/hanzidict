@@ -6,7 +6,7 @@ import UserMenu from './UserMenu';
 import NavSearch from './NavSearch';
 import { useAuth } from './AuthProvider';
 
-export default function Nav() {
+export default function Nav({ hideScript = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
@@ -64,9 +64,11 @@ export default function Nav() {
               {label}
             </button>
           ))}
-          <button className="script-btn" onClick={toggleScript} title="Toggle script">
-            {script === 'traditional' ? '繁' : '简'}
-          </button>
+          {!hideScript && (
+            <button className="script-btn" onClick={toggleScript} title="Toggle script">
+              {script === 'traditional' ? '繁' : '简'}
+            </button>
+          )}
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
             {dark ? '☀️' : '🌙'}
           </button>
