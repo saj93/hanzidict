@@ -15,12 +15,21 @@ export default function ResetPasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Supabase puts the recovery token in the URL fragment; the client SDK
-    // picks it up automatically on getSession() after page load.
     const supabase = createClient();
-    supabase.auth.onAuthStateChange((event) => {
+
+    // PKCE flow: Supabase now sends ?code= instead of a URL fragment.
+    // We must exchange it for a session before the PASSWORD_RECOVERY event fires.
+    const code = new URLSearchParams(window.location.search).get('code');
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).catch(() => {
+        setError('Reset link is invalid or has expired. Please request a new one.');
+      });
+    }
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') setReady(true);
     });
+    return () => subscription.unsubscribe();
   }, []);
 
   async function handleSubmit(e) {
