@@ -19,8 +19,8 @@ export default function ResetPasswordPage() {
     const supabase = createAuthClient();
     supabaseRef.current = supabase;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && session)) {
-        setReady(true);
+      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+        if (session) setReady(true);
       }
     });
     return () => subscription.unsubscribe();
