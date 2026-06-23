@@ -1506,7 +1506,7 @@ html.dark .history-footer { background: var(--bg3); }
 .fc-wordlist-btn {
   flex: 1; padding: 0 8px; height: 32px;
   background: var(--accent-dim); color: var(--accent-text);
-  border: 0.5px solid var(--accent); border-radius: 6px;
+  border: 0.5px solid var(--accent); border-radius: 50px;
   font-size: 13px; font-weight: 500;
   cursor: pointer; transition: opacity 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
