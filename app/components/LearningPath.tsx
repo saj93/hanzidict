@@ -51,7 +51,7 @@ function buildSteps(level: Level, goal: Goal): Step[] {
   const fc = (n: number): Step => ({
     icon: '🃏', title: `HSK ${n} Flashcards`,
     desc: `Study the HSK ${n} vocabulary set with spaced repetition.`,
-    href: '/flashcards', cta: 'Study →',
+    href: '/hsk', cta: 'Study →',
   });
   const fcLocked = (label: string): Step => ({
     icon: '🔒', title: label,
