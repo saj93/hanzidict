@@ -37,7 +37,7 @@ const NEW_LIMIT_OPTIONS = [10, 20, 30, 50];
 export default function FlashcardsPage() {
   const router = useRouter();
   const { user, session } = useAuth();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subLoading } = useSubscription();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [deckCounts, setDeckCounts] = useState({ 1: 467, 2: 729, 3: 944, 4: 979, 5: 1061, 6: 1124, 7: 5595 });
@@ -257,7 +257,7 @@ export default function FlashcardsPage() {
           </div>
           <div className="fc-deck-grid">
             {HSK_META.map(({ level, label, free }) => {
-              const unlocked = free || isPremium;
+              const unlocked = free || isPremium || subLoading;
               const count = deckCounts[level];
               const stats = deckStats[level];
               return (

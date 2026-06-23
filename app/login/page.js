@@ -71,7 +71,7 @@ export default function LoginPage() {
       <div className="auth-wrap">
         <div className="auth-card">
           <h1 className="auth-title">Welcome back</h1>
-          <p className="auth-sub">Log in to sync your flashcard progress</p>
+          <p className="auth-sub">Log in to track your progress</p>
           {callbackError && (
             <div className="auth-error" style={{ marginBottom: 12 }}>
               Reset link error: {callbackError}
