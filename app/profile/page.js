@@ -147,7 +147,7 @@ export default function ProfilePage() {
             <div className="prof-empty-icon">🎯</div>
             <div className="prof-empty-title">No flashcard progress yet</div>
             <div className="prof-empty-sub">Complete your first session to start tracking your streak and progress.</div>
-            <button className="up-save-btn" onClick={() => router.push('/flashcards')}>
+            <button className="up-save-btn" onClick={() => router.push('/hsk')}>
               Start Flashcards →
             </button>
           </div>

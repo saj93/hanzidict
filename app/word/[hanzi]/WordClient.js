@@ -368,7 +368,7 @@ export default function WordPage() {
         </div>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
-          <button className="nav-link" onClick={() => router.push('/flashcards')}>HSK</button>
+          <button className="nav-link" onClick={() => router.push('/hsk')}>HSK</button>
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
@@ -383,7 +383,7 @@ export default function WordPage() {
       {menuOpen && (
         <div className="mobile-menu">
           <button className="mobile-menu-link active">Dictionary</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>HSK</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/hsk'); }}>HSK</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>

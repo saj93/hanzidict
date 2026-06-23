@@ -1485,7 +1485,7 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-start-btn {
   flex: 1; padding: 7px 8px;
-  background: #1D9E75; color: #0d2b21;
+  background: #1D9E75; color: #fff;
   border: none; border-radius: 8px;
   font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
@@ -1505,7 +1505,7 @@ html.dark .history-footer { background: var(--bg3); }
 .fc-wordlist-btn {
   flex: 1; padding: 7px 8px;
   background: transparent; color: #1D9E75;
-  border: 1px solid #1D9E75; border-radius: 8px;
+  border: 0.5px solid #1D9E75; border-radius: 8px;
   font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;

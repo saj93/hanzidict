@@ -100,7 +100,7 @@ export default function HskLevelPage() {
         <div className="nav-search-center"><NavSearch /></div>
         <div className="nav-right">
           <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
-          <button className="nav-link" onClick={() => router.push('/flashcards')}>HSK</button>
+          <button className="nav-link" onClick={() => router.push('/hsk')}>HSK</button>
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
@@ -115,7 +115,7 @@ export default function HskLevelPage() {
       {menuOpen && (
         <div className="mobile-menu">
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>HSK</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/hsk'); }}>HSK</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
@@ -131,7 +131,7 @@ export default function HskLevelPage() {
               {total > 0 && !loading && ` · showing ${start}–${end}`}
             </p>
           </div>
-          <button className="hsk-flashcard-btn" onClick={() => router.push('/flashcards')}>
+          <button className="hsk-flashcard-btn" onClick={() => router.push('/hsk')}>
             Study flashcards →
           </button>
         </div>
