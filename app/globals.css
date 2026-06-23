@@ -1463,7 +1463,8 @@ html.dark .history-footer { background: var(--bg3); }
   transition: box-shadow 0.2s;
 }
 .fc-deck-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-.fc-deck-premium { opacity: 0.72; }
+.fc-deck-premium .fc-deck-level,
+.fc-deck-premium .fc-deck-count { opacity: 0.5; }
 .fc-deck-badge { min-height: 22px; }
 .fc-badge-free {
   display: inline-block; padding: 2px 8px;
@@ -1495,14 +1496,12 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-start-btn:hover { background: #178a65; }
 .fc-start-btn-locked {
-  background: var(--bg2); color: var(--accent-text);
+  background: var(--accent-dim); color: var(--accent-text);
   border: 1px dashed var(--accent);
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  transition: opacity 0.15s;
 }
-.fc-start-btn-locked:hover {
-  border-color: var(--accent); color: var(--fg2); background: var(--accent-dim);
-}
+.fc-start-btn-locked:hover { opacity: 0.8; }
 .fc-wordlist-btn {
   flex: 1; padding: 0 8px; height: 32px;
   background: var(--accent-dim); color: var(--accent-text);
