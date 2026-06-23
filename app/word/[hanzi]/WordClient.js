@@ -145,6 +145,7 @@ export default function WordPage() {
   const [editExFields, setEditExFields] = useState({ chinese: '', pinyin: '', english: '' });
   const [editExSaving, setEditExSaving] = useState(false);
   const [confirmDeleteExId, setConfirmDeleteExId] = useState(null);
+  const [cardLoading, setCardLoading] = useState(false);
   const hwRef = useRef(null);
   const router = useRouter();
   const { isAdmin, session } = useAuth() ?? {};
@@ -601,21 +602,31 @@ export default function WordPage() {
   }
 
   async function downloadCard() {
-    if (!primary?.id || !session) return;
+    if (!primary?.id || !session || cardLoading) return;
+    setCardLoading(true);
     try {
       const resp = await fetch(`/api/cards/${primary.id}`, {
-        headers: { 'Authorization': `Bearer ${session.access_token}` },
+        headers: { Authorization: `Bearer ${session.access_token}` },
       });
-      if (!resp.ok) { console.error('Card generation failed:', await resp.text()); return; }
+      if (!resp.ok) {
+        const msg = await resp.text();
+        alert(`Card error: ${msg}`);
+        return;
+      }
       const blob = await resp.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `${primary.simplified}-card.png`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      // Delay revoke so browser has time to start the download
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
     } catch (e) {
-      console.error('Download card error:', e);
+      alert(`Card error: ${e.message}`);
+    } finally {
+      setCardLoading(false);
     }
   }
 
@@ -672,7 +683,7 @@ export default function WordPage() {
                 <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
                 <AudioButton text={primary?.simplified || hanzi} />
                 <AddToListButton simplified={primary?.simplified || hanzi} />
-                {isAdmin && <button className="card-dl-btn" onClick={downloadCard} title="Download card">↓ Card</button>}
+                {isAdmin && <button className="card-dl-btn" onClick={downloadCard} disabled={cardLoading} title="Download card">{cardLoading ? '…' : '↓ Card'}</button>}
               </div>
             </div>
           ) : (
@@ -684,7 +695,7 @@ export default function WordPage() {
                   <div className="pinyin-line">{pinyin}</div>
                   <AudioButton text={primary?.simplified || hanzi} />
                   <AddToListButton simplified={primary?.simplified || hanzi} />
-                  {isAdmin && <button className="card-dl-btn" onClick={downloadCard} title="Download card">↓ Card</button>}
+                  {isAdmin && <button className="card-dl-btn" onClick={downloadCard} disabled={cardLoading} title="Download card">{cardLoading ? '…' : '↓ Card'}</button>}
                 </div>
                 {taiwanPinyin && <div className="taiwan-pr-below">also {taiwanPinyin} in Taiwan</div>}
                 {posLine && <div className="pos-line">{posLine}</div>}

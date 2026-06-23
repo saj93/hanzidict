@@ -258,7 +258,9 @@ export async function GET(request, { params }) {
     browser = await launchBrowser();
     const page = await browser.newPage();
     await page.setViewportSize({ width: 1080, height: 1080 });
-    await page.setContent(html, { waitUntil: 'networkidle' });
+    await page.setContent(html, { waitUntil: 'domcontentloaded' });
+    // Brief pause so fonts have time to render before screenshotting
+    await page.waitForTimeout(800);
 
     const buffer = await page.screenshot({ type: 'png' });
 
