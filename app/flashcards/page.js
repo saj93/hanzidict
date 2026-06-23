@@ -55,7 +55,7 @@ export default function FlashcardsPage() {
   const [showSettings, setShowSettings] = useState(false);
   const [pronIdx, setPronIdx] = useState(0);
 
-  useEffect(() => { document.title = 'Flashcards — HanziDict'; }, []);
+  useEffect(() => { document.title = 'HSK Vocabulary Lists & Flashcards | HanziDict'; }, []);
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -226,8 +226,8 @@ export default function FlashcardsPage() {
           <div className="fc-page-header">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
               <div>
-                <h1 className="fc-title">Flashcard Decks</h1>
-                <p className="fc-subtitle">Review vocabulary by HSK level</p>
+                <h1 className="fc-title">HSK Vocabulary</h1>
+                <p className="fc-subtitle">Browse and study all 9 HSK levels — word lists and flashcards for every stage of your Chinese learning.</p>
               </div>
               {user && (
                 <button className="fc-settings-btn" onClick={() => setShowSettings(o => !o)} title="Settings">

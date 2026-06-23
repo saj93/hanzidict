@@ -1481,15 +1481,16 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-deck-count { font-size: 13px; color: var(--fg3); }
 .fc-deck-actions {
-  display: flex; gap: 8px; margin-top: 6px;
+  display: flex; gap: 6px; margin-top: 6px;
 }
 .fc-start-btn {
-  flex: 1; padding: 9px 0;
+  flex: 1; padding: 7px 8px;
   background: #1D9E75; color: #0d2b21;
-  border: none; border-radius: 10px;
-  font-size: 14px; font-weight: 500;
+  border: none; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .fc-start-btn:hover { background: #178a65; }
 .fc-start-btn-locked {
@@ -1502,12 +1503,13 @@ html.dark .history-footer { background: var(--bg3); }
   border-color: var(--accent); color: var(--fg2); background: var(--accent-dim);
 }
 .fc-wordlist-btn {
-  flex: 1; padding: 9px 0;
+  flex: 1; padding: 7px 8px;
   background: transparent; color: #1D9E75;
-  border: 1px solid #1D9E75; border-radius: 10px;
-  font-size: 14px; font-weight: 500;
+  border: 1px solid #1D9E75; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .fc-wordlist-btn:hover { background: rgba(29,158,117,0.12); }
 

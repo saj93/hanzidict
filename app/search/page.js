@@ -108,7 +108,7 @@ function SearchResults() {
         </div>
         <div className="nav-right">
           <button className="nav-link active">Dictionary</button>
-          <button className="nav-link" onClick={() => router.push('/flashcards')}>Flashcards</button>
+          <button className="nav-link" onClick={() => router.push('/flashcards')}>HSK</button>
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
@@ -126,7 +126,7 @@ function SearchResults() {
             <NavSearch initialQuery={q} onSubmit={newQ => { setMenuOpen(false); router.push(`/search?q=${encodeURIComponent(newQ)}`); }} />
           </div>
           <button className="mobile-menu-link active" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>Flashcards</button>
+          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/flashcards'); }}>HSK</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>

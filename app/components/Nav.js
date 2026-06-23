@@ -41,7 +41,7 @@ export default function Nav() {
 
   const links = [
     { label: 'Dictionary', path: '/' },
-    { label: 'Flashcards', path: '/flashcards' },
+    { label: 'HSK', path: '/flashcards' },
     { label: 'Learn', path: '/learn' },
     { label: 'Blog', path: '/blog' },
     { label: 'About', path: '/about' },
