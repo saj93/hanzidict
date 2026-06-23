@@ -63,10 +63,7 @@ export default function UserMenu() {
             <button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/profile'); }}>
               Profile
             </button>
-            <button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/flashcards'); }}>
-              Flashcards
-            </button>
-            <button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/lists'); }}>
+<button className="user-dropdown-item" onClick={() => { setOpen(false); router.push('/lists'); }}>
               My Lists
             </button>
             <div className="user-dropdown-divider" />
