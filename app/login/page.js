@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 
 export default function LoginPage() {
@@ -18,8 +18,12 @@ export default function LoginPage() {
   const [resetSent, setResetSent] = useState(false);
   const [resetError, setResetError] = useState('');
   const resetInputRef = useRef(null);
-  const searchParams = useSearchParams();
-  const callbackError = searchParams.get('error');
+  const [callbackError, setCallbackError] = useState('');
+
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search).get('error');
+    if (p) setCallbackError(p);
+  }, []);
 
   useEffect(() => {
     if (resetOpen) {
