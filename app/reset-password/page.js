@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createAuthClient } from '@/lib/supabase-auth';
+import Nav from '@/app/components/Nav';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -53,11 +54,7 @@ export default function ResetPasswordPage() {
 
   return (
     <main style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <nav className="nav">
-        <button className="nav-logo" onClick={() => router.push('/')}>
-          <span className="logo-mark">汉</span>HanziDict
-        </button>
-      </nav>
+      <Nav />
 
       <div className="auth-wrap">
         <div className="auth-card">
