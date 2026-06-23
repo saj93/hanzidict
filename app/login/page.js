@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
+import { createAuthClient } from '@/lib/supabase-auth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function LoginPage() {
     e.preventDefault();
     setResetError('');
     setResetLoading(true);
-    const supabase = createClient();
+    const supabase = createAuthClient();
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
       redirectTo: `${window.location.origin}/reset-password`,
     });

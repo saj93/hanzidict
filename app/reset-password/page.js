@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase';
+import { createAuthClient } from '@/lib/supabase-auth';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function ResetPasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const supabase = createClient();
+    const supabase = createAuthClient();
     // Implicit flow: Supabase puts #access_token=...&type=recovery in the URL fragment.
     // The SDK picks it up and fires PASSWORD_RECOVERY via onAuthStateChange.
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
@@ -30,7 +30,7 @@ export default function ResetPasswordPage() {
     if (password.length < 6) { setError('Password must be at least 6 characters.'); return; }
     setError('');
     setLoading(true);
-    const supabase = createClient();
+    const supabase = createAuthClient();
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
     if (error) { setError(error.message); return; }
