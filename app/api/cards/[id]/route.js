@@ -20,21 +20,22 @@ async function fetchEntryById(id) {
 }
 
 async function launchBrowser() {
-  const { chromium } = await import('playwright-core');
-
   if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    // On Vercel: use sparticuz chromium (designed for Lambda/serverless)
+    const { chromium } = await import('playwright-core');
     const { default: sparticuz } = await import('@sparticuz/chromium-min');
     const binUrl =
       process.env.SPARTICUZ_CHROMIUM_URL ||
-      `https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.tar`;
+      'https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.tar';
     return chromium.launch({
       args: [...sparticuz.args, '--disable-web-security'],
       executablePath: await sparticuz.executablePath(binUrl),
-      headless: true,
+      headless: sparticuz.headless,
     });
   }
 
-  // Local: try system Brave/Chrome/Chromium
+  // Local: use system Brave/Chrome/Chromium
+  const { chromium } = await import('playwright-core');
   const candidates = [
     process.env.CHROMIUM_PATH,
     '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
@@ -48,9 +49,7 @@ async function launchBrowser() {
 
   const executablePath = candidates.find(p => existsSync(p));
   if (!executablePath) {
-    throw new Error(
-      'No browser found. Install Brave/Chrome or set CHROMIUM_PATH in .env.local'
-    );
+    throw new Error('No browser found. Install Brave/Chrome or set CHROMIUM_PATH in .env.local');
   }
 
   return chromium.launch({ executablePath, headless: true });
