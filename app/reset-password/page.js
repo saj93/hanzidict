@@ -13,22 +13,28 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
   const [ready, setReady] = useState(false);
+  const [debug, setDebug] = useState('starting…');
 
   useEffect(() => {
     const supabase = createClient();
 
     const code = new URLSearchParams(window.location.search).get('code');
+    setDebug(`code found: ${!!code}`);
     if (code) {
       supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+        setDebug(`exchange done — error: ${JSON.stringify(error?.message)} | session: ${!!data?.session} | user: ${!!data?.user}`);
         if (error) {
-          setError('Reset link is invalid or has expired. Please request a new one.');
+          setError(`Exchange error: ${error.message}`);
         } else if (data?.session) {
           setReady(true);
+        } else {
+          setError(`No session returned. data: ${JSON.stringify(data)}`);
         }
       });
     } else {
-      // Legacy fragment flow: wait for PASSWORD_RECOVERY event
+      setDebug('no code in URL — waiting for PASSWORD_RECOVERY event');
       const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+        setDebug(`auth event: ${event}`);
         if (event === 'PASSWORD_RECOVERY') setReady(true);
       });
       return () => subscription.unsubscribe();
@@ -66,9 +72,12 @@ export default function ResetPasswordPage() {
               Password updated. Redirecting to log in…
             </p>
           ) : !ready ? (
-            <p className="auth-sub" style={{ marginBottom: 0 }}>
-              Verifying your reset link…
-            </p>
+            <>
+              <p className="auth-sub" style={{ marginBottom: 8 }}>
+                Verifying your reset link…
+              </p>
+              <p style={{ fontSize: 11, color: 'var(--fg3)', wordBreak: 'break-all' }}>{debug}</p>
+            </>
           ) : (
             <>
               <p className="auth-sub">Choose a new password for your account.</p>
