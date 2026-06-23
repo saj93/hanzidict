@@ -1484,13 +1484,14 @@ html.dark .history-footer { background: var(--bg3); }
   display: flex; gap: 6px; margin-top: 6px;
 }
 .fc-start-btn {
-  flex: 1; padding: 7px 8px;
+  flex: 1; padding: 0 8px; height: 32px;
   background: #1D9E75; color: #fff;
-  border: none; border-radius: 8px;
+  border: none; border-radius: 50px;
   font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; justify-content: center;
 }
 .fc-start-btn:hover { background: #178a65; }
 .fc-start-btn-locked {
@@ -1503,15 +1504,16 @@ html.dark .history-footer { background: var(--bg3); }
   border-color: var(--accent); color: var(--fg2); background: var(--accent-dim);
 }
 .fc-wordlist-btn {
-  flex: 1; padding: 7px 8px;
-  background: transparent; color: #1D9E75;
-  border: 0.5px solid #1D9E75; border-radius: 8px;
+  flex: 1; padding: 0 8px; height: 32px;
+  background: var(--bg2); color: var(--accent);
+  border: 0.5px solid var(--accent); border-radius: 50px;
   font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: background 0.15s;
+  cursor: pointer; transition: background 0.2s;
   font-family: var(--font-body), system-ui, sans-serif;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: flex; align-items: center; justify-content: center;
 }
-.fc-wordlist-btn:hover { background: rgba(29,158,117,0.12); }
+.fc-wordlist-btn:hover { background: var(--accent-dim); }
 
 /* Study view */
 .fc-progress-wrap {
