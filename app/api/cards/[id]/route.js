@@ -34,11 +34,13 @@ async function launchBrowser() {
     });
   }
 
-  // Local: try system Chrome/Chromium
+  // Local: try system Brave/Chrome/Chromium
   const candidates = [
     process.env.CHROMIUM_PATH,
+    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/brave-browser',
     '/usr/bin/google-chrome',
     '/usr/bin/chromium-browser',
     '/usr/bin/chromium',
@@ -47,7 +49,7 @@ async function launchBrowser() {
   const executablePath = candidates.find(p => existsSync(p));
   if (!executablePath) {
     throw new Error(
-      'No Chrome found. Install Chrome or set CHROMIUM_PATH in .env.local'
+      'No browser found. Install Brave/Chrome or set CHROMIUM_PATH in .env.local'
     );
   }
 
