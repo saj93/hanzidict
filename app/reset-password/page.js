@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createAuthClient } from '@/lib/supabase-auth';
 
@@ -13,9 +13,11 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
   const [ready, setReady] = useState(false);
+  const supabaseRef = useRef(null);
 
   useEffect(() => {
     const supabase = createAuthClient();
+    supabaseRef.current = supabase;
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && session)) {
         setReady(true);
@@ -30,7 +32,7 @@ export default function ResetPasswordPage() {
     if (password.length < 6) { setError('Password must be at least 6 characters.'); return; }
     setError('');
     setLoading(true);
-    const supabase = createAuthClient();
+    const supabase = supabaseRef.current;
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
     if (error) { setError(error.message); return; }
