@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 
 export default function LoginPage() {
@@ -18,6 +18,8 @@ export default function LoginPage() {
   const [resetSent, setResetSent] = useState(false);
   const [resetError, setResetError] = useState('');
   const resetInputRef = useRef(null);
+  const searchParams = useSearchParams();
+  const callbackError = searchParams.get('error');
 
   useEffect(() => {
     if (resetOpen) {
@@ -65,6 +67,11 @@ export default function LoginPage() {
         <div className="auth-card">
           <h1 className="auth-title">Welcome back</h1>
           <p className="auth-sub">Log in to sync your flashcard progress</p>
+          {callbackError && (
+            <div className="auth-error" style={{ marginBottom: 12 }}>
+              Reset link error: {callbackError}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="auth-field">

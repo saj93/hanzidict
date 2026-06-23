@@ -28,7 +28,11 @@ export async function GET(request) {
     if (!error) {
       return NextResponse.redirect(`${origin}${next}`);
     }
+    console.error('[/auth/callback] exchange error:', error.message);
+    return NextResponse.redirect(
+      `${origin}/login?error=${encodeURIComponent(error.message)}`
+    );
   }
 
-  return NextResponse.redirect(`${origin}/login?error=invalid_reset_link`);
+  return NextResponse.redirect(`${origin}/login?error=no_code`);
 }
