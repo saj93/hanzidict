@@ -107,13 +107,26 @@ const FOOTER_HTML = `
   </div>
 `;
 
+function escHtml(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function hanziFontSize(str) {
+  const len = (str ?? '').length;
+  if (len <= 2) return 220;
+  if (len <= 4) return 160;
+  if (len <= 6) return 120;
+  return 90;
+}
+
 function wordCardHtml(entry) {
-  const hanzi = entry.simplified;
-  const pinyin = convertPinyin(entry.pinyin || '');
-  const def = firstDef(entry.definitions) || '';
+  const hanzi = escHtml(entry.simplified);
+  const pinyin = escHtml(convertPinyin(entry.pinyin || ''));
+  const def = escHtml(firstDef(entry.definitions) || '');
   const hsk = entry.hsk_level
     ? `HSK ${entry.hsk_level >= 7 ? '7–9' : entry.hsk_level}`
     : null;
+  const fontSize = hanziFontSize(entry.simplified);
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8">${FONTS}<style>
 ${BASE_CSS}
@@ -123,7 +136,7 @@ ${BASE_CSS}
   width: 880px;
 }
 .hanzi {
-  font-size: 220px; font-weight: 700; color: #F1EFE8; line-height: 1;
+  font-size: ${fontSize}px; font-weight: 700; color: #F1EFE8; line-height: 1;
   font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   margin-bottom: 28px;
 }
@@ -165,17 +178,18 @@ ${BASE_CSS}
 }
 
 function chengyuCardHtml(entry) {
-  const hanzi = entry.simplified;
-  const pinyin = convertPinyin(entry.pinyin || '');
-  const mainMeaning = firstDef(entry.definitions) || '';
+  const hanzi = escHtml(entry.simplified);
+  const pinyin = escHtml(convertPinyin(entry.pinyin || ''));
+  const mainMeaning = escHtml(firstDef(entry.definitions) || '');
 
   // Second non-empty segment as usage note (excludes CL: and Taiwan pr.)
   const segments = (entry.definitions || '').split(' | ').filter(Boolean);
-  const usageNote =
+  const usageNote = escHtml(
     segments
       .slice(1)
       .find(d => d.trim() && !d.startsWith('CL:') && !/^Taiwan pr\./i.test(d))
-      ?.trim() || '';
+      ?.trim() || ''
+  );
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8">${FONTS}<style>
 ${BASE_CSS}
