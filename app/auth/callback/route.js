@@ -1,5 +1,4 @@
 import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function GET(request) {
@@ -7,32 +6,42 @@ export async function GET(request) {
   const code = searchParams.get('code');
   const next = searchParams.get('next') ?? '/';
 
-  if (code) {
-    const cookieStore = await cookies();
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-      {
-        cookies: {
-          getAll() { return cookieStore.getAll(); },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
-          },
-        },
-      }
-    );
+  if (!code) {
+    return NextResponse.redirect(`${origin}/login?error=no_code`);
+  }
 
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+  // Collect cookies written by the exchange so we can attach them to the redirect.
+  // In Route Handlers, NextResponse.redirect() is a fresh response — cookies set
+  // via next/headers won't appear in it, so we must add them manually.
+  const pendingCookies = [];
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          pendingCookies.push(...cookiesToSet);
+        },
+      },
     }
+  );
+
+  const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+  if (error) {
     console.error('[/auth/callback] exchange error:', error.message);
     return NextResponse.redirect(
       `${origin}/login?error=${encodeURIComponent(error.message)}`
     );
   }
 
-  return NextResponse.redirect(`${origin}/login?error=no_code`);
+  const response = NextResponse.redirect(`${origin}${next}`);
+  pendingCookies.forEach(({ name, value, options }) => {
+    response.cookies.set(name, value, options);
+  });
+  return response;
 }
