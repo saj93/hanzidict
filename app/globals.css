@@ -2446,6 +2446,17 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
   .pricing-card-featured { order: -1; }
 }
 
+/* ── Download Card button (admin only) ── */
+.card-dl-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 32px; padding: 0 10px; border-radius: 6px; border: none; cursor: pointer;
+  background: var(--card-bg); color: var(--fg3);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.card-dl-btn:hover { color: var(--accent); background: var(--hover-bg); }
+
 /* ── AddToListButton ── */
 .atl-btn {
   display: inline-flex; align-items: center; justify-content: center;

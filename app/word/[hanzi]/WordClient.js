@@ -600,6 +600,25 @@ export default function WordPage() {
     }
   }
 
+  async function downloadCard() {
+    if (!primary?.id || !session) return;
+    try {
+      const resp = await fetch(`/api/cards/${primary.id}`, {
+        headers: { 'Authorization': `Bearer ${session.access_token}` },
+      });
+      if (!resp.ok) { console.error('Card generation failed:', await resp.text()); return; }
+      const blob = await resp.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${primary.simplified}-card.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('Download card error:', e);
+    }
+  }
+
   return (
     <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
     <main>
@@ -653,6 +672,7 @@ export default function WordPage() {
                 <span className="badge green">{isTraditional ? 'Traditional' : 'Simplified'}</span>
                 <AudioButton text={primary?.simplified || hanzi} />
                 <AddToListButton simplified={primary?.simplified || hanzi} />
+                {isAdmin && <button className="card-dl-btn" onClick={downloadCard} title="Download card">↓ Card</button>}
               </div>
             </div>
           ) : (
@@ -664,6 +684,7 @@ export default function WordPage() {
                   <div className="pinyin-line">{pinyin}</div>
                   <AudioButton text={primary?.simplified || hanzi} />
                   <AddToListButton simplified={primary?.simplified || hanzi} />
+                  {isAdmin && <button className="card-dl-btn" onClick={downloadCard} title="Download card">↓ Card</button>}
                 </div>
                 {taiwanPinyin && <div className="taiwan-pr-below">also {taiwanPinyin} in Taiwan</div>}
                 {posLine && <div className="pos-line">{posLine}</div>}
