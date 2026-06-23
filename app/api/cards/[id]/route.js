@@ -253,7 +253,9 @@ export async function GET(request, { params }) {
   if (!entry) return new Response('Not found', { status: 404 });
 
   const html = entry.is_chengyu ? chengyuCardHtml(entry) : wordCardHtml(entry);
-  const filename = `${entry.simplified}-card.png`;
+  const displayName = `${entry.simplified}-card.png`;
+  const encodedName = encodeURIComponent(displayName);
+  const contentDisposition = `attachment; filename="card.png"; filename*=UTF-8''${encodedName}`;
 
   let browser;
   try {
@@ -269,7 +271,7 @@ export async function GET(request, { params }) {
     return new Response(buffer, {
       headers: {
         'Content-Type': 'image/png',
-        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Disposition': contentDisposition,
         'Cache-Control': 'no-store',
       },
     });
