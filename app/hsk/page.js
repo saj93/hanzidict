@@ -280,14 +280,14 @@ export default function HskFlashcardsPage() {
                     </div>
                   )}
                   <div className="fc-deck-actions">
+                    <button className="fc-wordlist-btn" onClick={() => router.push(`/hsk/${level}`)}>
+                      Word list
+                    </button>
                     <button
                       className={`fc-start-btn${unlocked ? '' : ' fc-start-btn-locked'}`}
                       onClick={() => unlocked ? startDeck(level) : router.push('/pricing')}
                     >
                       {unlocked ? 'Study →' : 'Unlock'}
-                    </button>
-                    <button className="fc-wordlist-btn" onClick={() => router.push(`/hsk/${level}`)}>
-                      Word list
                     </button>
                   </div>
                 </div>
