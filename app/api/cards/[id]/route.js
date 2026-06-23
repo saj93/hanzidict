@@ -20,22 +20,25 @@ async function fetchEntryById(id) {
 }
 
 async function launchBrowser() {
+  // puppeteer-core is used instead of playwright-core because it does not
+  // require browsers.json at import time, which is missing in Vercel's
+  // serverless deployment even when the package is marked as external.
+  const puppeteer = await import('puppeteer-core');
+  const launch = puppeteer.default?.launch ?? puppeteer.launch;
+
   if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
-    // On Vercel: use sparticuz chromium (designed for Lambda/serverless)
-    const { chromium } = await import('playwright-core');
     const { default: sparticuz } = await import('@sparticuz/chromium-min');
     const binUrl =
       process.env.SPARTICUZ_CHROMIUM_URL ||
       'https://github.com/Sparticuz/chromium/releases/download/v149.0.0/chromium-v149.0.0-pack.tar';
-    return chromium.launch({
-      args: [...sparticuz.args, '--disable-web-security'],
+    return launch({
+      args: sparticuz.args,
       executablePath: await sparticuz.executablePath(binUrl),
-      headless: sparticuz.headless,
+      headless: true,
     });
   }
 
   // Local: use system Brave/Chrome/Chromium
-  const { chromium } = await import('playwright-core');
   const candidates = [
     process.env.CHROMIUM_PATH,
     '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
@@ -52,7 +55,7 @@ async function launchBrowser() {
     throw new Error('No browser found. Install Brave/Chrome or set CHROMIUM_PATH in .env.local');
   }
 
-  return chromium.launch({ executablePath, headless: true });
+  return launch({ executablePath, headless: true });
 }
 
 // ─── HTML templates ──────────────────────────────────────────────────────────
@@ -256,10 +259,10 @@ export async function GET(request, { params }) {
   try {
     browser = await launchBrowser();
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1080, height: 1080 });
+    await page.setViewport({ width: 1080, height: 1080 });
     await page.setContent(html, { waitUntil: 'domcontentloaded' });
     // Brief pause so fonts have time to render before screenshotting
-    await page.waitForTimeout(800);
+    await new Promise(r => setTimeout(r, 800));
 
     const buffer = await page.screenshot({ type: 'png' });
 
