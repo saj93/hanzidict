@@ -17,19 +17,22 @@ export default function ResetPasswordPage() {
   useEffect(() => {
     const supabase = createClient();
 
-    // PKCE flow: Supabase now sends ?code= instead of a URL fragment.
-    // We must exchange it for a session before the PASSWORD_RECOVERY event fires.
     const code = new URLSearchParams(window.location.search).get('code');
     if (code) {
-      supabase.auth.exchangeCodeForSession(code).catch(() => {
-        setError('Reset link is invalid or has expired. Please request a new one.');
+      supabase.auth.exchangeCodeForSession(code).then(({ data, error }) => {
+        if (error) {
+          setError('Reset link is invalid or has expired. Please request a new one.');
+        } else if (data?.session) {
+          setReady(true);
+        }
       });
+    } else {
+      // Legacy fragment flow: wait for PASSWORD_RECOVERY event
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+        if (event === 'PASSWORD_RECOVERY') setReady(true);
+      });
+      return () => subscription.unsubscribe();
     }
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') setReady(true);
-    });
-    return () => subscription.unsubscribe();
   }, []);
 
   async function handleSubmit(e) {
