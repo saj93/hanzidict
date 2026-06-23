@@ -406,7 +406,7 @@ function VocabSection({ vocabCards, script }) {
 export default function SituationPage() {
   const { id }    = useParams();
   const router    = useRouter();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subLoading } = useSubscription();
   const { isAdmin, session } = useAuth() ?? {};
   const [mode, setMode] = useState('browse'); // 'browse' | 'quiz'
   const [editingKey, setEditingKey] = useState(null);
@@ -528,7 +528,7 @@ export default function SituationPage() {
                 key={si}
                 section={section}
                 sectionIdx={si}
-                isPremium={isPremium}
+                isPremium={isPremium || subLoading}
                 onUpgrade={upgrade}
                 isAdmin={isAdmin}
                 editingKey={editingKey}
@@ -549,7 +549,7 @@ export default function SituationPage() {
             )}
 
             {/* Bottom upgrade CTA */}
-            {hasPremiumContent && !isPremium && (
+            {hasPremiumContent && !isPremium && !subLoading && (
               <div className="pb-upgrade-banner">
                 <div className="pb-upgrade-title">🔒 Unlock all phrases</div>
                 <div className="pb-upgrade-sub">

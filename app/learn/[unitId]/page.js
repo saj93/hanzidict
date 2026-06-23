@@ -244,7 +244,7 @@ export default function UnitPage() {
 
   const router = useRouter();
   const { user, session, loading: authLoading } = useAuth();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subLoading } = useSubscription();
 
   const [tab, setTab] = useState('learn');
   const [practicePhase, setPracticePhase] = useState('idle'); // idle | verbs | quiz | done
@@ -406,11 +406,11 @@ export default function UnitPage() {
               <PhraseSection
                 key={i}
                 section={section}
-                isPremium={isPremium}
+                isPremium={isPremium || subLoading}
                 onUpgrade={upgrade}
               />
             ))}
-            {situation.sections.some(s => s.phrases.some(p => !p.free)) && !isPremium && (
+            {situation.sections.some(s => s.phrases.some(p => !p.free)) && !isPremium && !subLoading && (
               <div className="pb-upgrade-banner">
                 <div className="pb-upgrade-title">🔒 Unlock all phrases</div>
                 <div className="pb-upgrade-sub">

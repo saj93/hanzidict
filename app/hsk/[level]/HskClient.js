@@ -24,7 +24,7 @@ export default function HskLevelPage() {
 
   const { isPremium, loading: subLoading } = useSubscription();
   const isFreeLevel = FREE_LEVELS.has(level);
-  const isLocked = !isFreeLevel && !isPremium;
+  const isLocked = !isFreeLevel && !isPremium && !subLoading;
 
   useEffect(() => {
     if (!subLoading && isLocked && page > 1) {

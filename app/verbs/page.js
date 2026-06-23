@@ -13,7 +13,7 @@ const FREE_COUNT = 35;
 
 export default function VerbsPage() {
   const router = useRouter();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subLoading } = useSubscription();
 
   useEffect(() => { document.title = 'Most Common Chinese Verbs — HanziDict'; }, []);
 
@@ -39,7 +39,7 @@ export default function VerbsPage() {
           ))}
         </div>
 
-        {!isPremium ? (
+        {!isPremium && !subLoading ? (
           <div className="pb-locked-wrap">
             {premiumVerbs.map(verb => (
               <div key={verb.simplified} className="verb-row pb-phrase-blurred" aria-hidden="true">

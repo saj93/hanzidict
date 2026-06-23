@@ -23,7 +23,7 @@ function sortSituations(sits) {
 
 export default function PhrasebookPage() {
   const router = useRouter();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subLoading } = useSubscription();
   const [script, setScript] = useState('simplified');
 
   useEffect(() => { document.title = 'Phrasebook — HanziDict'; }, []);
@@ -36,7 +36,7 @@ export default function PhrasebookPage() {
   }, []);
 
   function handleCardClick(sit) {
-    if (!sit.free && !isPremium) {
+    if (!sit.free && !isPremium && !subLoading) {
       router.push('/pricing');
       return;
     }
@@ -59,7 +59,7 @@ export default function PhrasebookPage() {
 
         <div className="pb-grid">
           {sorted.map(sit => {
-            const locked = !sit.free && !isPremium;
+            const locked = !sit.free && !isPremium && !subLoading;
 
             return (
               <button
