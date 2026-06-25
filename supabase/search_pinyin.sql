@@ -1,5 +1,6 @@
--- Run this once in the Supabase SQL editor.
--- Creates an RPC function used by the pinyin search path in db.js.
+-- Run this once in the Supabase SQL editor to redeploy.
+-- Fixes: LIMIT 20 was too low; frequency_rank now used as tiebreaker so
+-- common words (好, 是...) with null HSK don't fall below rarer tagged entries.
 
 CREATE OR REPLACE FUNCTION search_pinyin_normalized(query_normalized text)
 RETURNS SETOF entries
@@ -16,6 +17,7 @@ AS $$
       ELSE 1
     END,
     COALESCE(hsk_level, 999),
+    COALESCE(frequency_rank, 999999),
     length(simplified)
-  LIMIT 20;
+  LIMIT 200;
 $$;
