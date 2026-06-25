@@ -72,7 +72,7 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     href: `/phrasebook/${slug}`, cta: locked ? 'Unlock →' : 'Start →', locked,
   });
   const bizPhrase: Step = {
-    icon: '💬', title: 'Business Phrasebook',
+    icon: '💼', title: 'Business Phrasebook',
     desc: 'Professional Chinese phrases for meetings and networking.',
     href: '/phrasebook/situation-10', cta: 'Start →',
   };
