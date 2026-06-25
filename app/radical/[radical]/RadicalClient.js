@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
 import { firstDef } from '../../../lib/utils';
-import { toTraditional } from '../../../lib/simp-to-trad';
+import { useSimpToTrad } from '../../hooks/useSimpToTrad';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
 import Footer from '../../components/Footer';
@@ -23,6 +23,7 @@ export default function RadicalPage() {
 
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
+  const toTraditional = useSimpToTrad(script);
   const [menuOpen, setMenuOpen] = useState(false);
   const [entries, setEntries] = useState([]);
   const [total, setTotal] = useState(0);
@@ -129,7 +130,7 @@ export default function RadicalPage() {
                   className="hsk-word-card"
                   onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
                 >
-                  <span className="hsk-wc-hanzi">{script === 'traditional' ? toTraditional(entry.simplified) : entry.simplified}</span>
+                  <span className="hsk-wc-hanzi">{toTraditional(entry.simplified)}</span>
                   <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
                   {entry.hsk_level && (
                     <span className="hsk-wc-badge">{HSK_LABEL[entry.hsk_level] || `HSK ${entry.hsk_level}`}</span>

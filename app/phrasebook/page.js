@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Nav from '../components/Nav';
-import { toTraditional } from '../../lib/simp-to-trad';
+import { useSimpToTrad } from '../hooks/useSimpToTrad';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
 import { useSubscription } from '../hooks/useSubscription';
@@ -25,6 +25,7 @@ export default function PhrasebookPage() {
   const router = useRouter();
   const { isPremium, loading: subLoading } = useSubscription();
   const [script, setScript] = useState('simplified');
+  const toTraditional = useSimpToTrad(script);
 
   useEffect(() => { document.title = 'Phrasebook — HanziDict'; }, []);
 
@@ -68,7 +69,7 @@ export default function PhrasebookPage() {
                 onClick={() => handleCardClick(sit)}
               >
                 {locked && <span className="pb-card-lock">🔒</span>}
-                <div className="pb-card-chinese">{script === 'traditional' ? toTraditional(sit.titleChinese) : sit.titleChinese}</div>
+                <div className="pb-card-chinese">{toTraditional(sit.titleChinese)}</div>
                 <div className="pb-card-title">{sit.title}</div>
                 <div className="pb-card-pinyin">{sit.pinyin}</div>
                 <div className="pb-card-meta">

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import { cleanDef } from '../../lib/utils';
-import * as OpenCC from 'opencc-js';
 import UserMenu from '../components/UserMenu';
 import { useAuth } from '../components/AuthProvider';
 import { useSubscription } from '../hooks/useSubscription';
@@ -12,8 +11,6 @@ import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
 import NavSearch from '../components/NavSearch';
 import AudioButton from '../components/AudioButton';
-
-const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
 const HSK_META = [
   { level: 1, label: 'HSK 1', free: true },

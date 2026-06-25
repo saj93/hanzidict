@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import Nav from '../../components/Nav';
-import { toTraditional } from '../../../lib/simp-to-trad';
+import { useSimpToTrad } from '../../hooks/useSimpToTrad';
 import Footer from '../../components/Footer';
 import AudioButton from '../../components/AudioButton';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -105,8 +105,9 @@ function PhraseRow({
   isAdmin, editingKey, editFields, setEditFields, editSaving,
   onStartEdit, onSave, onCancel, script,
 }) {
+  const toTraditional = useSimpToTrad(script);
   const display = override ? { ...phrase, ...override } : phrase;
-  const displayHanzi = script === 'traditional' ? toTraditional(display.hanzi) : display.hanzi;
+  const displayHanzi = toTraditional(display.hanzi);
   const badge = BADGE_CONFIG[display.badge] || BADGE_CONFIG.common;
   const typeCls = TYPE_CLS[display.type] || 'pb-type-qa';
   const isEditing = isAdmin && editingKey === phraseKey;
@@ -256,6 +257,7 @@ function QuizDone({ score, total, onRetry, onBrowse }) {
 }
 
 function Quiz({ questions: initialQuestions, onDone, script }) {
+  const toTraditional = useSimpToTrad(script);
   const [questions, setQuestions] = useState(initialQuestions);
   const [current, setCurrent]     = useState(0);
   const [selected, setSelected]   = useState(null);
@@ -340,7 +342,7 @@ function Quiz({ questions: initialQuestions, onDone, script }) {
               onClick={() => select(i)}
               disabled={revealed}
             >
-              <div className="pb-quiz-opt-hanzi">{script === 'traditional' ? toTraditional(opt.hanzi) : opt.hanzi}</div>
+              <div className="pb-quiz-opt-hanzi">{toTraditional(opt.hanzi)}</div>
               <div className="pb-quiz-opt-pinyin">{opt.pinyin}</div>
             </button>
           );
@@ -354,7 +356,7 @@ function Quiz({ questions: initialQuestions, onDone, script }) {
             <div className="pb-quiz-feedback correct">✓ Correct!</div>
           ) : (
             <div className="pb-quiz-feedback wrong">
-              ✗ It was: <strong>{script === 'traditional' ? toTraditional(q.phrase.hanzi) : q.phrase.hanzi}</strong> — {q.phrase.pinyin}
+              ✗ It was: <strong>{toTraditional(q.phrase.hanzi)}</strong> — {q.phrase.pinyin}
             </div>
           )}
           <button className="pb-quiz-next" onClick={next}>
@@ -369,6 +371,7 @@ function Quiz({ questions: initialQuestions, onDone, script }) {
 // ── Vocab list ────────────────────────────────────────────────────────────────
 
 function VocabSection({ vocabCards, script }) {
+  const toTraditional = useSimpToTrad(script);
   const router = useRouter();
   if (!vocabCards || !vocabCards.length) return null;
   const items = vocabCards.flatMap(g => g.items);
@@ -390,7 +393,7 @@ function VocabSection({ vocabCards, script }) {
               className="pb-vocab-row"
               onClick={() => router.push(`/word/${encodeURIComponent(item.hanzi)}`)}
             >
-              <td className="pb-vocab-td pb-vocab-td-hanzi">{script === 'traditional' ? toTraditional(item.hanzi) : item.hanzi}</td>
+              <td className="pb-vocab-td pb-vocab-td-hanzi">{toTraditional(item.hanzi)}</td>
               <td className="pb-vocab-td pb-vocab-td-pinyin">{item.pinyin}</td>
               <td className="pb-vocab-td pb-vocab-td-en">{item.english}</td>
             </tr>
@@ -414,6 +417,7 @@ export default function SituationPage() {
   const [editSaving, setEditSaving] = useState(false);
   const [overrides, setOverrides] = useState({});
   const [script, setScript] = useState('simplified');
+  const toTraditional = useSimpToTrad(script);
 
   useEffect(() => {
     try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
@@ -510,7 +514,7 @@ export default function SituationPage() {
             <div className="pb-sit-header">
               <div className="pb-sit-header-top">
                 <div>
-                  <div className="pb-sit-chinese">{script === 'traditional' ? toTraditional(situation.titleChinese) : situation.titleChinese}</div>
+                  <div className="pb-sit-chinese">{toTraditional(situation.titleChinese)}</div>
                   <div className="pb-sit-title">{situation.title}</div>
                   <div className="pb-sit-pinyin">{situation.pinyin}</div>
                 </div>

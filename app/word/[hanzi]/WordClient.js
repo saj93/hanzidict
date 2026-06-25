@@ -13,10 +13,7 @@ import AddToListButton from '../../components/AddToListButton';
 import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../components/AuthProvider';
-import * as OpenCC from 'opencc-js';
-
-const toSimplified = OpenCC.Converter({ from: 'tw', to: 'cn' });
-const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
+import { useSimpToTrad } from '../../hooks/useSimpToTrad';
 
 function isVariant(entry) {
   return isVariantEntry(entry.definitions);
@@ -124,6 +121,7 @@ export default function WordPage() {
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
   const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
+  const toTraditional = useSimpToTrad(script);
   const [searchTab, setSearchTab] = useState('text');
   const [dark, setDark] = useState(false);
   const [hwDark, setHwDark] = useState(false);
@@ -812,7 +810,7 @@ export default function WordPage() {
                               </>
                             ) : (
                               <>
-                                <div className="example-zh"><ClickableChars text={isTraditional ? toTraditional(ex.chinese) : toSimplified(ex.chinese)} /></div>
+                                <div className="example-zh"><ClickableChars text={toTraditional(ex.chinese)} /></div>
                                 {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
                                 <div className="example-en">{ex.english}</div>
                               </>

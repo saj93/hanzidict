@@ -7,7 +7,8 @@ import { useAuth } from './AuthProvider';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
 import NewsletterForm from './NewsletterForm';
-import BlogEditor from './BlogEditor';
+import dynamic from 'next/dynamic';
+const BlogEditor = dynamic(() => import('./BlogEditor'), { ssr: false });
 
 export default function BlogPostClient({ frontmatter, children, slug, rawContent }) {
   const router = useRouter();

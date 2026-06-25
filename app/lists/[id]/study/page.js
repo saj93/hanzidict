@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '../../../components/AuthProvider';
 import { convertPinyin } from '../../../../lib/pinyin';
-import * as OpenCC from 'opencc-js';
 import AudioButton from '../../../components/AudioButton';
-
-const toTraditional = OpenCC.Converter({ from: 'cn', to: 'twp' });
 
 const RATINGS = [
   { label: 'Again', color: '#e53e3e', key: 'again' },

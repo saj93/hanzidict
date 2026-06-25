@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import AudioButton from './AudioButton';
 import { convertPinyin } from '../../lib/pinyin';
 import { firstDef } from '../../lib/utils';
-import { toTraditional } from '../../lib/simp-to-trad';
+import { useSimpToTrad } from '../hooks/useSimpToTrad';
 
 const HSK_LABEL: Record<number, string> = {
   1: 'HSK 1', 2: 'HSK 2', 3: 'HSK 3',
@@ -13,9 +13,10 @@ const HSK_LABEL: Record<number, string> = {
 
 export default function WordOfDay({ wordData, script }: { wordData: any; script: string }) {
   const router = useRouter();
+  const toTraditional = useSimpToTrad(script);
   if (!wordData) return null;
 
-  const hanzi = script === 'traditional' ? toTraditional(wordData.simplified) : wordData.simplified;
+  const hanzi = toTraditional(wordData.simplified);
   const def = firstDef(wordData.definitions);
   const label = wordData.isChengyu ? '成语 · Chengyu of the day' : 'Word of the day';
 
