@@ -12,7 +12,8 @@ type Goal  = 'travel' | 'business' | 'culture' | 'hsk' | 'interest';
 type Time  = '5' | '15' | '30';
 interface Answers { level: Level; goal: Goal; time: Time; }
 interface Step    { icon: string; title: string; desc: string; href: string; cta: string; locked?: boolean; }
-interface Saved   extends Answers { steps: Step[]; }
+// Only answers are persisted; steps are always re-derived so code changes take effect immediately.
+type Saved = Answers;
 
 const QUESTIONS = [
   {
@@ -195,10 +196,8 @@ export default function LearningPath() {
       setTimeout(() => { setStep(s => s + 1); setVisible(true); }, 180);
     } else {
       const full = next as Answers;
-      const steps = buildSteps(full.level, full.goal);
-      const data: Saved = { ...full, steps };
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
-      setSaved(data);
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(full)); } catch {}
+      setSaved(full);
 
       if (user && session) {
         const sb = createClient();
@@ -220,6 +219,7 @@ export default function LearningPath() {
 
   // ── Plan view ──────────────────────────────────────────────────────────────
   if (saved) {
+    const steps = buildSteps(saved.level, saved.goal);
     return (
       <section className="lp-section">
         <div className="lp-inner">
@@ -228,7 +228,7 @@ export default function LearningPath() {
             <p className="lp-plan-sub">Personalized recommendations based on your answers</p>
           </div>
           <div className="lp-steps">
-            {saved.steps.map((s, i) => (
+            {steps.map((s, i) => (
               <div key={i} className={`lp-step${s.locked ? ' lp-step-locked' : ''}`}>
                 <div className="lp-step-num">{i + 1}</div>
                 <div className="lp-step-icon">{s.icon}</div>
