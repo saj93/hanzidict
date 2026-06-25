@@ -71,9 +71,9 @@ function buildSteps(level: Level, goal: Goal): Step[] {
     href: `/phrasebook/${slug}`, cta: locked ? 'Unlock →' : 'Start →', locked,
   });
   const bizPhrase: Step = {
-    icon: '💼', title: 'Business Phrasebook',
-    desc: 'Professional Chinese phrases for meetings and networking — coming soon.',
-    href: '/phrasebook/business', cta: 'Coming soon', locked: true,
+    icon: '💬', title: 'Business Phrasebook',
+    desc: 'Professional Chinese phrases for meetings and networking.',
+    href: '/phrasebook/situation-10', cta: 'Start →',
   };
   const verbs: Step = {
     icon: '⚡', title: 'Learn the 100 most common verbs',
@@ -84,15 +84,15 @@ function buildSteps(level: Level, goal: Goal): Step[] {
   if (level === 'beginner0') {
     if (goal === 'travel') return [
       tones,
-      phrase('greetings', 'Phrasebook: Greetings', 'Master basic hellos, goodbyes and pleasantries.'),
+      phrase('situation-1', 'Phrasebook: Greetings', 'Master basic hellos, goodbyes and pleasantries.'),
       verbs,
-      phrase('introductions', 'Phrasebook: Introducing Yourself', "Say your name, where you're from, and more."),
+      phrase('situation-2', 'Phrasebook: Introducing Yourself', "Say your name, where you're from, and more."),
       fc(1),
     ];
     if (goal === 'culture' || goal === 'interest') return [
       tones,
       blog('chinese-characters', 'Guide: Chinese Characters', 'Understand how characters work before you learn them.'),
-      phrase('greetings', 'Phrasebook: Greetings', 'Start speaking from day one.'),
+      phrase('situation-1', 'Phrasebook: Greetings', 'Start speaking from day one.'),
       verbs,
       fc(1),
     ];
@@ -115,11 +115,11 @@ function buildSteps(level: Level, goal: Goal): Step[] {
 
   if (level === 'beginner1') {
     if (goal === 'travel') return [
-      phrase('greetings', 'Phrasebook: Greetings', 'Refresh and expand your greeting vocabulary.'),
-      phrase('introductions', 'Phrasebook: Introducing Yourself', 'Go beyond basics with richer self-introductions.'),
+      phrase('situation-1', 'Phrasebook: Greetings', 'Refresh and expand your greeting vocabulary.'),
+      phrase('situation-2', 'Phrasebook: Introducing Yourself', 'Go beyond basics with richer self-introductions.'),
       verbs,
       fc(1),
-      phrase('natives', 'What Natives Ask You', 'Common questions locals will ask — advanced phrases.', true),
+      phrase('situation-4', 'What Natives Ask You', 'Common questions locals will ask — advanced phrases.', true),
     ];
     if (goal === 'hsk') return [
       fc(1),
