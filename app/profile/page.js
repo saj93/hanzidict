@@ -46,6 +46,9 @@ export default function ProfilePage() {
     if (params.get('upgraded') === 'true') {
       setUpgraded(true);
       window.history.replaceState({}, '', '/profile');
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Purchase', { value: 4.99, currency: 'USD' });
+      }
     }
   }, []);
 

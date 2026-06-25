@@ -19,6 +19,12 @@ export default function PricingPage() {
   useEffect(() => { document.title = 'Pricing — HanziDict'; }, []);
 
   useEffect(() => {
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'ViewContent', { content_name: 'Pricing' });
+    }
+  }, []);
+
+  useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
   }, []);
 
