@@ -623,6 +623,18 @@ footer:not(.site-footer) {
 }
 .footer-hsk-btn:hover { color: var(--accent); }
 .footer-dot { color: var(--fg3); opacity: 0.5; margin: 0 1px; }
+.footer-secondary-links {
+  padding: 8px 32px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex; align-items: center; gap: 2px;
+}
+.footer-sec-btn {
+  background: none; border: none; color: var(--fg3); font-size: 12px;
+  cursor: pointer; padding: 2px 4px; border-radius: 4px;
+  font-family: var(--font-body), system-ui, sans-serif;
+  transition: color 0.15s;
+}
+.footer-sec-btn:hover { color: var(--accent); }
 .footer-bottom {
   padding: 14px 32px;
   display: flex; justify-content: space-between; align-items: center;
@@ -2237,6 +2249,12 @@ html.dark .user-dropdown-item.danger:hover { background: #2d1515; }
 }
 .pricing-feature { font-size: 14px; color: var(--fg2); line-height: 1.4; }
 .pricing-feature-off { color: var(--fg3); }
+.pricing-feature-link {
+  background: none; border: none; font-size: inherit; color: var(--accent);
+  cursor: pointer; padding: 0; font-family: inherit; text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pricing-feature-link:hover { opacity: 0.8; }
 .pricing-btn {
   width: 100%; padding: 12px 0;
   border-radius: var(--radius); border: none; cursor: pointer;
@@ -2986,6 +3004,13 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   text-transform: uppercase; letter-spacing: .05em; white-space: nowrap;
 }
 .unit-done-wrap { display: flex; align-items: center; justify-content: center; min-height: 300px; }
+.unit-phrasebook-link { text-align: center; padding: 24px 0 8px; }
+.unit-phrasebook-btn {
+  background: none; border: none; font-size: 13px; color: var(--fg3);
+  cursor: pointer; font-family: var(--font-body), system-ui, sans-serif;
+  transition: color 0.15s;
+}
+.unit-phrasebook-btn:hover { color: var(--accent); }
 
 @media (max-width: 480px) {
   .learn-unit-row { padding: 12px 14px; gap: 12px; }

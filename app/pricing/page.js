@@ -150,7 +150,7 @@ export default function PricingPage() {
               <li className="pricing-feature">✓ Everything in Free</li>
               <li className="pricing-feature">✓ HSK 5–9 flashcards (12,000+ advanced words)</li>
               <li className="pricing-feature">✓ Unlimited custom lists</li>
-              <li className="pricing-feature">✓ Full phrasebook (all situations, all phrases)</li>
+              <li className="pricing-feature">✓ <button className="pricing-feature-link" onClick={() => router.push('/phrasebook')}>Full phrasebook</button> (all situations, all phrases)</li>
               <li className="pricing-feature">✓ All 100 common verbs</li>
               <li className="pricing-feature">✓ Cancel any time</li>
             </ul>
@@ -178,7 +178,7 @@ export default function PricingPage() {
               <li className="pricing-feature">✓ Everything in Free</li>
               <li className="pricing-feature">✓ HSK 5–9 flashcards (12,000+ advanced words)</li>
               <li className="pricing-feature">✓ Unlimited custom lists</li>
-              <li className="pricing-feature">✓ Full phrasebook (all situations, all phrases)</li>
+              <li className="pricing-feature">✓ <button className="pricing-feature-link" onClick={() => router.push('/phrasebook')}>Full phrasebook</button> (all situations, all phrases)</li>
               <li className="pricing-feature">✓ All 100 common verbs</li>
               <li className="pricing-feature">✓ Cancel any time</li>
             </ul>

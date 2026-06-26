@@ -415,17 +415,22 @@ export default function UnitPage() {
           <div className="unit-header-pinyin">{situation.pinyin}</div>
         </div>
 
-        {/* Tab switcher */}
+        {/* Tab switcher — Vocabulary tab only appears when the situation has vocab data */}
         <div className="unit-tabs">
-          {['phrases', 'vocabulary'].map(t => (
+          <button
+            className={`unit-tab-btn${tab === 'phrases' ? ' active' : ''}`}
+            onClick={() => setTab('phrases')}
+          >
+            📖 Phrases
+          </button>
+          {situation.vocabCards && (
             <button
-              key={t}
-              className={`unit-tab-btn${tab === t ? ' active' : ''}`}
-              onClick={() => setTab(t)}
+              className={`unit-tab-btn${tab === 'vocabulary' ? ' active' : ''}`}
+              onClick={() => setTab('vocabulary')}
             >
-              {t === 'phrases' ? '📖 Phrases' : '⚡ Vocabulary'}
+              ⚡ Vocabulary
             </button>
-          ))}
+          )}
         </div>
 
         {/* Tab: Phrases */}
@@ -442,34 +447,21 @@ export default function UnitPage() {
           </div>
         )}
 
-        {/* Tab: Vocabulary */}
-        {tab === 'vocabulary' && (
+        {/* Tab: Vocabulary — situation-specific words (only for situations that have them) */}
+        {tab === 'vocabulary' && situation.vocabCards && (
           <div className="unit-section">
-            {situation.vocabCards ? (
-              situation.vocabCards.map((group, gi) => (
-                <div key={gi}>
-                  {group.title && (
-                    <div className="unit-vocab-header">{group.title}</div>
-                  )}
-                  <div className="verbs-list">
-                    {group.items.map((item, ii) => (
-                      <VocabRow key={ii} item={item} />
-                    ))}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <>
-                <div className="unit-vocab-header">
-                  Verbs {unit.verbStart}–{unit.verbEnd} of the 100 most common
-                </div>
+            {situation.vocabCards.map((group, gi) => (
+              <div key={gi}>
+                {group.title && (
+                  <div className="unit-vocab-header">{group.title}</div>
+                )}
                 <div className="verbs-list">
-                  {unitVerbs.map(verb => (
-                    <VerbRow key={verb.rank} verb={verb} />
+                  {group.items.map((item, ii) => (
+                    <VocabRow key={ii} item={item} />
                   ))}
                 </div>
-              </>
-            )}
+              </div>
+            ))}
           </div>
         )}
 
@@ -477,6 +469,13 @@ export default function UnitPage() {
         <div className="unit-section">
           <div className="unit-vocab-header">✏️ Practice</div>
           {renderPractice()}
+        </div>
+
+        {/* Phrasebook link — always at bottom */}
+        <div className="unit-phrasebook-link">
+          <button className="unit-phrasebook-btn" onClick={() => router.push('/phrasebook')}>
+            Browse the full phrasebook →
+          </button>
         </div>
       </div>
 
