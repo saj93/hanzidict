@@ -48,7 +48,12 @@ async function handleCheckoutComplete(session, stripe, supabase) {
 
   const sub  = await stripe.subscriptions.retrieve(session.subscription);
   const plan = session.metadata?.plan ?? 'monthly';
-  const premiumUntil = new Date(sub.current_period_end * 1000).toISOString();
+
+  // current_period_end was removed in Stripe SDK v17. Derive from billing_cycle_anchor
+  // + plan interval. invoice.payment_succeeded will keep this updated on renewal.
+  const anchor = sub.billing_cycle_anchor ?? sub.start_date ?? Math.floor(Date.now() / 1000);
+  const intervalDays = plan === 'annual' ? 366 : 32;
+  const premiumUntil = new Date((anchor + intervalDays * 24 * 60 * 60) * 1000).toISOString();
 
   const { error } = await supabase.from('subscriptions').upsert({
     user_id:                userId,
@@ -66,8 +71,11 @@ async function handleCheckoutComplete(session, stripe, supabase) {
 async function handleInvoicePayment(invoice, stripe, supabase) {
   if (!invoice.subscription) return;
 
-  const sub = await stripe.subscriptions.retrieve(invoice.subscription);
-  const premiumUntil = new Date(sub.current_period_end * 1000).toISOString();
+  // invoice.period_end is on the event object directly — no extra API call needed,
+  // and avoids the removed current_period_end field on the subscription in SDK v17.
+  const premiumUntil = invoice.period_end
+    ? new Date(invoice.period_end * 1000).toISOString()
+    : new Date(Date.now() + 32 * 24 * 60 * 60 * 1000).toISOString();
 
   const { error } = await supabase.from('subscriptions')
     .update({ status: 'active', premium_until: premiumUntil, updated_at: new Date().toISOString() })
@@ -77,8 +85,8 @@ async function handleInvoicePayment(invoice, stripe, supabase) {
 }
 
 async function handleSubscriptionUpdated(sub, supabase) {
-  const premiumUntil = new Date(sub.current_period_end * 1000).toISOString();
-  // cancel_at_period_end = user cancelled but still active until period end
+  const anchor = sub.billing_cycle_anchor ?? sub.start_date ?? Math.floor(Date.now() / 1000);
+  const premiumUntil = new Date((anchor + 32 * 24 * 60 * 60) * 1000).toISOString();
   const status = sub.status === 'active' ? 'active' : sub.status;
 
   const { error } = await supabase.from('subscriptions')
