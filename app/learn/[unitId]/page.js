@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import AudioButton from '../../components/AudioButton';
-import { PhraseSection } from '../../components/PhraseDisplay';
+import SituationBrowser from '../../components/SituationBrowser';
 import { useAuth } from '../../components/AuthProvider';
 import { useSubscription } from '../../hooks/useSubscription';
 import { UNITS } from '../../../content/units';
@@ -23,7 +23,6 @@ function shuffle(arr) {
   return a;
 }
 
-// All free phrases across all situations (for distractor pool)
 const ALL_FREE_PHRASES = situations.flatMap(s =>
   s.sections.flatMap(sec => sec.phrases.filter(p => p.free))
 );
@@ -47,7 +46,7 @@ const RATINGS = [
   { label: 'Easy',  color: '#3182ce', key: 'easy'  },
 ];
 
-// ── Verb row (inline — no link, just display) ─────────────────────────────────
+// ── Verb row ──────────────────────────────────────────────────────────────────
 
 function VerbRow({ verb }) {
   const router = useRouter();
@@ -70,7 +69,7 @@ function VerbRow({ verb }) {
   );
 }
 
-// ── Practice: verb flashcard phase ────────────────────────────────────────────
+// ── Verb flashcards ───────────────────────────────────────────────────────────
 
 function VerbFlashcards({ cards, onDone }) {
   const [idx, setIdx] = useState(0);
@@ -143,7 +142,7 @@ function VerbFlashcards({ cards, onDone }) {
   );
 }
 
-// ── Practice: phrase QCM phase ────────────────────────────────────────────────
+// ── Phrase quiz ───────────────────────────────────────────────────────────────
 
 function PhraseQuiz({ questions: initialQ, onComplete }) {
   const [questions, setQuestions] = useState(initialQ);
@@ -246,10 +245,18 @@ export default function UnitPage() {
   const { user, session, loading: authLoading } = useAuth();
   const { isPremium, loading: subLoading } = useSubscription();
 
-  const [tab, setTab] = useState('learn');
+  const [tab, setTab] = useState('phrases'); // 'phrases' | 'vocabulary'
   const [practicePhase, setPracticePhase] = useState('idle'); // idle | verbs | quiz | done
   const [finalStreak, setFinalStreak] = useState(0);
   const [completing, setCompleting] = useState(false);
+  const [script, setScript] = useState('simplified');
+
+  useEffect(() => {
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch (e) {}
+    const handler = e => setScript(e.detail);
+    window.addEventListener('hanzidict:scriptChange', handler);
+    return () => window.removeEventListener('hanzidict:scriptChange', handler);
+  }, []);
 
   useEffect(() => {
     if (unit) document.title = `${unit.title} — HanziDict`;
@@ -306,7 +313,7 @@ export default function UnitPage() {
 
   const nextUnit = UNITS.find(u => u.id === unitNum + 1);
 
-  // ── Practice section render ─────────────────────────────────────────────────
+  // ── Practice section ────────────────────────────────────────────────────────
 
   function renderPractice() {
     if (practicePhase === 'idle') {
@@ -371,7 +378,7 @@ export default function UnitPage() {
     }
   }
 
-  // ── Main render ─────────────────────────────────────────────────────────────
+  // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
     <main>
@@ -388,37 +395,28 @@ export default function UnitPage() {
 
         {/* Tab switcher */}
         <div className="unit-tabs">
-          {['learn', 'vocabulary', 'practice'].map(t => (
+          {['phrases', 'vocabulary'].map(t => (
             <button
               key={t}
               className={`unit-tab-btn${tab === t ? ' active' : ''}`}
-              onClick={() => { setTab(t); if (t !== 'practice') setPracticePhase('idle'); }}
+              onClick={() => setTab(t)}
             >
-              {t === 'learn' ? '📖 Learn' : t === 'vocabulary' ? '⚡ Vocabulary' : '✏️ Practice'}
+              {t === 'phrases' ? '📖 Phrases' : '⚡ Vocabulary'}
             </button>
           ))}
         </div>
 
-        {/* Tab: Learn */}
-        {tab === 'learn' && (
+        {/* Tab: Phrases */}
+        {tab === 'phrases' && (
           <div className="unit-section">
-            {situation.sections.map((section, i) => (
-              <PhraseSection
-                key={i}
-                section={section}
-                isPremium={isPremium || subLoading}
-                onUpgrade={upgrade}
-              />
-            ))}
-            {situation.sections.some(s => s.phrases.some(p => !p.free)) && !isPremium && !subLoading && (
-              <div className="pb-upgrade-banner">
-                <div className="pb-upgrade-title">🔒 Unlock all phrases</div>
-                <div className="pb-upgrade-sub">
-                  See all {situation.phraseCount} phrases including natural reactions, nuanced responses, and cultural notes.
-                </div>
-                <button className="pb-upgrade-btn" onClick={upgrade}>Upgrade to Premium</button>
-              </div>
-            )}
+            <SituationBrowser
+              situation={situation}
+              isPremium={isPremium || subLoading}
+              isAdmin={false}
+              session={null}
+              script={script}
+              onUpgrade={upgrade}
+            />
           </div>
         )}
 
@@ -436,12 +434,11 @@ export default function UnitPage() {
           </div>
         )}
 
-        {/* Tab: Practice */}
-        {tab === 'practice' && (
-          <div className="unit-section">
-            {renderPractice()}
-          </div>
-        )}
+        {/* Practice — always visible below tabs */}
+        <div className="unit-section">
+          <div className="unit-vocab-header">✏️ Practice</div>
+          {renderPractice()}
+        </div>
       </div>
 
       <Footer />

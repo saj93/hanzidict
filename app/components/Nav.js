@@ -43,6 +43,7 @@ export default function Nav({ hideScript = false }) {
     { label: 'Dictionary', path: '/' },
     { label: 'HSK', path: '/hsk' },
     { label: 'Learn', path: '/learn' },
+    { label: 'Phrasebook', path: '/phrasebook' },
     { label: 'Blog', path: '/blog' },
     { label: 'About', path: '/about' },
   ];
