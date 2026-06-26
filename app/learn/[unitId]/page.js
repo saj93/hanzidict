@@ -46,7 +46,7 @@ const RATINGS = [
   { label: 'Easy',  color: '#3182ce', key: 'easy'  },
 ];
 
-// ── Verb row ──────────────────────────────────────────────────────────────────
+// ── Verb row (ranked verbs fallback) ─────────────────────────────────────────
 
 function VerbRow({ verb }) {
   const router = useRouter();
@@ -65,6 +65,28 @@ function VerbRow({ verb }) {
         <AudioButton text={verb.simplified} />
       </span>
       <span className="verb-def">{verb.meaning}</span>
+    </div>
+  );
+}
+
+// ── Vocab row (situation vocabulary — no rank) ────────────────────────────────
+
+function VocabRow({ item }) {
+  const router = useRouter();
+  return (
+    <div
+      className="verb-row vocab-row"
+      role="button"
+      tabIndex={0}
+      onClick={() => router.push(`/word/${encodeURIComponent(item.hanzi)}`)}
+      onKeyDown={e => e.key === 'Enter' && router.push(`/word/${encodeURIComponent(item.hanzi)}`)}
+    >
+      <span className="verb-hanzi">{item.hanzi}</span>
+      <span className="verb-pinyin">{item.pinyin}</span>
+      <span className="verb-audio" onClick={e => e.stopPropagation()}>
+        <AudioButton text={item.hanzi} />
+      </span>
+      <span className="verb-def">{item.english}</span>
     </div>
   );
 }
@@ -423,14 +445,31 @@ export default function UnitPage() {
         {/* Tab: Vocabulary */}
         {tab === 'vocabulary' && (
           <div className="unit-section">
-            <div className="unit-vocab-header">
-              Verbs {unit.verbStart}–{unit.verbEnd} of the 100 most common
-            </div>
-            <div className="verbs-list">
-              {unitVerbs.map(verb => (
-                <VerbRow key={verb.rank} verb={verb} />
-              ))}
-            </div>
+            {situation.vocabCards ? (
+              situation.vocabCards.map((group, gi) => (
+                <div key={gi}>
+                  {group.title && (
+                    <div className="unit-vocab-header">{group.title}</div>
+                  )}
+                  <div className="verbs-list">
+                    {group.items.map((item, ii) => (
+                      <VocabRow key={ii} item={item} />
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div className="unit-vocab-header">
+                  Verbs {unit.verbStart}–{unit.verbEnd} of the 100 most common
+                </div>
+                <div className="verbs-list">
+                  {unitVerbs.map(verb => (
+                    <VerbRow key={verb.rank} verb={verb} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
 
