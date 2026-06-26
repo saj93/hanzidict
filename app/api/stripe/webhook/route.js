@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { sendPremiumEmail } from '../premium-email';
 
 // Raw body required for Stripe signature verification — disable body parsing
 export const config = { api: { bodyParser: false } };
@@ -65,7 +66,13 @@ async function handleCheckoutComplete(session, stripe, supabase) {
     updated_at:             new Date().toISOString(),
   }, { onConflict: 'user_id' });
 
-  if (error) console.error('[webhook] upsert error:', error.message);
+  if (error) { console.error('[webhook] upsert error:', error.message); return; }
+
+  // Send premium confirmation email — look up the user's email from Supabase auth
+  const { data: { user } } = await supabase.auth.admin.getUserById(userId);
+  if (user?.email) {
+    await sendPremiumEmail(user.email, plan);
+  }
 }
 
 async function handleInvoicePayment(invoice, stripe, supabase) {
