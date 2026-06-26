@@ -2988,6 +2988,12 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   font-size: 13px; font-weight: 600; color: var(--fg3);
   text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px;
 }
+.unit-vocab-label {
+  font-size: 11px; font-weight: 600; color: var(--fg3); opacity: 0.6;
+  text-transform: uppercase; letter-spacing: .08em;
+  margin: 20px 0 6px; padding: 0 2px;
+}
+.unit-vocab-label:first-child { margin-top: 0; }
 
 /* Practice idle state */
 .unit-practice-idle { text-align: center; padding: 48px 0 24px; }

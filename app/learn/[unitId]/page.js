@@ -342,7 +342,7 @@ export default function UnitPage() {
       return (
         <div className="unit-practice-idle">
           <div className="unit-practice-summary">
-            <div className="unit-practice-item">⚡ {practiceCards.length} verbs to review</div>
+            <div className="unit-practice-item">⚡ Review vocabulary</div>
             <div className="unit-practice-item">💬 {quizQuestions.length} phrase questions</div>
           </div>
           {!user ? (
@@ -415,7 +415,7 @@ export default function UnitPage() {
           <div className="unit-header-pinyin">{situation.pinyin}</div>
         </div>
 
-        {/* Tab switcher — Vocabulary tab only appears when the situation has vocab data */}
+        {/* Tab switcher */}
         <div className="unit-tabs">
           <button
             className={`unit-tab-btn${tab === 'phrases' ? ' active' : ''}`}
@@ -423,14 +423,12 @@ export default function UnitPage() {
           >
             📖 Phrases
           </button>
-          {situation.vocabCards && (
-            <button
-              className={`unit-tab-btn${tab === 'vocabulary' ? ' active' : ''}`}
-              onClick={() => setTab('vocabulary')}
-            >
-              ⚡ Vocabulary
-            </button>
-          )}
+          <button
+            className={`unit-tab-btn${tab === 'vocabulary' ? ' active' : ''}`}
+            onClick={() => setTab('vocabulary')}
+          >
+            ⚡ Vocabulary
+          </button>
         </div>
 
         {/* Tab: Phrases */}
@@ -447,23 +445,39 @@ export default function UnitPage() {
           </div>
         )}
 
-        {/* Tab: Vocabulary — situation-specific words (only for situations that have them) */}
-        {tab === 'vocabulary' && situation.vocabCards && (
-          <div className="unit-section">
-            {situation.vocabCards.map((group, gi) => (
-              <div key={gi}>
-                {group.title && (
-                  <div className="unit-vocab-header">{group.title}</div>
-                )}
-                <div className="verbs-list">
-                  {group.items.map((item, ii) => (
-                    <VocabRow key={ii} item={item} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Tab: Vocabulary — flatten + deduplicate vocabCards, split into Verbs / Words */}
+        {tab === 'vocabulary' && (() => {
+          const allItems = [...new Map(
+            (situation.vocabCards ?? []).flatMap(g => g.items).map(item => [item.hanzi, item])
+          ).values()];
+          const vocabVerbs = allItems.filter(item => item.english.trimStart().startsWith('to '));
+          const vocabWords = allItems.filter(item => !item.english.trimStart().startsWith('to '));
+          return (
+            <div className="unit-section">
+              {vocabVerbs.length > 0 && (
+                <>
+                  <div className="unit-vocab-label">Verbs</div>
+                  <div className="verbs-list">
+                    {vocabVerbs.map((item, i) => <VocabRow key={i} item={item} />)}
+                  </div>
+                </>
+              )}
+              {vocabWords.length > 0 && (
+                <>
+                  <div className="unit-vocab-label">Words</div>
+                  <div className="verbs-list">
+                    {vocabWords.map((item, i) => <VocabRow key={i} item={item} />)}
+                  </div>
+                </>
+              )}
+              {allItems.length === 0 && (
+                <p style={{ color: 'var(--fg3)', padding: '24px 0', textAlign: 'center' }}>
+                  Vocabulary coming soon for this unit.
+                </p>
+              )}
+            </div>
+          );
+        })()}
 
         {/* Practice — always visible below tabs */}
         <div className="unit-section">

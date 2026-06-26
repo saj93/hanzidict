@@ -221,6 +221,68 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "谢谢",
+            "pinyin": "Xièxie",
+            "english": "to thank; thank you"
+          },
+          {
+            "hanzi": "感谢",
+            "pinyin": "Gǎnxiè",
+            "english": "to thank; to be grateful"
+          },
+          {
+            "hanzi": "请",
+            "pinyin": "Qǐng",
+            "english": "to invite, to treat; please"
+          },
+          {
+            "hanzi": "对不起",
+            "pinyin": "Duìbuqǐ",
+            "english": "to be sorry; I'm sorry"
+          },
+          {
+            "hanzi": "早上",
+            "pinyin": "Zǎoshang",
+            "english": "morning"
+          },
+          {
+            "hanzi": "下午",
+            "pinyin": "Xiàwǔ",
+            "english": "afternoon"
+          },
+          {
+            "hanzi": "晚上",
+            "pinyin": "Wǎnshang",
+            "english": "evening; night"
+          },
+          {
+            "hanzi": "好",
+            "pinyin": "Hǎo",
+            "english": "good; well; fine"
+          },
+          {
+            "hanzi": "没关系",
+            "pinyin": "Méi guānxi",
+            "english": "no problem; never mind; it's okay"
+          },
+          {
+            "hanzi": "再见",
+            "pinyin": "Zàijiàn",
+            "english": "goodbye; see you"
+          },
+          {
+            "hanzi": "不客气",
+            "pinyin": "Bú kèqi",
+            "english": "you're welcome; don't mention it"
+          }
+        ]
+      }
     ]
   },
   {
@@ -493,6 +555,68 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "叫",
+            "pinyin": "Jiào",
+            "english": "to be called; to call"
+          },
+          {
+            "hanzi": "姓",
+            "pinyin": "Xìng",
+            "english": "to be surnamed; surname; family name"
+          },
+          {
+            "hanzi": "来自",
+            "pinyin": "Láizì",
+            "english": "to come from"
+          },
+          {
+            "hanzi": "工作",
+            "pinyin": "Gōngzuò",
+            "english": "to work; job; work"
+          },
+          {
+            "hanzi": "学",
+            "pinyin": "Xué",
+            "english": "to study; to learn"
+          },
+          {
+            "hanzi": "认识",
+            "pinyin": "Rènshi",
+            "english": "to know; to recognise; to meet"
+          },
+          {
+            "hanzi": "名字",
+            "pinyin": "Míngzì",
+            "english": "name; given name"
+          },
+          {
+            "hanzi": "哪里",
+            "pinyin": "Nǎlǐ",
+            "english": "where; which place"
+          },
+          {
+            "hanzi": "学生",
+            "pinyin": "Xuésheng",
+            "english": "student"
+          },
+          {
+            "hanzi": "岁",
+            "pinyin": "Suì",
+            "english": "years old; age"
+          },
+          {
+            "hanzi": "中文",
+            "pinyin": "Zhōngwén",
+            "english": "Chinese language; Chinese"
+          }
+        ]
+      }
     ]
   },
   {
@@ -588,6 +712,63 @@
             "badge": "everyday",
             "badgeNote": null,
             "free": true
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "听",
+            "pinyin": "Tīng",
+            "english": "to listen; to hear"
+          },
+          {
+            "hanzi": "懂",
+            "pinyin": "Dǒng",
+            "english": "to understand; to know"
+          },
+          {
+            "hanzi": "明白",
+            "pinyin": "Míngbai",
+            "english": "to understand; clear; obvious"
+          },
+          {
+            "hanzi": "说",
+            "pinyin": "Shuō",
+            "english": "to say; to speak; to tell"
+          },
+          {
+            "hanzi": "写",
+            "pinyin": "Xiě",
+            "english": "to write"
+          },
+          {
+            "hanzi": "再",
+            "pinyin": "Zài",
+            "english": "again; once more"
+          },
+          {
+            "hanzi": "慢",
+            "pinyin": "Màn",
+            "english": "slow; slowly"
+          },
+          {
+            "hanzi": "普通话",
+            "pinyin": "Pǔtōnghuà",
+            "english": "Mandarin Chinese; Standard Chinese"
+          },
+          {
+            "hanzi": "意思",
+            "pinyin": "Yìsi",
+            "english": "meaning; idea; intention"
+          },
+          {
+            "hanzi": "英文",
+            "pinyin": "Yīngwén",
+            "english": "English (language)"
           }
         ]
       }
@@ -1025,6 +1206,53 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "会",
+            "pinyin": "Huì",
+            "english": "to know how to; can; be able to"
+          },
+          {
+            "hanzi": "觉得",
+            "pinyin": "Juédé",
+            "english": "to feel; to think; to consider"
+          },
+          {
+            "hanzi": "自学",
+            "pinyin": "Zìxué",
+            "english": "to self-study; to teach oneself"
+          },
+          {
+            "hanzi": "中文",
+            "pinyin": "Zhōngwén",
+            "english": "Chinese language; Chinese"
+          },
+          {
+            "hanzi": "汉字",
+            "pinyin": "Hànzì",
+            "english": "Chinese character; Hanzi"
+          },
+          {
+            "hanzi": "声调",
+            "pinyin": "Shēngdiào",
+            "english": "tone (in Chinese phonetics)"
+          },
+          {
+            "hanzi": "流利",
+            "pinyin": "Liúlì",
+            "english": "fluent; flowing"
+          },
+          {
+            "hanzi": "难",
+            "pinyin": "Nán",
+            "english": "difficult; hard"
+          }
+        ]
+      }
     ]
   },
   {
@@ -1156,6 +1384,53 @@
             "badge": "everyday",
             "badgeNote": null,
             "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "喜欢",
+            "pinyin": "Xǐhuān",
+            "english": "to like; to love; to be fond of"
+          },
+          {
+            "hanzi": "觉得",
+            "pinyin": "Juédé",
+            "english": "to feel; to think; to consider"
+          },
+          {
+            "hanzi": "感兴趣",
+            "pinyin": "Gǎn xìngqù",
+            "english": "to be interested in"
+          },
+          {
+            "hanzi": "最",
+            "pinyin": "Zuì",
+            "english": "most; -est (superlative)"
+          },
+          {
+            "hanzi": "更",
+            "pinyin": "Gèng",
+            "english": "more; even more; still more"
+          },
+          {
+            "hanzi": "有意思",
+            "pinyin": "Yǒu yìsi",
+            "english": "interesting; fun"
+          },
+          {
+            "hanzi": "随便",
+            "pinyin": "Suíbiàn",
+            "english": "casual; as you like; whatever"
+          },
+          {
+            "hanzi": "情况",
+            "pinyin": "Qíngkuàng",
+            "english": "situation; circumstances; condition"
           }
         ]
       }
