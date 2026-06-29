@@ -16,7 +16,7 @@ export default function HistoryDropdown({ history, onSelect, onRemove, onClear }
           </button>
           <button
             className="history-remove-btn"
-            onMouseDown={e => { e.preventDefault(); e.stopPropagation(); onRemove(item.query); }}
+            onMouseDown={e => { e.preventDefault(); onRemove(item.query); }}
             title="Remove from history"
           >×</button>
         </div>

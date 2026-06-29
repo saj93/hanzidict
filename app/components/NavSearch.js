@@ -14,6 +14,7 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
   const wrapRef = useRef(null);
   const timerRef = useRef(null);
   const userTypedRef = useRef(false);
+  const suppressNextOutsideRef = useRef(false);
   const router = useRouter();
   const { history, add: addHistory, remove: removeHistory, clear: clearHistory } = useSearchHistory();
 
@@ -55,6 +56,10 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
   // Click outside closes everything
   useEffect(() => {
     function handler(e) {
+      if (suppressNextOutsideRef.current) {
+        suppressNextOutsideRef.current = false;
+        return;
+      }
       if (wrapRef.current && !wrapRef.current.contains(e.target)) {
         setShowDrop(false);
         setShowHistory(false);
@@ -129,7 +134,7 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
         <HistoryDropdown
           history={history.slice(0, 10)}
           onSelect={selectFromHistory}
-          onRemove={removeHistory}
+          onRemove={(q) => { suppressNextOutsideRef.current = true; removeHistory(q); }}
           onClear={clearHistory}
         />
       )}
