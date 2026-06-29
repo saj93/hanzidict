@@ -5,6 +5,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import { Table, TableRow, TableHeader, TableCell } from '@tiptap/extension-table';
+import { Image } from '@tiptap/extension-image';
 import { Markdown } from 'tiptap-markdown';
 
 // Stable module-level references so Tiptap's compareOptions never sees them
@@ -22,6 +23,7 @@ const extensions = [
   TableRow,
   TableHeader,
   TableCell,
+  Image,
   markdownExt,
 ];
 
