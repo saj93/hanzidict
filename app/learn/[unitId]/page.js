@@ -475,9 +475,8 @@ export default function UnitPage() {
           );
         })()}
 
-        {/* Practice — always visible below tabs */}
-        <div className="unit-section">
-          <div className="unit-vocab-header">✏️ Practice</div>
+        {/* Practice — always visible below tabs, no section title */}
+        <div className="unit-section unit-practice-section">
           {renderPractice()}
         </div>
 
