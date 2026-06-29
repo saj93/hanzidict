@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
-import { TableKit } from '@tiptap/extension-table';
+import { Table, TableRow, TableHeader, TableCell } from '@tiptap/extension-table';
 import { Markdown } from 'tiptap-markdown';
 
 // Stable module-level references so Tiptap's compareOptions never sees them
@@ -18,7 +18,10 @@ const markdownExt = Markdown.configure({
 const extensions = [
   StarterKit,
   Underline,
-  TableKit,
+  Table,
+  TableRow,
+  TableHeader,
+  TableCell,
   markdownExt,
 ];
 
