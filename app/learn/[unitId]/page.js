@@ -341,10 +341,6 @@ export default function UnitPage() {
     if (practicePhase === 'idle') {
       return (
         <div className="unit-practice-idle">
-          <div className="unit-practice-summary">
-            <div className="unit-practice-item">⚡ Review vocabulary</div>
-            <div className="unit-practice-item">💬 {quizQuestions.length} phrase questions</div>
-          </div>
           {!user ? (
             <button className="lp-start-btn" onClick={() => router.push(`/login?next=/learn/${unitNum}`)}>
               Log in to practise →

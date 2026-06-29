@@ -2996,7 +2996,7 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
 .unit-vocab-label:first-child { margin-top: 0; }
 
 /* Practice idle state */
-.unit-practice-idle { text-align: center; padding: 48px 0 24px; }
+.unit-practice-idle { text-align: center; padding: 24px 0; }
 .unit-practice-summary {
   display: flex; gap: 20px; justify-content: center;
   flex-wrap: wrap; margin-bottom: 28px;
