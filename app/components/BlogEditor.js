@@ -4,6 +4,10 @@ import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 import { Markdown } from 'tiptap-markdown';
 
 // Stable module-level references so Tiptap's compareOptions never sees them
@@ -14,7 +18,15 @@ const markdownExt = Markdown.configure({
   tightLists: true,
   transformPastedText: true,
 });
-const extensions = [StarterKit, Underline, markdownExt];
+const extensions = [
+  StarterKit,
+  Underline,
+  Table.configure({ resizable: false }),
+  TableRow,
+  TableHeader,
+  TableCell,
+  markdownExt,
+];
 
 function ToolbarButton({ onClick, active, title, children }) {
   return (
