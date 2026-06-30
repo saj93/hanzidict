@@ -28,6 +28,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
   const { user } = (useAuth() as any) ?? {};
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const suppressNextOutsideRef = useRef(false);
   const { history, add: addHistory, remove: removeHistory, clear: clearHistory } = useSearchHistory();
 
   useEffect(() => {
@@ -58,6 +59,10 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
 
   useEffect(() => {
     function handler(e: MouseEvent) {
+      if (suppressNextOutsideRef.current) {
+        suppressNextOutsideRef.current = false;
+        return;
+      }
       if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node)) {
         setShowDrop(false);
         setShowHistory(false);
@@ -180,7 +185,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
               <HistoryDropdown
                 history={history.slice(0, 10)}
                 onSelect={selectFromHistory}
-                onRemove={removeHistory}
+                onRemove={(q) => { suppressNextOutsideRef.current = true; removeHistory(q); }}
                 onClear={clearHistory}
               />
             )}
