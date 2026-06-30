@@ -98,7 +98,7 @@ function processExactMatches(entries) {
     }
     deduped.push({
       ...best,
-      _rawDefinitions: best.definitions, // single-row defs before merging; used for admin editing
+      _allEntries: group, // all DB rows for this pinyin — used by admin to patch the right row
       definitions: mergedDefs.length ? mergedDefs.join(' | ') : best.definitions,
     });
   }
@@ -440,9 +440,7 @@ export default function WordPage() {
     );
   }
 
-  // Admins edit the primary row's own definitions only (not the cross-row merge),
-  // so that PATCH /api/entries/:id actually covers everything being shown.
-  const rawDefs = localDefinitions ?? (isAdmin ? (primary._rawDefinitions ?? primary.definitions) : primary.definitions) ?? '';
+  const rawDefs = localDefinitions ?? primary.definitions ?? '';
   const IDIOM_STRIP_RE = /\s*\(idiom\)[;,]?\s*/gi;
   const allDefs = (cleanDefinitions(rawDefs) || rawDefs || '')
     .split(' | ')
@@ -495,33 +493,95 @@ export default function WordPage() {
   const pinyin = convertPinyin(primary.pinyin);
   const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
 
-  async function patchDefs(newAllDefs) {
+  // Find which source DB row contains `defText` (matched after minimal cleaning),
+  // remove or replace it there, and PATCH that row. Returns the patched row's id or null.
+  async function patchSourceEntry(defText, replacementText /* undefined = delete */) {
+    const authHeader = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` };
+    const entries = primary._allEntries ?? [primary];
+    const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
+    const clean = s => s.replace(BOUND_IDIOM_RE, '').trim();
+
+    for (const entry of entries) {
+      const rawParts = (entry.definitions || '').split(' | ').map(s => s.trim()).filter(Boolean);
+      let changed = false;
+      const newParts = rawParts.reduce((acc, raw) => {
+        if (!changed && (raw === defText || clean(raw) === defText)) {
+          changed = true;
+          if (replacementText) acc.push(replacementText);
+          // else: delete — don't push
+        } else {
+          acc.push(raw);
+        }
+        return acc;
+      }, []);
+      if (changed) {
+        const resp = await fetch(`/api/entries/${entry.id}`, {
+          method: 'PATCH', headers: authHeader,
+          body: JSON.stringify({ definitions: newParts.join(' | ') }),
+        });
+        return resp.ok ? entry.id : null;
+      }
+    }
+    return null;
+  }
+
+  // Reorder saves the full new order to primary and strips those defs from
+  // secondary rows so the merge doesn't re-introduce duplicates.
+  async function patchReorder(newAllDefs) {
+    const authHeader = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` };
     const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
     const prev = localDefinitions ?? primary.definitions;
     setLocalDefinitions(newDefinitions);
-    try {
-      const resp = await fetch(`/api/entries/${primary.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
-        body: JSON.stringify({ definitions: newDefinitions }),
-      });
-      if (!resp.ok) setLocalDefinitions(prev);
-    } catch (e) { setLocalDefinitions(prev); }
+
+    // Save canonical order to primary row
+    const r = await fetch(`/api/entries/${primary.id}`, {
+      method: 'PATCH', headers: authHeader,
+      body: JSON.stringify({ definitions: newDefinitions }),
+    });
+    if (!r.ok) { setLocalDefinitions(prev); return; }
+
+    // Remove from secondary rows any defs now owned by primary
+    const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
+    const clean = s => s.replace(BOUND_IDIOM_RE, '').trim();
+    const primarySet = new Set(newAllDefs.map(clean));
+    for (const entry of (primary._allEntries ?? [])) {
+      if (entry.id === primary.id) continue;
+      const rawParts = (entry.definitions || '').split(' | ').map(s => s.trim()).filter(Boolean);
+      const remaining = rawParts.filter(raw => !primarySet.has(clean(raw)) && !primarySet.has(raw));
+      if (remaining.length < rawParts.length) {
+        await fetch(`/api/entries/${entry.id}`, {
+          method: 'PATCH', headers: authHeader,
+          body: JSON.stringify({ definitions: remaining.join(' | ') }),
+        });
+      }
+    }
   }
 
   async function saveDefEdit() {
     if (editingDefIdx === null || !primary?.id || !session) return;
     setEditSaving(true);
     const val = editVal.trim();
-    const newAllDefs = [...allDefs];
     if (editingDefIdx === defs.length) {
-      if (val) newAllDefs.push(val);
+      // Appending new def — always goes to primary row
+      const newDefs = [...allDefs, ...(val ? [val] : [])].filter(Boolean).join(' | ');
+      const prev = localDefinitions ?? primary.definitions;
+      setLocalDefinitions(newDefs);
+      const resp = await fetch(`/api/entries/${primary.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ definitions: newDefs }),
+      });
+      if (!resp.ok) setLocalDefinitions(prev);
     } else {
       const ai = defIndices[editingDefIdx];
-      if (val) newAllDefs[ai] = val;
-      else newAllDefs.splice(ai, 1);
+      const defText = allDefs[ai];
+      const patched = await patchSourceEntry(defText, val || undefined);
+      if (patched) {
+        const newAllDefs = [...allDefs];
+        if (val) newAllDefs[ai] = val; else newAllDefs.splice(ai, 1);
+        setLocalDefinitions(newAllDefs.filter(Boolean).join(' | '));
+      }
     }
-    await patchDefs(newAllDefs);
     setEditingDefIdx(null);
     setEditVal('');
     setEditSaving(false);
@@ -530,7 +590,9 @@ export default function WordPage() {
   async function deleteDefAt(defIdx) {
     if (!primary?.id || !session) return;
     const ai = defIndices[defIdx];
-    await patchDefs(allDefs.filter((_, i) => i !== ai));
+    const defText = allDefs[ai];
+    const patched = await patchSourceEntry(defText);
+    if (patched) setLocalDefinitions(allDefs.filter((_, i) => i !== ai).join(' | '));
   }
 
   async function moveDefUpDown(defIdx, dir) {
@@ -540,7 +602,7 @@ export default function WordPage() {
     const ai2 = defIndices[newIdx];
     const newAllDefs = [...allDefs];
     [newAllDefs[ai1], newAllDefs[ai2]] = [newAllDefs[ai2], newAllDefs[ai1]];
-    await patchDefs(newAllDefs);
+    await patchReorder(newAllDefs);
   }
 
   function startExEdit(ex) {
