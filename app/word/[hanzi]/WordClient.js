@@ -145,6 +145,7 @@ export default function WordPage() {
   const [editExSaving, setEditExSaving] = useState(false);
   const [confirmDeleteExId, setConfirmDeleteExId] = useState(null);
   const [cardLoading, setCardLoading] = useState(false);
+  const [wodStatus, setWodStatus] = useState(null); // null | 'saving' | 'done' | 'error'
   const hwRef = useRef(null);
   const router = useRouter();
   const { isAdmin, session } = useAuth() ?? {};
@@ -671,6 +672,23 @@ export default function WordPage() {
     }
   }
 
+  async function setWordOfDay() {
+    if (!primary?.simplified || !session || wodStatus === 'saving') return;
+    setWodStatus('saving');
+    try {
+      const resp = await fetch('/api/admin/word-of-day', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ simplified: primary.simplified }),
+      });
+      setWodStatus(resp.ok ? 'done' : 'error');
+      setTimeout(() => setWodStatus(null), 3000);
+    } catch (e) {
+      setWodStatus('error');
+      setTimeout(() => setWodStatus(null), 3000);
+    }
+  }
+
   async function downloadCard() {
     if (!primary?.id || !session || cardLoading) return;
     setCardLoading(true);
@@ -754,6 +772,7 @@ export default function WordPage() {
                 <AudioButton text={primary?.simplified || hanzi} />
                 <AddToListButton simplified={primary?.simplified || hanzi} />
                 {isAdmin && <button className="card-dl-btn" onClick={downloadCard} disabled={cardLoading} title="Download card">{cardLoading ? '…' : '↓ Card'}</button>}
+                {isAdmin && <button className="card-dl-btn" onClick={setWordOfDay} disabled={wodStatus === 'saving'} title="Set as Word of Day">{wodStatus === 'saving' ? '…' : wodStatus === 'done' ? '✓ Set!' : wodStatus === 'error' ? '✗ Error' : '📅 WoD'}</button>}
               </div>
             </div>
           ) : (
@@ -766,6 +785,7 @@ export default function WordPage() {
                   <AudioButton text={primary?.simplified || hanzi} />
                   <AddToListButton simplified={primary?.simplified || hanzi} />
                   {isAdmin && <button className="card-dl-btn" onClick={downloadCard} disabled={cardLoading} title="Download card">{cardLoading ? '…' : '↓ Card'}</button>}
+                {isAdmin && <button className="card-dl-btn" onClick={setWordOfDay} disabled={wodStatus === 'saving'} title="Set as Word of Day">{wodStatus === 'saving' ? '…' : wodStatus === 'done' ? '✓ Set!' : wodStatus === 'error' ? '✗ Error' : '📅 WoD'}</button>}
                 </div>
                 {taiwanPinyin && <div className="taiwan-pr-below">also {taiwanPinyin} in Taiwan</div>}
                 {posLine && <div className="pos-line">{posLine}</div>}
