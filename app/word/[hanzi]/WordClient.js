@@ -139,6 +139,8 @@ export default function WordPage() {
   const [editVal, setEditVal] = useState('');
   const [editSaving, setEditSaving] = useState(false);
   const [confirmDeleteDefIdx, setConfirmDeleteDefIdx] = useState(null);
+  const [dragOverIdx, setDragOverIdx] = useState(null);
+  const dragIndexRef = useRef(null);
   const [editingExampleId, setEditingExampleId] = useState(null);
   const [editExFields, setEditExFields] = useState({ chinese: '', pinyin: '', english: '' });
   const [editExSaving, setEditExSaving] = useState(false);
@@ -553,6 +555,37 @@ export default function WordPage() {
     } catch (e) { console.error('Delete failed:', e); }
   }
 
+  async function reorderDefs(fromIdx, toIdx) {
+    if (fromIdx === null || fromIdx === toIdx) return;
+    const newOrder = [...groupedDefs];
+    const [moved] = newOrder.splice(fromIdx, 1);
+    newOrder.splice(toIdx, 0, moved);
+    // Rebuild allDefs in new group order, preserving non-grouped entries at the end
+    const newAllDefs = [];
+    const covered = new Set();
+    for (const group of newOrder) {
+      for (let di = group.start; di <= group.end; di++) {
+        const ai = defIndices[di];
+        newAllDefs.push(allDefs[ai]);
+        covered.add(ai);
+      }
+    }
+    for (let ai = 0; ai < allDefs.length; ai++) {
+      if (!covered.has(ai)) newAllDefs.push(allDefs[ai]);
+    }
+    const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
+    const prev = localDefinitions ?? primary.definitions;
+    setLocalDefinitions(newDefinitions);
+    try {
+      const resp = await fetch(`/api/entries/${primary.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
+        body: JSON.stringify({ definitions: newDefinitions }),
+      });
+      if (!resp.ok) setLocalDefinitions(prev);
+    } catch (e) { setLocalDefinitions(prev); }
+  }
+
   function startExEdit(ex) {
     setEditingExampleId(ex.id);
     setEditExFields({ chinese: ex.chinese, pinyin: ex.pinyin || '', english: ex.english });
@@ -745,7 +778,17 @@ export default function WordPage() {
           <div className="sec-label">Definitions</div>
           <ul className="defs">
             {(isAdmin || showAllDefs ? groupedDefs : groupedDefs.slice(0, 6)).map((group, i) => (
-              <li key={i} className="def-row">
+              <li
+                key={i}
+                className={`def-row${dragOverIdx === i ? ' def-row-drag-over' : ''}`}
+                draggable={isAdmin && editingDefIdx === null}
+                onDragStart={isAdmin ? () => { dragIndexRef.current = i; } : undefined}
+                onDragOver={isAdmin ? (e) => { e.preventDefault(); setDragOverIdx(i); } : undefined}
+                onDragLeave={isAdmin ? () => setDragOverIdx(null) : undefined}
+                onDrop={isAdmin ? (e) => { e.preventDefault(); setDragOverIdx(null); reorderDefs(dragIndexRef.current, i); dragIndexRef.current = null; } : undefined}
+                onDragEnd={isAdmin ? () => { setDragOverIdx(null); dragIndexRef.current = null; } : undefined}
+              >
+                {isAdmin && <span className="def-drag-handle" title="Drag to reorder">⠿</span>}
                 <span className="def-num">{i + 1}</span>
                 <div style={{ flex: 1 }}>
                   {isAdmin && editingDefIdx === i ? (
