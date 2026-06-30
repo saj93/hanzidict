@@ -28,13 +28,6 @@ export default function Footer({ compactNewsletter = false }) {
           </span>
         ))}
       </div>
-      <div className="footer-secondary-links">
-        <button className="footer-sec-btn" onClick={() => router.push('/phrasebook')}>Phrasebook</button>
-        <span className="footer-dot">·</span>
-        <button className="footer-sec-btn" onClick={() => router.push('/learn')}>Learn</button>
-        <span className="footer-dot">·</span>
-        <button className="footer-sec-btn" onClick={() => router.push('/about')}>About</button>
-      </div>
       <div className="footer-bottom">
         <span>HanziDict · Data from CC-CEDICT (CC BY-SA 4.0)</span>
         <span>Open source · GitHub</span>

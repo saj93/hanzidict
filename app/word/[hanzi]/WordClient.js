@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
-import { isVariantEntry, isTruePointer, cleanDefinitions, firstDef } from '../../../lib/utils';
+import { isVariantEntry, isTruePointer, cleanDefinitions, firstDef, cleanDef } from '../../../lib/utils';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
@@ -139,8 +139,6 @@ export default function WordPage() {
   const [editVal, setEditVal] = useState('');
   const [editSaving, setEditSaving] = useState(false);
   const [confirmDeleteDefIdx, setConfirmDeleteDefIdx] = useState(null);
-  const [dragOverIdx, setDragOverIdx] = useState(null);
-  const dragIndexRef = useRef(null);
   const [editingExampleId, setEditingExampleId] = useState(null);
   const [editExFields, setEditExFields] = useState({ chinese: '', pinyin: '', english: '' });
   const [editExSaving, setEditExSaving] = useState(false);
@@ -494,85 +492,7 @@ export default function WordPage() {
   const pinyin = convertPinyin(primary.pinyin);
   const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
 
-  async function saveDefEdit() {
-    if (editingDefIdx === null || !primary?.id || !session) return;
-    setEditSaving(true);
-    const val = editVal.trim();
-    let newAllDefs = [...allDefs];
-    if (editingDefIdx === groupedDefs.length) {
-      // Appending a brand-new definition
-      if (val) newAllDefs.push(val);
-    } else {
-      // Editing a grouped def: replace the full range of allDefs entries it spans
-      // with the edited text as a single entry (merges previously split sub-meanings)
-      const group = groupedDefs[editingDefIdx];
-      const firstAllIdx = defIndices[group.start];
-      const lastAllIdx = defIndices[group.end];
-      newAllDefs = [
-        ...allDefs.slice(0, firstAllIdx),
-        ...(val ? [val] : []),
-        ...allDefs.slice(lastAllIdx + 1),
-      ];
-    }
-    const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
-    try {
-      const resp = await fetch(`/api/entries/${primary.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
-        body: JSON.stringify({ definitions: newDefinitions }),
-      });
-      if (resp.ok) {
-        setLocalDefinitions(newDefinitions);
-        setEditingDefIdx(null);
-        setEditVal('');
-      } else {
-        const err = await resp.json().catch(() => ({}));
-        console.error('Save failed:', err);
-      }
-    } catch (e) {
-      console.error('Save failed:', e);
-    }
-    setEditSaving(false);
-  }
-
-  async function deleteDefAt(groupIdx) {
-    if (!primary?.id || !session) return;
-    const group = groupedDefs[groupIdx];
-    const firstAllIdx = defIndices[group.start];
-    const lastAllIdx = defIndices[group.end];
-    const newAllDefs = [
-      ...allDefs.slice(0, firstAllIdx),
-      ...allDefs.slice(lastAllIdx + 1),
-    ];
-    const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
-    try {
-      const resp = await fetch(`/api/entries/${primary.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
-        body: JSON.stringify({ definitions: newDefinitions }),
-      });
-      if (resp.ok) setLocalDefinitions(newDefinitions);
-    } catch (e) { console.error('Delete failed:', e); }
-  }
-
-  async function reorderDefs(fromIdx, toIdx) {
-    if (fromIdx === null || fromIdx === toIdx) return;
-    const newOrder = [...groupedDefs];
-    const [moved] = newOrder.splice(fromIdx, 1);
-    newOrder.splice(toIdx, 0, moved);
-    // Rebuild allDefs in new group order, preserving non-grouped entries at the end
-    const newAllDefs = [];
-    const covered = new Set();
-    for (const group of newOrder) {
-      for (let di = group.start; di <= group.end; di++) {
-        const ai = defIndices[di];
-        newAllDefs.push(allDefs[ai]);
-        covered.add(ai);
-      }
-    }
-    for (let ai = 0; ai < allDefs.length; ai++) {
-      if (!covered.has(ai)) newAllDefs.push(allDefs[ai]);
-    }
+  async function patchDefs(newAllDefs) {
     const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
     const prev = localDefinitions ?? primary.definitions;
     setLocalDefinitions(newDefinitions);
@@ -584,6 +504,40 @@ export default function WordPage() {
       });
       if (!resp.ok) setLocalDefinitions(prev);
     } catch (e) { setLocalDefinitions(prev); }
+  }
+
+  async function saveDefEdit() {
+    if (editingDefIdx === null || !primary?.id || !session) return;
+    setEditSaving(true);
+    const val = editVal.trim();
+    const newAllDefs = [...allDefs];
+    if (editingDefIdx === defs.length) {
+      if (val) newAllDefs.push(val);
+    } else {
+      const ai = defIndices[editingDefIdx];
+      if (val) newAllDefs[ai] = val;
+      else newAllDefs.splice(ai, 1);
+    }
+    await patchDefs(newAllDefs);
+    setEditingDefIdx(null);
+    setEditVal('');
+    setEditSaving(false);
+  }
+
+  async function deleteDefAt(defIdx) {
+    if (!primary?.id || !session) return;
+    const ai = defIndices[defIdx];
+    await patchDefs(allDefs.filter((_, i) => i !== ai));
+  }
+
+  async function moveDefUpDown(defIdx, dir) {
+    const newIdx = defIdx + dir;
+    if (newIdx < 0 || newIdx >= defs.length) return;
+    const ai1 = defIndices[defIdx];
+    const ai2 = defIndices[newIdx];
+    const newAllDefs = [...allDefs];
+    [newAllDefs[ai1], newAllDefs[ai2]] = [newAllDefs[ai2], newAllDefs[ai1]];
+    await patchDefs(newAllDefs);
   }
 
   function startExEdit(ex) {
@@ -777,18 +731,10 @@ export default function WordPage() {
 
           <div className="sec-label">Definitions</div>
           <ul className="defs">
-            {(isAdmin || showAllDefs ? groupedDefs : groupedDefs.slice(0, 6)).map((group, i) => (
-              <li
-                key={i}
-                className={`def-row${dragOverIdx === i ? ' def-row-drag-over' : ''}`}
-                draggable={isAdmin && editingDefIdx === null}
-                onDragStart={isAdmin ? () => { dragIndexRef.current = i; } : undefined}
-                onDragOver={isAdmin ? (e) => { e.preventDefault(); setDragOverIdx(i); } : undefined}
-                onDragLeave={isAdmin ? () => setDragOverIdx(null) : undefined}
-                onDrop={isAdmin ? (e) => { e.preventDefault(); setDragOverIdx(null); reorderDefs(dragIndexRef.current, i); dragIndexRef.current = null; } : undefined}
-                onDragEnd={isAdmin ? () => { setDragOverIdx(null); dragIndexRef.current = null; } : undefined}
-              >
-                {isAdmin && <span className="def-drag-handle" title="Drag to reorder">⠿</span>}
+            {(isAdmin ? defs : (showAllDefs ? groupedDefs : groupedDefs.slice(0, 6))).map((item, i) => {
+              const displayText = isAdmin ? cleanDef(defs[i]) : item.text;
+              return (
+              <li key={i} className="def-row">
                 <span className="def-num">{i + 1}</span>
                 <div style={{ flex: 1 }}>
                   {isAdmin && editingDefIdx === i ? (
@@ -814,11 +760,13 @@ export default function WordPage() {
                     </div>
                   ) : (
                     <>
-                      {convertPinyinInText(group.text)}
+                      {convertPinyinInText(displayText)}
                       {isAdmin && (
                         <>
-                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(group.text); setConfirmDeleteDefIdx(null); }}>Edit</button>
+                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(displayText); setConfirmDeleteDefIdx(null); }}>Edit</button>
                           <button className="def-edit-btn" onClick={() => setConfirmDeleteDefIdx(i)} style={{ color: '#c0392b' }}>Delete</button>
+                          <button className="def-move-btn" onClick={() => moveDefUpDown(i, -1)} disabled={i === 0} title="Move up">↑</button>
+                          <button className="def-move-btn" onClick={() => moveDefUpDown(i, 1)} disabled={i === defs.length - 1} title="Move down">↓</button>
                         </>
                       )}
                       {i === 0 && examples.length > 0 && (() => {
@@ -894,10 +842,11 @@ export default function WordPage() {
                   )}
                 </div>
               </li>
-            ))}
-            {isAdmin && editingDefIdx === groupedDefs.length && (
+              );
+            })}
+            {isAdmin && editingDefIdx === defs.length && (
               <li className="def-row" key="new">
-                <span className="def-num">{groupedDefs.length + 1}</span>
+                <span className="def-num">{defs.length + 1}</span>
                 <div style={{ flex: 1 }}>
                   <div className="def-edit-wrap">
                     <textarea className="def-edit-input" value={editVal} onChange={e => setEditVal(e.target.value)}
@@ -912,9 +861,9 @@ export default function WordPage() {
               </li>
             )}
           </ul>
-          {isAdmin && editingDefIdx !== groupedDefs.length && (
+          {isAdmin && editingDefIdx !== defs.length && (
             <button className="def-edit-btn" style={{ marginLeft: 0, marginTop: 8 }}
-              onClick={() => { setEditingDefIdx(groupedDefs.length); setEditVal(''); setConfirmDeleteDefIdx(null); }}>
+              onClick={() => { setEditingDefIdx(defs.length); setEditVal(''); setConfirmDeleteDefIdx(null); }}>
               + Add definition
             </button>
           )}

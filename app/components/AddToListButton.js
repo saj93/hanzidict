@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import { createClient } from '@/lib/supabase';
 
-const POPOVER_W = 230;
+const POPOVER_W = 270;
 
 export default function AddToListButton({ simplified }) {
   const { user, session } = useAuth();
