@@ -477,9 +477,13 @@ export default function WordPage() {
       defIndices.push(ai);
     }
   }
-  // Sort: multi-word groups first (stable), single-word groups last.
-  // Prevents a bare noun like "heel" appearing as #1 when verbal meanings exist.
+  // Sort: secondary-register annotations last, then multi-word groups first.
+  // Prevents "(classical) to say" appearing as #1 when a common modern meaning exists.
+  const SECONDARY_FIRST_RE = /^\((?:classical|archaic|literary|historical|old|figuratively|slang|dialect|dialectal|informal|vulgar|offensive|Cantonese|Wu|Min)\)/i;
   const groupedDefs = groupShortDefs(defs).sort((a, b) => {
+    const aSec = SECONDARY_FIRST_RE.test(a.text.trim()) ? 1 : 0;
+    const bSec = SECONDARY_FIRST_RE.test(b.text.trim()) ? 1 : 0;
+    if (aSec !== bSec) return aSec - bSec;
     const aShort = a.text.trim().split(/\s+/).filter(Boolean).length < 2 ? 1 : 0;
     const bShort = b.text.trim().split(/\s+/).filter(Boolean).length < 2 ? 1 : 0;
     return aShort - bShort;
