@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AudioButton from './AudioButton';
 import { convertPinyin } from '../../lib/pinyin';
 import { firstDef } from '../../lib/utils';
 import { useSimpToTrad } from '../hooks/useSimpToTrad';
+import { useAuth } from './AuthProvider';
 
 const HSK_LABEL: Record<number, string> = {
   1: 'HSK 1', 2: 'HSK 2', 3: 'HSK 3',
@@ -14,11 +16,30 @@ const HSK_LABEL: Record<number, string> = {
 export default function WordOfDay({ wordData, script }: { wordData: any; script: string }) {
   const router = useRouter();
   const toTraditional = useSimpToTrad(script);
-  if (!wordData) return null;
+  const { isAdmin, session } = (useAuth() as any) ?? {};
+  const [clearing, setClearing] = useState(false);
+  const [cleared, setCleared] = useState(false);
+  if (!wordData || cleared) return null;
 
   const hanzi = toTraditional(wordData.simplified);
   const def = firstDef(wordData.definitions);
   const label = wordData.isChengyu ? '成语 · Chengyu of the day' : 'Word of the day';
+
+  async function clearOverride() {
+    if (!session || clearing) return;
+    setClearing(true);
+    try {
+      await fetch('/api/admin/word-of-day', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ simplified: '' }),
+      });
+      setCleared(true);
+      router.refresh();
+    } finally {
+      setClearing(false);
+    }
+  }
 
   return (
     <div className="wotd-wrap">
@@ -42,6 +63,15 @@ export default function WordOfDay({ wordData, script }: { wordData: any; script:
         </div>
         <div className="wotd-side">
           <AudioButton text={hanzi} />
+          {isAdmin && wordData.isOverride && (
+            <button
+              className="card-dl-btn"
+              onClick={e => { e.stopPropagation(); clearOverride(); }}
+              disabled={clearing}
+              title="Clear Word of Day override"
+              style={{ fontSize: 11 }}
+            >{clearing ? '…' : '✕ WoD'}</button>
+          )}
           <button
             className="wotd-link-btn"
             onClick={() => router.push(`/word/${encodeURIComponent(wordData.simplified)}`)}
