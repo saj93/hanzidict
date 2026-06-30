@@ -185,7 +185,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
               <HistoryDropdown
                 history={history.slice(0, 10)}
                 onSelect={selectFromHistory}
-                onRemove={(q) => { suppressNextOutsideRef.current = true; removeHistory(q); }}
+                onRemove={(q: string) => { suppressNextOutsideRef.current = true; removeHistory(q); }}
                 onClear={clearHistory}
               />
             )}
