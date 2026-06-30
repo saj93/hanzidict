@@ -98,6 +98,7 @@ function processExactMatches(entries) {
     }
     deduped.push({
       ...best,
+      _rawDefinitions: best.definitions, // single-row defs before merging; used for admin editing
       definitions: mergedDefs.length ? mergedDefs.join(' | ') : best.definitions,
     });
   }
@@ -439,7 +440,9 @@ export default function WordPage() {
     );
   }
 
-  const rawDefs = localDefinitions ?? primary.definitions ?? '';
+  // Admins edit the primary row's own definitions only (not the cross-row merge),
+  // so that PATCH /api/entries/:id actually covers everything being shown.
+  const rawDefs = localDefinitions ?? (isAdmin ? (primary._rawDefinitions ?? primary.definitions) : primary.definitions) ?? '';
   const IDIOM_STRIP_RE = /\s*\(idiom\)[;,]?\s*/gi;
   const allDefs = (cleanDefinitions(rawDefs) || rawDefs || '')
     .split(' | ')
