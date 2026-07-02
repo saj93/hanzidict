@@ -441,32 +441,52 @@ export default function UnitPage() {
           </div>
         )}
 
-        {/* Tab: Vocabulary — flatten + deduplicate vocabCards, split into Verbs / Words */}
+        {/* Tab: Vocabulary
+            Units 1-5: use hand-curated vocabCards (individual key words).
+            Units 6-11: vocabCards were moved to content/phrasebook/theme-vocab.json
+            (preserved for future /words/[theme] pages); fall back to phrases instead. */}
         {tab === 'vocabulary' && (() => {
-          const allItems = [...new Map(
-            (situation.vocabCards ?? []).flatMap(g => g.items).map(item => [item.hanzi, item])
-          ).values()];
-          const vocabVerbs = allItems.filter(item => item.english.trimStart().startsWith('to '));
-          const vocabWords = allItems.filter(item => !item.english.trimStart().startsWith('to '));
+          const hasVocabCards = (situation.vocabCards ?? []).length > 0;
+          if (hasVocabCards) {
+            const allItems = [...new Map(
+              situation.vocabCards.flatMap(g => g.items).map(item => [item.hanzi, item])
+            ).values()];
+            const vocabVerbs = allItems.filter(item => item.english.trimStart().startsWith('to '));
+            const vocabWords = allItems.filter(item => !item.english.trimStart().startsWith('to '));
+            return (
+              <div className="unit-section">
+                {vocabVerbs.length > 0 && (
+                  <>
+                    <div className="unit-vocab-label">Verbs</div>
+                    <div className="verbs-list">
+                      {vocabVerbs.map((item, i) => <VocabRow key={i} item={item} />)}
+                    </div>
+                  </>
+                )}
+                {vocabWords.length > 0 && (
+                  <>
+                    <div className="unit-vocab-label">Words</div>
+                    <div className="verbs-list">
+                      {vocabWords.map((item, i) => <VocabRow key={i} item={item} />)}
+                    </div>
+                  </>
+                )}
+              </div>
+            );
+          }
+          // Phrase-derived vocabulary: use actual situation phrases as study items
+          const allPhrases = situation.sections.flatMap(s => s.phrases);
           return (
             <div className="unit-section">
-              {vocabVerbs.length > 0 && (
-                <>
-                  <div className="unit-vocab-label">Verbs</div>
+              {situation.sections.map((sec, si) => (
+                <div key={si}>
+                  <div className="unit-vocab-label">{sec.title}</div>
                   <div className="verbs-list">
-                    {vocabVerbs.map((item, i) => <VocabRow key={i} item={item} />)}
+                    {sec.phrases.map((item, i) => <VocabRow key={i} item={item} />)}
                   </div>
-                </>
-              )}
-              {vocabWords.length > 0 && (
-                <>
-                  <div className="unit-vocab-label">Words</div>
-                  <div className="verbs-list">
-                    {vocabWords.map((item, i) => <VocabRow key={i} item={item} />)}
-                  </div>
-                </>
-              )}
-              {allItems.length === 0 && (
+                </div>
+              ))}
+              {allPhrases.length === 0 && (
                 <p style={{ color: 'var(--fg3)', padding: '24px 0', textAlign: 'center' }}>
                   Vocabulary coming soon for this unit.
                 </p>
@@ -480,12 +500,6 @@ export default function UnitPage() {
           {renderPractice()}
         </div>
 
-        {/* Phrasebook link — always at bottom */}
-        <div className="unit-phrasebook-link">
-          <button className="unit-phrasebook-btn" onClick={() => router.push('/phrasebook')}>
-            Browse the full phrasebook →
-          </button>
-        </div>
       </div>
 
       <Footer />

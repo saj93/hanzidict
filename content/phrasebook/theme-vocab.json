@@ -1,0 +1,584 @@
+{
+  "situation-6": [
+    {
+      "title": "Types of cuisine 菜系",
+      "items": [
+        {
+          "hanzi": "川菜",
+          "pinyin": "Chuāncài",
+          "english": "Sichuan cuisine"
+        },
+        {
+          "hanzi": "粤菜",
+          "pinyin": "Yuècài",
+          "english": "Cantonese cuisine"
+        },
+        {
+          "hanzi": "北京菜",
+          "pinyin": "Běijīng cài",
+          "english": "Beijing cuisine"
+        },
+        {
+          "hanzi": "素菜",
+          "pinyin": "Sùcài",
+          "english": "Vegetarian dish"
+        },
+        {
+          "hanzi": "海鲜",
+          "pinyin": "Hǎixiān",
+          "english": "Seafood"
+        }
+      ]
+    },
+    {
+      "title": "Flavors 口味",
+      "items": [
+        {
+          "hanzi": "辣",
+          "pinyin": "Là",
+          "english": "Spicy"
+        },
+        {
+          "hanzi": "甜",
+          "pinyin": "Tián",
+          "english": "Sweet"
+        },
+        {
+          "hanzi": "咸",
+          "pinyin": "Xián",
+          "english": "Salty"
+        },
+        {
+          "hanzi": "酸",
+          "pinyin": "Suān",
+          "english": "Sour"
+        },
+        {
+          "hanzi": "苦",
+          "pinyin": "Kǔ",
+          "english": "Bitter"
+        },
+        {
+          "hanzi": "淡",
+          "pinyin": "Dàn",
+          "english": "Bland / mild"
+        }
+      ]
+    },
+    {
+      "title": "Useful nouns 常用词",
+      "items": [
+        {
+          "hanzi": "菜单",
+          "pinyin": "Càidān",
+          "english": "Menu"
+        },
+        {
+          "hanzi": "筷子",
+          "pinyin": "Kuàizi",
+          "english": "Chopsticks"
+        },
+        {
+          "hanzi": "勺子",
+          "pinyin": "Sháozi",
+          "english": "Spoon"
+        },
+        {
+          "hanzi": "叉子",
+          "pinyin": "Chāzi",
+          "english": "Fork"
+        },
+        {
+          "hanzi": "服务员",
+          "pinyin": "Fúwùyuán",
+          "english": "Waiter/waitress"
+        },
+        {
+          "hanzi": "账单",
+          "pinyin": "Zhàngdān",
+          "english": "Bill"
+        },
+        {
+          "hanzi": "收据",
+          "pinyin": "Shōujù",
+          "english": "Receipt"
+        },
+        {
+          "hanzi": "外卖",
+          "pinyin": "Wàimài",
+          "english": "Takeaway/delivery"
+        }
+      ]
+    }
+  ],
+  "situation-7": [
+    {
+      "title": "Weather 天气",
+      "items": [
+        {
+          "hanzi": "晴天",
+          "pinyin": "Qíngtiān",
+          "english": "Sunny day"
+        },
+        {
+          "hanzi": "阴天",
+          "pinyin": "Yīntiān",
+          "english": "Cloudy day"
+        },
+        {
+          "hanzi": "下雨",
+          "pinyin": "Xià yǔ",
+          "english": "Raining"
+        },
+        {
+          "hanzi": "下雪",
+          "pinyin": "Xià xuě",
+          "english": "Snowing"
+        },
+        {
+          "hanzi": "刮风",
+          "pinyin": "Guā fēng",
+          "english": "Windy"
+        },
+        {
+          "hanzi": "雾霾",
+          "pinyin": "Wùmái",
+          "english": "Smog/haze"
+        },
+        {
+          "hanzi": "温度",
+          "pinyin": "Wēndù",
+          "english": "Temperature"
+        }
+      ]
+    },
+    {
+      "title": "Family members 家庭成员",
+      "items": [
+        {
+          "hanzi": "父母",
+          "pinyin": "Fùmǔ",
+          "english": "Parents"
+        },
+        {
+          "hanzi": "爸爸",
+          "pinyin": "Bàba",
+          "english": "Father/Dad"
+        },
+        {
+          "hanzi": "妈妈",
+          "pinyin": "Māma",
+          "english": "Mother/Mom"
+        },
+        {
+          "hanzi": "哥哥",
+          "pinyin": "Gēge",
+          "english": "Older brother"
+        },
+        {
+          "hanzi": "弟弟",
+          "pinyin": "Dìdi",
+          "english": "Younger brother"
+        },
+        {
+          "hanzi": "姐姐",
+          "pinyin": "Jiějie",
+          "english": "Older sister"
+        },
+        {
+          "hanzi": "妹妹",
+          "pinyin": "Mèimei",
+          "english": "Younger sister"
+        },
+        {
+          "hanzi": "爷爷",
+          "pinyin": "Yéye",
+          "english": "Paternal grandfather"
+        },
+        {
+          "hanzi": "奶奶",
+          "pinyin": "Nǎinai",
+          "english": "Paternal grandmother"
+        },
+        {
+          "hanzi": "外公",
+          "pinyin": "Wàigōng",
+          "english": "Maternal grandfather"
+        },
+        {
+          "hanzi": "外婆",
+          "pinyin": "Wàipó",
+          "english": "Maternal grandmother"
+        }
+      ]
+    },
+    {
+      "title": "Hobbies 爱好",
+      "items": [
+        {
+          "hanzi": "看书",
+          "pinyin": "Kàn shū",
+          "english": "Reading"
+        },
+        {
+          "hanzi": "听音乐",
+          "pinyin": "Tīng yīnyuè",
+          "english": "Listening to music"
+        },
+        {
+          "hanzi": "看电影",
+          "pinyin": "Kàn diànyǐng",
+          "english": "Watching movies"
+        },
+        {
+          "hanzi": "追剧",
+          "pinyin": "Zhuī jù",
+          "english": "Binge-watching series"
+        },
+        {
+          "hanzi": "健身",
+          "pinyin": "Jiànshēn",
+          "english": "Working out"
+        },
+        {
+          "hanzi": "做饭",
+          "pinyin": "Zuò fàn",
+          "english": "Cooking"
+        },
+        {
+          "hanzi": "旅游",
+          "pinyin": "Lǚyóu",
+          "english": "Traveling"
+        },
+        {
+          "hanzi": "打游戏",
+          "pinyin": "Dǎ yóuxì",
+          "english": "Playing video games"
+        }
+      ]
+    }
+  ],
+  "situation-8": [
+    {
+      "title": "Transport 交通",
+      "items": [
+        {
+          "hanzi": "地铁",
+          "pinyin": "Dìtiě",
+          "english": "Subway/metro"
+        },
+        {
+          "hanzi": "公交车",
+          "pinyin": "Gōngjiāochē",
+          "english": "Bus"
+        },
+        {
+          "hanzi": "出租车",
+          "pinyin": "Chūzūchē",
+          "english": "Taxi"
+        },
+        {
+          "hanzi": "滴滴",
+          "pinyin": "Dīdī",
+          "english": "Didi (Chinese Uber)"
+        },
+        {
+          "hanzi": "高铁",
+          "pinyin": "Gāotiě",
+          "english": "High-speed train"
+        },
+        {
+          "hanzi": "火车",
+          "pinyin": "Huǒchē",
+          "english": "Train"
+        },
+        {
+          "hanzi": "飞机",
+          "pinyin": "Fēijī",
+          "english": "Airplane"
+        },
+        {
+          "hanzi": "机场",
+          "pinyin": "Jīchǎng",
+          "english": "Airport"
+        },
+        {
+          "hanzi": "火车站",
+          "pinyin": "Huǒchē zhàn",
+          "english": "Train station"
+        }
+      ]
+    },
+    {
+      "title": "Hotel 酒店",
+      "items": [
+        {
+          "hanzi": "前台",
+          "pinyin": "Qiántái",
+          "english": "Front desk/reception"
+        },
+        {
+          "hanzi": "房间",
+          "pinyin": "Fángjiān",
+          "english": "Room"
+        },
+        {
+          "hanzi": "钥匙",
+          "pinyin": "Yàoshi",
+          "english": "Key"
+        },
+        {
+          "hanzi": "行李",
+          "pinyin": "Xíngli",
+          "english": "Luggage"
+        },
+        {
+          "hanzi": "早餐",
+          "pinyin": "Zǎocān",
+          "english": "Breakfast"
+        },
+        {
+          "hanzi": "空调",
+          "pinyin": "Kōngtiáo",
+          "english": "Air conditioning"
+        },
+        {
+          "hanzi": "入住",
+          "pinyin": "Rùzhù",
+          "english": "Check-in"
+        },
+        {
+          "hanzi": "退房",
+          "pinyin": "Tuì fáng",
+          "english": "Check-out"
+        }
+      ]
+    }
+  ],
+  "situation-9": [
+    {
+      "title": "Key words 关键词",
+      "items": [
+        {
+          "hanzi": "价格",
+          "pinyin": "Jiàgé",
+          "english": "Price"
+        },
+        {
+          "hanzi": "折扣",
+          "pinyin": "Zhékòu",
+          "english": "Discount"
+        },
+        {
+          "hanzi": "打折",
+          "pinyin": "Dǎzhé",
+          "english": "On sale"
+        },
+        {
+          "hanzi": "便宜",
+          "pinyin": "Piányí",
+          "english": "Cheap/inexpensive"
+        },
+        {
+          "hanzi": "贵",
+          "pinyin": "Guì",
+          "english": "Expensive"
+        },
+        {
+          "hanzi": "尺码",
+          "pinyin": "Chǐmǎ",
+          "english": "Size (clothing)"
+        },
+        {
+          "hanzi": "颜色",
+          "pinyin": "Yánsè",
+          "english": "Color"
+        },
+        {
+          "hanzi": "收银台",
+          "pinyin": "Shōuyíntái",
+          "english": "Cashier/checkout"
+        },
+        {
+          "hanzi": "试衣间",
+          "pinyin": "Shì yī jiān",
+          "english": "Fitting room"
+        },
+        {
+          "hanzi": "发票",
+          "pinyin": "Fāpiào",
+          "english": "Official receipt/invoice"
+        },
+        {
+          "hanzi": "退换",
+          "pinyin": "Tuìhuàn",
+          "english": "Return/exchange"
+        }
+      ]
+    }
+  ],
+  "situation-10": [
+    {
+      "title": "Key words 关键词",
+      "items": [
+        {
+          "hanzi": "会议",
+          "pinyin": "Huìyì",
+          "english": "Meeting"
+        },
+        {
+          "hanzi": "合同",
+          "pinyin": "Hétong",
+          "english": "Contract"
+        },
+        {
+          "hanzi": "名片",
+          "pinyin": "Míngpiàn",
+          "english": "Business card"
+        },
+        {
+          "hanzi": "合作",
+          "pinyin": "Hézuò",
+          "english": "Cooperation/partnership"
+        },
+        {
+          "hanzi": "客户",
+          "pinyin": "Kèhù",
+          "english": "Client/customer"
+        },
+        {
+          "hanzi": "谈判",
+          "pinyin": "Tánpàn",
+          "english": "Negotiation"
+        },
+        {
+          "hanzi": "项目",
+          "pinyin": "Xiàngmù",
+          "english": "Project"
+        },
+        {
+          "hanzi": "方案",
+          "pinyin": "Fāng'àn",
+          "english": "Proposal/plan"
+        },
+        {
+          "hanzi": "报价",
+          "pinyin": "Bàojià",
+          "english": "Quote/price offer"
+        },
+        {
+          "hanzi": "签约",
+          "pinyin": "Qiānyuē",
+          "english": "Sign a contract"
+        },
+        {
+          "hanzi": "出差",
+          "pinyin": "Chūchāi",
+          "english": "Business trip"
+        }
+      ]
+    }
+  ],
+  "situation-11": [
+    {
+      "title": "Chinese apps 中国应用",
+      "items": [
+        {
+          "hanzi": "微信",
+          "pinyin": "Wēixìn",
+          "english": "WeChat — messaging, payments, everything"
+        },
+        {
+          "hanzi": "抖音",
+          "pinyin": "Dǒuyīn",
+          "english": "Douyin — Chinese TikTok, dominant video app"
+        },
+        {
+          "hanzi": "支付宝",
+          "pinyin": "Zhīfùbǎo",
+          "english": "Alipay — mobile payments"
+        },
+        {
+          "hanzi": "小红书",
+          "pinyin": "Xiǎohóngshū",
+          "english": "Xiaohongshu (RedNote) — lifestyle, shopping"
+        },
+        {
+          "hanzi": "哔哩哔哩",
+          "pinyin": "Bìlìbìlì",
+          "english": "Bilibili (B站) — long-form video, popular with youth"
+        },
+        {
+          "hanzi": "拼多多",
+          "pinyin": "Pīnduōduō",
+          "english": "Pinduoduo — e-commerce, very popular"
+        },
+        {
+          "hanzi": "滴滴",
+          "pinyin": "Dīdī",
+          "english": "Didi — Chinese Uber"
+        },
+        {
+          "hanzi": "百度",
+          "pinyin": "Bǎidù",
+          "english": "Baidu — Chinese search engine"
+        },
+        {
+          "hanzi": "微博",
+          "pinyin": "Wēibó",
+          "english": "Weibo — social/news, declining but still used"
+        }
+      ]
+    },
+    {
+      "title": "General tech 科技词汇",
+      "items": [
+        {
+          "hanzi": "手机",
+          "pinyin": "Shǒujī",
+          "english": "Mobile phone"
+        },
+        {
+          "hanzi": "充电",
+          "pinyin": "Chōngdiàn",
+          "english": "Charge (battery)"
+        },
+        {
+          "hanzi": "密码",
+          "pinyin": "Mìmǎ",
+          "english": "Password"
+        },
+        {
+          "hanzi": "二维码",
+          "pinyin": "Èrwéimǎ",
+          "english": "QR code"
+        },
+        {
+          "hanzi": "信号",
+          "pinyin": "Xìnhào",
+          "english": "Signal"
+        },
+        {
+          "hanzi": "下载",
+          "pinyin": "Xiàzài",
+          "english": "Download"
+        },
+        {
+          "hanzi": "上传",
+          "pinyin": "Shàngchuán",
+          "english": "Upload"
+        },
+        {
+          "hanzi": "流量",
+          "pinyin": "Liúliàng",
+          "english": "Mobile data"
+        },
+        {
+          "hanzi": "网络",
+          "pinyin": "Wǎngluò",
+          "english": "Internet / network"
+        }
+      ]
+    }
+  ]
+}

@@ -3194,23 +3194,23 @@ html.dark .pb-type-qa { background: #2e1065; color: #c4b5fd; }
 /* Phrase badge pills — same shape as .badge on word pages */
 .pb-phrase-badge {
   font-size: 11px; padding: 3px 10px; border-radius: 6px;
-  border: 0.5px solid var(--border); white-space: nowrap;
+  border: 0.5px solid var(--accent); white-space: nowrap;
   font-family: var(--font-body), system-ui, sans-serif;
 }
 /* 🗣️ Everyday — green (native daily speech) */
-.pb-badge-everyday   { background: var(--accent-dim); color: var(--accent-text); border-color: var(--accent); }
+.pb-badge-everyday   { background: var(--accent-dim); color: var(--accent-text); }
 /* 📚 Textbook — blue (taught in class, rarely used) */
-.pb-badge-textbook   { background: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+.pb-badge-textbook   { background: #dbeafe; color: #1e40af; }
 /* 🤝 Polite — purple (respectful, not academic) */
-.pb-badge-polite     { background: #ede9fe; color: #5b21b6; border-color: #c4b5fd; }
+.pb-badge-polite     { background: #ede9fe; color: #5b21b6; }
 /* 💬 Colloquial — amber (informal, between friends) */
-.pb-badge-colloquial { background: #fef9c3; color: #713f12; border-color: #fbbf24; }
+.pb-badge-colloquial { background: #fef9c3; color: #713f12; }
 /* 🌏 Regional — teal (Taiwan / mainland / diaspora) */
-.pb-badge-regional   { background: #ccfbf1; color: #0f766e; border-color: #5eead4; }
-html.dark .pb-badge-textbook   { background: #1e3a5f; color: #93c5fd; border-color: #1e40af; }
-html.dark .pb-badge-polite     { background: #2e1f5e; color: #c4b5fd; border-color: #5b21b6; }
-html.dark .pb-badge-colloquial { background: #2d2a08; color: #fbbf24; border-color: #713f12; }
-html.dark .pb-badge-regional   { background: #042f2e; color: #5eead4; border-color: #0f766e; }
+.pb-badge-regional   { background: #ccfbf1; color: #0f766e; }
+html.dark .pb-badge-textbook   { background: #1e3a5f; color: #93c5fd; }
+html.dark .pb-badge-polite     { background: #2e1f5e; color: #c4b5fd; }
+html.dark .pb-badge-colloquial { background: #2d2a08; color: #fbbf24; }
+html.dark .pb-badge-regional   { background: #042f2e; color: #5eead4; }
 .pb-phrase-badge-note { font-size: 11px; color: var(--fg3); font-style: italic; }
 
 /* Locked / blurred phrases */
@@ -3423,4 +3423,27 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 @media (max-width: 480px) {
   .verb-pinyin { min-width: 70px; }
   .verb-def { display: none; }
+}
+
+/* ── Resources page ──────────────────────────────────────────────────────── */
+.resources-wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; }
+.resources-hero { text-align: center; margin-bottom: 48px; }
+.resources-title { font-size: 32px; font-weight: 700; color: var(--fg); margin: 0 0 10px; }
+.resources-sub { font-size: 15px; color: var(--fg3); margin: 0; }
+.resources-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+}
+.resources-card {
+  display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+  padding: 24px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--bg2); cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.resources-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+.resources-card-icon { font-size: 28px; margin-bottom: 12px; }
+.resources-card-title { font-size: 17px; font-weight: 600; color: var(--fg); margin-bottom: 6px; }
+.resources-card-desc { font-size: 13px; color: var(--fg3); line-height: 1.6; flex: 1; }
+.resources-card-link { font-size: 13px; color: var(--accent); margin-top: 16px; font-weight: 500; }
+@media (max-width: 540px) {
+  .resources-grid { grid-template-columns: 1fr; }
 }
