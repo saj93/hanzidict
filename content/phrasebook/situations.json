@@ -1655,6 +1655,73 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "推荐",
+            "pinyin": "Tuījiàn",
+            "english": "to recommend"
+          },
+          {
+            "hanzi": "打包",
+            "pinyin": "Dǎbāo",
+            "english": "to pack up; takeaway"
+          },
+          {
+            "hanzi": "过敏",
+            "pinyin": "Guòmǐn",
+            "english": "to be allergic to; allergy"
+          },
+          {
+            "hanzi": "刷卡",
+            "pinyin": "Shuā kǎ",
+            "english": "to pay by card"
+          },
+          {
+            "hanzi": "请客",
+            "pinyin": "Qǐng kè",
+            "english": "to treat someone; to pay for a meal"
+          },
+          {
+            "hanzi": "菜单",
+            "pinyin": "Càidān",
+            "english": "menu"
+          },
+          {
+            "hanzi": "素食",
+            "pinyin": "Sùshí",
+            "english": "vegetarian food"
+          },
+          {
+            "hanzi": "辣",
+            "pinyin": "Là",
+            "english": "spicy; hot"
+          },
+          {
+            "hanzi": "清真",
+            "pinyin": "Qīngzhēn",
+            "english": "halal"
+          },
+          {
+            "hanzi": "一共",
+            "pinyin": "Yīgòng",
+            "english": "in total; altogether"
+          },
+          {
+            "hanzi": "位",
+            "pinyin": "Wèi",
+            "english": "measure word for people (polite)"
+          },
+          {
+            "hanzi": "买单",
+            "pinyin": "Mǎidān",
+            "english": "bill; check (at a restaurant)"
+          }
+        ]
+      }
     ]
   },
   {
@@ -1936,6 +2003,73 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "结婚",
+            "pinyin": "Jiéhūn",
+            "english": "to get married; to marry"
+          },
+          {
+            "hanzi": "住",
+            "pinyin": "Zhù",
+            "english": "to live; to stay; to reside"
+          },
+          {
+            "hanzi": "健身",
+            "pinyin": "Jiànshēn",
+            "english": "to work out; to exercise; gym"
+          },
+          {
+            "hanzi": "追剧",
+            "pinyin": "Zhuī jù",
+            "english": "to binge-watch a series"
+          },
+          {
+            "hanzi": "天气",
+            "pinyin": "Tiānqì",
+            "english": "weather"
+          },
+          {
+            "hanzi": "热",
+            "pinyin": "Rè",
+            "english": "hot; heat"
+          },
+          {
+            "hanzi": "冷",
+            "pinyin": "Lěng",
+            "english": "cold"
+          },
+          {
+            "hanzi": "下雨",
+            "pinyin": "Xià yǔ",
+            "english": "to rain; rainy"
+          },
+          {
+            "hanzi": "爱好",
+            "pinyin": "Àihào",
+            "english": "hobby; interest"
+          },
+          {
+            "hanzi": "孩子",
+            "pinyin": "Háizi",
+            "english": "child; children; kids"
+          },
+          {
+            "hanzi": "室友",
+            "pinyin": "Shìyǒu",
+            "english": "roommate; flatmate"
+          },
+          {
+            "hanzi": "周末",
+            "pinyin": "Zhōumò",
+            "english": "weekend"
+          }
+        ]
+      }
     ]
   },
   {
@@ -2199,6 +2333,68 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "迷路",
+            "pinyin": "Mílù",
+            "english": "to get lost"
+          },
+          {
+            "hanzi": "预订",
+            "pinyin": "Yùdìng",
+            "english": "to reserve; to book in advance"
+          },
+          {
+            "hanzi": "入住",
+            "pinyin": "Rùzhù",
+            "english": "to check in (hotel)"
+          },
+          {
+            "hanzi": "退房",
+            "pinyin": "Tuì fáng",
+            "english": "to check out (hotel)"
+          },
+          {
+            "hanzi": "拍照",
+            "pinyin": "Pāi zhào",
+            "english": "to take a photo"
+          },
+          {
+            "hanzi": "地铁",
+            "pinyin": "Dìtiě",
+            "english": "subway; metro"
+          },
+          {
+            "hanzi": "附近",
+            "pinyin": "Fùjìn",
+            "english": "nearby; in the vicinity"
+          },
+          {
+            "hanzi": "票",
+            "pinyin": "Piào",
+            "english": "ticket"
+          },
+          {
+            "hanzi": "门票",
+            "pinyin": "Ménpiào",
+            "english": "entrance ticket; entrance fee"
+          },
+          {
+            "hanzi": "空调",
+            "pinyin": "Kōngtiáo",
+            "english": "air conditioning; AC"
+          },
+          {
+            "hanzi": "房间",
+            "pinyin": "Fángjiān",
+            "english": "room"
+          }
+        ]
+      }
     ]
   },
   {
@@ -2312,6 +2508,58 @@
             "badge": "everyday",
             "badgeNote": "Important in China",
             "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "买",
+            "pinyin": "Mǎi",
+            "english": "to buy; to purchase"
+          },
+          {
+            "hanzi": "试穿",
+            "pinyin": "Shìchuān",
+            "english": "to try on (clothes)"
+          },
+          {
+            "hanzi": "退换",
+            "pinyin": "Tuìhuàn",
+            "english": "to return or exchange (a product)"
+          },
+          {
+            "hanzi": "贵",
+            "pinyin": "Guì",
+            "english": "expensive; costly"
+          },
+          {
+            "hanzi": "便宜",
+            "pinyin": "Piányí",
+            "english": "cheap; inexpensive"
+          },
+          {
+            "hanzi": "颜色",
+            "pinyin": "Yánsè",
+            "english": "color"
+          },
+          {
+            "hanzi": "尺码",
+            "pinyin": "Chǐmǎ",
+            "english": "size (of clothing)"
+          },
+          {
+            "hanzi": "折扣",
+            "pinyin": "Zhékòu",
+            "english": "discount"
+          },
+          {
+            "hanzi": "发票",
+            "pinyin": "Fāpiào",
+            "english": "receipt; invoice"
           }
         ]
       }
@@ -2509,6 +2757,63 @@
           }
         ]
       }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "合作",
+            "pinyin": "Hézuò",
+            "english": "to cooperate; cooperation; partnership"
+          },
+          {
+            "hanzi": "签",
+            "pinyin": "Qiān",
+            "english": "to sign (a contract)"
+          },
+          {
+            "hanzi": "出差",
+            "pinyin": "Chū chāi",
+            "english": "to go on a business trip"
+          },
+          {
+            "hanzi": "考虑",
+            "pinyin": "Kǎolǜ",
+            "english": "to consider; to think about"
+          },
+          {
+            "hanzi": "名片",
+            "pinyin": "Míngpiàn",
+            "english": "business card"
+          },
+          {
+            "hanzi": "公司",
+            "pinyin": "Gōngsī",
+            "english": "company; firm"
+          },
+          {
+            "hanzi": "合同",
+            "pinyin": "Hétong",
+            "english": "contract; agreement"
+          },
+          {
+            "hanzi": "会议",
+            "pinyin": "Huìyì",
+            "english": "meeting; conference"
+          },
+          {
+            "hanzi": "部门",
+            "pinyin": "Bùmén",
+            "english": "department; division"
+          },
+          {
+            "hanzi": "邮件",
+            "pinyin": "Yóujiàn",
+            "english": "email; mail"
+          }
+        ]
+      }
     ]
   },
   {
@@ -2613,6 +2918,58 @@
             "badge": "everyday",
             "badgeNote": null,
             "free": false
+          }
+        ]
+      }
+    ],
+    "vocabCards": [
+      {
+        "title": "Key words 关键词",
+        "items": [
+          {
+            "hanzi": "加",
+            "pinyin": "Jiā",
+            "english": "to add (a contact); to follow"
+          },
+          {
+            "hanzi": "扫",
+            "pinyin": "Sǎo",
+            "english": "to scan (a QR code)"
+          },
+          {
+            "hanzi": "刷",
+            "pinyin": "Shuā",
+            "english": "to scroll (a feed); to swipe"
+          },
+          {
+            "hanzi": "充电",
+            "pinyin": "Chōng diàn",
+            "english": "to charge (a phone); to recharge"
+          },
+          {
+            "hanzi": "二维码",
+            "pinyin": "Èrwéimǎ",
+            "english": "QR code"
+          },
+          {
+            "hanzi": "密码",
+            "pinyin": "Mìmǎ",
+            "english": "password; PIN; passcode"
+          },
+          {
+            "hanzi": "信号",
+            "pinyin": "Xìnhào",
+            "english": "signal; reception"
+          },
+          {
+            "hanzi": "手机",
+            "pinyin": "Shǒujī",
+            "english": "mobile phone; smartphone"
+          },
+          {
+            "hanzi": "WiFi",
+            "pinyin": "Wúxiàn wǎng",
+            "english": "WiFi; wireless internet"
           }
         ]
       }

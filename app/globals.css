@@ -3056,15 +3056,15 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   gap: 16px;
 }
 .pb-card {
-  background: var(--bg2); border: 1px solid var(--border);
+  background: var(--bg2); border: 1px solid var(--accent);
   border-radius: var(--radius); padding: 22px 20px 18px;
   cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
   text-align: left; display: flex; flex-direction: column; gap: 4px;
   position: relative;
 }
-.pb-card:hover { border-color: var(--border-mid); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.pb-card:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 .pb-card.locked { cursor: default; opacity: 0.75; }
-.pb-card.locked:hover { border-color: var(--border); box-shadow: none; }
+.pb-card.locked:hover { border-color: var(--accent); box-shadow: none; }
 .pb-card-lock { position: absolute; top: 14px; right: 14px; font-size: 16px; }
 .pb-card-chinese {
   font-size: 20px; font-weight: 700; color: var(--fg);
