@@ -82,7 +82,6 @@ export default function LearnPage() {
           )}
         </div>
 
-        <div className="learn-section-label">Your learning path</div>
         <div className="learn-path-list">
           {units.map((unit, i) => {
             const phraseCount = FREE_PHRASE_COUNTS[unit.situation] ?? 0;

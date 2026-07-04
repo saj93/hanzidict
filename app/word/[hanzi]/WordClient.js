@@ -481,7 +481,11 @@ export default function WordPage() {
   }
   // Merge order from processExactMatches already ranks by HSK/frequency, so secondary
   // meanings (classical, archaic) naturally end up last. No sort needed.
-  const groupedDefs = groupShortDefs(defs);
+  // Admin: each def is its own row so delete/edit operates on exactly one def, not a
+  // display-merged group (which would accidentally remove multiple definitions at once).
+  const groupedDefs = isAdmin
+    ? defs.map((d, i) => ({ text: d, start: i, end: i }))
+    : groupShortDefs(defs);
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
   const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
