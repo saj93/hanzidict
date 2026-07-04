@@ -16,6 +16,13 @@ const FREE_PHRASE_COUNTS = Object.fromEntries(
   ])
 );
 
+const EXPLORE_RESOURCES = [
+  { title: 'Phrasebook', desc: 'Situational phrases for real conversations', href: '/phrasebook' },
+  { title: 'Common Verbs', desc: 'The 100 most common Chinese verbs', href: '/verbs' },
+  { title: 'Chengyu', desc: 'Four-character idioms with explanations', href: '/chengyu' },
+  { title: 'Radicals', desc: 'Browse characters by their building blocks', href: '/radicals' },
+];
+
 export default function LearnPage() {
   const router = useRouter();
   const { user, session, loading: authLoading } = useAuth();
@@ -75,6 +82,7 @@ export default function LearnPage() {
           )}
         </div>
 
+        <div className="learn-section-label">Your learning path</div>
         <div className="learn-path-list">
           {units.map((unit, i) => {
             const phraseCount = FREE_PHRASE_COUNTS[unit.situation] ?? 0;
@@ -102,6 +110,19 @@ export default function LearnPage() {
               </div>
             );
           })}
+        </div>
+
+        <div className="learn-section-label learn-section-label--explore">Explore freely</div>
+        <div className="learn-resource-grid">
+          {EXPLORE_RESOURCES.map(r => (
+            <button key={r.href} className="learn-resource-tile" onClick={() => router.push(r.href)}>
+              <div className="learn-resource-tile-top">
+                <span className="learn-resource-tile-name">{r.title}</span>
+                <span className="learn-resource-tile-arrow">→</span>
+              </div>
+              <div className="learn-resource-tile-desc">{r.desc}</div>
+            </button>
+          ))}
         </div>
       </div>
 
