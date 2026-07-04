@@ -2430,7 +2430,7 @@
     "titleChinese": "购物",
     "pinyin": "Gòuwù",
     "free": true,
-    "phraseCount": 21,
+    "phraseCount": 20,
     "freePhraseCount": 10,
     "sections": [
       {
@@ -2567,7 +2567,7 @@
       },
       {
         "title": "Convenience Store (便利店 Biànlì diàn)",
-        "note": "**Taiwan note:** 载具 *zǎijù* refers to Taiwan's e-invoice system — every purchase generates an electronic receipt stored on a carrier (membership card, phone number, or ID). You'll hear this at every register. As a visitor, just say 不用谢谢 or give your phone number.",
+        "note": null,
         "phrases": [
           {
             "type": "Q",
@@ -2598,7 +2598,7 @@
           },
           {
             "type": "Q",
-            "hanzi": "热的还是冷的？",
+            "hanzi": "热的还是冰的？",
             "pinyin": "Rè de háishi bīng de?",
             "english": "Hot or cold?",
             "badge": "everyday",
@@ -2607,21 +2607,12 @@
           },
           {
             "type": "A",
-            "hanzi": "热的。/ 冷的。/ 常温。",
+            "hanzi": "热的。/ 冰的。/ 常温。",
             "pinyin": "Rè de. / Bīng de. / Cháng wēn.",
             "english": "Hot. / Cold. / Room temperature.",
             "badge": "everyday",
             "badgeNote": null,
             "free": true
-          },
-          {
-            "type": "Q",
-            "hanzi": "积点吗？",
-            "pinyin": "Jī diǎn ma?",
-            "english": "Are you collecting points?",
-            "badge": "everyday",
-            "badgeNote": "Mainland China",
-            "free": false
           },
           {
             "type": "Q",
@@ -2632,7 +2623,8 @@
             "badgeNote": "Taiwan only",
             "free": false
           }
-        ]
+        ],
+        "footer": "**Taiwan note:** 载具 *zǎijù* refers to Taiwan's e-invoice system — every purchase generates an electronic receipt stored on a carrier (membership card, phone number, or ID). You'll hear this at every register. As a visitor, just say 不用谢谢 or give your phone number."
       }
     ],
     "vocabCards": [

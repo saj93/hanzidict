@@ -187,6 +187,7 @@ function Section({
       {!isPremium && !isAdmin && lockedPhrases.length > 0 && (
         <LockedBlock phrases={lockedPhrases} onUpgrade={onUpgrade} />
       )}
+      {section.footer && <NoteBlock note={section.footer} />}
     </div>
   );
 }
