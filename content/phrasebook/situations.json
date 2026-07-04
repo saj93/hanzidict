@@ -1442,11 +1442,11 @@
     "titleChinese": "餐厅",
     "pinyin": "Cāntīng",
     "free": true,
-    "phraseCount": 22,
-    "freePhraseCount": 9,
+    "phraseCount": 25,
+    "freePhraseCount": 11,
     "sections": [
       {
-        "title": "Getting seated & ordering basics",
+        "title": "Getting seated & ordering",
         "note": null,
         "phrases": [
           {
@@ -1469,11 +1469,29 @@
           },
           {
             "type": "Q",
-            "hanzi": "有没有菜单？",
-            "pinyin": "Yǒu méiyǒu càidān?",
-            "english": "Do you have a menu?",
+            "hanzi": "在这里吃还是打包？",
+            "pinyin": "Zài zhèlǐ chī háishi dǎbāo?",
+            "english": "Dine in or takeaway?",
             "badge": "everyday",
             "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "在这里吃。/ 打包。",
+            "pinyin": "Zài zhèlǐ chī. / Dǎbāo.",
+            "english": "Dine in. / Takeaway.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "扫码点餐。",
+            "pinyin": "Sǎo mǎ diǎn cān.",
+            "english": "Scan to order.",
+            "badge": "everyday",
+            "badgeNote": "Very common now",
             "free": true
           },
           {
@@ -1505,12 +1523,21 @@
           },
           {
             "type": "A",
-            "hanzi": "好吃！",
-            "pinyin": "Hǎochī!",
-            "english": "Delicious!",
+            "hanzi": "不要辣。",
+            "pinyin": "Bùyào là.",
+            "english": "No spice please.",
             "badge": "everyday",
             "badgeNote": null,
-            "free": true
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "少放盐/油。",
+            "pinyin": "Shǎo fàng yán/yóu.",
+            "english": "Less salt/oil please.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
           },
           {
             "type": "Q",
@@ -1532,36 +1559,9 @@
           },
           {
             "type": "A",
-            "hanzi": "不要辣。",
-            "pinyin": "Bùyào là.",
-            "english": "No spice please.",
-            "badge": "everyday",
-            "badgeNote": null,
-            "free": false
-          },
-          {
-            "type": "A",
-            "hanzi": "少放盐/油。",
-            "pinyin": "Shǎo fàng yán/yóu.",
-            "english": "Less salt/oil please.",
-            "badge": "everyday",
-            "badgeNote": null,
-            "free": false
-          },
-          {
-            "type": "A",
             "hanzi": "我对…过敏。",
             "pinyin": "Wǒ duì…guòmǐn.",
             "english": "I'm allergic to…",
-            "badge": "everyday",
-            "badgeNote": null,
-            "free": false
-          },
-          {
-            "type": "Q",
-            "hanzi": "可以加辣吗？",
-            "pinyin": "Kěyǐ jiā là ma?",
-            "english": "Can you make it spicy?",
             "badge": "everyday",
             "badgeNote": null,
             "free": false
@@ -1576,10 +1576,19 @@
             "free": false
           },
           {
+            "type": "Q",
+            "hanzi": "可以加一道菜吗？",
+            "pinyin": "Kěyǐ jiā yī dào cài ma?",
+            "english": "Can we add a dish?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
             "type": "A",
-            "hanzi": "打包。",
-            "pinyin": "Dǎbāo.",
-            "english": "To go / takeaway.",
+            "hanzi": "好吃！",
+            "pinyin": "Hǎochī!",
+            "english": "Delicious!",
             "badge": "everyday",
             "badgeNote": null,
             "free": false
@@ -1600,6 +1609,15 @@
             "free": true
           },
           {
+            "type": "A",
+            "hanzi": "扫码付款。",
+            "pinyin": "Sǎo mǎ fùkuǎn.",
+            "english": "Pay by QR code scan.",
+            "badge": "everyday",
+            "badgeNote": "Default in China",
+            "free": true
+          },
+          {
             "type": "Q",
             "hanzi": "一共多少钱？",
             "pinyin": "Yīgòng duōshao qián?",
@@ -1607,6 +1625,15 @@
             "badge": "everyday",
             "badgeNote": null,
             "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "可以用微信支付/支付宝吗？",
+            "pinyin": "Kěyǐ yòng Wēixìn zhīfù / Zhīfùbǎo ma?",
+            "english": "Can I pay with WeChat Pay / Alipay?",
+            "badge": "everyday",
+            "badgeNote": "Essential in China",
+            "free": false
           },
           {
             "type": "Q",
@@ -1619,11 +1646,11 @@
           },
           {
             "type": "Q",
-            "hanzi": "可以用微信支付/支付宝吗？",
-            "pinyin": "Kěyǐ yòng Wēixìn zhīfù / Zhīfùbǎo ma?",
-            "english": "Can I pay with WeChat Pay / Alipay?",
+            "hanzi": "有没有收据/发票？",
+            "pinyin": "Yǒu méiyǒu shōujù / fāpiào?",
+            "english": "Can I get a receipt/invoice?",
             "badge": "everyday",
-            "badgeNote": "Essential in China",
+            "badgeNote": null,
             "free": false
           },
           {
@@ -1666,6 +1693,11 @@
             "english": "to recommend"
           },
           {
+            "hanzi": "扫码",
+            "pinyin": "Sǎo mǎ",
+            "english": "to scan a QR code; scan to pay"
+          },
+          {
             "hanzi": "打包",
             "pinyin": "Dǎbāo",
             "english": "to pack up; takeaway"
@@ -1676,19 +1708,14 @@
             "english": "to be allergic to; allergy"
           },
           {
-            "hanzi": "刷卡",
-            "pinyin": "Shuā kǎ",
-            "english": "to pay by card"
-          },
-          {
             "hanzi": "请客",
             "pinyin": "Qǐng kè",
             "english": "to treat someone; to pay for a meal"
           },
           {
-            "hanzi": "菜单",
-            "pinyin": "Càidān",
-            "english": "menu"
+            "hanzi": "买单",
+            "pinyin": "Mǎidān",
+            "english": "bill; check (at a restaurant)"
           },
           {
             "hanzi": "素食",
@@ -1716,9 +1743,9 @@
             "english": "measure word for people (polite)"
           },
           {
-            "hanzi": "买单",
-            "pinyin": "Mǎidān",
-            "english": "bill; check (at a restaurant)"
+            "hanzi": "点餐",
+            "pinyin": "Diǎn cān",
+            "english": "to order food; to place an order"
           }
         ]
       }
@@ -2403,11 +2430,11 @@
     "titleChinese": "购物",
     "pinyin": "Gòuwù",
     "free": true,
-    "phraseCount": 11,
-    "freePhraseCount": 4,
+    "phraseCount": 21,
+    "freePhraseCount": 10,
     "sections": [
       {
-        "title": "Basics",
+        "title": "In the store",
         "note": null,
         "phrases": [
           {
@@ -2448,17 +2475,44 @@
           },
           {
             "type": "Q",
-            "hanzi": "能便宜一点吗？",
-            "pinyin": "Néng piányí yīdiǎn ma?",
-            "english": "Can you lower the price?",
+            "hanzi": "有会员吗？",
+            "pinyin": "Yǒu huìyuán ma?",
+            "english": "Do you have a membership?",
             "badge": "everyday",
-            "badgeNote": "For markets",
+            "badgeNote": "You'll hear this constantly",
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "怎么付款？",
+            "pinyin": "Zěnme fùkuǎn?",
+            "english": "How do I pay?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "A",
+            "hanzi": "扫码。",
+            "pinyin": "Sǎo mǎ.",
+            "english": "Scan the QR code.",
+            "badge": "everyday",
+            "badgeNote": "Default payment in China",
             "free": false
           },
           {
             "type": "Q",
-            "hanzi": "有没有别的颜色/尺码？",
-            "pinyin": "Yǒu méiyǒu bié de yánsè / chǐmǎ?",
+            "hanzi": "可以用微信支付/支付宝吗？",
+            "pinyin": "Kěyǐ yòng Wēixìn zhīfù / Zhīfùbǎo ma?",
+            "english": "Can I pay with WeChat Pay / Alipay?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有其他颜色/尺码？",
+            "pinyin": "Yǒu méiyǒu qítā yánsè / chǐmǎ?",
             "english": "Do you have other colors/sizes?",
             "badge": "everyday",
             "badgeNote": null,
@@ -2475,11 +2529,11 @@
           },
           {
             "type": "Q",
-            "hanzi": "有没有折扣？",
-            "pinyin": "Yǒu méiyǒu zhékòu?",
-            "english": "Is there a discount?",
+            "hanzi": "能便宜一点吗？",
+            "pinyin": "Néng piányí yīdiǎn ma?",
+            "english": "Can you lower the price?",
             "badge": "everyday",
-            "badgeNote": null,
+            "badgeNote": "For markets only",
             "free": false
           },
           {
@@ -2492,21 +2546,90 @@
             "free": false
           },
           {
-            "type": "A",
-            "hanzi": "打包一下。",
-            "pinyin": "Dǎbāo yīxià.",
-            "english": "Please wrap it up.",
-            "badge": "everyday",
-            "badgeNote": null,
-            "free": false
-          },
-          {
             "type": "Q",
             "hanzi": "有发票吗？",
             "pinyin": "Yǒu fāpiào ma?",
             "english": "Can I get a receipt/invoice?",
             "badge": "everyday",
             "badgeNote": "Important in China",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有没有折扣？",
+            "pinyin": "Yǒu méiyǒu zhékòu?",
+            "english": "Is there a discount?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": false
+          }
+        ]
+      },
+      {
+        "title": "Convenience Store (便利店 Biànlì diàn)",
+        "note": "**Taiwan note:** 载具 *zǎijù* refers to Taiwan's e-invoice system — every purchase generates an electronic receipt stored on a carrier (membership card, phone number, or ID). You'll hear this at every register. As a visitor, just say 不用谢谢 or give your phone number.",
+        "phrases": [
+          {
+            "type": "Q",
+            "hanzi": "要袋子吗？",
+            "pinyin": "Yào dàizi ma?",
+            "english": "Do you want a bag?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "要。/ 不用，谢谢。",
+            "pinyin": "Yào. / Bùyòng, xièxie.",
+            "english": "Yes please. / No thanks.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "加热吗？",
+            "pinyin": "Jiārè ma?",
+            "english": "Do you want it heated up?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "热的还是冷的？",
+            "pinyin": "Rè de háishi bīng de?",
+            "english": "Hot or cold?",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "A",
+            "hanzi": "热的。/ 冷的。/ 常温。",
+            "pinyin": "Rè de. / Bīng de. / Cháng wēn.",
+            "english": "Hot. / Cold. / Room temperature.",
+            "badge": "everyday",
+            "badgeNote": null,
+            "free": true
+          },
+          {
+            "type": "Q",
+            "hanzi": "积点吗？",
+            "pinyin": "Jī diǎn ma?",
+            "english": "Are you collecting points?",
+            "badge": "everyday",
+            "badgeNote": "Mainland China",
+            "free": false
+          },
+          {
+            "type": "Q",
+            "hanzi": "有载具吗？",
+            "pinyin": "Yǒu zǎijù ma?",
+            "english": "Do you have a carrier?",
+            "badge": "regional",
+            "badgeNote": "Taiwan only",
             "free": false
           }
         ]
@@ -2532,6 +2655,31 @@
             "english": "to return or exchange (a product)"
           },
           {
+            "hanzi": "扫码",
+            "pinyin": "Sǎo mǎ",
+            "english": "to scan a QR code; scan to pay"
+          },
+          {
+            "hanzi": "付款",
+            "pinyin": "Fùkuǎn",
+            "english": "to pay; payment"
+          },
+          {
+            "hanzi": "会员",
+            "pinyin": "Huìyuán",
+            "english": "member; membership"
+          },
+          {
+            "hanzi": "便利店",
+            "pinyin": "Biànlì diàn",
+            "english": "convenience store"
+          },
+          {
+            "hanzi": "袋子",
+            "pinyin": "Dàizi",
+            "english": "bag; shopping bag"
+          },
+          {
             "hanzi": "贵",
             "pinyin": "Guì",
             "english": "expensive; costly"
@@ -2540,16 +2688,6 @@
             "hanzi": "便宜",
             "pinyin": "Piányí",
             "english": "cheap; inexpensive"
-          },
-          {
-            "hanzi": "颜色",
-            "pinyin": "Yánsè",
-            "english": "color"
-          },
-          {
-            "hanzi": "尺码",
-            "pinyin": "Chǐmǎ",
-            "english": "size (of clothing)"
           },
           {
             "hanzi": "折扣",
