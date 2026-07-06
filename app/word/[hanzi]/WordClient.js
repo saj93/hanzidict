@@ -481,11 +481,7 @@ export default function WordPage() {
   }
   // Merge order from processExactMatches already ranks by HSK/frequency, so secondary
   // meanings (classical, archaic) naturally end up last. No sort needed.
-  // Admin: each def is its own row so delete/edit operates on exactly one def, not a
-  // display-merged group (which would accidentally remove multiple definitions at once).
-  const groupedDefs = isAdmin
-    ? defs.map((d, i) => ({ text: d, start: i, end: i }))
-    : groupShortDefs(defs);
+  const groupedDefs = groupShortDefs(defs);
   const posLine = primary.hsk_level ? `HSK ${primary.hsk_level}` : null;
   const pinyin = convertPinyin(primary.pinyin);
   const taiwanPinyin = taiwanPr ? convertPinyin(taiwanPr) : null;
@@ -572,23 +568,18 @@ export default function WordPage() {
       if (!resp.ok) setLocalDefinitions(prev);
     } else {
       const group = groupedDefs[editingDefIdx];
-      // Update first def in the group with new value; delete any others in the group
+      // Edit operates only on the first def in the group — others are left intact.
+      // (Delete-group removes all defs in the group; edit-group only changes the first.)
       const ai_first = defIndices[group.start];
       const firstText = allDefs[ai_first];
-      const aisToRemove = new Set();
       if (val) {
         await patchSourceEntry(firstText, val);
+        setLocalDefinitions(allDefs.map((d, ai) => ai === ai_first ? val : d).join(' | '));
       } else {
+        // Empty val = delete just the first def; the rest of the group stays
         await patchSourceEntry(firstText);
-        aisToRemove.add(ai_first);
+        setLocalDefinitions(allDefs.filter((_, ai) => ai !== ai_first).join(' | '));
       }
-      for (let si = group.start + 1; si <= group.end; si++) {
-        const ai = defIndices[si];
-        await patchSourceEntry(allDefs[ai]);
-        aisToRemove.add(ai);
-      }
-      const newAllDefs = allDefs.map((d, ai) => aisToRemove.has(ai) ? null : (ai === ai_first && val ? val : d));
-      setLocalDefinitions(newAllDefs.filter(Boolean).join(' | '));
     }
     setEditingDefIdx(null);
     setEditVal('');
@@ -868,7 +859,7 @@ export default function WordPage() {
                       {convertPinyinInText(displayText)}
                       {isAdmin && (
                         <>
-                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(displayText); setConfirmDeleteDefIdx(null); }}>Edit</button>
+                          <button className="def-edit-btn" onClick={() => { setEditingDefIdx(i); setEditVal(cleanDef(defs[group.start])); setConfirmDeleteDefIdx(null); }}>Edit</button>
                           <button className="def-edit-btn" onClick={() => setConfirmDeleteDefIdx(i)} style={{ color: '#c0392b' }}>Delete</button>
                           <button className="def-move-btn" onClick={() => moveGroupUpDown(i, -1)} disabled={i === 0} title="Move up">↑</button>
                           <button className="def-move-btn" onClick={() => moveGroupUpDown(i, 1)} disabled={i === groupedDefs.length - 1} title="Move down">↓</button>
