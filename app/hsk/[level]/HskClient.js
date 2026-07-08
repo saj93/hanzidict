@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
-import { firstDef } from '../../../lib/utils';
+import { firstGroupedDef } from '../../../lib/utils';
 import UserMenu from '../../components/UserMenu';
 import Footer from '../../components/Footer';
 import NewsletterForm from '../../components/NewsletterForm';
@@ -149,7 +149,7 @@ export default function HskLevelPage() {
                 >
                   <span className="hsk-wc-hanzi">{displayHanzi(entry)}</span>
                   <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
-                  <span className="hsk-wc-def">{firstDef(entry.definitions)}</span>
+                  <span className="hsk-wc-def">{firstGroupedDef(entry.definitions)}</span>
                 </button>
               ))}
             </div>

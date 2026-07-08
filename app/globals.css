@@ -2926,7 +2926,7 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   padding: 16px 18px; transition: border-color .15s, box-shadow .15s;
 }
 .learn-unit-row:not(.locked):hover {
-  border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent);
+  border-color: var(--accent);
 }
 .learn-unit-row.completed { border-color: #a3dfc2; }
 .learn-unit-row.locked { opacity: .5; }
@@ -3062,9 +3062,9 @@ html.dark .lp-phase-discovery { background: #2d2007; color: #d4a040; }
   text-align: left; display: flex; flex-direction: column; gap: 4px;
   position: relative;
 }
-.pb-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.pb-card:hover { border-color: var(--accent); }
 .pb-card.locked { cursor: default; opacity: 0.75; }
-.pb-card.locked:hover { border-color: var(--border); box-shadow: none; }
+.pb-card.locked:hover { border-color: var(--border); }
 .pb-card-lock { position: absolute; top: 14px; right: 14px; font-size: 16px; }
 .pb-card-chinese {
   font-size: 20px; font-weight: 700; color: var(--fg);
@@ -3430,7 +3430,17 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--fg3); margin-bottom: 14px;
 }
-.learn-section-label--explore { margin-top: 44px; margin-bottom: 16px; }
+.learn-explore-heading {
+  margin-top: 52px; margin-bottom: 20px;
+  padding-top: 28px; border-top: 1px solid var(--border);
+}
+.learn-explore-title {
+  font-family: var(--font-display), 'Lora', Georgia, serif;
+  font-size: 22px; font-weight: 700; color: var(--fg); line-height: 1.2; margin-bottom: 4px;
+}
+.learn-explore-sub {
+  font-size: 14px; color: var(--fg3); line-height: 1.4;
+}
 .learn-resource-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
 }
@@ -3441,7 +3451,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   transition: border-color .15s, box-shadow .15s;
 }
 .learn-resource-tile:hover {
-  border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent);
+  border-color: var(--accent);
 }
 .learn-resource-tile-top {
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;

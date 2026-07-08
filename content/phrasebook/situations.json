@@ -3097,9 +3097,19 @@
             "english": "mobile phone; smartphone"
           },
           {
-            "hanzi": "WiFi",
-            "pinyin": "Wúxiàn wǎng",
-            "english": "WiFi; wireless internet"
+            "hanzi": "无线网络",
+            "pinyin": "Wúxiàn wǎngluò",
+            "english": "wireless network; Wi-Fi"
+          },
+          {
+            "hanzi": "上网",
+            "pinyin": "Shàngwǎng",
+            "english": "to go online; to surf the internet"
+          },
+          {
+            "hanzi": "网上",
+            "pinyin": "Wǎngshàng",
+            "english": "online; on the internet"
           }
         ]
       }

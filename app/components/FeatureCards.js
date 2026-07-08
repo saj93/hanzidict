@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 // Normalized [0-1] stroke paths for 人
@@ -95,7 +95,8 @@ function DrawPreviewCard({ onTry }) {
 // ── Card 2: stroke order animation ──────────────────────────────────────────
 
 function StrokePreviewCard({ onTry }) {
-  const idRef = useRef('feat-hw-' + Math.random().toString(36).slice(2));
+  const uid = useId();
+  const idRef = useRef('feat-hw-' + uid.replace(/:/g, ''));
 
   useEffect(() => {
     let cancelled = false;

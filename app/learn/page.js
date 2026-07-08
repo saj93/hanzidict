@@ -111,7 +111,10 @@ export default function LearnPage() {
           })}
         </div>
 
-        <div className="learn-section-label learn-section-label--explore">Explore freely</div>
+        <div className="learn-explore-heading">
+          <div className="learn-explore-title">Explore freely</div>
+          <div className="learn-explore-sub">No order needed — jump into any topic</div>
+        </div>
         <div className="learn-resource-grid">
           {EXPLORE_RESOURCES.map(r => (
             <button key={r.href} className="learn-resource-tile" onClick={() => router.push(r.href)}>
