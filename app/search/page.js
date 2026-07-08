@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
-import { firstDef } from '../../lib/utils';
+import { firstGroupedDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
 import NavSearch from '../components/NavSearch';
 
@@ -166,7 +166,7 @@ function SearchResults() {
                     <div className="sr-py">
                       {r.pinyin_all ? r.pinyin_all.map(p => convertPinyin(p)).join(' / ') : convertPinyin(r.pinyin)}
                     </div>
-                    <div className="sr-def">{firstDef(r.definitions)}</div>
+                    <div className="sr-def">{firstGroupedDef(r.definitions)}</div>
                   </div>
                   <div className="sr-arrow">›</div>
                 </button>

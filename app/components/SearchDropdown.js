@@ -1,6 +1,6 @@
 'use client';
 import { convertPinyin } from '../../lib/pinyin';
-import { firstDef } from '../../lib/utils';
+import { firstGroupedDef } from '../../lib/utils';
 import { useRouter } from 'next/navigation';
 
 export default function SearchDropdown({ suggestions, query, onSelect }) {
@@ -9,7 +9,7 @@ export default function SearchDropdown({ suggestions, query, onSelect }) {
   return (
     <div className="search-drop">
       {suggestions.map((s, i) => {
-        const def = firstDef(s.definitions);
+        const def = firstGroupedDef(s.definitions);
         return (
           <button key={i} className="drop-row" onMouseDown={e => { e.preventDefault(); onSelect(s.simplified); }}>
             <span className="drop-hz">{s.simplified}</span>
