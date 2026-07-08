@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../../lib/pinyin';
-import { firstDef } from '../../../lib/utils';
+import { firstGroupedDef } from '../../../lib/utils';
 import { useSimpToTrad } from '../../hooks/useSimpToTrad';
 import UserMenu from '../../components/UserMenu';
 import NavSearch from '../../components/NavSearch';
@@ -123,7 +123,7 @@ export default function RadicalPage() {
         ) : (
           <div className="hsk-word-grid">
             {entries.map(entry => {
-              const def = firstDef(entry.definitions);
+              const def = firstGroupedDef(entry.definitions);
               return (
                 <button
                   key={entry.simplified}
@@ -131,7 +131,7 @@ export default function RadicalPage() {
                   onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
                 >
                   <span className="hsk-wc-hanzi">{toTraditional(entry.simplified)}</span>
-                  <span className="hsk-wc-pinyin">{convertPinyin(entry.pinyin || '')}</span>
+                  <span className="hsk-wc-pinyin">{entry.pinyin_all ? entry.pinyin_all.map(p => convertPinyin(p)).join(' / ') : convertPinyin(entry.pinyin || '')}</span>
                   {entry.hsk_level && (
                     <span className="hsk-wc-badge">{HSK_LABEL[entry.hsk_level] || `HSK ${entry.hsk_level}`}</span>
                   )}
