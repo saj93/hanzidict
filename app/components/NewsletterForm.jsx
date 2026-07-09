@@ -29,7 +29,7 @@ export default function NewsletterForm({ compact = false }) {
           <span className="nl-compact-success">You're in! Check your inbox.</span>
         ) : (
           <form className="nl-compact-form" onSubmit={submit}>
-            <span className="nl-compact-label">Receive your 5-min Chinese lesson everyday for free</span>
+            <span className="nl-compact-label">One Chinese word a day, with tips. Free.</span>
             <input
               className="nl-compact-input"
               type="email"
