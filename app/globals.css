@@ -3456,14 +3456,10 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .learn-resource-tile-top {
   display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;
 }
-.learn-resource-tile-name { font-size: 15px; font-weight: 600; color: var(--fg); display: flex; align-items: center; gap: 6px; }
-.learn-resource-tile-chinese { font-size: 13px; color: var(--accent); font-weight: 600; }
-.learn-resource-tile-arrow { font-size: 16px; color: var(--accent); font-weight: 600; flex-shrink: 0; }
+.learn-resource-tile-name { font-size: 15px; font-weight: 600; color: var(--fg); }
+.learn-resource-tile-arrow { font-size: 16px; color: var(--accent); font-weight: 600; }
 .learn-resource-tile-desc { font-size: 13px; color: var(--fg3); line-height: 1.45; }
-@media (max-width: 640px) {
-  .learn-resource-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 380px) {
+@media (max-width: 480px) {
   .learn-resource-grid { grid-template-columns: 1fr; }
 }
 
