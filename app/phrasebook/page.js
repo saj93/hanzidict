@@ -51,6 +51,7 @@ export default function PhrasebookPage() {
       <Nav />
 
       <div className="pb-wrap">
+        <button className="words-back-btn" onClick={() => router.push('/learn')}>← Learn</button>
         <div className="pb-hero">
           <h1 className="pb-hero-title">Phrasebook</h1>
           <p className="pb-hero-sub">

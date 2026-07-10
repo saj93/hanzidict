@@ -25,6 +25,7 @@ export default function VerbsPage() {
       <Nav />
 
       <div className="verbs-page">
+        <button className="words-back-btn" onClick={() => router.push('/learn')}>← Learn</button>
         <div className="verbs-header">
           <h1 className="verbs-title">The 100 Most Common Chinese Verbs</h1>
           <p className="verbs-sub">

@@ -106,6 +106,7 @@ export default function ChengyuPage() {
       )}
 
       <div className="hsk-page">
+        <button className="words-back-btn" onClick={() => router.push('/learn')}>← Learn</button>
         <div className="hsk-page-header">
           <div>
             <h1 className="hsk-page-title">成语 Chengyu</h1>

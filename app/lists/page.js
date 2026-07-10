@@ -97,7 +97,7 @@ export default function ListsPage() {
   if (!user && !loading) {
     return (
       <main>
-        <Nav />
+        <Nav hideScript />
         <div className="lists-page">
           <div className="lists-login-prompt">
             <div style={{ fontSize: 36, marginBottom: 16 }}>📋</div>
@@ -113,7 +113,7 @@ export default function ListsPage() {
 
   return (
     <main>
-      <Nav />
+      <Nav hideScript />
       <div className="lists-page">
         <div className="lists-header">
           <div>

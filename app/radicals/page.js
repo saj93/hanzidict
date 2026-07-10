@@ -75,6 +75,7 @@ export default function RadicalsPage() {
       )}
 
       <div className="radicals-page">
+        <button className="words-back-btn" onClick={() => router.push('/learn')}>← Learn</button>
         <div className="radicals-page-header">
           <h1 className="radicals-page-title">214 Kangxi Radicals</h1>
           <p className="radicals-page-sub">

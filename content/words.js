@@ -51,7 +51,6 @@ export const WORD_DATA = {
           { s: '双', py: 'shuang1', en: 'pair; double; even number' },
           { s: '半', py: 'ban4', en: 'half' },
           { s: '第', py: 'di4', en: 'ordinal prefix', note: '第一 = first, 第二 = second — placed before any number to make it ordinal' },
-          { s: '数字', py: 'shu4 zi4', en: 'number; digit; numeral' },
           { s: '号码', py: 'hao4 ma3', en: 'number (phone, ID, etc.)' },
           { s: '多少', py: 'duo1 shao3', en: 'how many; how much' },
           { s: '几', py: 'ji3', en: 'how many (small number); several', note: '几 implies a smaller, countable quantity — use it when expecting single digits' },
@@ -65,7 +64,6 @@ export const WORD_DATA = {
       {
         heading: 'Colors',
         words: [
-          { s: '颜色', py: 'yan2 se4', en: 'color; colour' },
           { s: '红色', py: 'hong2 se4', en: 'red' },
           { s: '橙色', py: 'cheng2 se4', en: 'orange' },
           { s: '黄色', py: 'huang2 se4', en: 'yellow' },
@@ -97,7 +95,6 @@ export const WORD_DATA = {
       {
         heading: 'Immediate family',
         words: [
-          { s: '家庭', py: 'jia1 ting2', en: 'family; household' },
           { s: '家人', py: 'jia1 ren2', en: 'family members' },
           { s: '爸妈', py: 'ba4 ma1', en: 'mom and dad (together)', note: 'The most natural colloquial way to refer to both parents' },
           { s: '爸爸', py: 'ba4 ba5', en: 'dad; father', variant: { s: '父亲', py: 'fu4 qin1', label: 'formal / written' } },
@@ -233,7 +230,6 @@ export const WORD_DATA = {
           { s: '小时', py: 'xiao3 shi2', en: 'hour' },
           { s: '分钟', py: 'fen1 zhong1', en: 'minute' },
           { s: '秒', py: 'miao3', en: 'second' },
-          { s: '时间', py: 'shi2 jian1', en: 'time' },
           { s: '时候', py: 'shi2 hou5', en: 'moment; (the) time when' },
           { s: '以前', py: 'yi3 qian2', en: 'before; in the past; previously' },
           { s: '以后', py: 'yi3 hou4', en: 'after; in the future; afterwards' },

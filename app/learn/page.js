@@ -61,7 +61,7 @@ export default function LearnPage() {
 
   return (
     <main>
-      <Nav />
+      <Nav hideScript />
 
       <div className="learn-path-wrap">
         <div className="learn-path-header">
