@@ -17,6 +17,7 @@ const FREE_PHRASE_COUNTS = Object.fromEntries(
 );
 
 const EXPLORE_RESOURCES = [
+  { title: 'Words by Topic', chinese: '词汇', desc: 'Essential vocabulary grouped by theme — numbers, family, food, and more.', href: '/learn/words' },
   { title: 'Phrasebook', desc: 'Situational phrases for real conversations', href: '/phrasebook' },
   { title: 'Common Verbs', desc: 'The 100 most common Chinese verbs', href: '/verbs' },
   { title: 'Chengyu', desc: 'Four-character idioms with explanations', href: '/chengyu' },
@@ -119,7 +120,10 @@ export default function LearnPage() {
           {EXPLORE_RESOURCES.map(r => (
             <button key={r.href} className="learn-resource-tile" onClick={() => router.push(r.href)}>
               <div className="learn-resource-tile-top">
-                <span className="learn-resource-tile-name">{r.title}</span>
+                <span className="learn-resource-tile-name">
+                  {r.chinese && <span className="learn-resource-tile-chinese">{r.chinese}</span>}
+                  {r.title}
+                </span>
                 <span className="learn-resource-tile-arrow">→</span>
               </div>
               <div className="learn-resource-tile-desc">{r.desc}</div>
