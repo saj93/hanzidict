@@ -3506,7 +3506,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .words-back-btn:hover { color: var(--accent); }
 .words-theme-title-row { display: flex; align-items: center; gap: 18px; }
 .words-theme-chinese {
-  font-size: 52px; color: var(--accent); line-height: 1; flex-shrink: 0;
+  font-size: 52px; color: var(--fg); line-height: 1; flex-shrink: 0;
 }
 .words-theme-title {
   font-family: var(--font-display), 'Lora', Georgia, serif;

@@ -17,6 +17,7 @@ export default function WordsIndexPage() {
       <Nav />
       <div className="words-index-page">
         <div className="words-index-header">
+          <button className="words-back-btn" onClick={() => router.push('/learn')}>← Learn</button>
           <h1 className="words-index-title">Words by Topic</h1>
           <p className="words-index-sub">
             Essential vocabulary grouped by theme — study one topic at a time or jump to what you need.
