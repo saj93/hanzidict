@@ -4,16 +4,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../components/AuthProvider';
 import { useSubscription } from '../hooks/useSubscription';
-import UserMenu from '../components/UserMenu';
-import NavSearch from '../components/NavSearch';
+import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 export default function ListsPage() {
   const router = useRouter();
   const { user, session } = useAuth();
   const { isPremium } = useSubscription();
-  const [dark, setDark] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [lists, setLists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNew, setShowNew] = useState(false);
@@ -22,12 +19,9 @@ export default function ListsPage() {
   const [upgradeNeeded, setUpgradeNeeded] = useState(false);
   const [renamingId, setRenamingId] = useState(null);
   const [renameValue, setRenameValue] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   useEffect(() => { document.title = 'My Lists — HanziDict'; }, []);
-
-  useEffect(() => {
-    setDark(document.documentElement.classList.contains('dark'));
-  }, []);
 
   useEffect(() => {
     if (!user || !session) { setLoading(false); return; }
@@ -37,12 +31,6 @@ export default function ListsPage() {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [user, session]);
-
-  function toggleDark() {
-    const isDark = document.documentElement.classList.toggle('dark');
-    try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
-    setDark(isDark);
-  }
 
   async function createList() {
     if (!newName.trim() || !session) return;
@@ -92,54 +80,24 @@ export default function ListsPage() {
     if (e.key === 'Escape') setRenamingId(null);
   }
 
-  async function deleteList(id, e) {
+  function requestDelete(id, e) {
     e.stopPropagation();
-    if (!confirm('Delete this list?')) return;
-    await fetch(`/api/lists/${id}`, {
+    setDeleteTarget(id);
+  }
+
+  async function confirmDelete() {
+    await fetch(`/api/lists/${deleteTarget}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${session.access_token}` },
     });
-    setLists(prev => prev.filter(l => l.id !== id));
+    setLists(prev => prev.filter(l => l.id !== deleteTarget));
+    setDeleteTarget(null);
   }
-
-  const nav = (
-    <>
-      <nav className="nav">
-        <button className="nav-logo" onClick={() => router.push('/')}>
-          <span className="logo-mark">汉</span>HanziDict
-        </button>
-        <div className="nav-search-center"><NavSearch /></div>
-        <div className="nav-right">
-          <button className="nav-link" onClick={() => router.push('/')}>Dictionary</button>
-          <button className="nav-link" onClick={() => router.push('/hsk')}>HSK</button>
-          <button className="nav-link active">Lists</button>
-          <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
-          <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
-          <button className="nav-link" onClick={() => router.push('/about')}>About</button>
-          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
-          <UserMenu />
-          <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
-            <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
-          </button>
-        </div>
-      </nav>
-      {menuOpen && (
-        <div className="mobile-menu">
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/'); }}>Dictionary</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/hsk'); }}>HSK</button>
-          <button className="mobile-menu-link active">Lists</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
-          <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
-        </div>
-      )}
-    </>
-  );
 
   if (!user && !loading) {
     return (
       <main>
-        {nav}
+        <Nav />
         <div className="lists-page">
           <div className="lists-login-prompt">
             <div style={{ fontSize: 36, marginBottom: 16 }}>📋</div>
@@ -155,7 +113,7 @@ export default function ListsPage() {
 
   return (
     <main>
-      {nav}
+      <Nav />
       <div className="lists-page">
         <div className="lists-header">
           <div>
@@ -231,7 +189,7 @@ export default function ListsPage() {
                   <button className="list-card-study" onClick={e => { e.stopPropagation(); router.push(`/lists/${list.id}/study`); }} disabled={list.word_count === 0}>
                     Study
                   </button>
-                  <button className="list-card-delete" onClick={e => deleteList(list.id, e)} title="Delete list">✕</button>
+                  <button className="list-card-delete" onClick={e => requestDelete(list.id, e)} title="Delete list">✕</button>
                 </div>
               </div>
             ))}
@@ -239,6 +197,19 @@ export default function ListsPage() {
         )}
       </div>
       <Footer />
+
+      {deleteTarget && (
+        <div className="lists-modal-backdrop" onClick={() => setDeleteTarget(null)}>
+          <div className="lists-modal" onClick={e => e.stopPropagation()}>
+            <div className="lists-modal-title">Delete this list?</div>
+            <p className="lists-modal-body">This can't be undone. All words in this list will be removed.</p>
+            <div className="lists-modal-actions">
+              <button className="lists-modal-cancel" onClick={() => setDeleteTarget(null)}>Cancel</button>
+              <button className="lists-modal-confirm" onClick={confirmDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

@@ -71,33 +71,33 @@ function WordRow({ word, onNavigate }) {
   return (
     <div className="wl-entry">
       <div
-        className="wl-row"
+        className="wl-card"
         role="button"
         tabIndex={0}
         onClick={() => onNavigate(word.s)}
         onKeyDown={e => e.key === 'Enter' && onNavigate(word.s)}
       >
-        <span className="wl-hanzi">{word.s}</span>
-        <span className="wl-pinyin">{convertPinyin(word.py)}</span>
+        <div className="wl-body">
+          <div className="wl-hanzi">{word.s}</div>
+          <div className="wl-sub">
+            <span className="wl-pinyin">{convertPinyin(word.py)}</span>
+            <span className="wl-dot">·</span>
+            <span className="wl-def">{word.en}</span>
+          </div>
+        </div>
         <span className="wl-audio" onClick={e => e.stopPropagation()}>
           <AudioButton text={word.s} />
         </span>
-        <span className="wl-def">{word.en}</span>
       </div>
+      {word.note && <p className="wl-note">{word.note}</p>}
       {word.variant && (
         <div className="wl-variant">
-          also:{' '}
-          <button
-            className="wl-variant-link"
-            onClick={() => onNavigate(word.variant.s)}
-          >
+          <span>also:</span>
+          <button className="wl-variant-link" onClick={() => onNavigate(word.variant.s)}>
             {word.variant.s}
           </button>
-          {' '}({word.variant.label})
+          {word.variant.label && <span className="wl-variant-desc">({word.variant.label})</span>}
         </div>
-      )}
-      {word.note && (
-        <div className="wl-note">{word.note}</div>
       )}
     </div>
   );
