@@ -71,20 +71,15 @@ function WordRow({ word, onNavigate }) {
   return (
     <div className="wl-entry">
       <div
-        className="wl-card"
+        className="wl-row"
         role="button"
         tabIndex={0}
         onClick={() => onNavigate(word.s)}
         onKeyDown={e => e.key === 'Enter' && onNavigate(word.s)}
       >
-        <div className="wl-body">
-          <div className="wl-hanzi">{word.s}</div>
-          <div className="wl-sub">
-            <span className="wl-pinyin">{convertPinyin(word.py)}</span>
-            <span className="wl-dot">·</span>
-            <span className="wl-def">{word.en}</span>
-          </div>
-        </div>
+        <span className="wl-hanzi">{word.s}</span>
+        <span className="wl-pinyin">{convertPinyin(word.py)}</span>
+        <span className="wl-def">{word.en}</span>
         <span className="wl-audio" onClick={e => e.stopPropagation()}>
           <AudioButton text={word.s} />
         </span>
