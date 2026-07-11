@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AudioButton from './AudioButton';
 import { convertPinyin } from '../../lib/pinyin';
@@ -41,12 +41,23 @@ const HSK_LABEL: Record<number, string> = {
   4: 'HSK 4', 5: 'HSK 5', 6: 'HSK 6', 7: 'HSK 7–9',
 };
 
-export default function WordOfDay({ wordData, script }: { wordData: any; script: string }) {
+export default function WordOfDay({ wordData: initialData, script }: { wordData: any; script: string }) {
   const router = useRouter();
   const toTraditional = useSimpToTrad(script);
   const { isAdmin, session } = (useAuth() as any) ?? {};
+  const [wordData, setWordData] = useState(initialData);
   const [clearing, setClearing] = useState(false);
   const [cleared, setCleared] = useState(false);
+
+  // Always fetch fresh from the API so the WoD updates on every page load
+  // regardless of the home page's ISR cache.
+  useEffect(() => {
+    fetch('/api/word-of-day', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data) setWordData(data); })
+      .catch(() => {});
+  }, []);
+
   if (!wordData || cleared) return null;
 
   const hanzi = toTraditional(wordData.simplified);
