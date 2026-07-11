@@ -41,18 +41,16 @@ export default function WordThemePage() {
           <button className="words-back-btn" onClick={() => router.push('/learn/words')}>
             ← Words by Topic
           </button>
-          <div className="words-theme-title-row">
-            <span className="words-theme-chinese">{theme.chinese}</span>
-            <div>
-              <h1 className="words-theme-title">{theme.title}</h1>
-              <p className="words-theme-pinyin">{convertPinyin(theme.pinyin)}</p>
-            </div>
+          <div className="words-sit-header">
+            <div className="words-sit-chinese">{theme.chinese}</div>
+            <h1 className="words-sit-title">{theme.title}</h1>
+            <p className="words-sit-pinyin">{convertPinyin(theme.pinyin)}</p>
           </div>
         </div>
 
         {data.sections.map(sec => (
           <div key={sec.heading} className="words-section">
-            <h2 className="words-section-heading">{sec.heading}</h2>
+            <div className="pb-section-title">{sec.heading}</div>
             <div className="words-list">
               {sec.words.map(word => (
                 <WordRow key={word.s} word={word} onNavigate={s => router.push(`/word/${encodeURIComponent(s)}`)} />
@@ -68,6 +66,11 @@ export default function WordThemePage() {
 }
 
 function WordRow({ word, onNavigate }) {
+  const hanziDisplay = word.variant ? `${word.s} / ${word.variant.s}` : word.s;
+  const pinyinDisplay = word.variant
+    ? `${convertPinyin(word.py)} / ${convertPinyin(word.variant.py)}`
+    : convertPinyin(word.py);
+
   return (
     <div className="wl-entry">
       <div
@@ -77,21 +80,20 @@ function WordRow({ word, onNavigate }) {
         onClick={() => onNavigate(word.s)}
         onKeyDown={e => e.key === 'Enter' && onNavigate(word.s)}
       >
-        <span className="wl-hanzi">{word.s}</span>
-        <span className="wl-pinyin">{convertPinyin(word.py)}</span>
+        <span className="wl-hanzi">{hanziDisplay}</span>
+        <span className="wl-pinyin">{pinyinDisplay}</span>
         <span className="wl-def">{word.en}</span>
+        {word.variant?.label && (
+          <span className="wl-badge" onClick={e => e.stopPropagation()}>{word.variant.label}</span>
+        )}
         <span className="wl-audio" onClick={e => e.stopPropagation()}>
           <AudioButton text={word.s} />
         </span>
       </div>
-      {word.note && <p className="wl-note">{word.note}</p>}
-      {word.variant && (
-        <div className="wl-variant">
-          <span>also:</span>
-          <button className="wl-variant-link" onClick={() => onNavigate(word.variant.s)}>
-            {word.variant.s}
-          </button>
-          {word.variant.label && <span className="wl-variant-desc">({word.variant.label})</span>}
+      {word.note && (
+        <div className="wl-note-block">
+          <span className="wl-note-icon">💡</span>
+          <p>{word.note}</p>
         </div>
       )}
     </div>
