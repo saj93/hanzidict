@@ -36,6 +36,12 @@ function sortByHskDefs(a, b) {
   const aHsk = a.hsk_level ?? 999;
   const bHsk = b.hsk_level ?? 999;
   if (aHsk !== bHsk) return aHsk - bHsk;
+  // Literary/archaic readings after everyday readings (same HSK level)
+  const LITERARY_RE = /^\((literary|archaic|classical)\)/i;
+  const firstDef = e => ((e.definitions || '').split(' | ')[0] || '').trim();
+  const aLit = LITERARY_RE.test(firstDef(a)) ? 1 : 0;
+  const bLit = LITERARY_RE.test(firstDef(b)) ? 1 : 0;
+  if (aLit !== bLit) return aLit - bLit;
   // More definitions first
   const aDefs = (a.definitions || '').split(' | ').filter(Boolean).length;
   const bDefs = (b.definitions || '').split(' | ').filter(Boolean).length;
