@@ -134,6 +134,14 @@ body {
   font-family: var(--font-display), serif;
 }
 .script-btn:hover { background: var(--accent-dim); }
+.nav-premium-btn {
+  height: 32px; padding: 0 14px; border-radius: 50px; border: none;
+  background: #1D9E75; color: #fff; font-size: 13px; font-weight: 600;
+  cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
+  font-family: var(--font-body), system-ui, sans-serif;
+  display: flex; align-items: center;
+}
+.nav-premium-btn:hover { opacity: 0.85; }
 
 /* ── HOME HERO ── */
 .hero {
@@ -1346,6 +1354,7 @@ html.dark .history-footer { background: var(--bg3); }
 .mobile-menu-link { background: none; border: none; text-align: left; padding: 12px 8px; font-size: 16px; color: var(--fg2); cursor: pointer; border-radius: 8px; }
 .mobile-menu-link.active { color: var(--fg); font-weight: 500; }
 .mobile-menu-link:hover { background: var(--bg2); }
+.mobile-menu-premium { background: #1D9E75; color: #fff; border: none; border-radius: 8px; text-align: left; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 6px; }
 .mobile-menu-actions { display: flex; gap: 8px; padding: 8px 8px 0; margin-top: 4px; border-top: 1px solid var(--border); }
 
 /* ── RESPONSIVE ── */
@@ -1356,6 +1365,7 @@ html.dark .history-footer { background: var(--bg3); }
   .nav-search-center { display: none; }
   /* Hide Dictionary / Flashcards / About; keep theme toggle + hamburger */
   .nav-link { display: none; }
+  .nav-premium-btn { display: none; }
   .theme-btn { display: flex; }
   /* Hamburger: pull to left side via absolute positioning */
   .hamburger-btn { display: flex; position: absolute; left: 16px; top: 50%; transform: translateY(-50%); }

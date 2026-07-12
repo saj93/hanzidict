@@ -5,11 +5,13 @@ import { useRouter, usePathname } from 'next/navigation';
 import UserMenu from './UserMenu';
 import NavSearch from './NavSearch';
 import { useAuth } from './AuthProvider';
+import { useSubscription } from '../hooks/useSubscription';
 
 export default function Nav({ hideScript = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
+  const { isPremium } = useSubscription();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,6 +71,11 @@ export default function Nav({ hideScript = false }) {
               {script === 'traditional' ? '繁' : '简'}
             </button>
           )}
+          {!isPremium && (
+            <button className="nav-premium-btn" onClick={() => go('/pricing')}>
+              Go Premium
+            </button>
+          )}
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
             {dark ? '☀️' : '🌙'}
           </button>
@@ -96,6 +103,9 @@ export default function Nav({ hideScript = false }) {
               {label}
             </button>
           ))}
+          {!isPremium && (
+            <button className="mobile-menu-premium" onClick={() => go('/pricing')}>Go Premium</button>
+          )}
           {!user && (
             <button className="mobile-menu-link" onClick={() => go('/login')}>Log in</button>
           )}
