@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import { cleanDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
+import PremiumNavBtn from '../components/PremiumNavBtn';
 import { useAuth } from '../components/AuthProvider';
 import { useSubscription } from '../hooks/useSubscription';
 import Footer from '../components/Footer';
@@ -181,6 +182,7 @@ export default function HskFlashcardsPage() {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">

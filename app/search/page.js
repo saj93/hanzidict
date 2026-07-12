@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import { firstGroupedDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
+import PremiumNavBtn from '../components/PremiumNavBtn';
 import NavSearch from '../components/NavSearch';
 
 const PAGE_SIZE = 20;
@@ -113,6 +114,7 @@ function SearchResults() {
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">

@@ -7,6 +7,7 @@ import { isVariantEntry, isTruePointer, cleanDefinitions, firstDef, cleanDef } f
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
+import PremiumNavBtn from '../../components/PremiumNavBtn';
 import NavSearch from '../../components/NavSearch';
 import AudioButton from '../../components/AudioButton';
 import AddToListButton from '../../components/AddToListButton';
@@ -380,6 +381,7 @@ export default function WordPage() {
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{isTraditional ? '繁' : '简'}</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">

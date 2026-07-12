@@ -336,6 +336,18 @@ html.dark .cand { background: var(--bg3); }
   transition: color 0.15s;
 }
 .wotd-link-btn:hover { color: var(--accent); }
+.home-premium-cta {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 14px; padding: 14px 24px 32px; text-align: center;
+}
+.home-premium-cta-text { font-size: 14px; color: var(--fg2); margin: 0; }
+.home-premium-cta-btn {
+  background: #1D9E75; color: #fff; border: none; border-radius: 50px;
+  padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: opacity 0.15s;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+.home-premium-cta-btn:hover { opacity: 0.85; }
 
 /* Stats strip */
 .stats-strip {

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import { firstDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
+import PremiumNavBtn from '../components/PremiumNavBtn';
 import NavSearch from '../components/NavSearch';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
@@ -88,6 +89,7 @@ export default function ChengyuPage() {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">

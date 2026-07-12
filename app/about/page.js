@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import UserMenu from '../components/UserMenu';
+import PremiumNavBtn from '../components/PremiumNavBtn';
 import { useAuth } from '../components/AuthProvider';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
@@ -47,6 +48,7 @@ export default function AboutPage() {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link active">About</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">

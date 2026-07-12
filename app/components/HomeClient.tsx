@@ -7,7 +7,9 @@ import HistoryDropdown from './HistoryDropdown';
 import DrawCanvas from './DrawCanvas';
 import RadicalSearch from './RadicalSearch';
 import UserMenu from './UserMenu';
+import PremiumNavBtn from './PremiumNavBtn';
 import { useAuth } from './AuthProvider';
+import { useSubscription } from '../hooks/useSubscription';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
 import LearningPath from './LearningPath';
@@ -26,6 +28,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
   const [showHistory, setShowHistory] = useState(false);
   const router = useRouter();
   const { user } = (useAuth() as any) ?? {};
+  const { isPremium } = useSubscription();
   const searchWrapRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressNextOutsideRef = useRef(false);
@@ -129,6 +132,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
             {dark ? '☀️' : '🌙'}
           </button>
@@ -145,6 +149,9 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
+          {!isPremium && (
+            <button className="mobile-menu-premium" onClick={() => { setMenuOpen(false); router.push('/pricing'); }}>Go Premium</button>
+          )}
           {!user && (
             <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/login'); }}>Log in</button>
           )}
@@ -218,6 +225,13 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
       </section>
 
       <WordOfDay wordData={wordOfDay} script={script} />
+
+      {!isPremium && (
+        <div className="home-premium-cta">
+          <p className="home-premium-cta-text">Want to go further? Unlock HSK 5–9, unlimited lists, and the full phrasebook.</p>
+          <button className="home-premium-cta-btn" onClick={() => router.push('/pricing')}>See pricing →</button>
+        </div>
+      )}
 
       <LearningPath />
 

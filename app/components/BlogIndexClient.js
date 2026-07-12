@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import UserMenu from './UserMenu';
+import PremiumNavBtn from './PremiumNavBtn';
 import { useAuth } from './AuthProvider';
 import NavSearch from './NavSearch';
 import Footer from './Footer';
@@ -37,6 +38,7 @@ export default function BlogIndexClient({ posts }) {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link active">Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
+          <PremiumNavBtn />
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
