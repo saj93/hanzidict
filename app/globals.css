@@ -1531,8 +1531,8 @@ html.dark .history-footer { background: var(--bg3); }
 }
 .fc-start-btn {
   flex: 1; padding: 0 8px; height: 32px;
-  background: #1D9E75; color: #fff;
-  border: none; border-radius: 50px;
+  background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent);
+  border-radius: 50px;
   font-size: 13px; font-weight: 500;
   cursor: pointer; transition: background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
@@ -1715,8 +1715,8 @@ html.dark .history-footer { background: var(--bg3); }
   background: rgba(49,130,206,0.1); border-radius: 5px; padding: 2px 7px;
 }
 .fc-stat-new {
-  font-size: 11px; font-weight: 600; color: #1D9E75;
-  background: rgba(29,158,117,0.1); border-radius: 5px; padding: 2px 7px;
+  font-size: 11px; font-weight: 600; color: var(--accent-text);
+  background: var(--accent-dim); border-radius: 5px; padding: 2px 7px;
 }
 .fc-stat-total {
   font-size: 11px; font-weight: 600; color: var(--fg3);
@@ -3616,7 +3616,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 }
 .home-quiz-cta-text { font-size: 16px; color: var(--fg2); margin: 0; }
 .home-quiz-cta-btn {
-  background: #1D9E75; color: #fff; border: none; border-radius: 50px;
+  background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent); border-radius: 50px;
   padding: 12px 28px; font-size: 15px; font-weight: 600; cursor: pointer;
   white-space: nowrap; transition: opacity 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
@@ -3626,7 +3626,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 /* ── QUIZ PAGE ── */
 .quiz-root { min-height: 100svh; display: flex; flex-direction: column; background: var(--bg); }
 .quiz-progress-track { height: 3px; background: var(--border); position: sticky; top: 0; z-index: 100; }
-.quiz-progress-fill { height: 100%; background: #1D9E75; transition: width 0.35s ease; }
+.quiz-progress-fill { height: 100%; background: var(--accent); transition: width 0.35s ease; }
 .quiz-header {
   padding: 16px 24px;
   display: flex; align-items: center;
@@ -3666,7 +3666,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   transition: border-color 0.15s, background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
 }
-.quiz-option:hover { border-color: #1D9E75; background: rgba(29,158,117,0.06); }
+.quiz-option:hover { border-color: var(--accent); background: var(--accent-dim); }
 .quiz-option-label { font-size: 15px; font-weight: 500; color: var(--fg); }
 .quiz-option-sub { font-size: 12px; color: var(--fg3); font-weight: 400; }
 
@@ -3678,7 +3678,7 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .quiz-results-inner { width: 100%; max-width: 540px; }
 .quiz-check {
   width: 40px; height: 40px; border-radius: 50%;
-  background: #1D9E75; color: #fff;
+  background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 700; margin-bottom: 18px;
 }
@@ -3696,16 +3696,16 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   transition: border-color 0.15s, background 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
 }
-.quiz-plan-step:hover { border-color: #1D9E75; background: rgba(29,158,117,0.06); }
+.quiz-plan-step:hover { border-color: var(--accent); background: var(--accent-dim); }
 .quiz-plan-step-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
 .quiz-plan-step-body { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .quiz-plan-step-title { font-size: 14px; font-weight: 600; color: var(--fg); }
 .quiz-plan-step-desc { font-size: 12px; color: var(--fg3); line-height: 1.5; }
-.quiz-plan-step-cta { font-size: 12px; color: #1D9E75; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.quiz-plan-step-cta { font-size: 12px; color: var(--accent-text); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
 .quiz-ctas { display: flex; flex-direction: column; gap: 10px; }
 .quiz-cta-primary {
-  width: 100%; padding: 15px; border-radius: 50px; border: none;
-  background: #1D9E75; color: #fff; font-size: 15px; font-weight: 700;
+  width: 100%; padding: 15px; border-radius: 50px;
+  background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent); font-size: 15px; font-weight: 700;
   cursor: pointer; transition: opacity 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
 }
