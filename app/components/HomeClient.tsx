@@ -12,7 +12,6 @@ import { useAuth } from './AuthProvider';
 import { useSubscription } from '../hooks/useSubscription';
 import Footer from './Footer';
 import FeatureCards from './FeatureCards';
-import LearningPath from './LearningPath';
 import NewsletterForm from './NewsletterForm';
 import { useSearchHistory } from '../hooks/useSearchHistory';
 import WordOfDay from './WordOfDay';
@@ -230,7 +229,10 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
         </div>
       )}
 
-      <LearningPath />
+      <div className="home-quiz-cta">
+        <p className="home-quiz-cta-text">Not sure where to start?</p>
+        <button className="home-quiz-cta-btn" onClick={() => router.push('/quiz')}>Find your learning path →</button>
+      </div>
 
       <FeatureCards
         onTryDraw={() => { setSearchTab('draw'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
