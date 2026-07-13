@@ -135,8 +135,9 @@ body {
 }
 .script-btn:hover { background: var(--accent-dim); }
 .nav-premium-btn {
-  height: 32px; padding: 0 14px; border-radius: 50px; border: none;
-  background: #1D9E75; color: #fff; font-size: 13px; font-weight: 600;
+  height: 32px; padding: 0 14px; border-radius: 50px;
+  border: 0.5px solid var(--accent); background: var(--accent-dim); color: var(--accent-text);
+  font-size: 13px; font-weight: 600;
   cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
   display: flex; align-items: center;
@@ -342,8 +343,8 @@ html.dark .cand { background: var(--bg3); }
 }
 .home-premium-cta-text { font-size: 14px; color: var(--fg2); margin: 0; }
 .home-premium-cta-btn {
-  background: #1D9E75; color: #fff; border: none; border-radius: 50px;
-  padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent);
+  border-radius: 50px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
   white-space: nowrap; transition: opacity 0.15s;
   font-family: var(--font-body), system-ui, sans-serif;
 }
@@ -1366,7 +1367,7 @@ html.dark .history-footer { background: var(--bg3); }
 .mobile-menu-link { background: none; border: none; text-align: left; padding: 12px 8px; font-size: 16px; color: var(--fg2); cursor: pointer; border-radius: 8px; }
 .mobile-menu-link.active { color: var(--fg); font-weight: 500; }
 .mobile-menu-link:hover { background: var(--bg2); }
-.mobile-menu-premium { background: #1D9E75; color: #fff; border: none; border-radius: 8px; text-align: left; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+.mobile-menu-premium { background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent); border-radius: 8px; text-align: left; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 6px; }
 .mobile-menu-actions { display: flex; gap: 8px; padding: 8px 8px 0; margin-top: 4px; border-top: 1px solid var(--border); }
 
 /* ── RESPONSIVE ── */

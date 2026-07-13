@@ -43,10 +43,16 @@ function sortByHskDefs(a, b) {
   const aLit = LITERARY_RE.test(firstDef(a)) ? 1 : 0;
   const bLit = LITERARY_RE.test(firstDef(b)) ? 1 : 0;
   if (aLit !== bLit) return aLit - bLit;
-  // More definitions first
-  const aDefs = (a.definitions || '').split(' | ').filter(Boolean).length;
-  const bDefs = (b.definitions || '').split(' | ').filter(Boolean).length;
-  if (aDefs !== bDefs) return bDefs - aDefs;
+  // Readings with more descriptive defs (higher avg words per def) are primary.
+  // This prevents short-gloss archaic readings (e.g. 没 mò: "drowned|to end|…") from
+  // outranking the everyday reading (没 méi: "(negative prefix for verbs) have not; not").
+  const aDefs = (a.definitions || '').split(' | ').filter(Boolean);
+  const bDefs = (b.definitions || '').split(' | ').filter(Boolean);
+  const avgWords = defs => defs.reduce((s, d) => s + d.split(/\s+/).length, 0) / (defs.length || 1);
+  const aAvg = avgWords(aDefs), bAvg = avgWords(bDefs);
+  if (Math.abs(aAvg - bAvg) > 2) return bAvg - aAvg;
+  // More definitions first (secondary tiebreaker)
+  if (aDefs.length !== bDefs.length) return bDefs.length - aDefs.length;
   // Alphabetical pinyin
   return (a.pinyin || '').localeCompare(b.pinyin || '');
 }
