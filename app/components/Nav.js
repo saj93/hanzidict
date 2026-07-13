@@ -103,9 +103,6 @@ export default function Nav({ hideScript = false }) {
               {label}
             </button>
           ))}
-          {!isPremium && (
-            <button className="mobile-menu-premium" onClick={() => go('/pricing')}>Go Premium</button>
-          )}
           {!user && (
             <button className="mobile-menu-link" onClick={() => go('/login')}>Log in</button>
           )}

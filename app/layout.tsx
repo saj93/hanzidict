@@ -3,6 +3,7 @@ import { Lora, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "./components/AuthProvider";
+import MobilePremiumBanner from "./components/MobilePremiumBanner";
 
 const lora = Lora({
   variable: "--font-display",
@@ -63,7 +64,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(localStorage.getItem('hanzidict-dark')==='true')document.documentElement.classList.add('dark')}catch(e){}})()` }} />
         <script dangerouslySetInnerHTML={{ __html: `if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js',{scope:'/'})})}`}} />
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var s=localStorage.getItem('hanzidict-script');if(s)document.documentElement.setAttribute('data-script',s)}catch(e){}})()` }} />
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children}
+          <MobilePremiumBanner />
+        </AuthProvider>
         {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
           <Script
             id="meta-pixel"

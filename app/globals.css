@@ -1368,6 +1368,7 @@ html.dark .history-footer { background: var(--bg3); }
 .mobile-menu-link.active { color: var(--fg); font-weight: 500; }
 .mobile-menu-link:hover { background: var(--bg2); }
 .mobile-menu-premium { background: var(--accent-dim); color: var(--accent-text); border: 0.5px solid var(--accent); border-radius: 8px; text-align: left; padding: 12px 16px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+.mobile-premium-banner { display: none; }
 .mobile-menu-actions { display: flex; gap: 8px; padding: 8px 8px 0; margin-top: 4px; border-top: 1px solid var(--border); }
 
 /* ── RESPONSIVE ── */
@@ -3590,4 +3591,20 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
   .wl-badge { display: none; }
   .wl-audio { margin-left: auto; }
   .wl-pinyin { min-width: 0; }
+}
+
+/* ── MOBILE PREMIUM STICKY BANNER ── */
+@media (max-width: 768px) {
+  .mobile-premium-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    background: rgba(29, 158, 117, 0.15);
+    border-top: 0.5px solid rgba(29, 158, 117, 0.3);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  .mobile-premium-banner-text { font-size: 13px; color: var(--accent-text); }
+  .mobile-premium-banner-cta { font-size: 13px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
 }

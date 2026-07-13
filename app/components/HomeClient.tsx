@@ -149,9 +149,6 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/learn'); }}>Learn</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/blog'); }}>Blog</button>
           <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/about'); }}>About</button>
-          {!isPremium && (
-            <button className="mobile-menu-premium" onClick={() => { setMenuOpen(false); router.push('/pricing'); }}>Go Premium</button>
-          )}
           {!user && (
             <button className="mobile-menu-link" onClick={() => { setMenuOpen(false); router.push('/login'); }}>Log in</button>
           )}
