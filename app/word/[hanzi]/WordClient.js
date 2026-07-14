@@ -593,12 +593,20 @@ export default function WordPage() {
       const ai_first = defIndices[group.start];
       const firstText = allDefs[ai_first];
       if (val) {
-        await patchSourceEntry(firstText, val);
-        setLocalDefinitions(allDefs.map((d, ai) => ai === ai_first ? val : d).join(' | ')); setLocalDefsTab(activeTabIdx);
+        const patched = await patchSourceEntry(firstText, val);
+        if (patched) {
+          setLocalDefinitions(allDefs.map((d, ai) => ai === ai_first ? val : d).join(' | ')); setLocalDefsTab(activeTabIdx);
+        } else {
+          alert('Save failed — definition not found in DB. Reload the page and try again.');
+        }
       } else {
         // Empty val = delete just the first def; the rest of the group stays
-        await patchSourceEntry(firstText);
-        setLocalDefinitions(allDefs.filter((_, ai) => ai !== ai_first).join(' | ')); setLocalDefsTab(activeTabIdx);
+        const patched = await patchSourceEntry(firstText);
+        if (patched) {
+          setLocalDefinitions(allDefs.filter((_, ai) => ai !== ai_first).join(' | ')); setLocalDefsTab(activeTabIdx);
+        } else {
+          alert('Save failed — definition not found in DB. Reload the page and try again.');
+        }
       }
     }
     setEditingDefIdx(null);
@@ -611,12 +619,17 @@ export default function WordPage() {
     if (!primary?.id || !session) return;
     const group = groupedDefs[groupIdx];
     const aisToRemove = new Set();
+    let anyFailed = false;
     for (let si = group.start; si <= group.end; si++) {
       const ai = defIndices[si];
-      await patchSourceEntry(allDefs[ai]);
-      aisToRemove.add(ai);
+      const patched = await patchSourceEntry(allDefs[ai]);
+      if (patched) aisToRemove.add(ai);
+      else anyFailed = true;
     }
-    setLocalDefinitions(allDefs.filter((_, ai) => !aisToRemove.has(ai)).join(' | ')); setLocalDefsTab(activeTabIdx);
+    if (anyFailed) alert('Some definitions could not be deleted — reload and try again.');
+    if (aisToRemove.size > 0) {
+      setLocalDefinitions(allDefs.filter((_, ai) => !aisToRemove.has(ai)).join(' | ')); setLocalDefsTab(activeTabIdx);
+    }
   }
 
   // Move groupedDefs[groupIdx] up or down by swapping its allDefs range with the adjacent group
