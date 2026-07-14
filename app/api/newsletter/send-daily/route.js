@@ -174,7 +174,7 @@ function buildHtml(wordData, sections, isChengyu) {
 
 // ── Route handler ──────────────────────────────────────────────────────────
 
-export async function POST(request) {
+export async function GET(request) {
   // Verify cron secret to prevent unauthorized calls
   const auth = request.headers.get('authorization');
   const secret = process.env.CRON_SECRET;
