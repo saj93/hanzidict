@@ -153,6 +153,7 @@ export default function WordPage() {
   const [sideView, setSideView] = useState('related'); // 'related' | 'chengyu'
   const [showAllDefs, setShowAllDefs] = useState(false);
   const [localDefinitions, setLocalDefinitions] = useState(null);
+  const [localDefsTab, setLocalDefsTab] = useState(null);
   const [editingDefIdx, setEditingDefIdx] = useState(null);
   const [editVal, setEditVal] = useState('');
   const [editSaving, setEditSaving] = useState(false);
@@ -213,7 +214,7 @@ export default function WordPage() {
     setChengyu([]);
     setSideView('related');
     setShowAllDefs(false);
-    setLocalDefinitions(null);
+    setLocalDefinitions(null); setLocalDefsTab(null);
     setEditingDefIdx(null);
     setEditingExampleId(null);
     setPronunciations([]);
@@ -226,6 +227,7 @@ export default function WordPage() {
     setShowAllDefs(false);
     setExampleIdx(0);
     setLocalDefinitions(null);
+    setLocalDefsTab(null);
     setEditingDefIdx(null);
   }, [activeTabIdx]);
 
@@ -459,7 +461,7 @@ export default function WordPage() {
     );
   }
 
-  const rawDefs = localDefinitions ?? primary.definitions ?? '';
+  const rawDefs = (localDefsTab === activeTabIdx ? localDefinitions : null) ?? primary.definitions ?? '';
   const IDIOM_STRIP_RE = /\s*\(idiom\)[;,]?\s*/gi;
   const allDefs = (cleanDefinitions(rawDefs) || rawDefs || '')
     .split(' | ')
@@ -542,14 +544,14 @@ export default function WordPage() {
     const authHeader = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` };
     const newDefinitions = newAllDefs.filter(Boolean).join(' | ');
     const prev = localDefinitions ?? primary.definitions;
-    setLocalDefinitions(newDefinitions);
+    setLocalDefinitions(newDefinitions); setLocalDefsTab(activeTabIdx);
 
     // Save canonical order to primary row
     const r = await fetch(`/api/entries/${primary.id}`, {
       method: 'PATCH', headers: authHeader,
       body: JSON.stringify({ definitions: newDefinitions }),
     });
-    if (!r.ok) { setLocalDefinitions(prev); return; }
+    if (!r.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); return; }
 
     // Remove from secondary rows any defs now owned by primary
     const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
@@ -577,13 +579,13 @@ export default function WordPage() {
       // Appending new def — always goes to primary row
       const newDefs = [...allDefs, ...(val ? [val] : [])].filter(Boolean).join(' | ');
       const prev = localDefinitions ?? primary.definitions;
-      setLocalDefinitions(newDefs);
+      setLocalDefinitions(newDefs); setLocalDefsTab(activeTabIdx);
       const resp = await fetch(`/api/entries/${primary.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${session.access_token}` },
         body: JSON.stringify({ definitions: newDefs }),
       });
-      if (!resp.ok) setLocalDefinitions(prev);
+      if (!resp.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); }
     } else {
       const group = groupedDefs[editingDefIdx];
       // Edit operates only on the first def in the group — others are left intact.
@@ -592,11 +594,11 @@ export default function WordPage() {
       const firstText = allDefs[ai_first];
       if (val) {
         await patchSourceEntry(firstText, val);
-        setLocalDefinitions(allDefs.map((d, ai) => ai === ai_first ? val : d).join(' | '));
+        setLocalDefinitions(allDefs.map((d, ai) => ai === ai_first ? val : d).join(' | ')); setLocalDefsTab(activeTabIdx);
       } else {
         // Empty val = delete just the first def; the rest of the group stays
         await patchSourceEntry(firstText);
-        setLocalDefinitions(allDefs.filter((_, ai) => ai !== ai_first).join(' | '));
+        setLocalDefinitions(allDefs.filter((_, ai) => ai !== ai_first).join(' | ')); setLocalDefsTab(activeTabIdx);
       }
     }
     setEditingDefIdx(null);
@@ -614,7 +616,7 @@ export default function WordPage() {
       await patchSourceEntry(allDefs[ai]);
       aisToRemove.add(ai);
     }
-    setLocalDefinitions(allDefs.filter((_, ai) => !aisToRemove.has(ai)).join(' | '));
+    setLocalDefinitions(allDefs.filter((_, ai) => !aisToRemove.has(ai)).join(' | ')); setLocalDefsTab(activeTabIdx);
   }
 
   // Move groupedDefs[groupIdx] up or down by swapping its allDefs range with the adjacent group
