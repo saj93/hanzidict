@@ -43,6 +43,10 @@ function sortByHskDefs(a, b) {
   const aLit = LITERARY_RE.test(firstDef(a)) ? 1 : 0;
   const bLit = LITERARY_RE.test(firstDef(b)) ? 1 : 0;
   if (aLit !== bLit) return aLit - bLit;
+  // Neutral-tone readings (tone 5) are grammatical particles — always primary
+  const aParticle = /5$/.test(a.pinyin || '') ? 0 : 1;
+  const bParticle = /5$/.test(b.pinyin || '') ? 0 : 1;
+  if (aParticle !== bParticle) return aParticle - bParticle;
   // Readings with more descriptive defs (higher avg words per def) are primary.
   // This prevents short-gloss archaic readings (e.g. 没 mò: "drowned|to end|…") from
   // outranking the everyday reading (没 méi: "(negative prefix for verbs) have not; not").
