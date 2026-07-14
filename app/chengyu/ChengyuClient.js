@@ -9,6 +9,7 @@ import PremiumNavBtn from '../components/PremiumNavBtn';
 import NavSearch from '../components/NavSearch';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
+import { useSimpToTrad } from '../hooks/useSimpToTrad';
 
 const HSK_LABEL = { 1:'HSK 1', 2:'HSK 2', 3:'HSK 3', 4:'HSK 4', 5:'HSK 5', 6:'HSK 6', 7:'HSK 7–9' };
 const LIMIT = 50;
@@ -27,11 +28,20 @@ export default function ChengyuPage() {
   const [total, setTotal] = useState(0);
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [script, setScript] = useState('simplified');
 
   const debounceRef = useRef(null);
 
+  const toTraditional = useSimpToTrad(script);
+
   useEffect(() => { document.title = 'Chengyu 成语 — HanziDict'; }, []);
   useEffect(() => { setDark(document.documentElement.classList.contains('dark')); }, []);
+  useEffect(() => {
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch {}
+    function handler(e) { setScript(e.detail?.script ?? 'simplified'); }
+    window.addEventListener('hanzidict:scriptChange', handler);
+    return () => window.removeEventListener('hanzidict:scriptChange', handler);
+  }, []);
 
   // Fetch whenever page or qParam changes (from URL)
   useEffect(() => {
@@ -52,6 +62,13 @@ export default function ChengyuPage() {
     const isDark = document.documentElement.classList.toggle('dark');
     try { localStorage.setItem('hanzidict-dark', String(isDark)); } catch (e) {}
     setDark(isDark);
+  }
+
+  function toggleScript() {
+    const next = script === 'simplified' ? 'traditional' : 'simplified';
+    setScript(next);
+    try { localStorage.setItem('hanzidict-script', next); } catch {}
+    window.dispatchEvent(new CustomEvent('hanzidict:scriptChange', { detail: { script: next } }));
   }
 
   function handleSearchChange(e) {
@@ -90,6 +107,7 @@ export default function ChengyuPage() {
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
           <PremiumNavBtn />
+          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
@@ -145,7 +163,7 @@ export default function ChengyuPage() {
                   onClick={() => router.push(`/word/${encodeURIComponent(entry.simplified)}`)}
                 >
                   <div className="chengyu-card-top">
-                    <span className="chengyu-card-hz">{entry.simplified}</span>
+                    <span className="chengyu-card-hz">{toTraditional(entry.simplified)}</span>
                   </div>
                   <div className="chengyu-card-py">{convertPinyin(entry.pinyin || '')}</div>
                   <div className="chengyu-card-def">{def}</div>

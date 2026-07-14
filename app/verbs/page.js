@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
 import AudioButton from '../components/AudioButton';
 import { useSubscription } from '../hooks/useSubscription';
+import { useSimpToTrad } from '../hooks/useSimpToTrad';
 import verbs from '../../content/verbs.json';
 
 const FREE_COUNT = 35;
@@ -14,8 +15,17 @@ const FREE_COUNT = 35;
 export default function VerbsPage() {
   const router = useRouter();
   const { isPremium, loading: subLoading } = useSubscription();
+  const [script, setScript] = useState('simplified');
 
-  useEffect(() => { document.title = 'Most Common Chinese Verbs — HanziDict'; }, []);
+  useEffect(() => {
+    document.title = 'Most Common Chinese Verbs — HanziDict';
+    try { if (localStorage.getItem('hanzidict-script') === 'traditional') setScript('traditional'); } catch {}
+    function handler(e) { setScript(e.detail?.script ?? 'simplified'); }
+    window.addEventListener('hanzidict:scriptChange', handler);
+    return () => window.removeEventListener('hanzidict:scriptChange', handler);
+  }, []);
+
+  const toTraditional = useSimpToTrad(script);
 
   const freeVerbs = verbs.slice(0, FREE_COUNT);
   const premiumVerbs = verbs.slice(FREE_COUNT);
@@ -36,7 +46,7 @@ export default function VerbsPage() {
 
         <div className="verbs-list">
           {freeVerbs.map(verb => (
-            <VerbRow key={verb.simplified} verb={verb} onClick={() => router.push(`/word/${encodeURIComponent(verb.simplified)}`)} />
+            <VerbRow key={verb.simplified} verb={verb} toTraditional={toTraditional} onClick={() => router.push(`/word/${encodeURIComponent(verb.simplified)}`)} />
           ))}
         </div>
 
@@ -45,7 +55,7 @@ export default function VerbsPage() {
             {premiumVerbs.map(verb => (
               <div key={verb.simplified} className="verb-row pb-phrase-blurred" aria-hidden="true">
                 <span className="verb-rank pb-blur-light">{verb.rank}</span>
-                <span className="verb-hanzi pb-blur-text">{verb.simplified}</span>
+                <span className="verb-hanzi pb-blur-text">{toTraditional(verb.simplified)}</span>
                 <span className="verb-pinyin pb-blur-light">{verb.pinyin}</span>
                 <span className="verb-def pb-blur-light">{verb.meaning}</span>
               </div>
@@ -57,7 +67,7 @@ export default function VerbsPage() {
         ) : (
           <div className="verbs-list">
             {premiumVerbs.map(verb => (
-              <VerbRow key={verb.simplified} verb={verb} onClick={() => router.push(`/word/${encodeURIComponent(verb.simplified)}`)} />
+              <VerbRow key={verb.simplified} verb={verb} toTraditional={toTraditional} onClick={() => router.push(`/word/${encodeURIComponent(verb.simplified)}`)} />
             ))}
           </div>
         )}
@@ -69,7 +79,8 @@ export default function VerbsPage() {
   );
 }
 
-function VerbRow({ verb, onClick }) {
+function VerbRow({ verb, toTraditional, onClick }) {
+  const hanzi = toTraditional(verb.simplified);
   return (
     <div
       className="verb-row"
@@ -79,7 +90,7 @@ function VerbRow({ verb, onClick }) {
       onKeyDown={e => e.key === 'Enter' && onClick()}
     >
       <span className="verb-rank">{verb.rank}</span>
-      <span className="verb-hanzi">{verb.simplified}</span>
+      <span className="verb-hanzi">{hanzi}</span>
       <span className="verb-pinyin">{verb.pinyin}</span>
       <span className="verb-audio" onClick={e => e.stopPropagation()}>
         <AudioButton text={verb.simplified} />
