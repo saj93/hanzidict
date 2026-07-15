@@ -67,7 +67,7 @@ export default function Nav({ hideScript = false }) {
             </button>
           ))}
           {!hideScript && (
-            <button className="script-btn" onClick={toggleScript} title="Toggle script">
+            <button className="script-btn" onClick={toggleScript} title={script === 'traditional' ? 'Switch to Simplified' : 'Switch to Traditional'}>
               {script === 'traditional' ? '繁' : '简'}
             </button>
           )}
@@ -76,7 +76,7 @@ export default function Nav({ hideScript = false }) {
               Go Premium
             </button>
           )}
-          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
+          <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>
             {dark ? '☀️' : '🌙'}
           </button>
           <UserMenu />

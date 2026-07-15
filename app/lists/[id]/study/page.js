@@ -98,7 +98,7 @@ export default function ListStudyPage() {
       </div>
       <div className="fc-card-counter">{Math.min(idx + 1, cards.length)} / {cards.length}</div>
       <div style={{ display: 'flex', gap: 8 }}>
-        <button className="sbtn" onClick={() => { setScript(s => s === 'simplified' ? 'traditional' : 'simplified'); }} title="Toggle script">
+        <button className="sbtn" onClick={() => { setScript(s => s === 'simplified' ? 'traditional' : 'simplified'); }} title={script === 'traditional' ? 'Switch to Simplified' : 'Switch to Traditional'}>
           {script === 'traditional' ? '繁' : '简'}
         </button>
         <button className="theme-btn" onClick={toggleDark}>{dark ? '☀️' : '🌙'}</button>

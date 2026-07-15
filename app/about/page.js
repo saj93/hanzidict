@@ -49,7 +49,7 @@ export default function AboutPage() {
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link active">About</button>
           <PremiumNavBtn />
-          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">{dark ? '☀️' : '🌙'}</button>
+          <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>{dark ? '☀️' : '🌙'}</button>
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />

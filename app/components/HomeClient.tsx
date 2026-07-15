@@ -128,9 +128,9 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
-          <button className="script-btn" onClick={toggleScript} title="Toggle script">{script === 'traditional' ? '繁' : '简'}</button>
+          <button className="script-btn" onClick={toggleScript} title={script === 'traditional' ? 'Switch to Simplified' : 'Switch to Traditional'}>{script === 'traditional' ? '繁' : '简'}</button>
           <PremiumNavBtn />
-          <button className="theme-btn" onClick={toggleDark} title="Toggle theme">
+          <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>
             {dark ? '☀️' : '🌙'}
           </button>
           <UserMenu />
