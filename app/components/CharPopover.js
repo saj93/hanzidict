@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
-import { cleanDefinitions, isTruePointer, isVariantEntry } from '../../lib/utils';
+import { cleanDefinitions } from '../../lib/utils';
+import { processExactMatches } from '../../lib/entrySort';
 import AudioButton from './AudioButton';
 
 const POPOVER_W = 224;
@@ -17,8 +18,7 @@ export default function CharPopover({ char, anchorRect, onClose }) {
 
   useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
 
-  // Fetch entry for this character — use raw=1 to get individual rows, then
-  // pick the primary the same way the word page does (lowest HSK, most defs, not a variant).
+  // Fetch entry for this character using the same grouping/sort logic as the word page.
   useEffect(() => {
     setLoading(true);
     setData(null);
@@ -28,19 +28,7 @@ export default function CharPopover({ char, anchorRect, onClose }) {
         const results = d.results || [];
         const exact = results.filter(e => e.simplified === char || e.traditional === char);
         const candidates = exact.length ? exact : results;
-        const sorted = [...candidates].sort((a, b) => {
-          if (a.hsk_level && !b.hsk_level) return -1;
-          if (!a.hsk_level && b.hsk_level) return 1;
-          if (a.hsk_level && b.hsk_level && a.hsk_level !== b.hsk_level) return a.hsk_level - b.hsk_level;
-          const aParticle = /5$/.test(a.pinyin || '') ? 0 : 1;
-          const bParticle = /5$/.test(b.pinyin || '') ? 0 : 1;
-          if (aParticle !== bParticle) return aParticle - bParticle;
-          const aCount = (a.definitions || '').split(' | ').filter(Boolean).length;
-          const bCount = (b.definitions || '').split(' | ').filter(Boolean).length;
-          if (aCount !== bCount) return bCount - aCount;
-          return (b.definitions || '').length - (a.definitions || '').length;
-        });
-        const primary = sorted.find(e => !isVariantEntry(e.definitions)) ?? sorted[0] ?? null;
+        const { primary } = processExactMatches(candidates);
         setData(primary);
         setLoading(false);
       })

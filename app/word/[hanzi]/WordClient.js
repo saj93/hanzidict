@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
-import { isVariantEntry, isTruePointer, cleanDefinitions, firstDef, cleanDef } from '../../../lib/utils';
+import { isTruePointer, cleanDefinitions, firstDef, cleanDef } from '../../../lib/utils';
+import { sortByHskDefs, processExactMatches } from '../../../lib/entrySort';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
@@ -15,55 +16,6 @@ import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../components/AuthProvider';
 import { useSimpToTrad } from '../../hooks/useSimpToTrad';
-
-function isVariant(entry) {
-  return isVariantEntry(entry.definitions);
-}
-
-function normalizePy(pinyin) {
-  return (pinyin || '').toLowerCase().trim();
-}
-
-function sortByHskDefs(a, b) {
-  // Variants/surnames last
-  const av = isVariant(a) ? 1 : 0, bv = isVariant(b) ? 1 : 0;
-  if (av !== bv) return av - bv;
-  // HSK-tagged before untagged
-  const aIsHSK = a.hsk_level !== null && a.hsk_level !== undefined;
-  const bIsHSK = b.hsk_level !== null && b.hsk_level !== undefined;
-  if (aIsHSK && !bIsHSK) return -1;
-  if (!aIsHSK && bIsHSK) return 1;
-  // Lower HSK level first
-  const aHsk = a.hsk_level ?? 999;
-  const bHsk = b.hsk_level ?? 999;
-  if (aHsk !== bHsk) return aHsk - bHsk;
-  // Literary/archaic readings after everyday readings (same HSK level)
-  const LITERARY_RE = /^\((literary|archaic|classical)\)/i;
-  const firstDef = e => ((e.definitions || '').split(' | ')[0] || '').trim();
-  const aLit = LITERARY_RE.test(firstDef(a)) ? 1 : 0;
-  const bLit = LITERARY_RE.test(firstDef(b)) ? 1 : 0;
-  if (aLit !== bLit) return aLit - bLit;
-  // Neutral-tone readings (tone 5) are grammatical particles — always primary
-  const aParticle = /5$/.test(a.pinyin || '') ? 0 : 1;
-  const bParticle = /5$/.test(b.pinyin || '') ? 0 : 1;
-  if (aParticle !== bParticle) return aParticle - bParticle;
-  // Readings with more descriptive defs (higher avg words per def) are primary.
-  // This prevents short-gloss archaic readings (e.g. 没 mò: "drowned|to end|…") from
-  // outranking the everyday reading (没 méi: "(negative prefix for verbs) have not; not").
-  const aDefs = (a.definitions || '').split(' | ').filter(Boolean);
-  const bDefs = (b.definitions || '').split(' | ').filter(Boolean);
-  const avgWords = defs => defs.reduce((s, d) => s + d.split(/\s+/).length, 0) / (defs.length || 1);
-  const aAvg = avgWords(aDefs), bAvg = avgWords(bDefs);
-  if (Math.abs(aAvg - bAvg) > 2) return bAvg - aAvg;
-  // More definitions first (secondary tiebreaker)
-  if (aDefs.length !== bDefs.length) return bDefs.length - aDefs.length;
-  // Alphabetical pinyin
-  return (a.pinyin || '').localeCompare(b.pinyin || '');
-}
-
-function sortByHskPinyin(entries) {
-  return [...entries].sort(sortByHskDefs);
-}
 
 // Group consecutive short defs (≤ 2 words) into semicolon-joined runs of up to 5.
 // Returns objects {text, start, end} where start/end are indices in the defs array.
@@ -88,44 +40,6 @@ function groupShortDefs(defs) {
   }
   if (run.length) groups.push({ text: run.join('; '), start: runStart, end: runStart + run.length - 1 });
   return groups;
-}
-
-function processExactMatches(entries) {
-  const sorted = sortByHskPinyin(entries);
-
-  // Group all entries by normalized pinyin (preserves sorted order within each group)
-  const groups = new Map();
-  for (const e of sorted) {
-    const key = normalizePy(e.pinyin);
-    if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(e);
-  }
-
-  // For each group: flat-merge defs from all non-pointer entries (including surname entries).
-  // Individual pointer defs ("variant of X") are filtered inline.
-  const deduped = [];
-  for (const group of groups.values()) {
-    const best = group.find(e => !isVariant(e)) ?? group[0];
-    const seenDefs = new Set();
-    const mergedDefs = [];
-    for (const e of group.filter(g => !isTruePointer(g.definitions))) {
-      for (const d of (e.definitions || '').split(' | ').map(d => d.trim()).filter(Boolean)) {
-        if (!seenDefs.has(d) && !isTruePointer(d)) { seenDefs.add(d); mergedDefs.push(d); }
-      }
-    }
-    deduped.push({
-      ...best,
-      _allEntries: group, // all DB rows for this pinyin — used by admin to patch the right row
-      definitions: mergedDefs.length ? mergedDefs.join(' | ') : best.definitions,
-    });
-  }
-
-  // Re-sort using merged def counts — more accurate than per-row counts used above
-  deduped.sort(sortByHskDefs);
-
-  const primary = deduped.find(e => !isVariant(e)) ?? deduped[0] ?? null;
-  const alternates = deduped.filter(e => e !== primary);
-  return { primary, alternates, deduped };
 }
 
 export default function WordPage() {
