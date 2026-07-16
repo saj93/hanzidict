@@ -32,6 +32,9 @@ export default function CharPopover({ char, anchorRect, onClose }) {
           if (a.hsk_level && !b.hsk_level) return -1;
           if (!a.hsk_level && b.hsk_level) return 1;
           if (a.hsk_level && b.hsk_level && a.hsk_level !== b.hsk_level) return a.hsk_level - b.hsk_level;
+          const aParticle = /5$/.test(a.pinyin || '') ? 0 : 1;
+          const bParticle = /5$/.test(b.pinyin || '') ? 0 : 1;
+          if (aParticle !== bParticle) return aParticle - bParticle;
           const aCount = (a.definitions || '').split(' | ').filter(Boolean).length;
           const bCount = (b.definitions || '').split(' | ').filter(Boolean).length;
           if (aCount !== bCount) return bCount - aCount;
