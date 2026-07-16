@@ -71,14 +71,14 @@ export default function Nav({ hideScript = false }) {
               {script === 'traditional' ? '繁' : '简'}
             </button>
           )}
+          <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>
+            {dark ? '☀️' : '🌙'}
+          </button>
           {!isPremium && (
             <button className="nav-premium-btn" onClick={() => go('/pricing')}>
               Go Premium
             </button>
           )}
-          <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>
-            {dark ? '☀️' : '🌙'}
-          </button>
           <UserMenu />
           <button
             className="hamburger-btn"
