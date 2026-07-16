@@ -3560,37 +3560,46 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .words-sit-pinyin { font-size: 14px; color: var(--fg3); margin: 0; }
 .words-section { margin-bottom: 0; }
 .words-section + .words-section { margin-top: 36px; }
+/* cols: hanzi | audio | pinyin | definition | badge */
 .words-list { display: flex; flex-direction: column; }
-.wl-entry { border-bottom: 0.5px solid var(--border); }
+.wl-entry {
+  display: grid;
+  grid-template-columns: 80px 28px 112px 1fr auto;
+  column-gap: 10px;
+  border-bottom: 0.5px solid var(--border);
+}
 .wl-entry:last-child { border-bottom: none; }
 .wl-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 11px 4px; cursor: pointer;
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: subgrid;
+  align-items: center;
+  padding: 10px 4px; cursor: pointer;
   transition: background 0.12s; border-radius: 6px;
 }
 .wl-row:hover { background: var(--bg2); }
-.wl-hanzi { font-size: 20px; color: var(--fg); flex-shrink: 0; }
-.wl-pinyin { font-size: 13px; color: var(--accent); flex-shrink: 0; min-width: 80px; }
-.wl-def { font-size: 13px; color: var(--fg2); flex: 1; min-width: 0; }
+.wl-hanzi { font-size: 20px; color: var(--fg); }
+.wl-pinyin { font-size: 13px; color: var(--accent); }
+.wl-def { font-size: 13px; color: var(--fg2); min-width: 0; }
 .wl-badge {
   font-size: 11px; padding: 2px 8px; border-radius: 6px;
-  border: 0.5px solid var(--accent); white-space: nowrap; flex-shrink: 0;
+  border: 0.5px solid var(--accent); white-space: nowrap;
   background: var(--accent-dim); color: var(--accent-text);
+  align-self: center;
 }
-.wl-audio { flex-shrink: 0; }
 .wl-note-block {
+  grid-column: 3 / -1;
   display: flex; gap: 10px; background: var(--bg2);
   border: 1px solid var(--border); border-left: 3px solid var(--accent);
   border-radius: var(--radius); padding: 10px 14px;
-  font-size: 13px; color: var(--fg2); line-height: 1.65; margin: 0 0 8px;
+  font-size: 13px; color: var(--fg2); line-height: 1.65; margin: 0 4px 10px;
 }
 .wl-note-icon { flex-shrink: 0; }
 .wl-note-block p { margin: 0; }
 @media (max-width: 480px) {
+  .wl-entry { grid-template-columns: max-content 28px 1fr; }
   .wl-def { display: none; }
   .wl-badge { display: none; }
-  .wl-audio { margin-left: auto; }
-  .wl-pinyin { min-width: 0; }
+  .wl-note-block { grid-column: 3 / -1; }
 }
 
 /* ── MOBILE PREMIUM STICKY BANNER ── */

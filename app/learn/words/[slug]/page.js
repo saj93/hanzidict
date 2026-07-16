@@ -81,14 +81,14 @@ function WordRow({ word, onNavigate }) {
         onKeyDown={e => e.key === 'Enter' && onNavigate(word.s)}
       >
         <span className="wl-hanzi">{hanziDisplay}</span>
+        <span className="wl-audio" onClick={e => e.stopPropagation()}>
+          <AudioButton text={word.s} />
+        </span>
         <span className="wl-pinyin">{pinyinDisplay}</span>
         <span className="wl-def">{word.en}</span>
         {word.variant?.label && (
           <span className="wl-badge" onClick={e => e.stopPropagation()}>{word.variant.label}</span>
         )}
-        <span className="wl-audio" onClick={e => e.stopPropagation()}>
-          <AudioButton text={word.s} />
-        </span>
       </div>
       {word.note && (
         <div className="wl-note-block">
