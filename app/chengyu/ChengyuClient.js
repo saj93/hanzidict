@@ -106,9 +106,9 @@ export default function ChengyuPage() {
           <button className="nav-link" onClick={() => router.push('/learn')}>Learn</button>
           <button className="nav-link" onClick={() => router.push('/blog')}>Blog</button>
           <button className="nav-link" onClick={() => router.push('/about')}>About</button>
-          <PremiumNavBtn />
           <button className="script-btn" onClick={toggleScript} title={script === 'traditional' ? 'Switch to Simplified' : 'Switch to Traditional'}>{script === 'traditional' ? '繁' : '简'}</button>
           <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>{dark ? '☀️' : '🌙'}</button>
+          <PremiumNavBtn />
           <UserMenu />
           <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
             <span className="ham-line" /><span className="ham-line" /><span className="ham-line" />
