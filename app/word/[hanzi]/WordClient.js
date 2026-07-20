@@ -160,10 +160,39 @@ export default function WordPage() {
     setDecomp([]);
     fetch(`/api/search?q=${encodeURIComponent(hanzi)}&raw=1`)
       .then(r => r.json())
-      .then(data => {
+      .then(async data => {
         const entries = data.results || [];
         const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
-        const { primary, alternates, deduped } = processExactMatches(exactMatches);
+
+        // If the URL is a traditional character (primary entry has simplified≠hanzi), redirect.
+        const { primary: tempPrimary } = processExactMatches(exactMatches);
+        if (tempPrimary?.simplified && tempPrimary.simplified !== hanzi) {
+          router.replace(`/word/${encodeURIComponent(tempPrimary.simplified)}`);
+          return;
+        }
+
+        // Expand: collect traditional forms that have their own standalone simplified= entries
+        // (e.g. 乾 has qian2/trigram entries on its own; include those on /word/干)
+        const ownEntries = exactMatches.filter(e => e.simplified === hanzi);
+        const tradForms = [...new Set(
+          ownEntries.map(e => e.traditional).filter(t => t && t !== hanzi)
+        )];
+        let allExact = [...exactMatches];
+        if (tradForms.length > 0) {
+          const extraArrays = await Promise.all(
+            tradForms.map(t =>
+              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1`)
+                .then(r => r.json())
+                .then(d => (d.results || []).filter(e =>
+                  e.simplified === t && !allExact.some(ex => ex.id === e.id)
+                ))
+                .catch(() => [])
+            )
+          );
+          allExact = [...allExact, ...extraArrays.flat()];
+        }
+
+        const { primary, alternates, deduped } = processExactMatches(allExact);
         const otherEntries = entries.filter(e => e.simplified !== hanzi && e.traditional !== hanzi);
         setResults([...(primary ? [primary] : []), ...alternates, ...otherEntries]);
         setPronunciations(deduped);
