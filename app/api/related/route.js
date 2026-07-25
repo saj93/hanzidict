@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getRelated } from '@/lib/db';
 
 export async function GET(request) {

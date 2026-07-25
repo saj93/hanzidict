@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { getExamples } from '@/lib/db';
 
 export async function GET(request) {

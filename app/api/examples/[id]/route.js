@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { getUserFromToken, isAdmin, updateExample, deleteExample } from '@/lib/db';
 

@@ -1,5 +1,7 @@
 import { searchEntries } from '../../../lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
@@ -12,5 +14,7 @@ export async function GET(request) {
 
   const raw = searchParams.get('raw') === '1';
   const { results, total } = await searchEntries(query, page, limit, raw);
-  return Response.json({ results, total });
+  const res = Response.json({ results, total });
+  res.headers.set('Cache-Control', 'no-store');
+  return res;
 }
