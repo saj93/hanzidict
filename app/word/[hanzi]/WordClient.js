@@ -173,33 +173,41 @@ export default function WordPage() {
           return;
         }
 
-        // Expand: collect traditional forms that have their own standalone simplified= entries
-        // (e.g. 乾 has qian2/trigram entries on its own; include those on /word/干)
-        const ownEntries = exactMatches.filter(e => e.simplified === hanzi);
-        const tradForms = [...new Set(
-          ownEntries.map(e => e.traditional).filter(t => t && t !== hanzi)
-        )];
-        let allExact = [...exactMatches];
-        if (tradForms.length > 0) {
-          const extraArrays = await Promise.all(
-            tradForms.map(t =>
-              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1`)
-                .then(r => r.json())
-                .then(d => (d.results || []).filter(e =>
-                  e.simplified === t && !allExact.some(ex => ex.id === e.id)
-                ))
-                .catch(() => [])
-            )
-          );
-          allExact = [...allExact, ...extraArrays.flat()];
-        }
-
-        const { primary, alternates, deduped } = processExactMatches(allExact);
+        // Render immediately with the entries we have — don't block on trad-form expansion.
+        const { primary, alternates, deduped } = processExactMatches(exactMatches);
         const otherEntries = entries.filter(e => e.simplified !== hanzi && e.traditional !== hanzi);
         setResults([...(primary ? [primary] : []), ...alternates, ...otherEntries]);
         setPronunciations(deduped);
         setLoading(false);
         if (!primary) return;
+
+        // Background: fetch any standalone simplified= entries for traditional forms
+        // (e.g. 乾 qián has its own entries; show them as alternates on /word/干).
+        // Non-blocking — page is already visible; pronunciations update if extras arrive.
+        const ownEntries = exactMatches.filter(e => e.simplified === hanzi);
+        const tradForms = [...new Set(
+          ownEntries.map(e => e.traditional).filter(t => t && t !== hanzi)
+        )];
+        if (tradForms.length > 0) {
+          Promise.all(
+            tradForms.map(t =>
+              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1`)
+                .then(r => r.json())
+                .then(d => (d.results || []).filter(e =>
+                  e.simplified === t && !exactMatches.some(ex => ex.id === e.id)
+                ))
+                .catch(() => [])
+            )
+          ).then(extraArrays => {
+            const extras = extraArrays.flat();
+            if (extras.length > 0) {
+              const allExact = [...exactMatches, ...extras];
+              const { primary: p2, alternates: a2, deduped: d2 } = processExactMatches(allExact);
+              setResults([...(p2 ? [p2] : []), ...a2, ...otherEntries]);
+              setPronunciations(d2);
+            }
+          });
+        }
 
         // Related words
         fetch(`/api/related?word=${encodeURIComponent(primary.simplified)}`)
