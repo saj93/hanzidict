@@ -16,6 +16,7 @@ import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
 import { useAuth } from '../../components/AuthProvider';
 import { useSimpToTrad } from '../../hooks/useSimpToTrad';
+import { useTradToSimp } from '../../hooks/useTradToSimp';
 
 // Group consecutive short defs (≤ 2 words) into semicolon-joined runs of up to 5.
 // Returns objects {text, start, end} where start/end are indices in the defs array.
@@ -54,6 +55,7 @@ export default function WordPage() {
   const [loading, setLoading] = useState(true);
   const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
   const toTraditional = useSimpToTrad(script);
+  const toSimplified = useTradToSimp(script);
   const [searchTab, setSearchTab] = useState('text');
   const [dark, setDark] = useState(false);
   const [hwDark, setHwDark] = useState(false);
@@ -877,7 +879,7 @@ export default function WordPage() {
                               </>
                             ) : (
                               <>
-                                <div className="example-zh"><ClickableChars text={toTraditional(ex.chinese)} /></div>
+                                <div className="example-zh"><ClickableChars text={script === 'simplified' ? toSimplified(ex.chinese) : toTraditional(ex.chinese)} /></div>
                                 {ex.pinyin && <div className="example-py">{ex.pinyin}</div>}
                                 <div className="example-en">{ex.english}</div>
                               </>
