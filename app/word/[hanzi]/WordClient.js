@@ -80,6 +80,11 @@ export default function WordPage() {
   const [confirmDeleteExId, setConfirmDeleteExId] = useState(null);
   const [cardLoading, setCardLoading] = useState(false);
   const [wodStatus, setWodStatus] = useState(null); // null | 'saving' | 'done' | 'error'
+  const [suggestOpen, setSuggestOpen] = useState(false);
+  const [suggestField, setSuggestField] = useState('Definition');
+  const [suggestValue, setSuggestValue] = useState('');
+  const [suggestReason, setSuggestReason] = useState('');
+  const [suggestStatus, setSuggestStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
   const hwRef = useRef(null);
   const router = useRouter();
   const { isAdmin, session } = useAuth() ?? {};
@@ -699,6 +704,38 @@ export default function WordPage() {
     }
   }
 
+  async function submitSuggestion(e) {
+    e.preventDefault();
+    if (!suggestValue.trim()) return;
+    setSuggestStatus('sending');
+    const currentValue = suggestField === 'Definition'
+      ? (primary.definitions || '')
+      : suggestField === 'Pinyin'
+        ? (primary.pinyin || '')
+        : '';
+    try {
+      const res = await fetch('/api/suggestions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
+        body: JSON.stringify({
+          entry_id: primary.id,
+          simplified: primary.simplified,
+          field: suggestField,
+          current_value: currentValue,
+          suggested_value: suggestValue.trim(),
+          reason: suggestReason.trim(),
+        }),
+      });
+      setSuggestStatus(res.ok ? 'sent' : 'error');
+      if (res.ok) setTimeout(() => { setSuggestOpen(false); setSuggestStatus(null); setSuggestValue(''); setSuggestReason(''); }, 1800);
+    } catch {
+      setSuggestStatus('error');
+    }
+  }
+
   return (
     <div style={{ maxWidth: '100vw', overflow: 'hidden' }}>
     <main>
@@ -955,6 +992,13 @@ export default function WordPage() {
             </button>
           )}
 
+          <button
+            className="suggest-correction-link"
+            onClick={() => { setSuggestOpen(true); setSuggestField('Definition'); setSuggestValue(''); setSuggestReason(''); setSuggestStatus(null); }}
+          >
+            Suggest a correction
+          </button>
+
           {radicalChar && (
             <div className="kangxi-line">
               {displayHanzi} is a Kangxi radical.{' '}
@@ -1065,6 +1109,73 @@ export default function WordPage() {
 
       {footer}
     </main>
+
+    {suggestOpen && (
+      <div className="suggest-modal-backdrop" onClick={e => { if (e.target === e.currentTarget) setSuggestOpen(false); }}>
+        <div className="suggest-modal" role="dialog" aria-modal="true" aria-label="Suggest a correction">
+          <div className="suggest-modal-header">
+            <h2 className="suggest-modal-title">Suggest a correction</h2>
+            <button className="suggest-modal-close" onClick={() => setSuggestOpen(false)} aria-label="Close">✕</button>
+          </div>
+
+          {suggestStatus === 'sent' ? (
+            <p className="suggest-modal-sent">Thanks — your suggestion has been submitted.</p>
+          ) : (
+            <form onSubmit={submitSuggestion}>
+              <div className="suggest-field-group">
+                <label className="suggest-label">What are you correcting?</label>
+                <select
+                  className="suggest-select"
+                  value={suggestField}
+                  onChange={e => setSuggestField(e.target.value)}
+                >
+                  <option>Definition</option>
+                  <option>Pinyin</option>
+                  <option>Example sentence</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div className="suggest-field-group">
+                <label className="suggest-label">Your suggested correction</label>
+                <textarea
+                  className="suggest-textarea"
+                  rows={3}
+                  placeholder="Enter the corrected text…"
+                  value={suggestValue}
+                  onChange={e => setSuggestValue(e.target.value)}
+                  required
+                  autoFocus
+                />
+              </div>
+
+              <div className="suggest-field-group">
+                <label className="suggest-label">Why are you suggesting this? <span className="suggest-optional">(optional)</span></label>
+                <input
+                  className="suggest-input"
+                  type="text"
+                  placeholder="Source, context, or reason…"
+                  value={suggestReason}
+                  onChange={e => setSuggestReason(e.target.value)}
+                />
+              </div>
+
+              {suggestStatus === 'error' && (
+                <p className="suggest-error">Something went wrong — please try again.</p>
+              )}
+
+              <button
+                type="submit"
+                className="suggest-submit"
+                disabled={suggestStatus === 'sending' || !suggestValue.trim()}
+              >
+                {suggestStatus === 'sending' ? 'Submitting…' : 'Submit'}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    )}
     </div>
   );
 }
