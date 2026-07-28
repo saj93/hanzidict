@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
 import { firstGroupedDef } from '../../lib/utils';
@@ -10,7 +10,7 @@ import NewsletterForm from '../components/NewsletterForm';
 
 const LIMIT = 50;
 
-export default function BellaPage() {
+function BellaList() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
@@ -141,5 +141,13 @@ export default function BellaPage() {
       <NewsletterForm />
       <Footer />
     </main>
+  );
+}
+
+export default function BellaPage() {
+  return (
+    <Suspense fallback={<main><Nav /><div className="hsk-loading">Loading…</div></main>}>
+      <BellaList />
+    </Suspense>
   );
 }
