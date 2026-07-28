@@ -79,12 +79,22 @@ export async function GET() {
 
   const queryChars = [...new Set(BELLASSEN_900.filter(c => c !== '〇'))];
 
-  const { data } = await sb
-    .from('entries')
-    .select('simplified, traditional, pinyin, definitions, hsk_level, frequency_rank')
-    .in('simplified', queryChars)
-    .order('hsk_level', { ascending: true, nullsFirst: false })
-    .order('frequency_rank', { ascending: true, nullsFirst: false });
+  const BATCH = 100;
+  const batches = [];
+  for (let i = 0; i < queryChars.length; i += BATCH) {
+    batches.push(queryChars.slice(i, i + BATCH));
+  }
+  const batchResults = await Promise.all(
+    batches.map(chunk =>
+      sb.from('entries')
+        .select('simplified, traditional, pinyin, definitions, hsk_level, frequency_rank')
+        .in('simplified', chunk)
+        .order('hsk_level', { ascending: true, nullsFirst: false })
+        .order('frequency_rank', { ascending: true, nullsFirst: false })
+        .then(r => r.data || [])
+    )
+  );
+  const data = batchResults.flat();
 
   // Pick best entry per character
   const entryMap = new Map();
