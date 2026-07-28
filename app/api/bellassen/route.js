@@ -102,15 +102,12 @@ export async function GET() {
 
   const results = BELLASSEN_900.map((char, i) => {
     const entry = entryMap.get(char);
-    const firstDef = (entry?.definitions || '')
-      .split(' | ')
-      .find(d => d && !d.startsWith('CL:') && !isTruePointer(d)) || '';
     return {
       index: i + 1,
       char,
       traditional: entry?.traditional || char,
       pinyin: entry?.pinyin || '',
-      definition: firstDef,
+      definitions: entry?.definitions || '',
     };
   });
 

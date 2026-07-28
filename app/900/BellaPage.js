@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { convertPinyin } from '../../lib/pinyin';
+import { firstGroupedDef } from '../../lib/utils';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import NewsletterForm from '../components/NewsletterForm';
-import AudioButton from '../components/AudioButton';
 
 const LIMIT = 50;
 
@@ -83,31 +83,21 @@ export default function BellaPage() {
           <div className="hsk-loading">Loading…</div>
         ) : (
           <>
-            <div className="bella-list">
+            <div className="hsk-word-grid">
               {pageEntries.map(row => {
                 const hanzi = script === 'traditional' && row.traditional && row.traditional !== row.char
                   ? row.traditional
                   : row.char;
                 return (
-                  <div
+                  <button
                     key={row.index}
-                    className="bella-row"
+                    className="hsk-word-card"
                     onClick={() => router.push(`/word/${encodeURIComponent(row.char)}`)}
-                    role="link"
-                    tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && router.push(`/word/${encodeURIComponent(row.char)}`)}
                   >
-                    <span className="bella-index">{row.index}</span>
-                    <span className="bella-hz">{hanzi}</span>
-                    <span className="bella-py">{convertPinyin(row.pinyin)}</span>
-                    <span className="bella-def">{row.definition}</span>
-                    <span
-                      className="bella-audio"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      {row.char !== '〇' && <AudioButton text={row.char} />}
-                    </span>
-                  </div>
+                    <span className="hsk-wc-hanzi">{hanzi}</span>
+                    <span className="hsk-wc-pinyin">{convertPinyin(row.pinyin)}</span>
+                    <span className="hsk-wc-def">{firstGroupedDef(row.definitions)}</span>
+                  </button>
                 );
               })}
             </div>
