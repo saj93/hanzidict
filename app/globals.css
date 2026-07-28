@@ -3795,3 +3795,32 @@ html.dark .pb-quiz-feedback.wrong { background: #2d0707; color: #f87171; }
 .suggest-error {
   font-size: 13px; color: #dc2626; margin: 0 0 12px; text-align: center;
 }
+
+/* Bellassen 900 list */
+.bella-list {
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+}
+.bella-row {
+  display: grid;
+  grid-template-columns: 44px 52px 110px 1fr 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .1s;
+}
+.bella-row:last-child { border-bottom: none; }
+.bella-row:hover { background: var(--bg2); }
+.bella-index { font-size: 12px; color: var(--fg3); text-align: right; }
+.bella-hz { font-size: 22px; font-weight: 600; color: var(--fg); line-height: 1; }
+.bella-py { font-size: 13px; color: var(--accent); font-weight: 500; }
+.bella-def { font-size: 13px; color: var(--fg2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bella-audio { display: flex; justify-content: center; }
+@media (max-width: 540px) {
+  .bella-row { grid-template-columns: 36px 44px 90px 1fr 36px; padding: 9px 12px; gap: 6px; }
+  .bella-hz { font-size: 19px; }
+  .bella-py { font-size: 12px; }
+  .bella-def { font-size: 12px; }
+}
