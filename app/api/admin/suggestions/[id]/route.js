@@ -1,4 +1,8 @@
-import { supabase, getUserFromToken, isAdmin } from '../../../../../lib/db';
+import {
+  getSuggestionById, setSuggestionStatus,
+  updateEntryDefinitions, updateEntryPinyin,
+  getUserFromToken, isAdmin,
+} from '../../../../../lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,48 +26,30 @@ export async function POST(request, { params }) {
     return Response.json({ error: 'action must be approve or reject' }, { status: 400 });
   }
 
-  // Fetch the suggestion
-  const { data: suggestion, error: fetchErr } = await supabase
-    .from('suggestions')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if (fetchErr || !suggestion) {
+  let suggestion;
+  try {
+    suggestion = await getSuggestionById(id);
+  } catch {
     return Response.json({ error: 'Suggestion not found' }, { status: 404 });
   }
 
-  if (action === 'approve') {
-    // Apply the correction to the entry for Definition and Pinyin fields
-    if (suggestion.field === 'Definition' && suggestion.entry_id) {
-      const { error: updateErr } = await supabase
-        .from('entries')
-        .update({ definitions: suggestion.suggested_value })
-        .eq('id', suggestion.entry_id);
-      if (updateErr) {
-        console.error('[suggestions/approve] definition update error:', updateErr);
-        return Response.json({ error: 'Failed to update entry' }, { status: 500 });
+  if (action === 'approve' && suggestion.entry_id) {
+    try {
+      if (suggestion.field === 'Definition') {
+        await updateEntryDefinitions(suggestion.entry_id, suggestion.suggested_value);
+      } else if (suggestion.field === 'Pinyin') {
+        await updateEntryPinyin(suggestion.entry_id, suggestion.suggested_value);
       }
-    } else if (suggestion.field === 'Pinyin' && suggestion.entry_id) {
-      const { error: updateErr } = await supabase
-        .from('entries')
-        .update({ pinyin: suggestion.suggested_value })
-        .eq('id', suggestion.entry_id);
-      if (updateErr) {
-        console.error('[suggestions/approve] pinyin update error:', updateErr);
-        return Response.json({ error: 'Failed to update entry' }, { status: 500 });
-      }
+    } catch (e) {
+      console.error('[suggestions/approve] entry update error:', e);
+      return Response.json({ error: 'Failed to update entry' }, { status: 500 });
     }
-    // Example sentence and Other: mark approved, admin handles manually
   }
 
-  const { error: statusErr } = await supabase
-    .from('suggestions')
-    .update({ status: action === 'approve' ? 'approved' : 'rejected' })
-    .eq('id', id);
-
-  if (statusErr) {
-    console.error('[suggestions] status update error:', statusErr);
+  try {
+    await setSuggestionStatus(id, action === 'approve' ? 'approved' : 'rejected');
+  } catch (e) {
+    console.error('[suggestions] status update error:', e);
     return Response.json({ error: 'Failed to update status' }, { status: 500 });
   }
 

@@ -1,4 +1,4 @@
-import { supabase, getUserFromToken, isAdmin } from '../../../../lib/db';
+import { getSuggestions, getUserFromToken, isAdmin } from '../../../../lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,19 +18,11 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const status = searchParams.get('status') || 'pending';
 
-  const { data, error } = await supabase
-    .from('suggestions')
-    .select(`
-      id, field, current_value, suggested_value, reason, status, created_at,
-      entry:entry_id (id, simplified, pinyin, definitions)
-    `)
-    .eq('status', status)
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('[admin/suggestions] fetch error:', error);
+  try {
+    const suggestions = await getSuggestions(status);
+    return Response.json({ suggestions });
+  } catch (e) {
+    console.error('[admin/suggestions] fetch error:', e);
     return Response.json({ error: 'Failed to fetch suggestions' }, { status: 500 });
   }
-
-  return Response.json({ suggestions: data });
 }

@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { supabase, getUserFromToken } from '../../../lib/db';
+import { insertSuggestion, getUserFromToken } from '../../../lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,7 +22,6 @@ export async function POST(request) {
     return Response.json({ error: 'Invalid field' }, { status: 400 });
   }
 
-  // Resolve user id if logged in (optional)
   let user_id = null;
   const auth = request.headers.get('authorization') || '';
   const token = auth.startsWith('Bearer ') ? auth.slice(7) : null;
@@ -31,26 +30,19 @@ export async function POST(request) {
     if (user) user_id = user.id;
   }
 
-  const { data, error } = await supabase.from('suggestions').insert({
-    entry_id,
-    user_id,
-    field,
-    current_value: current_value || null,
-    suggested_value: suggested_value.trim(),
-    reason: reason?.trim() || null,
-  }).select().single();
-
-  if (error) {
-    console.error('[suggestions] insert error:', error);
+  let data;
+  try {
+    data = await insertSuggestion({ entry_id, user_id, field, current_value, suggested_value: suggested_value.trim(), reason });
+  } catch (e) {
+    console.error('[suggestions] insert error:', e);
     return Response.json({ error: 'Failed to save suggestion' }, { status: 500 });
   }
 
-  // Email notification (fire-and-forget — don't block the response)
+  // Fire-and-forget email notification
   const adminEmail = process.env.ADMIN_EMAIL;
   const resendKey = process.env.RESEND_API_KEY;
   if (adminEmail && resendKey) {
-    const resend = new Resend(resendKey);
-    resend.emails.send({
+    new Resend(resendKey).emails.send({
       from: 'HanziDict <daily@hanzidict.app>',
       to: adminEmail,
       subject: `Correction suggested for ${simplified || `entry #${entry_id}`}`,
