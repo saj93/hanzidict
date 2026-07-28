@@ -1,4 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
+import { sortByHskDefs } from '../../../lib/entrySort.js';
+import { isVariantEntry } from '../../../lib/utils.js';
 
 export const revalidate = 86400;
 
@@ -65,12 +67,6 @@ const BELLASSEN_900 = [
   '自','总','走','租','族','足','组','嘴','最','昨','左','作','做','坐','座',
 ];
 
-function isTruePointer(defs) {
-  if (!defs) return false;
-  const first = defs.split(' | ')[0]?.trim() || '';
-  return /^(variant of|old variant of|see also|Japanese variant of)/i.test(first);
-}
-
 export async function GET() {
   const sb = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -96,18 +92,17 @@ export async function GET() {
   );
   const data = batchResults.flat();
 
-  // Pick best entry per character
+  // Group by simplified, then pick primary reading with same logic as HSK word list pages
+  const grouped = new Map();
+  for (const e of data) {
+    if (!grouped.has(e.simplified)) grouped.set(e.simplified, []);
+    grouped.get(e.simplified).push(e);
+  }
   const entryMap = new Map();
-  for (const e of data || []) {
-    const existing = entryMap.get(e.simplified);
-    if (!existing) { entryMap.set(e.simplified, e); continue; }
-    const ePtr = isTruePointer(e.definitions);
-    const exPtr = isTruePointer(existing.definitions);
-    if (ePtr && !exPtr) continue;
-    if (!ePtr && exPtr) { entryMap.set(e.simplified, e); continue; }
-    const eDefs = (e.definitions || '').split(' | ').filter(Boolean).length;
-    const exDefs = (existing.definitions || '').split(' | ').filter(Boolean).length;
-    if (eDefs > exDefs) entryMap.set(e.simplified, e);
+  for (const [simp, entries] of grouped) {
+    const sorted = [...entries].sort(sortByHskDefs);
+    const primary = sorted.find(e => !isVariantEntry(e.definitions)) ?? sorted[0];
+    if (primary) entryMap.set(simp, primary);
   }
 
   const results = BELLASSEN_900.map((char, i) => {
