@@ -480,10 +480,10 @@ export default function WordPage() {
         // For replacements, only change the first occurrence (in the first matched entry).
         // For deletions, remove from every entry that has it so the merge can't re-add it.
         const matches = raw === defText || clean(raw) === defText;
-        if (matches && (!replacementText || !firstPatchedId)) {
+        if (matches) {
           changed = true;
           if (replacementText && !firstPatchedId) acc.push(replacementText);
-          // else: delete — don't push
+          // else: delete (plain deletion, or de-dup old text from sibling entry)
         } else {
           acc.push(raw);
         }
