@@ -472,13 +472,17 @@ export default function WordPage() {
     const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
     const clean = s => s.replace(BOUND_IDIOM_RE, '').trim();
 
+    let firstPatchedId = null;
     for (const entry of entries) {
       const rawParts = (entry.definitions || '').split(' | ').map(s => s.trim()).filter(Boolean);
       let changed = false;
       const newParts = rawParts.reduce((acc, raw) => {
-        if (!changed && (raw === defText || clean(raw) === defText)) {
+        // For replacements, only change the first occurrence (in the first matched entry).
+        // For deletions, remove from every entry that has it so the merge can't re-add it.
+        const matches = raw === defText || clean(raw) === defText;
+        if (matches && (!replacementText || !firstPatchedId)) {
           changed = true;
-          if (replacementText) acc.push(replacementText);
+          if (replacementText && !firstPatchedId) acc.push(replacementText);
           // else: delete — don't push
         } else {
           acc.push(raw);
@@ -490,10 +494,10 @@ export default function WordPage() {
           method: 'PATCH', headers: authHeader,
           body: JSON.stringify({ definitions: newParts.join(' | ') }),
         });
-        return resp.ok ? entry.id : null;
+        if (resp.ok && !firstPatchedId) firstPatchedId = entry.id;
       }
     }
-    return null;
+    return firstPatchedId;
   }
 
   // Reorder saves the full new order to primary and strips those defs from
