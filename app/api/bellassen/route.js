@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { sortByHskDefs } from '../../../lib/entrySort.js';
 import { isVariantEntry } from '../../../lib/utils.js';
 
-export const revalidate = 86400;
+export const dynamic = 'force-dynamic';
 
 const BELLASSEN_900 = [
   '啊','爱','安','暗','按','八','把','爸','吧','白','百','拜','班','般','板',
@@ -117,6 +117,6 @@ export async function GET() {
   });
 
   return Response.json({ results }, {
-    headers: { 'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=3600' },
+    headers: { 'Cache-Control': 'no-store' },
   });
 }
