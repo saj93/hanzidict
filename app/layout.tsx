@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lora, DM_Sans } from "next/font/google";
+import { Lora, DM_Sans, Roboto_Slab } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "./components/AuthProvider";
@@ -16,6 +16,13 @@ const dmSans = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+});
+
+const robotoSlab = Roboto_Slab({
+  variable: "--font-logo",
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -59,7 +66,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${lora.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${lora.variable} ${dmSans.variable} ${robotoSlab.variable}`} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(localStorage.getItem('hanzidict-dark')==='true')document.documentElement.classList.add('dark')}catch(e){}})()` }} />
         <script dangerouslySetInnerHTML={{ __html: `if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js',{scope:'/'})})}`}} />
