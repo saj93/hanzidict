@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 
 let responses = [];
 let filters = [];
+let signals = [];
 mock.module('@supabase/supabase-js', {
   namedExports: {
     createClient: () => ({
@@ -18,7 +19,7 @@ mock.module('@supabase/supabase-js', {
           ilike() { return this; },
           in() { return this; },
           limit() { return this; },
-          abortSignal() { return this; },
+          abortSignal(signal) { signals.push(signal); return this; },
           then(resolve, reject) { return Promise.resolve(response).then(resolve, reject); },
         };
         return query;
@@ -77,6 +78,17 @@ test('An exact preview arrives while related matches are still pending, without 
   assert.equal(responses.length, 0);
   release({ data: [entry], error: null });
   assert.equal((await full).total, 1);
+});
+
+test('Cancelling a streaming request also cancels its Supabase calls', async () => {
+  signals = [];
+  const controller = new AbortController();
+  responses = [{ data: [entry], error: null }, { data: [], error: null }];
+  await searchEntries('课文', 1, 20, false, false, undefined, controller.signal);
+  assert.equal(signals.length, 2);
+  assert.equal(signals[0], controller.signal);
+  controller.abort();
+  assert.ok(signals.every(signal => signal.aborted));
 });
 
 test('English previews arrive before a slow pinyin lookup, preserving final results', async () => {

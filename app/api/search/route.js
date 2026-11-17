@@ -23,26 +23,28 @@ export async function GET(request) {
   const exactOnly = searchParams.get('exact') === '1';
   if (searchParams.get('stream') === '1') {
     let cancelled = false;
+    const requestController = new AbortController();
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       start(controller) {
         const send = frame => {
           if (!cancelled) {
             try { controller.enqueue(encoder.encode(JSON.stringify(frame) + '\n')); }
-            catch { cancelled = true; }
+            catch { cancelled = true; requestController.abort(); }
           }
         };
         send({ type: 'start' });
         withSearchTiming(timings, () => searchEntries(query, page, limit, raw, exactOnly,
-          data => send({ type: 'preview', ...data })
+          data => send({ type: 'preview', ...data }), requestController.signal
         )).then(data => {
           send({ type: 'complete', ...data, timing: searchTimingHeader(timings, performance.now() - start) });
         }).catch(error => {
+          if (cancelled) return;
           console.error('[search] streaming query failed', error?.code || 'unknown');
           send({ type: 'error', code: error?.code === '57014' ? 'SEARCH_TIMEOUT' : 'SEARCH_UNAVAILABLE' });
         }).finally(() => { if (!cancelled) controller.close(); });
       },
-      cancel() { cancelled = true; },
+      cancel() { cancelled = true; requestController.abort(); },
     });
     return new Response(stream, { headers: {
       'Content-Type': 'application/x-ndjson; charset=utf-8',
