@@ -3,6 +3,7 @@ import { test, mock } from 'node:test';
 import assert from 'node:assert/strict';
 
 let responses = [];
+let filters = [];
 mock.module('@supabase/supabase-js', {
   namedExports: {
     createClient: () => ({
@@ -12,7 +13,7 @@ mock.module('@supabase/supabase-js', {
         assert.ok(response, 'Unexpected database request');
         const query = {
           select() { return this; },
-          or() { return this; },
+          or(filter) { filters.push(filter); return this; },
           order() { return this; },
           ilike() { return this; },
           in() { return this; },
@@ -54,6 +55,21 @@ test('Word-page exact mode never issues the expensive related-match request', as
 test('Exact mode never substitutes a containing word when the exact word is absent', async () => {
   responses = [{ data: [], error: null }];
   assert.deepEqual(await searchEntries('课文集', 1, 20, true, true), { results: [], total: 0 });
+});
+
+test('Chinese partial search uses LIKE without changing exact-first results', async () => {
+  filters = [];
+  responses = [{ data: [entry], error: null }, { data: [entry], error: null }];
+  const result = await searchEntries('课文');
+  assert.ok(filters.includes('simplified.like.%课文%,traditional.like.%课文%'));
+  assert.equal(result.results[0].simplified, '课文');
+});
+
+test('Mixed Chinese and Latin queries retain case-insensitive matching', async () => {
+  filters = [];
+  responses = [{ data: [], error: null }, { data: [], error: null }];
+  await searchEntries('维生素A');
+  assert.ok(filters.includes('simplified.ilike.%维生素A%,traditional.ilike.%维生素A%'));
 });
 
 test('A failed search without exact matches rejects rather than returning zero results', async () => {
