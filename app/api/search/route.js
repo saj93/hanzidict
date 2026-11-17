@@ -27,7 +27,10 @@ export async function GET(request) {
   } catch (error) {
     console.error('[search] query failed', error?.code || 'unknown');
     return Response.json(
-      { error: 'Search is temporarily unavailable. Please try again.' },
+      {
+        error: 'Search is temporarily unavailable. Please try again.',
+        code: error?.code === '57014' ? 'SEARCH_TIMEOUT' : 'SEARCH_UNAVAILABLE',
+      },
       { status: 503, headers: headers() }
     );
   }

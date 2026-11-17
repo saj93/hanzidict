@@ -7,6 +7,7 @@ import { firstGroupedDef } from '../../lib/utils';
 import UserMenu from '../components/UserMenu';
 import PremiumNavBtn from '../components/PremiumNavBtn';
 import NavSearch from '../components/NavSearch';
+import { requestSearch } from '../../lib/searchRequest';
 
 const PAGE_SIZE = 20;
 
@@ -51,7 +52,7 @@ function SearchResults() {
   const [results, setResults] = useState(null);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
@@ -79,22 +80,17 @@ function SearchResults() {
     const q = searchParams.get('q') || '';
     document.title = q.trim() ? `"${q.trim()}" — HanziDict` : 'Search — HanziDict';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    setError(false);
+    setError('');
     if (!q.trim()) { setResults([]); setTotal(0); setLoading(false); return; }
     const controller = new AbortController();
     let active = true;
     setLoading(true);
-    fetch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`, { signal: controller.signal })
-      .then(r => {
-        if (!r.ok) throw new Error('Search request failed');
-        return r.json();
-      })
+    requestSearch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`, { signal: controller.signal })
       .then(d => {
-        if (!Array.isArray(d.results) || !Number.isFinite(d.total)) throw new Error('Invalid search response');
         if (active) { setResults(d.results); setTotal(d.total); setLoading(false); }
       })
-      .catch(() => {
-        if (active) { setError(true); setResults(null); setTotal(0); setLoading(false); }
+      .catch(error => {
+        if (active) { setError(error.message); setResults(null); setTotal(0); setLoading(false); }
       });
     return () => { active = false; controller.abort(); };
   }, [searchParams, attempt]);
@@ -166,7 +162,7 @@ function SearchResults() {
         {!loading && error && (
           <div role="alert" style={{ textAlign: 'center', padding: '60px 0' }}>
             <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>Search is temporarily unavailable</div>
-            <p style={{ fontSize: 13, color: 'var(--fg2)', marginBottom: 16 }}>We couldn’t complete your search. Please try again.</p>
+            <p style={{ fontSize: 13, color: 'var(--fg2)', marginBottom: 16 }}>{error}</p>
             <button className="pg-btn" onClick={() => setAttempt(n => n + 1)}>Try again</button>
           </div>
         )}
