@@ -165,7 +165,7 @@ export default function WordPage() {
     setLoading(true);
     setRelated([]);
     setDecomp([]);
-    fetch(`/api/search?q=${encodeURIComponent(hanzi)}&raw=1`)
+    fetch(`/api/search?q=${encodeURIComponent(hanzi)}&raw=1&exact=1`)
       .then(r => r.json())
       .then(async data => {
         const entries = data.results || [];
@@ -196,7 +196,7 @@ export default function WordPage() {
         if (tradForms.length > 0) {
           Promise.all(
             tradForms.map(t =>
-              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1`)
+              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1&exact=1`)
                 .then(r => r.json())
                 .then(d => (d.results || []).filter(e =>
                   e.simplified === t && !exactMatches.some(ex => ex.id === e.id)
@@ -238,7 +238,7 @@ export default function WordPage() {
         if (primary.simplified.length > 1) {
           const chars = primary.simplified.split('');
           Promise.all(chars.map(ch =>
-            fetch(`/api/search?q=${encodeURIComponent(ch)}`).then(r => r.json()).catch(() => ({ results: [] }))
+            fetch(`/api/search?q=${encodeURIComponent(ch)}&exact=1`).then(r => r.json()).catch(() => ({ results: [] }))
           )).then(dataArr => {
             setDecomp(
               dataArr.map((d, i) =>

@@ -45,16 +45,18 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
+    const controller = new AbortController();
     timerRef.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}`)
-        .then(r => r.json())
+      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`, { signal: controller.signal })
+        .then(r => { if (!r.ok) throw new Error('Search failed'); return r.json(); })
         .then(d => {
+          if (controller.signal.aborted) return;
           setSuggestions((d.results || []).slice(0, 6));
           setShowDrop(true);
         })
         .catch(() => {});
     }, 250);
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); controller.abort(); };
   }, [query]);
 
   useEffect(() => {

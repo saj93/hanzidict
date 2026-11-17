@@ -22,7 +22,7 @@ export default function CharPopover({ char, anchorRect, onClose }) {
   useEffect(() => {
     setLoading(true);
     setData(null);
-    fetch(`/api/search?q=${encodeURIComponent(char)}&limit=10&raw=1`)
+    fetch(`/api/search?q=${encodeURIComponent(char)}&limit=10&raw=1&exact=1`)
       .then(r => r.json())
       .then(d => {
         const results = d.results || [];

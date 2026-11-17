@@ -43,6 +43,19 @@ test('Raw word-page searches also preserve exact rows on timeout', async () => {
   assert.deepEqual((await searchEntries('课文', 1, 20, true)).results, [entry]);
 });
 
+test('Word-page exact mode never issues the expensive related-match request', async () => {
+  for (const q of ['课文', '課文', '你好']) {
+    responses = [{ data: [entry], error: null }];
+    assert.equal((await searchEntries(q, 1, 20, true, true)).results[0].id, entry.id);
+    assert.equal(responses.length, 0);
+  }
+});
+
+test('Exact mode never substitutes a containing word when the exact word is absent', async () => {
+  responses = [{ data: [], error: null }];
+  assert.deepEqual(await searchEntries('课文集', 1, 20, true, true), { results: [], total: 0 });
+});
+
 test('A failed search without exact matches rejects rather than returning zero results', async () => {
   responses = [{ data: [], error: null }, { data: null, error: timeout }];
   await assert.rejects(searchEntries('不存在'), error => error.code === '57014');

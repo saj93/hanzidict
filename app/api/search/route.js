@@ -13,8 +13,9 @@ export async function GET(request) {
   }
 
   const raw = searchParams.get('raw') === '1';
+  const exactOnly = searchParams.get('exact') === '1';
   try {
-    const { results, total } = await searchEntries(query, page, limit, raw);
+    const { results, total } = await searchEntries(query, page, limit, raw, exactOnly);
     return Response.json({ results, total }, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
     console.error('[search] query failed', error?.code || 'unknown');

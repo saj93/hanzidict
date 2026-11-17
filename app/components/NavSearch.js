@@ -23,12 +23,8 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
     setQuery(initialQuery);
     userTypedRef.current = false;
     setShowHistory(false);
-    if (initialQuery.trim()) {
-      fetch(`/api/search?q=${encodeURIComponent(initialQuery.trim())}&limit=6`)
-        .then(r => r.json())
-        .then(d => setSuggestions((d.results || []).slice(0, 6)))
-        .catch(() => {});
-    }
+    setSuggestions([]);
+    setShowDrop(false);
   }, [initialQuery]);
 
   // Autocomplete while typing — hide history while query is non-empty
@@ -40,17 +36,19 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
       return;
     }
     setShowHistory(false);
+    const controller = new AbortController();
     timerRef.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`)
-        .then(r => r.json())
+      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`, { signal: controller.signal })
+        .then(r => { if (!r.ok) throw new Error('Search failed'); return r.json(); })
         .then(d => {
+          if (controller.signal.aborted) return;
           const s = (d.results || []).slice(0, 6);
           setSuggestions(s);
           setShowDrop(s.length > 0);
         })
         .catch(() => {});
-    }, 100);
-    return () => clearTimeout(timerRef.current);
+    }, 250);
+    return () => { clearTimeout(timerRef.current); controller.abort(); };
   }, [query]);
 
   // Click outside closes everything

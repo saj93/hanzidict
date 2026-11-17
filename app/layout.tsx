@@ -1,15 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Lora, DM_Sans, Roboto_Slab } from "next/font/google";
+import { DM_Sans, Roboto_Slab } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "./components/AuthProvider";
 import MobilePremiumBanner from "./components/MobilePremiumBanner";
 
-const lora = Lora({
+// Official Google Fonts files; license is retained in app/fonts/Lora-OFL.txt.
+const lora = localFont({
+  src: [
+    { path: './fonts/Lora-Regular.woff2', weight: '400 500', style: 'normal' },
+    { path: './fonts/Lora-Italic.woff2', weight: '400 500', style: 'italic' },
+  ],
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+  display: "swap",
 });
 
 const dmSans = DM_Sans({
