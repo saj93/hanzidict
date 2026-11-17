@@ -4,6 +4,12 @@ import { NextResponse } from 'next/server';
 export async function middleware(request) {
   let response = NextResponse.next({ request });
 
+  // Dictionary search is public and authenticates no user. An expired session
+  // or unavailable auth service must not block this read-only endpoint.
+  if (request.method === 'GET' && request.nextUrl.pathname === '/api/search') {
+    return response;
+  }
+
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return response;
   }
