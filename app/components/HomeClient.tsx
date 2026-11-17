@@ -14,6 +14,7 @@ import FeatureCards from './FeatureCards';
 import NewsletterForm from './NewsletterForm';
 import { useSearchHistory } from '../hooks/useSearchHistory';
 import WordOfDay from './WordOfDay';
+import { requestSearch } from '../../lib/searchRequest';
 
 export default function HomeClient({ initialChips, wordOfDay }: { initialChips: [string, string][]; wordOfDay?: any }) {
   const [query, setQuery] = useState('');
@@ -47,8 +48,15 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
     if (!query.trim()) { setSuggestions([]); setShowDrop(false); return; }
     const controller = new AbortController();
     timerRef.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`, { signal: controller.signal })
-        .then(r => { if (!r.ok) throw new Error('Search failed'); return r.json(); })
+      requestSearch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6&stream=1`, {
+        signal: controller.signal,
+        retry: false,
+        onPreview: d => {
+          if (controller.signal.aborted) return;
+          setSuggestions(d.results.slice(0, 6));
+          setShowDrop(true);
+        },
+      })
         .then(d => {
           if (controller.signal.aborted) return;
           setSuggestions((d.results || []).slice(0, 6));

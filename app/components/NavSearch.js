@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import SearchDropdown from './SearchDropdown';
 import HistoryDropdown from './HistoryDropdown';
 import { useSearchHistory } from '../hooks/useSearchHistory';
+import { requestSearch } from '../../lib/searchRequest';
 
 export default function NavSearch({ initialQuery = '', onSubmit }) {
   const [query, setQuery] = useState(initialQuery);
@@ -38,8 +39,15 @@ export default function NavSearch({ initialQuery = '', onSubmit }) {
     setShowHistory(false);
     const controller = new AbortController();
     timerRef.current = setTimeout(() => {
-      fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`, { signal: controller.signal })
-        .then(r => { if (!r.ok) throw new Error('Search failed'); return r.json(); })
+      requestSearch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6&stream=1`, {
+        signal: controller.signal,
+        retry: false,
+        onPreview: d => {
+          if (controller.signal.aborted) return;
+          setSuggestions(d.results.slice(0, 6));
+          setShowDrop(true);
+        },
+      })
         .then(d => {
           if (controller.signal.aborted) return;
           const s = (d.results || []).slice(0, 6);

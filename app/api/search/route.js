@@ -21,6 +21,36 @@ export async function GET(request) {
 
   const raw = searchParams.get('raw') === '1';
   const exactOnly = searchParams.get('exact') === '1';
+  if (searchParams.get('stream') === '1') {
+    let cancelled = false;
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        const send = frame => {
+          if (!cancelled) {
+            try { controller.enqueue(encoder.encode(JSON.stringify(frame) + '\n')); }
+            catch { cancelled = true; }
+          }
+        };
+        send({ type: 'start' });
+        withSearchTiming(timings, () => searchEntries(query, page, limit, raw, exactOnly,
+          data => send({ type: 'preview', ...data })
+        )).then(data => {
+          send({ type: 'complete', ...data, timing: searchTimingHeader(timings, performance.now() - start) });
+        }).catch(error => {
+          console.error('[search] streaming query failed', error?.code || 'unknown');
+          send({ type: 'error', code: error?.code === '57014' ? 'SEARCH_TIMEOUT' : 'SEARCH_UNAVAILABLE' });
+        }).finally(() => { if (!cancelled) controller.close(); });
+      },
+      cancel() { cancelled = true; },
+    });
+    return new Response(stream, { headers: {
+      'Content-Type': 'application/x-ndjson; charset=utf-8',
+      'Cache-Control': 'no-store, no-transform',
+      'X-Accel-Buffering': 'no',
+      'X-Content-Type-Options': 'nosniff',
+    } });
+  }
   try {
     const { results, total } = await withSearchTiming(timings, () => searchEntries(query, page, limit, raw, exactOnly));
     return Response.json({ results, total }, { headers: headers() });

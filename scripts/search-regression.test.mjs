@@ -65,6 +65,38 @@ test('Chinese partial search uses LIKE without changing exact-first results', as
   assert.equal(result.results[0].simplified, '课文');
 });
 
+test('An exact preview arrives while related matches are still pending, without extra queries', async () => {
+  let release, seen;
+  const related = new Promise(resolve => { release = resolve; });
+  const preview = new Promise(resolve => { seen = resolve; });
+  responses = [{ data: [entry], error: null }, related];
+  let finished = false;
+  const full = searchEntries('课文', 1, 20, false, false, seen).then(data => { finished = true; return data; });
+  assert.equal((await preview).results[0].simplified, '课文');
+  assert.equal(finished, false);
+  assert.equal(responses.length, 0);
+  release({ data: [entry], error: null });
+  assert.equal((await full).total, 1);
+});
+
+test('English previews arrive before a slow pinyin lookup, preserving final results', async () => {
+  let release, seen;
+  const pinyin = new Promise(resolve => { release = resolve; });
+  const preview = new Promise(resolve => { seen = resolve; });
+  responses = [pinyin, { data: [entry], error: null }, { data: [], error: null }, { data: [entry], error: null }];
+  let finished = false;
+  const full = searchEntries('text', 1, 20, false, false, seen).then(data => { finished = true; return data; });
+  assert.equal((await preview).results[0].id, entry.id);
+  assert.equal(finished, false);
+  release({ data: [], error: null });
+  assert.equal((await full).results[0].id, entry.id);
+});
+
+test('Punctuation in a search is literal, not an invalid regular expression', async () => {
+  responses = [{ data: [], error: null }, { data: [entry], error: null }, { data: [], error: null }, { data: [entry], error: null }];
+  assert.equal((await searchEntries('text(')).results.length, 1);
+});
+
 test('Mixed Chinese and Latin queries retain case-insensitive matching', async () => {
   filters = [];
   responses = [{ data: [], error: null }, { data: [], error: null }];
