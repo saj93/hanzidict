@@ -155,7 +155,7 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
       <section className="hero">
         <div className="hero-eyebrow">Open source · CC-CEDICT</div>
         <h1 className="hero-title">
-          The Chinese dictionary
+          Chinese, word by word.
         </h1>
         <p className="hero-sub">
           Search by character, pinyin, or English.
