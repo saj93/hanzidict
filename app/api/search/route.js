@@ -13,8 +13,14 @@ export async function GET(request) {
   }
 
   const raw = searchParams.get('raw') === '1';
-  const { results, total } = await searchEntries(query, page, limit, raw);
-  const res = Response.json({ results, total });
-  res.headers.set('Cache-Control', 'no-store');
-  return res;
+  try {
+    const { results, total } = await searchEntries(query, page, limit, raw);
+    return Response.json({ results, total }, { headers: { 'Cache-Control': 'no-store' } });
+  } catch (error) {
+    console.error('[search] query failed', error?.code || 'unknown');
+    return Response.json(
+      { error: 'Search is temporarily unavailable. Please try again.' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } }
+    );
+  }
 }

@@ -51,6 +51,8 @@ function SearchResults() {
   const [results, setResults] = useState(null);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,13 +79,25 @@ function SearchResults() {
     const q = searchParams.get('q') || '';
     document.title = q.trim() ? `"${q.trim()}" — HanziDict` : 'Search — HanziDict';
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-    if (!q.trim()) { setResults([]); setTotal(0); return; }
+    setError(false);
+    if (!q.trim()) { setResults([]); setTotal(0); setLoading(false); return; }
+    const controller = new AbortController();
+    let active = true;
     setLoading(true);
-    fetch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`)
-      .then(r => r.json())
-      .then(d => { setResults(d.results || []); setTotal(d.total ?? 0); setLoading(false); })
-      .catch(() => { setResults([]); setTotal(0); setLoading(false); });
-  }, [searchParams]);
+    fetch(`/api/search?q=${encodeURIComponent(q.trim())}&page=${page}&limit=${PAGE_SIZE}`, { signal: controller.signal })
+      .then(r => {
+        if (!r.ok) throw new Error('Search request failed');
+        return r.json();
+      })
+      .then(d => {
+        if (!Array.isArray(d.results) || !Number.isFinite(d.total)) throw new Error('Invalid search response');
+        if (active) { setResults(d.results); setTotal(d.total); setLoading(false); }
+      })
+      .catch(() => {
+        if (active) { setError(true); setResults(null); setTotal(0); setLoading(false); }
+      });
+    return () => { active = false; controller.abort(); };
+  }, [searchParams, attempt]);
 
   function goToPage(p) {
     const q = searchParams.get('q') || '';
@@ -143,13 +157,21 @@ function SearchResults() {
         {q && (
           <div style={{ marginBottom: 20 }}>
             <span style={{ fontSize: 13, color: 'var(--fg3)' }}>
-              {loading ? 'Searching…' : `${total} result${total !== 1 ? 's' : ''} for `}
+              {loading ? 'Searching…' : error ? 'Search unavailable for ' : `${total} result${total !== 1 ? 's' : ''} for `}
             </span>
             {!loading && <span style={{ fontSize: 13, color: 'var(--fg)', fontWeight: 500 }}>"{q}"</span>}
           </div>
         )}
 
-        {!loading && results?.length === 0 && (
+        {!loading && error && (
+          <div role="alert" style={{ textAlign: 'center', padding: '60px 0' }}>
+            <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>Search is temporarily unavailable</div>
+            <p style={{ fontSize: 13, color: 'var(--fg2)', marginBottom: 16 }}>We couldn’t complete your search. Please try again.</p>
+            <button className="pg-btn" onClick={() => setAttempt(n => n + 1)}>Try again</button>
+          </div>
+        )}
+
+        {!loading && !error && results?.length === 0 && (
           <div style={{ textAlign: 'center', padding: '60px 0' }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>🔍</div>
             <div style={{ fontSize: 18, fontWeight: 500, color: 'var(--fg)', marginBottom: 8 }}>No results for "{q}"</div>
