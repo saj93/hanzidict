@@ -21,7 +21,7 @@ const dmSans = DM_Sans({
 const robotoSlab = Roboto_Slab({
   variable: "--font-logo",
   subsets: ["latin"],
-  weight: "700",
+  weight: ["400", "700"],
   display: "swap",
 });
 

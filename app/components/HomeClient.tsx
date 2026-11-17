@@ -155,10 +155,13 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
       <section className="hero">
         <div className="hero-eyebrow">Open source · CC-CEDICT</div>
         <h1 className="hero-title">
-          The Chinese dictionary<br />built for <em>everyone</em>
+          The Chinese dictionary
         </h1>
         <p className="hero-sub">
-          Search by character, pinyin, or English — 124,000 entries from CC-CEDICT, with HSK 1–9 tagging and stroke order animations.
+          Search by character, pinyin, or English.
+        </p>
+        <p className="hero-details">
+          124,000 entries from CC-CEDICT, with HSK 1–9 tagging and stroke order animations.
         </p>
 
         <div className="search-widget">
