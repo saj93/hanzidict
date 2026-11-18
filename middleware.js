@@ -4,9 +4,12 @@ import { NextResponse } from 'next/server';
 export async function middleware(request) {
   let response = NextResponse.next({ request });
 
-  // Dictionary search is public and authenticates no user. An expired session
-  // or unavailable auth service must not block this read-only endpoint.
-  if (request.method === 'GET' && request.nextUrl.pathname === '/api/search') {
+  // Public dictionary routes must not wait for session refresh, even if the
+  // matcher is broadened later. They contain no user-specific server data.
+  const path = request.nextUrl.pathname;
+  if (['GET', 'HEAD'].includes(request.method) && (
+    path === '/' || path === '/search' || path === '/word' || path.startsWith('/word/') || path === '/api/search'
+  )) {
     return response;
   }
 
@@ -37,5 +40,17 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon\\.ico|.*\\.svg).*)'],
+  // Keep public content out of the middleware entirely. Authentication and
+  // authorization inside API handlers remain unchanged.
+  matcher: [
+    '/profile/:path*',
+    '/admin/:path*',
+    '/lists/:path*',
+    '/learn/:path*',
+    '/api/:path*',
+    '/auth/:path*',
+    '/login',
+    '/signup',
+    '/reset-password',
+  ],
 };

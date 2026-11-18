@@ -23,8 +23,10 @@ mock.module('next/server.js', {
 const { middleware } = await import('../middleware.js');
 
 test('Public GET search works even if the authentication service is unavailable', async () => {
-  const response = await middleware({ method: 'GET', nextUrl: { pathname: '/api/search' } });
-  assert.equal(response.next, true);
+  for (const pathname of ['/api/search', '/word/课文', '/word/你好', '/search', '/']) {
+    const response = await middleware({ method: 'GET', nextUrl: { pathname } });
+    assert.equal(response.next, true);
+  }
   assert.equal(authCalls, 0);
 });
 
