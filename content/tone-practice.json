@@ -1,0 +1,266 @@
+[
+  {
+    "syllable": "ma",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "妈",
+        "pinyin": "mā",
+        "gloss": "mother",
+        "audio": "/audio/tones/ma1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "麻",
+        "pinyin": "má",
+        "gloss": "hemp",
+        "audio": "/audio/tones/ma2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "马",
+        "pinyin": "mǎ",
+        "gloss": "horse",
+        "audio": "/audio/tones/ma3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "骂",
+        "pinyin": "mà",
+        "gloss": "to scold",
+        "audio": "/audio/tones/ma4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "ba",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "八",
+        "pinyin": "bā",
+        "gloss": "eight",
+        "audio": "/audio/tones/ba1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "拔",
+        "pinyin": "bá",
+        "gloss": "to pull out",
+        "audio": "/audio/tones/ba2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "把",
+        "pinyin": "bǎ",
+        "gloss": "to hold",
+        "audio": "/audio/tones/ba3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "爸",
+        "pinyin": "bà",
+        "gloss": "dad",
+        "audio": "/audio/tones/ba4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "da",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "搭",
+        "pinyin": "dā",
+        "gloss": "to build",
+        "audio": "/audio/tones/da1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "达",
+        "pinyin": "dá",
+        "gloss": "to reach",
+        "audio": "/audio/tones/da2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "打",
+        "pinyin": "dǎ",
+        "gloss": "to hit",
+        "audio": "/audio/tones/da3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "大",
+        "pinyin": "dà",
+        "gloss": "big",
+        "audio": "/audio/tones/da4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "shi",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "诗",
+        "pinyin": "shī",
+        "gloss": "poem",
+        "audio": "/audio/tones/shi1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "十",
+        "pinyin": "shí",
+        "gloss": "ten",
+        "audio": "/audio/tones/shi2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "史",
+        "pinyin": "shǐ",
+        "gloss": "history",
+        "audio": "/audio/tones/shi3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "是",
+        "pinyin": "shì",
+        "gloss": "to be",
+        "audio": "/audio/tones/shi4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "yi",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "一",
+        "pinyin": "yī",
+        "gloss": "one",
+        "audio": "/audio/tones/yi1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "移",
+        "pinyin": "yí",
+        "gloss": "to move",
+        "audio": "/audio/tones/yi2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "椅",
+        "pinyin": "yǐ",
+        "gloss": "chair",
+        "audio": "/audio/tones/yi3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "意",
+        "pinyin": "yì",
+        "gloss": "meaning",
+        "audio": "/audio/tones/yi4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "po",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "坡",
+        "pinyin": "pō",
+        "gloss": "slope",
+        "audio": "/audio/tones/po1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "婆",
+        "pinyin": "pó",
+        "gloss": "elderly woman",
+        "audio": "/audio/tones/po2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "叵",
+        "pinyin": "pǒ",
+        "gloss": "cannot",
+        "audio": "/audio/tones/po3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "破",
+        "pinyin": "pò",
+        "gloss": "to break",
+        "audio": "/audio/tones/po4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "fei",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "飞",
+        "pinyin": "fēi",
+        "gloss": "to fly",
+        "audio": "/audio/tones/fei1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "肥",
+        "pinyin": "féi",
+        "gloss": "fat",
+        "audio": "/audio/tones/fei2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "匪",
+        "pinyin": "fěi",
+        "gloss": "bandit",
+        "audio": "/audio/tones/fei3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "费",
+        "pinyin": "fèi",
+        "gloss": "expense",
+        "audio": "/audio/tones/fei4.mp3"
+      }
+    ]
+  },
+  {
+    "syllable": "fu",
+    "tones": [
+      {
+        "tone": 1,
+        "hanzi": "夫",
+        "pinyin": "fū",
+        "gloss": "husband",
+        "audio": "/audio/tones/fu1.mp3"
+      },
+      {
+        "tone": 2,
+        "hanzi": "扶",
+        "pinyin": "fú",
+        "gloss": "to support",
+        "audio": "/audio/tones/fu2.mp3"
+      },
+      {
+        "tone": 3,
+        "hanzi": "斧",
+        "pinyin": "fǔ",
+        "gloss": "axe",
+        "audio": "/audio/tones/fu3.mp3"
+      },
+      {
+        "tone": 4,
+        "hanzi": "父",
+        "pinyin": "fù",
+        "gloss": "father",
+        "audio": "/audio/tones/fu4.mp3"
+      }
+    ]
+  }
+]

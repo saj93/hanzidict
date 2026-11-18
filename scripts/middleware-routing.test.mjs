@@ -14,7 +14,7 @@ const { unstable_doesMiddlewareMatch: matches } = require('next/experimental/tes
 const { config } = await import('../middleware.js');
 
 test('Next excludes public pages from routing middleware, including word navigation', () => {
-  for (const path of ['/', '/word/课文', '/word/你好', '/search?q=hello', '/about', '/hsk/1', '/blog/tones']) {
+  for (const path of ['/', '/word/课文', '/word/你好', '/search?q=hello', '/about', '/hsk/1', '/blog/tones', '/learn/tones']) {
     assert.equal(matches({ config, nextConfig: {}, url: 'https://hanzidict.app' + path }), false, path);
   }
 });

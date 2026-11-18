@@ -17,6 +17,7 @@ const FREE_PHRASE_COUNTS = Object.fromEntries(
 );
 
 const EXPLORE_RESOURCES = [
+  { title: 'Tone practice', desc: 'Train your ear to recognise the four Mandarin tones', href: '/learn/tones' },
   { title: 'Words by Topic', desc: 'Essential vocabulary grouped by theme', href: '/learn/words' },
   { title: 'Phrasebook', desc: 'Phrases for real conversations', href: '/phrasebook' },
   { title: 'Common Verbs', desc: 'The 100 most common Chinese verbs', href: '/verbs' },

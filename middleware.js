@@ -8,7 +8,7 @@ export async function middleware(request) {
   // matcher is broadened later. They contain no user-specific server data.
   const path = request.nextUrl.pathname;
   if (['GET', 'HEAD'].includes(request.method) && (
-    path === '/' || path === '/search' || path === '/word' || path.startsWith('/word/') || path === '/api/search'
+    path === '/' || path === '/search' || path === '/word' || path.startsWith('/word/') || path === '/learn/tones' || path === '/api/search'
   )) {
     return response;
   }
@@ -46,7 +46,7 @@ export const config = {
     '/profile/:path*',
     '/admin/:path*',
     '/lists/:path*',
-    '/learn/:path*',
+    '/learn/((?!tones(?:/|$)).*)',
     '/api/:path*',
     '/auth/:path*',
     '/login',

@@ -39,7 +39,7 @@ export default function Nav({ hideScript = false }) {
     router.push(path);
   }
 
-  const isActive = (path) => pathname === path || (path === '/' && pathname === '/');
+  const isActive = (path) => pathname === path || (path === '/learn' && pathname.startsWith('/learn/'));
 
   const links = [
     { label: 'Dictionary', path: '/' },
