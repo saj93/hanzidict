@@ -39,7 +39,10 @@ export default function TonePractice() {
     const frame = requestAnimationFrame(() => {
       const first = drawTone();
       upcoming.current = drawTone(first.audio);
-      prepareAudio(pool, first);
+      // Keep one playback element unlocked by the first user gesture on iOS.
+      audioRef.current = new Audio(first.audio);
+      audioRef.current.preload = 'auto';
+      audioRef.current.load();
       prepareAudio(pool, upcoming.current);
       setQuestion(first);
     });
@@ -52,6 +55,10 @@ export default function TonePractice() {
     return () => {
       cancelAnimationFrame(frame); clearTimeout(nextTimer.current);
       window.removeEventListener('keydown', keydown); controllerRef.current?.abort();
+      audioRef.current?.pause();
+      audioRef.current?.removeAttribute('src');
+      audioRef.current?.load();
+      audioRef.current = null;
       for (const audio of pool.values()) { audio.pause(); audio.removeAttribute('src'); audio.load(); }
       pool.clear();
     };
@@ -62,7 +69,7 @@ export default function TonePractice() {
     if (!clip || (counts && locked.current)) return;
     stop();
     const controller = new AbortController(); controllerRef.current = controller;
-    audioRef.current = prepareAudio(audioPool.current, clip);
+    audioRef.current ??= new Audio();
     setPlaying(true); setError('');
     try {
       await playToneSequence(audioRef.current, [clip], { signal: controller.signal });
