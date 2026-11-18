@@ -35,6 +35,9 @@ test('Accuracy uses correct and wrong answers, including an unanswered session',
 
 class FakeAudio extends EventTarget {
   calls = [];
+  sourceChanges = 0;
+  set src(value) { this.source = value; this.sourceChanges++; }
+  get src() { return this.source; }
   play() { this.calls.push(this.src); queueMicrotask(() => this.dispatchEvent(new Event('ended'))); return Promise.resolve(); }
   pause() {}
 }
@@ -47,4 +50,14 @@ test('Audio plays with pitch preserved, and cancellation prevents playback', asy
   const controller = new AbortController(); controller.abort();
   await assert.rejects(playToneSequence(audio, [{ audio: '/three.mp3' }], { signal: controller.signal }), e => e.name === 'AbortError');
   assert.equal(audio.calls.length, 2);
+});
+
+test('Replaying a prepared clip seeks to the start without reloading its source', async () => {
+  const audio = new FakeAudio();
+  audio.src = '/ready.mp3';
+  audio.currentTime = 0.4;
+  await playToneSequence(audio, [{ audio: '/ready.mp3' }]);
+  assert.equal(audio.sourceChanges, 1);
+  assert.equal(audio.currentTime, 0);
+  assert.deepEqual(audio.calls, ['/ready.mp3']);
 });

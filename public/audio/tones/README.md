@@ -12,4 +12,7 @@ human assessment of the acoustic recordings.
 Files are served locally so playback does not need a live TTS request or secret.
 The drill uses one syllable at a time and teaches dictionary tones, not
 contextual third-tone or yi/bu sandhi. Neutral tone is not included.
-Slower playback preserves pitch.
+The `-v2` clips remove leading/trailing synthesis silence using a -55 dB
+threshold, retaining 80 ms of padding on each side of speech. They play at their
+original speed and pitch. Versioned filenames avoid stale cached originals.
+The current and upcoming clips are preloaded and reused for repeated playback.

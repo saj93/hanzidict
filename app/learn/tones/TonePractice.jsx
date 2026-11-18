@@ -6,6 +6,16 @@ import Nav from '../../components/Nav';
 import { drawTone, getToneVariants, toneAccuracy, playToneSequence, TONES } from '../../../lib/tonePractice';
 import './tones.css';
 
+function prepareAudio(pool, clip) {
+  if (!pool.has(clip.audio)) {
+    const audio = new Audio(clip.audio);
+    audio.preload = 'auto';
+    audio.load();
+    pool.set(clip.audio, audio);
+  }
+  return pool.get(clip.audio);
+}
+
 export default function TonePractice() {
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -17,20 +27,34 @@ export default function TonePractice() {
   const [comparing, setComparing] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const audioRef = useRef(null);
+  const audioPool = useRef(new Map());
+  const upcoming = useRef(null);
   const controllerRef = useRef(null);
   const nextTimer = useRef(null);
   const locked = useRef(false);
   const handlers = useRef({});
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setQuestion(drawTone()));
+    const pool = audioPool.current;
+    const frame = requestAnimationFrame(() => {
+      const first = drawTone();
+      upcoming.current = drawTone(first.audio);
+      prepareAudio(pool, first);
+      prepareAudio(pool, upcoming.current);
+      setQuestion(first);
+    });
     const keydown = e => {
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable || e.ctrlKey || e.metaKey || e.altKey) return;
       if (/^[1-4]$/.test(e.key)) handlers.current.choose?.(Number(e.key));
       else if (e.code === 'Space' && (e.target.tagName !== 'BUTTON' || e.target.disabled)) { e.preventDefault(); handlers.current.play?.(); }
     };
     window.addEventListener('keydown', keydown);
-    return () => { cancelAnimationFrame(frame); clearTimeout(nextTimer.current); window.removeEventListener('keydown', keydown); controllerRef.current?.abort(); audioRef.current?.pause(); };
+    return () => {
+      cancelAnimationFrame(frame); clearTimeout(nextTimer.current);
+      window.removeEventListener('keydown', keydown); controllerRef.current?.abort();
+      for (const audio of pool.values()) { audio.pause(); audio.removeAttribute('src'); audio.load(); }
+      pool.clear();
+    };
   }, []);
 
   function stop() { controllerRef.current?.abort(); audioRef.current?.pause(); setPlaying(false); }
@@ -38,7 +62,7 @@ export default function TonePractice() {
     if (!clip || (counts && locked.current)) return;
     stop();
     const controller = new AbortController(); controllerRef.current = controller;
-    audioRef.current ??= new Audio();
+    audioRef.current = prepareAudio(audioPool.current, clip);
     setPlaying(true); setError('');
     try {
       await playToneSequence(audioRef.current, [clip], { signal: controller.signal });
@@ -54,12 +78,15 @@ export default function TonePractice() {
     setTransitioning(true);
     setComparing(false);
     if (right) setCorrect(n => n + 1); else setWrong(n => n + 1);
-    nextTimer.current = setTimeout(() => advance(), 1000);
+    nextTimer.current = setTimeout(() => advance(), 450);
   }
   function advance(reset = false) {
     clearTimeout(nextTimer.current);
     stop(); locked.current = false;
-    const next = drawTone(question?.audio);
+    const next = upcoming.current ?? drawTone(question?.audio);
+    upcoming.current = drawTone(next.audio);
+    prepareAudio(audioPool.current, next);
+    prepareAudio(audioPool.current, upcoming.current);
     setQuestion(next); setHeard(false); setError(''); setTransitioning(false);
     if (reset) { setCorrect(0); setWrong(0); setFeedback(null); setComparing(false); }
     else play(next);
