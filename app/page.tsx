@@ -1,20 +1,20 @@
-import { getHomepageSamples, getWordOfDay } from '../lib/db';
+import { getHomepageSamplePool, getWordOfDay } from '../lib/db';
 import { convertPinyin } from '../lib/pinyin';
 import HomeClient from './components/HomeClient';
 
 export const revalidate = 300; // re-render homepage at most every 5 minutes
 
 export default async function Home() {
-  let chips: [string, string][] = [];
+  let chipPool: [string, string][] = [];
   let wordOfDay: any = null;
 
   const [samples, dailyWord] = await Promise.allSettled([
-    getHomepageSamples(),
+    getHomepageSamplePool(),
     getWordOfDay(),
   ]);
 
   if (samples.status === 'fulfilled') {
-    chips = samples.value
+    chipPool = samples.value
       .filter((e: any) => e.simplified && e.pinyin)
       .map((e: any) => [e.simplified, convertPinyin(e.pinyin)] as [string, string]);
   } else {
@@ -27,5 +27,5 @@ export default async function Home() {
     console.error('[Home] failed to load word of day:', dailyWord.reason);
   }
 
-  return <HomeClient initialChips={chips} wordOfDay={wordOfDay} />;
+  return <HomeClient chipPool={chipPool} wordOfDay={wordOfDay} />;
 }

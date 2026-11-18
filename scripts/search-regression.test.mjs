@@ -18,6 +18,8 @@ mock.module('@supabase/supabase-js', {
           order() { return this; },
           ilike() { return this; },
           in() { return this; },
+          eq() { return this; },
+          range() { return this; },
           limit() { return this; },
           abortSignal(signal) { signals.push(signal); return this; },
           then(resolve, reject) { return Promise.resolve(response).then(resolve, reject); },
@@ -27,9 +29,20 @@ mock.module('@supabase/supabase-js', {
     }),
   },
 });
-const { searchEntries } = await import('../lib/db.js');
+const { searchEntries, getHomepageSamplePool } = await import('../lib/db.js');
 const entry = { id: 1, simplified: '课文', traditional: '課文', pinyin: 'ke4 wen2', definitions: 'text', hsk_level: 2 };
 const timeout = { code: '57014', message: 'canceling statement due to statement timeout' };
+
+test('Homepage pool covers more than the first thirty rows and retains representative readings', async () => {
+  const words = Array.from({ length: 60 }, (_, i) => ({ ...entry, id: i, hsk_level: 1, simplified: `词${i}` }));
+  responses = [{ data: [...words, { ...words[0], id: 100, pinyin: 'ci2', frequency_rank: 1 },
+    { ...entry, simplified: '異', definitions: 'variant of something' }], error: null }];
+  const pool = await getHomepageSamplePool();
+  assert.equal(pool.length, 60);
+  assert.equal(pool.find(e => e.simplified === '词0').pinyin, 'ci2');
+  assert.ok(pool.some(e => e.simplified === '词59'));
+  assert.deepEqual(Object.keys(pool[0]).sort(), ['pinyin', 'simplified']);
+});
 
 test('Exact words survive a related-match timeout, in simplified and traditional search', async () => {
   for (const q of ['课文', '課文']) {

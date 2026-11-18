@@ -15,8 +15,10 @@ import NewsletterForm from './NewsletterForm';
 import { useSearchHistory } from '../hooks/useSearchHistory';
 import WordOfDay from './WordOfDay';
 import { requestSearch } from '../../lib/searchRequest';
+import { pickHomepageChips } from '../../lib/homepageChips';
 
-export default function HomeClient({ initialChips, wordOfDay }: { initialChips: [string, string][]; wordOfDay?: any }) {
+export default function HomeClient({ chipPool, wordOfDay }: { chipPool: [string, string][]; wordOfDay?: any }) {
+  const [chips, setChips] = useState<[string, string][] | null>(null);
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTab, setSearchTab] = useState<'text' | 'draw' | 'radical'>('text');
@@ -31,6 +33,12 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressNextOutsideRef = useRef(false);
   const { history, add: addHistory, remove: removeHistory, clear: clearHistory } = useSearchHistory();
+
+  useEffect(() => {
+    // Draw after hydration: the server-rendered homepage can stay cached.
+    const frame = requestAnimationFrame(() => setChips(pickHomepageChips(chipPool)));
+    return () => cancelAnimationFrame(frame);
+  }, [chipPool]);
 
   useEffect(() => {
     setDark(document.documentElement.classList.contains('dark'));
@@ -220,9 +228,9 @@ export default function HomeClient({ initialChips, wordOfDay }: { initialChips: 
             </div>
           )}
         </div>
-        {initialChips.length > 0 && (
-          <div className="chips">
-            {initialChips.map(([hz, py]) => (
+        {chipPool.length > 0 && (
+          <div className="chips" aria-busy={chips === null} style={{ visibility: chips === null ? 'hidden' : 'visible' }}>
+            {(chips ?? chipPool.slice(0, 5)).map(([hz, py]) => (
               <button key={hz} className="chip" onClick={() => router.push(`/word/${encodeURIComponent(hz)}`)}>
                 <span className="chip-hanzi">{hz}</span> {py}
               </button>
