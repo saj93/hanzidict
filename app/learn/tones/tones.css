@@ -1,1 +1,48 @@
-.tone-page{max-width:900px;margin:0 auto;padding:36px 28px 60px}.tone-back{font-size:13px;color:var(--fg2);text-decoration:none}.tone-page h1{font-family:var(--font-display),serif;font-size:34px;font-weight:500;margin:22px 0 10px}.tone-subtitle{color:var(--fg2);font-size:15px}.tone-toolbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-mid);margin-top:32px;gap:16px}.tone-page button{font:inherit;cursor:pointer}.tone-toolbar button{background:none;border:0;color:var(--fg2);padding:15px 10px;font-size:14px}.tone-toolbar button[aria-pressed=true]{color:var(--fg);border-bottom:3px solid var(--accent)}.tone-page button:disabled{cursor:default;opacity:.45}.tone-page button:focus-visible,.tone-page a:focus-visible,.tone-page input:focus-visible,.tone-page select:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.tone-intro{padding:48px 0;text-align:center}.tone-intro h2{font-family:var(--font-display),serif;font-weight:400;font-size:28px;margin:20px 0}.tone-intro>p{color:var(--fg2);line-height:1.8;max-width:480px;margin:0 auto 24px}.tone-eyebrow{display:block;font-size:11px;letter-spacing:.1em;color:var(--fg2);margin:24px 0}.tone-reference{display:flex;justify-content:center;gap:40px;margin:32px 0}.tone-reference>div{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px}.tone-reference svg,.tone-answers svg{color:var(--accent)}.tone-primary,.tone-secondary{padding:10px 18px;border-radius:6px;font-size:14px}.tone-primary{background:var(--accent);border:1px solid var(--accent);color:white}.tone-secondary{background:transparent;color:var(--fg);border:1px solid var(--border-mid)}.tone-exercise{padding-top:24px}.tone-progress-label{display:flex;justify-content:space-between;font-size:13px;color:var(--fg2)}.tone-exercise progress{display:block;width:100%;height:4px;margin:12px 0 38px;accent-color:var(--accent);border:0;border-radius:3px;overflow:hidden;background:var(--bg3)}.tone-exercise progress::-webkit-progress-bar{background:var(--bg3)}.tone-exercise progress::-webkit-progress-value{background:var(--accent)}.tone-player{display:flex;justify-content:center;align-items:center;gap:22px;margin:34px 0 20px}.tone-player button:not(.tone-play){border:0;border-bottom:1px solid var(--fg3);background:none;color:var(--fg2);padding:4px 0;font-size:13px}.tone-player .tone-play{border:0;background:var(--accent);color:white;width:64px;height:64px;border-radius:50%;font-size:26px}.tone-syllable{font-size:36px;text-align:center;margin:20px 0 34px}.tone-prompt{font-size:18px;margin-bottom:20px}.tone-answers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.tone-answers button{background:transparent;border:1px solid var(--border-mid);border-radius:6px;color:var(--fg);min-height:106px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:14px}.tone-answers button:disabled{opacity:.7}.tone-answers button.is-correct{border:2px solid var(--accent);background:var(--accent-dim);opacity:1}.tone-answers button.is-wrong{border-color:#bc7269;background:#bc726912;opacity:1}.tone-hint{font-size:12px;color:var(--fg2);margin:18px 0}.tone-skip{text-align:right}.tone-skip button{background:none;border:0;color:var(--fg2);text-decoration:underline;padding:10px}.tone-feedback{border-top:1px solid var(--border-mid);padding:24px 0;margin-top:26px}.tone-feedback>strong{color:var(--accent-text);font-size:18px}.tone-feedback.is-wrong>strong,.tone-error{color:#bc7269}.tone-reveal{display:flex;gap:30px;margin:18px 0}.tone-reveal span{font-size:28px;margin-right:8px}.tone-reveal small{display:block;color:var(--fg2);margin-top:6px}.tone-feedback>p{font-size:13px;color:var(--fg2)}.tone-feedback-actions{display:flex;justify-content:space-between;gap:16px;margin-top:22px}.tone-compare,.tone-slots{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}.tone-compare button,.tone-slots button{border:1px solid var(--border-mid);background:none;color:var(--fg);padding:10px 14px;border-radius:5px;font-size:13px}.tone-slots button[aria-pressed=true]{border-color:var(--accent)}.tone-footnote{border-top:1px solid var(--border-mid);padding-top:20px;margin-top:36px;font-size:12px;line-height:1.8;color:var(--fg2)}.tone-settings{border:1px solid var(--border-mid);border-radius:6px;padding:18px;margin-top:20px;font-size:13px}.tone-settings legend{padding:0 8px;color:var(--fg2)}.tone-checks{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:16px}.tone-checks label{display:flex;gap:7px;align-items:center}.tone-settings select{margin:0 18px 0 8px;background:var(--bg);color:var(--fg);border:1px solid var(--border-mid);padding:7px}.tone-error{font-size:13px;line-height:1.7}.tone-compare button{min-width:70px}@media(max-width:600px){.tone-page{padding:24px 18px 40px}.tone-page h1{font-size:28px}.tone-toolbar{gap:4px}.tone-toolbar button{padding:14px 6px;font-size:12px}.tone-answers{grid-template-columns:repeat(2,1fr);gap:10px}.tone-player{gap:18px}.tone-reference{gap:18px}.tone-reference svg{width:45px}.tone-reference>div{font-size:11px}.tone-syllable{font-size:30px}.tone-reveal{gap:18px}.tone-reveal span{font-size:24px}.tone-checks{gap:12px}}
+.tone-page { max-width: 760px; margin: 0 auto; padding: 24px 24px 16px; }
+.tone-back { font-size: 12px; color: var(--fg2); text-decoration: none; }
+.tone-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 14px 0 6px; }
+.tone-heading h1 { font-family: var(--font-display), serif; font-size: 28px; font-weight: 500; margin: 0; }
+.tone-subtitle { color: var(--fg2); font-size: 13px; margin-bottom: 22px; line-height: 1.5; }
+.tone-page button { font: inherit; cursor: pointer; }
+.tone-page button:disabled { cursor: default; opacity: .5; }
+.tone-page button:focus-visible, .tone-page a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tone-text-button { color: var(--fg2); background: none; border: 0; padding: 8px 4px; font-size: 13px !important; text-decoration: underline; text-underline-offset: 3px; }
+.tone-answers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; border-top: 1px solid var(--border-mid); padding-top: 20px; }
+.tone-answers button { min-height: 58px; display: flex; align-items: center; justify-content: center; gap: 18px; background: transparent; border: 1px solid var(--border-mid); border-radius: 7px; color: var(--fg); font-size: 16px; }
+.tone-answers svg { color: var(--accent); }
+.tone-answers button.is-correct { border-color: var(--accent); background: var(--accent-dim); opacity: 1; }
+.tone-answers button.is-wrong { border-color: #bc7269; background: #bc726912; opacity: 1; }
+.tone-player { display: flex; align-items: center; gap: 18px; max-width: 480px; margin: 20px auto 8px; }
+.tone-play { flex: 1; min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: white; border: 0; border-radius: 6px; font-size: 15px !important; }
+.tone-hint { text-align: center; color: var(--fg2); font-size: 11px; line-height: 1.5; margin: 0 0 18px; }
+.tone-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 28px; padding: 16px 0; border-top: 1px solid var(--border-mid); border-bottom: 1px solid var(--border-mid); font-size: 14px; }
+.tone-stats b { font-variant-numeric: tabular-nums; font-weight: 500; }
+.tone-correct { color: var(--accent-text); }
+.tone-wrong, .tone-error { color: #bc7269; }
+.tone-result-area { min-height: 144px; padding-top: 16px; }
+.tone-feedback { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 24px; min-height: 36px; }
+.tone-feedback strong { font-size: 14px; font-weight: 500; }
+.tone-word { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.tone-word > span:first-child, .tone-word a { color: var(--fg); font-size: 22px; text-decoration: none; }
+.tone-word .tone-gloss { font-size: 13px; color: var(--fg2); }
+.tone-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; }
+.tone-next { background: var(--accent); color: white; border: 0; border-radius: 5px; padding: 10px 14px; font-size: 13px !important; }
+.tone-compare { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.tone-compare button { min-height: 34px; border: 1px solid var(--border-mid); border-radius: 5px; color: var(--fg); background: var(--bg2); font-size: 13px; }
+.tone-waiting, .tone-error { font-size: 12px; text-align: center; line-height: 1.6; margin: 10px 0; }
+.tone-waiting { color: var(--fg2); }
+.tone-footnote { color: var(--fg2); font-size: 10px; text-align: center; margin: 10px 0 0; line-height: 1.5; }
+@media (max-width: 600px) {
+  .tone-page { padding: 16px 18px 12px; }
+  .tone-heading { margin-top: 10px; }
+  .tone-heading h1 { font-size: 24px; }
+  .tone-subtitle { margin-bottom: 14px; font-size: 12px; }
+  .tone-answers { gap: 10px; padding-top: 14px; }
+  .tone-answers button { min-height: 52px; gap: 10px; font-size: 14px; }
+  .tone-answers svg { width: 38px; }
+  .tone-player { margin-top: 16px; }
+  .tone-stats { gap: 18px; font-size: 12px; padding: 12px 0; }
+  .tone-result-area { min-height: 144px; padding-top: 12px; }
+  .tone-feedback { gap: 6px 14px; }
+  .tone-word > span:first-child, .tone-word a { font-size: 20px; }
+}
