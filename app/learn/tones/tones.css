@@ -26,7 +26,6 @@
 .tone-word > span:first-child, .tone-word a { color: var(--fg); font-size: 22px; text-decoration: none; }
 .tone-word .tone-gloss { font-size: 13px; color: var(--fg2); }
 .tone-actions { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 12px; }
-.tone-next { background: var(--accent); color: white; border: 0; border-radius: 5px; padding: 10px 14px; font-size: 13px !important; }
 .tone-compare { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
 .tone-compare button { min-height: 34px; border: 1px solid var(--border-mid); border-radius: 5px; color: var(--fg); background: var(--bg2); font-size: 13px; }
 .tone-waiting, .tone-error { font-size: 12px; text-align: center; line-height: 1.6; margin: 10px 0; }
