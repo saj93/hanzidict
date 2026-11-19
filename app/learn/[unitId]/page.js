@@ -381,7 +381,7 @@ export default function UnitPage() {
               <div className="lp-done-streak">🔥 {finalStreak}-day streak</div>
             )}
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 28, flexWrap: 'wrap' }}>
-              <button className="fc-action-btn fc-action-secondary" onClick={() => router.push('/learn')}>
+              <button className="fc-action-btn fc-action-secondary" onClick={() => router.push('/learn/path')}>
                 ← Back to path
               </button>
               {nextUnit && (
@@ -403,7 +403,7 @@ export default function UnitPage() {
       <Nav />
 
       <div className="unit-wrap">
-        <button className="unit-back" onClick={() => router.push('/learn')}>← Learning path</button>
+        <button className="unit-back" onClick={() => router.push('/learn/path')}>← Learning path</button>
 
         <div className="unit-header">
           <div className="unit-header-chinese">{situation.titleChinese}</div>
