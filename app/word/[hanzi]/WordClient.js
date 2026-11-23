@@ -6,6 +6,7 @@ import { convertPinyin, convertPinyinInText } from '../../../lib/pinyin';
 import { isTruePointer, cleanDefinitions, firstDef, cleanDef } from '../../../lib/utils';
 import { sortByHskDefs, processExactMatches } from '../../../lib/entrySort';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
+import { wordCache } from '../../../lib/wordCache';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
 import PremiumNavBtn from '../../components/PremiumNavBtn';
@@ -53,6 +54,8 @@ export default function WordPage() {
   const [related, setRelated] = useState([]);
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
   const toTraditional = useSimpToTrad(script);
   const toSimplified = useTradToSimp(script);
@@ -162,12 +165,15 @@ export default function WordPage() {
 
   useEffect(() => {
     if (!hanzi) return;
+    let active = true;
+    const background = new AbortController();
     setLoading(true);
+    setLoadError('');
     setRelated([]);
     setDecomp([]);
-    fetch(`/api/search?q=${encodeURIComponent(hanzi)}&raw=1&exact=1`)
-      .then(r => r.json())
+    wordCache.load(hanzi)
       .then(async data => {
+        if (!active) return;
         const entries = data.results || [];
         const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
 
@@ -196,14 +202,14 @@ export default function WordPage() {
         if (tradForms.length > 0) {
           Promise.all(
             tradForms.map(t =>
-              fetch(`/api/search?q=${encodeURIComponent(t)}&raw=1&exact=1`)
-                .then(r => r.json())
+              wordCache.load(t)
                 .then(d => (d.results || []).filter(e =>
                   e.simplified === t && !exactMatches.some(ex => ex.id === e.id)
                 ))
                 .catch(() => [])
             )
           ).then(extraArrays => {
+            if (!active) return;
             const extras = extraArrays.flat();
             if (extras.length > 0) {
               const allExact = [...exactMatches, ...extras];
@@ -215,22 +221,22 @@ export default function WordPage() {
         }
 
         // Related words
-        fetch(`/api/related?word=${encodeURIComponent(primary.simplified)}`)
+        fetch(`/api/related?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
           .then(r => r.json())
-          .then(d => setRelated(d.results || []))
+          .then(d => { if (active) setRelated(d.results || []); })
           .catch(() => {});
 
         // Example sentences
-        fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`)
+        fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
           .then(r => r.ok ? r.json() : null)
-          .then(d => { if (d?.results?.length) { setExamples(d.results); setExampleIdx(0); } })
+          .then(d => { if (active && d?.results?.length) { setExamples(d.results); setExampleIdx(0); } })
           .catch(() => {});
 
         // Chengyu containing this character (single-char entries only)
         if (primary.simplified.length === 1) {
-          fetch(`/api/chengyu?char=${encodeURIComponent(primary.simplified)}`)
+          fetch(`/api/chengyu?char=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
             .then(r => r.json())
-            .then(d => setChengyu(d.results || []))
+            .then(d => { if (active) setChengyu(d.results || []); })
             .catch(() => {});
         }
 
@@ -238,8 +244,9 @@ export default function WordPage() {
         if (primary.simplified.length > 1) {
           const chars = primary.simplified.split('');
           Promise.all(chars.map(ch =>
-            fetch(`/api/search?q=${encodeURIComponent(ch)}&exact=1`).then(r => r.json()).catch(() => ({ results: [] }))
+            fetch(`/api/search?q=${encodeURIComponent(ch)}&exact=1`, { signal: background.signal, credentials: 'omit' }).then(r => r.json()).catch(() => ({ results: [] }))
           )).then(dataArr => {
+            if (!active) return;
             setDecomp(
               dataArr.map((d, i) =>
                 (d.results || []).find(e => e.simplified === chars[i]) ?? { simplified: chars[i], pinyin: '', definitions: '' }
@@ -248,8 +255,9 @@ export default function WordPage() {
           });
         }
       })
-      .catch(() => { setResults([]); setLoading(false); });
-  }, [hanzi]);
+      .catch(error => { if (active) { setLoadError(error.message); setLoading(false); } });
+    return () => { active = false; background.abort(); };
+  }, [hanzi, loadAttempt, router]);
 
 
   const primary = pronunciations[activeTabIdx] ?? results?.[0] ?? null;
@@ -395,6 +403,18 @@ export default function WordPage() {
 
   const footer = <Footer compactNewsletter />;
 
+  if (loadError) {
+    return <main>
+      {nav}{wordHeader}
+      <div role="alert" style={{ textAlign: 'center', padding: '80px 20px' }}>
+        <h1 style={{ fontSize: 22, marginBottom: 12 }}>This word couldn’t be loaded</h1>
+        <p style={{ color: 'var(--fg2)', marginBottom: 20 }}>{loadError}</p>
+        <button className="lp-start-btn" onClick={() => setLoadAttempt(n => n + 1)}>Try again</button>
+      </div>
+      {footer}
+    </main>;
+  }
+
   if (loading || results === null) {
     return (
       <main>
@@ -411,7 +431,7 @@ export default function WordPage() {
         {nav}{wordHeader}
         <div style={{ textAlign: 'center', padding: '100px 0' }}>
           <div style={{ fontSize: 42, marginBottom: 16 }}>🔍</div>
-          <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 10, color: 'var(--fg)' }}>No results for "{hanzi}"</div>
+          <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 10, color: 'var(--fg)' }}>No results for &quot;{hanzi}&quot;</div>
           <div style={{ fontSize: 14, color: 'var(--fg3)' }}>Try simplified characters, pinyin, or an English keyword</div>
         </div>
         {footer}
@@ -494,7 +514,10 @@ export default function WordPage() {
           method: 'PATCH', headers: authHeader,
           body: JSON.stringify({ definitions: newParts.join(' | ') }),
         });
-        if (resp.ok && !firstPatchedId) firstPatchedId = entry.id;
+        if (resp.ok) {
+          wordCache.invalidate();
+          if (!firstPatchedId) firstPatchedId = entry.id;
+        }
       }
     }
     return firstPatchedId;
@@ -514,6 +537,7 @@ export default function WordPage() {
       body: JSON.stringify({ definitions: newDefinitions }),
     });
     if (!r.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); return; }
+    wordCache.invalidate();
 
     // Remove from secondary rows any defs now owned by primary
     const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
@@ -524,10 +548,11 @@ export default function WordPage() {
       const rawParts = (entry.definitions || '').split(' | ').map(s => s.trim()).filter(Boolean);
       const remaining = rawParts.filter(raw => !primarySet.has(clean(raw)) && !primarySet.has(raw));
       if (remaining.length < rawParts.length) {
-        await fetch(`/api/entries/${entry.id}`, {
+        const response = await fetch(`/api/entries/${entry.id}`, {
           method: 'PATCH', headers: authHeader,
           body: JSON.stringify({ definitions: remaining.join(' | ') }),
         });
+        if (response.ok) wordCache.invalidate();
       }
     }
   }
@@ -548,6 +573,7 @@ export default function WordPage() {
         body: JSON.stringify({ definitions: newDefs }),
       });
       if (!resp.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); }
+      else wordCache.invalidate();
     } else {
       const group = groupedDefs[editingDefIdx];
       // Edit operates only on the first def in the group — others are left intact.
