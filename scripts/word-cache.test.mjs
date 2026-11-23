@@ -99,3 +99,16 @@ test('A stalled word request times out and can be retried', async () => {
   stalled = false;
   assert.deepEqual(await cache.load('你好'), word);
 });
+
+test('An explicit diagnostic refresh bypasses one word while preserving other persisted entries', async () => {
+  const saved = storage();
+  const original = createWordCache({ storage: () => saved, fetcher: async () => Response.json(word) });
+  await original.load('好'); await original.load('你好');
+  let calls = 0;
+  const updated = { ...word, results: [{ ...word.results[0], definitions: 'fresh response' }] };
+  const restored = createWordCache({ storage: () => saved, fetcher: async () => { calls++; return Response.json(updated); } });
+  await restored.load('你好', { refresh: true });
+  assert.equal(calls, 1);
+  assert.deepEqual(restored.read('你好'), updated);
+  assert.deepEqual(restored.read('好'), word);
+});

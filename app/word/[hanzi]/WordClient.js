@@ -170,16 +170,18 @@ export default function WordPage() {
     let active = true;
     const background = new AbortController();
     const startedAt = performance.now();
-    const cacheHit = !!wordCache.read(hanzi);
-    setWordLoadMetrics({ pending: true, cacheHit });
+    const params = new URLSearchParams(window.location.search);
+    const cacheBypassed = params.get('diagnostic') === '1' && params.get('fresh') === '1';
+    const cacheHit = !cacheBypassed && !!wordCache.read(hanzi);
+    setWordLoadMetrics({ pending: true, cacheHit, cacheBypassed });
     setLoading(true);
     setLoadError('');
     setRelated([]);
     setDecomp([]);
-    wordCache.load(hanzi)
+    wordCache.load(hanzi, { refresh: cacheBypassed })
       .then(async data => {
         if (!active) return;
-        setWordLoadMetrics({ pending: false, cacheHit, loadMs: performance.now() - startedAt });
+        setWordLoadMetrics({ pending: false, cacheHit, cacheBypassed, loadMs: performance.now() - startedAt });
         const entries = data.results || [];
         const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
 
@@ -262,7 +264,7 @@ export default function WordPage() {
         }
       })
       .catch(error => { if (active) {
-        setWordLoadMetrics({ pending: false, cacheHit, failed: true, loadMs: performance.now() - startedAt });
+        setWordLoadMetrics({ pending: false, cacheHit, cacheBypassed, failed: true, loadMs: performance.now() - startedAt });
         setLoadError(error.message); setLoading(false);
       } });
     return () => { active = false; background.abort(); };

@@ -40,3 +40,18 @@ test('Script/font/stroke delays use anonymous labels without revealing filenames
   assert.ok(!JSON.stringify(report).includes('private-'));
   assert.ok(!JSON.stringify(report).includes('秘密'));
 });
+
+test('Database preparation, HTTP attempts and retry gaps remain anonymous', () => {
+  const report = loadingReport({ origin: 'https://example.test', wordLoad: { cacheBypassed: true }, resources: [
+    { name: 'https://example.test/api/search?raw=1', duration: 1000, startTime: 10, serverTiming: [
+      { name: 'exact_prepare', duration: 200 }, { name: 'exact_http_1_503', duration: 100 },
+      { name: 'exact_retry_wait', duration: 500 }, { name: 'exact_http_2_200', duration: 150 },
+      { name: 'exact_auth_1_200', duration: 100 },
+      { name: 'exact_http_1_private-token', duration: 1 },
+    ] },
+  ] });
+  assert.equal(report.format, 'hanzidict-loading-v2');
+  assert.equal(report.word.cacheBypassed, true);
+  assert.equal(report.requests[0].server.length, 5);
+  assert.ok(!JSON.stringify(report).includes('private-token'));
+});
