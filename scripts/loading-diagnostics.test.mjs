@@ -55,3 +55,13 @@ test('Database preparation, HTTP attempts and retry gaps remain anonymous', () =
   assert.equal(report.requests[0].server.length, 5);
   assert.ok(!JSON.stringify(report).includes('private-token'));
 });
+
+test('Secondary detail transport timings identify the grouped lookup without leaking the word', () => {
+  const report = loadingReport({ origin: 'https://example.test', resources: [
+    { name: 'https://example.test/api/word-characters?word=private-word', duration: 20, startTime: 10,
+      serverTiming: [{ name: 'characters_http_1_200', duration: 15 }, { name: 'details_total', duration: 18 }] },
+  ] });
+  assert.equal(report.requests[0].label, 'word_characters');
+  assert.equal(report.requests[0].server.length, 2);
+  assert.ok(!JSON.stringify(report).includes('private-word'));
+});

@@ -1,11 +1,5 @@
 export const dynamic = 'force-dynamic';
-import { getExamples } from '@/lib/db';
+import { cachedExamples } from '../../../lib/publicWordDetails.js';
+import { wordDetailsResponse } from '../../../lib/wordDetailsResponse.js';
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const word = searchParams.get('word')?.trim();
-  if (!word) return Response.json({ results: [] });
-
-  const results = await getExamples(word);
-  return Response.json({ results });
-}
+export const GET = request => wordDetailsResponse(request, 'examples', cachedExamples);

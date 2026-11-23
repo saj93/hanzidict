@@ -251,17 +251,10 @@ export default function WordPage() {
 
         // Decomposition: one tile per character (no dedup, preserves position)
         if (primary.simplified.length > 1) {
-          const chars = primary.simplified.split('');
-          Promise.all(chars.map(ch =>
-            fetch(`/api/search?q=${encodeURIComponent(ch)}&exact=1`, { signal: background.signal, credentials: 'omit' }).then(r => r.json()).catch(() => ({ results: [] }))
-          )).then(dataArr => {
-            if (!active) return;
-            setDecomp(
-              dataArr.map((d, i) =>
-                (d.results || []).find(e => e.simplified === chars[i]) ?? { simplified: chars[i], pinyin: '', definitions: '' }
-              )
-            );
-          });
+          fetch(`/api/word-characters?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
+            .then(r => r.ok ? r.json() : null)
+            .then(d => { if (active && d) setDecomp(d.results || []); })
+            .catch(() => {});
         }
       })
       .catch(error => { if (active) {

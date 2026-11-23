@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { getUserFromToken, isAdmin, updateEntryDefinitions } from '@/lib/db';
 
 async function getAuthedUser(req) {
@@ -23,6 +24,7 @@ export async function PATCH(request, { params }) {
 
   try {
     const entry = await updateEntryDefinitions(id, body.definitions.trim());
+    revalidateTag('word-dictionary', { expire: 0 });
     return NextResponse.json({ entry });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });

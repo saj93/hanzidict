@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 let responses = [];
 let filters = [];
 let signals = [];
+let inFilters = [];
 mock.module('@supabase/supabase-js', {
   namedExports: {
     createClient: () => ({
@@ -17,7 +18,9 @@ mock.module('@supabase/supabase-js', {
           or(filter) { filters.push(filter); return this; },
           order() { return this; },
           ilike() { return this; },
-          in() { return this; },
+          in(column, values) { inFilters.push({ column, values }); return this; },
+          neq() { return this; },
+          not() { return this; },
           eq() { return this; },
           range() { return this; },
           limit() { return this; },
@@ -29,9 +32,35 @@ mock.module('@supabase/supabase-js', {
     }),
   },
 });
-const { searchEntries, getHomepageSamplePool } = await import('../lib/db.js');
+const { searchEntries, getHomepageSamplePool, getExamples, getRelated, getWordCharacters } = await import('../lib/db.js');
 const entry = { id: 1, simplified: '课文', traditional: '課文', pinyin: 'ke4 wen2', definitions: 'text', hsk_level: 2 };
 const timeout = { code: '57014', message: 'canceling statement due to statement timeout' };
+
+test('Component tiles use one lookup while preserving repeated, missing and supplementary characters', async () => {
+  inFilters = [];
+  const ni = { ...entry, id: 11, simplified: '你', traditional: '你', pinyin: 'ni3', definitions: 'you', radical: '亻', stroke_count: 7 };
+  const hao = { ...entry, id: 12, simplified: '好', traditional: '好', pinyin: 'hao3', definitions: 'good' };
+  const rows = [hao, ni, { ...ni, id: 13, definitions: 'variant of 你[ni3]' }];
+  responses = [{ data: rows, error: null }];
+  const result = await getWordCharacters('你好你𠀀');
+  assert.deepEqual(result.map(e => e.simplified), ['你', '好', '你', '𠀀']);
+  assert.deepEqual(inFilters, [{ column: 'simplified', values: ['你', '好', '𠀀'] }]);
+  assert.equal(responses.length, 0);
+  assert.equal(result[0].radical, '亻'); assert.equal(result[0].stroke_count, 7);
+  assert.deepEqual(result[3], { simplified: '𠀀', pinyin: '', definitions: '' });
+  responses = [{ data: rows.filter(e => e.simplified === '你'), error: null }];
+  const previous = await searchEntries('你', 1, 20, false, true);
+  assert.deepEqual(result[0], previous.results[0]);
+});
+
+test('Detail query failures propagate instead of becoming cacheable empty results', async () => {
+  for (const operation of [() => getExamples('你好'), () => getWordCharacters('你好')]) {
+    responses = [{ data: null, error: timeout }];
+    await assert.rejects(operation, error => error === timeout);
+  }
+  responses = [{ data: null, error: timeout }, { data: null, error: timeout }];
+  await assert.rejects(() => getRelated('你好'), error => error === timeout);
+});
 
 test('Homepage pool covers more than the first thirty rows and retains representative readings', async () => {
   const words = Array.from({ length: 60 }, (_, i) => ({ ...entry, id: i, hsk_level: 1, simplified: `词${i}` }));

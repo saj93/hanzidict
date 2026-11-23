@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { getUserFromToken, isAdmin, updateExample, deleteExample } from '@/lib/db';
 
 async function getAuthedUser(req) {
@@ -25,6 +26,7 @@ export async function PATCH(request, { params }) {
 
   try {
     const example = await updateExample(id, { chinese: chinese.trim(), pinyin: pinyin?.trim() || '', english: english.trim() });
+    revalidateTag('word-examples', { expire: 0 });
     return NextResponse.json({ example });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
@@ -40,6 +42,7 @@ export async function DELETE(request, { params }) {
   const { id } = await params;
   try {
     await deleteExample(id);
+    revalidateTag('word-examples', { expire: 0 });
     return NextResponse.json({ ok: true });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });

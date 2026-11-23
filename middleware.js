@@ -8,7 +8,8 @@ export async function middleware(request) {
   // matcher is broadened later. They contain no user-specific server data.
   const path = request.nextUrl.pathname;
   if (['GET', 'HEAD'].includes(request.method) && (
-    path === '/' || path === '/search' || path === '/word' || path.startsWith('/word/') || path === '/learn/tones' || path === '/api/search'
+    path === '/' || path === '/search' || path === '/word' || path.startsWith('/word/') || path === '/learn/tones'
+    || ['/api/search', '/api/example', '/api/related', '/api/word-characters', '/api/chengyu'].includes(path)
   )) {
     return response;
   }

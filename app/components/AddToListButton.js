@@ -23,19 +23,25 @@ export default function AddToListButton({ simplified }) {
   // Check membership directly via browser Supabase client — no API cold start,
   // no server-side token re-validation. Requires RLS on lists + list_entries.
   useEffect(() => {
+    setLists([]);
     if (!session) return;
+    let active = true;
+    const controller = new AbortController();
     const supabase = createClient();
     supabase
       .from('list_entries')
-      .select('list_id', { count: 'exact', head: true })
+      .select('list_id')
       .eq('simplified', simplified)
-      .then(({ count }) => {
-        if ((count ?? 0) > 0) {
+      .limit(1)
+      .abortSignal(controller.signal)
+      .then(({ data }) => {
+        if (active && data?.length) {
           // Word is saved — mark it so the icon fills immediately
           setLists([{ __savedCheck: true, contains: true }]);
         }
       })
       .catch(() => {});
+    return () => { active = false; controller.abort(); };
   }, [simplified, session?.access_token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saved = lists.some(l => l.contains);
@@ -156,7 +162,7 @@ export default function AddToListButton({ simplified }) {
               <div className="atl-loading">Loading…</div>
             ) : (
               <>
-                <div className="atl-header">Save "{simplified}"</div>
+                <div className="atl-header">Save &quot;{simplified}&quot;</div>
                 {lists.filter(l => !l.__savedCheck).length === 0 && !showNew && (
                   <div className="atl-empty">No lists yet</div>
                 )}
