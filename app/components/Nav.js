@@ -11,7 +11,7 @@ export default function Nav({ hideScript = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
-  const { isPremium } = useSubscription();
+  const { isPremium, loading: subscriptionLoading } = useSubscription();
   const [dark, setDark] = useState(false);
   const [script, setScript] = useState('simplified');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function Nav({ hideScript = false }) {
           <button className="theme-btn" onClick={toggleDark} title={dark ? 'Light mode' : 'Dark mode'}>
             {dark ? '☀️' : '🌙'}
           </button>
-          {!isPremium && (
+          {!subscriptionLoading && !isPremium && (
             <button className="nav-premium-btn" onClick={() => go('/pricing')}>
               Go Premium
             </button>

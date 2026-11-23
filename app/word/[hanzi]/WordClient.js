@@ -92,7 +92,7 @@ export default function WordPage() {
   const [suggestStatus, setSuggestStatus] = useState(null); // null | 'sending' | 'sent' | 'error'
   const hwRef = useRef(null);
   const router = useRouter();
-  const { isAdmin, session } = useAuth() ?? {};
+  const { isAdmin, session, markPublicWordReady } = useAuth() ?? {};
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains('dark');
@@ -191,6 +191,7 @@ export default function WordPage() {
           router.replace(`/word/${encodeURIComponent(tempPrimary.simplified)}`);
           return;
         }
+        markPublicWordReady?.();
 
         // Render immediately with the entries we have — don't block on trad-form expansion.
         const { primary, alternates, deduped } = processExactMatches(exactMatches);
@@ -264,11 +265,12 @@ export default function WordPage() {
         }
       })
       .catch(error => { if (active) {
+        markPublicWordReady?.();
         setWordLoadMetrics({ pending: false, cacheHit, cacheBypassed, failed: true, loadMs: performance.now() - startedAt });
         setLoadError(error.message); setLoading(false);
       } });
     return () => { active = false; background.abort(); };
-  }, [hanzi, loadAttempt, router]);
+  }, [hanzi, loadAttempt, router, markPublicWordReady]);
 
 
   const primary = pronunciations[activeTabIdx] ?? results?.[0] ?? null;

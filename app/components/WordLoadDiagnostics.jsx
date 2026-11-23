@@ -13,7 +13,7 @@ const subscribeLocation = notify => {
 };
 
 export default function WordLoadDiagnostics({ wordLoad }) {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, accountChecksDeferred } = useAuth();
   const { loading: subscriptionPending } = useSubscription();
   const enabled = useSyncExternalStore(subscribeLocation, diagnosticEnabled, serverDisabled);
   const [report, setReport] = useState('');
@@ -32,7 +32,7 @@ export default function WordLoadDiagnostics({ wordLoad }) {
     const text = JSON.stringify(loadingReport({
       origin: window.location.origin,
       account: authLoading ? 'pending' : user ? 'signed_in' : 'signed_out',
-      subscriptionPending, wordLoad,
+      subscriptionPending, accountChecksDeferred, wordLoad,
       resources: performance.getEntriesByType('resource'),
       navigation: performance.getEntriesByType('navigation')[0],
       now: performance.now(), longTasks: longTasks.current,

@@ -19,15 +19,23 @@ function subscriptionData(data) {
   };
 }
 
-export function SubscriptionProvider({ children, userId, accessToken, authLoading }) {
+export function SubscriptionProvider({ children, userId, accessToken, authLoading, deferRefresh = false }) {
   const pathname = usePathname();
   const [snapshot, setSnapshot] = useState({ userId: null, data: EMPTY, loading: true });
   const refreshRef = useRef(null);
+  const pauseRef = useRef(null);
+  const deferred = useRef(deferRefresh);
+
+  useEffect(() => {
+    deferred.current = deferRefresh;
+    if (deferRefresh) pauseRef.current?.();
+    else refreshRef.current?.();
+  }, [deferRefresh]);
 
   useEffect(() => {
     if (authLoading || !userId || !accessToken) return;
     const cacheKey = `hd-sub-${userId}`;
-    let active = true, inFlight = false, checkedAt = 0, controller;
+    let active = true, inFlight = false, checkedAt = 0, controller, paused = false;
     let cached = null;
     try {
       const saved = JSON.parse(localStorage.getItem(cacheKey) || 'null');
@@ -36,7 +44,7 @@ export function SubscriptionProvider({ children, userId, accessToken, authLoadin
     setSnapshot({ userId, data: cached || EMPTY, loading: !cached });
 
     async function refresh() {
-      if (!active || inFlight || Date.now() - checkedAt < REFRESH_INTERVAL) return;
+      if (!active || deferred.current || inFlight || Date.now() - checkedAt < REFRESH_INTERVAL) return;
       inFlight = true; checkedAt = Date.now();
       controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 12000);
@@ -59,18 +67,28 @@ export function SubscriptionProvider({ children, userId, accessToken, authLoadin
       } catch {
         if (!active) return;
         checkedAt = 0;
+        if (paused) return;
         // A failed refresh must not erase a previously verified cached status.
         setSnapshot(previous => previous.userId === userId ? { ...previous, loading: false } : { userId, data: EMPTY, loading: false });
-      } finally { clearTimeout(timer); inFlight = false; }
+      } finally {
+        clearTimeout(timer); inFlight = false;
+        if (paused) {
+          paused = false;
+          if (active && !deferred.current) queueMicrotask(refresh);
+        }
+      }
     }
+    const pause = () => { if (inFlight) { paused = true; controller?.abort(); } };
     const visibleRefresh = () => { if (document.visibilityState === 'visible') refresh(); };
     refreshRef.current = refresh;
+    pauseRef.current = pause;
     refresh(); // Revalidate once on login/reload, including after Stripe returns.
     window.addEventListener('focus', visibleRefresh);
     document.addEventListener('visibilitychange', visibleRefresh);
     return () => {
       active = false; controller?.abort();
       if (refreshRef.current === refresh) refreshRef.current = null;
+      if (pauseRef.current === pause) pauseRef.current = null;
       window.removeEventListener('focus', visibleRefresh);
       document.removeEventListener('visibilitychange', visibleRefresh);
     };
