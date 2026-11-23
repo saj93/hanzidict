@@ -1,4 +1,3 @@
-export const dynamic = 'force-dynamic';
 import { cachedRelated } from '../../../lib/publicWordDetails.js';
 import { wordDetailsResponse } from '../../../lib/wordDetailsResponse.js';
 

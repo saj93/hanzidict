@@ -21,6 +21,7 @@ mock.module('@supabase/supabase-js', {
           in(column, values) { inFilters.push({ column, values }); return this; },
           neq() { return this; },
           not() { return this; },
+          is() { return this; },
           eq() { return this; },
           range() { return this; },
           limit() { return this; },
@@ -58,8 +59,24 @@ test('Detail query failures propagate instead of becoming cacheable empty result
     responses = [{ data: null, error: timeout }];
     await assert.rejects(operation, error => error === timeout);
   }
-  responses = [{ data: null, error: timeout }, { data: null, error: timeout }];
+  responses = [{ data: null, error: timeout }];
   await assert.rejects(() => getRelated('你好'), error => error === timeout);
+});
+
+test('Related words prefer distinct HSK entries, with no full-table random RPC', async () => {
+  const candidates = Array.from({ length: 8 }, (_, i) => ({ ...entry, id: i, simplified: `你${i}` }));
+  responses = [{ data: [...candidates, candidates[0], { ...entry, definitions: 'variant of 你[ni3]' }], error: null }];
+  const result = await getRelated('你好');
+  assert.equal(result.length, 5); assert.equal(new Set(result.map(e => e.simplified)).size, 5);
+  assert.ok(result.every(e => candidates.includes(e)));
+  assert.equal(responses.length, 0, 'Enough HSK matches must not launch another query');
+});
+
+test('Related fallback keeps available HSK matches and fills only missing slots', async () => {
+  responses = [{ data: [entry], error: null }, { data: [{ ...entry, simplified: '课本', hsk_level: null }], error: null }];
+  assert.deepEqual((await getRelated('课')).map(e => e.simplified), ['课文', '课本']);
+  responses = [{ data: [entry], error: null }, { data: null, error: timeout }];
+  assert.deepEqual(await getRelated('课'), [entry]);
 });
 
 test('Homepage pool covers more than the first thirty rows and retains representative readings', async () => {

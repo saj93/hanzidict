@@ -31,11 +31,11 @@ const { once } = require('node:events');
       await new Promise(resolve => setTimeout(resolve, 300));
       return reply([{ id: 1, chinese: '你好。', pinyin: 'ni3 hao3', english }]);
     }
-    if (url.pathname === '/rest/v1/rpc/get_related_words') {
-      counts.related++; await new Promise(resolve => setTimeout(resolve, 300));
-      return reply([{ simplified: '你好', traditional: '你好', pinyin: 'ni3 hao3', definitions: 'hello' }]);
-    }
     if (url.pathname === '/rest/v1/entries') {
+      if (url.searchParams.has('hsk_level')) {
+        counts.related++; await new Promise(resolve => setTimeout(resolve, 300));
+        return reply(Array.from({ length: 5 }, (_, i) => ({ simplified: '你' + i, traditional: '你' + i, pinyin: 'ni3', definitions: 'fixture', hsk_level: 1 })));
+      }
       counts.characters++; await new Promise(resolve => setTimeout(resolve, 300));
       return reply(rows());
     }

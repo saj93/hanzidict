@@ -7,6 +7,7 @@ import { isTruePointer, cleanDefinitions, firstDef, cleanDef } from '../../../li
 import { sortByHskDefs, processExactMatches } from '../../../lib/entrySort';
 import { KANGXI_RADICALS } from '../../../lib/radicals';
 import { wordCache } from '../../../lib/wordCache';
+import { wordDetailsCache } from '../../../lib/wordDetailsCache';
 import DrawCanvas from '../../components/DrawCanvas';
 import UserMenu from '../../components/UserMenu';
 import PremiumNavBtn from '../../components/PremiumNavBtn';
@@ -45,6 +46,11 @@ function groupShortDefs(defs) {
   return groups;
 }
 
+function invalidateWordData() {
+  wordCache.invalidate();
+  wordDetailsCache.invalidate();
+}
+
 export default function WordPage() {
   const params = useParams();
   const hanzi = decodeURIComponent(params.hanzi || '');
@@ -53,6 +59,7 @@ export default function WordPage() {
   const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [related, setRelated] = useState([]);
+  const [relatedStatus, setRelatedStatus] = useState('loading');
   const [decomp, setDecomp] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -177,6 +184,7 @@ export default function WordPage() {
     setLoading(true);
     setLoadError('');
     setRelated([]);
+    setRelatedStatus('loading');
     setDecomp([]);
     wordCache.load(hanzi, { refresh: cacheBypassed })
       .then(async data => {
@@ -230,15 +238,13 @@ export default function WordPage() {
         }
 
         // Related words
-        fetch(`/api/related?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
-          .then(r => r.json())
-          .then(d => { if (active) setRelated(d.results || []); })
-          .catch(() => {});
+        wordDetailsCache.load('related', primary.simplified, { refresh: cacheBypassed })
+          .then(rows => { if (active) { setRelated(rows); setRelatedStatus('ready'); } })
+          .catch(() => { if (active) setRelatedStatus('error'); });
 
         // Example sentences
-        fetch(`/api/example?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
-          .then(r => r.ok ? r.json() : null)
-          .then(d => { if (active && d?.results?.length) { setExamples(d.results); setExampleIdx(0); } })
+        wordDetailsCache.load('examples', primary.simplified, { refresh: cacheBypassed })
+          .then(rows => { if (active && rows.length) { setExamples(rows); setExampleIdx(0); } })
           .catch(() => {});
 
         // Chengyu containing this character (single-char entries only)
@@ -251,9 +257,8 @@ export default function WordPage() {
 
         // Decomposition: one tile per character (no dedup, preserves position)
         if (primary.simplified.length > 1) {
-          fetch(`/api/word-characters?word=${encodeURIComponent(primary.simplified)}`, { signal: background.signal, credentials: 'omit' })
-            .then(r => r.ok ? r.json() : null)
-            .then(d => { if (active && d) setDecomp(d.results || []); })
+          wordDetailsCache.load('characters', primary.simplified, { refresh: cacheBypassed })
+            .then(rows => { if (active) setDecomp(rows); })
             .catch(() => {});
         }
       })
@@ -523,7 +528,7 @@ export default function WordPage() {
           body: JSON.stringify({ definitions: newParts.join(' | ') }),
         });
         if (resp.ok) {
-          wordCache.invalidate();
+          invalidateWordData();
           if (!firstPatchedId) firstPatchedId = entry.id;
         }
       }
@@ -545,7 +550,7 @@ export default function WordPage() {
       body: JSON.stringify({ definitions: newDefinitions }),
     });
     if (!r.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); return; }
-    wordCache.invalidate();
+    invalidateWordData();
 
     // Remove from secondary rows any defs now owned by primary
     const BOUND_IDIOM_RE = /^\(bound form\)\s*|^bound form:\s*|\s*\(idiom\)[;,]?\s*/gi;
@@ -560,7 +565,7 @@ export default function WordPage() {
           method: 'PATCH', headers: authHeader,
           body: JSON.stringify({ definitions: remaining.join(' | ') }),
         });
-        if (response.ok) wordCache.invalidate();
+        if (response.ok) invalidateWordData();
       }
     }
   }
@@ -581,7 +586,7 @@ export default function WordPage() {
         body: JSON.stringify({ definitions: newDefs }),
       });
       if (!resp.ok) { setLocalDefinitions(prev); setLocalDefsTab(activeTabIdx); }
-      else wordCache.invalidate();
+      else invalidateWordData();
     } else {
       const group = groupedDefs[editingDefIdx];
       // Edit operates only on the first def in the group — others are left intact.
@@ -661,6 +666,7 @@ export default function WordPage() {
         body: JSON.stringify(editExFields),
       });
       if (resp.ok) {
+        wordDetailsCache.invalidate();
         setExamples(exs => exs.map(e => e.id === editingExampleId ? { ...e, ...editExFields } : e));
         setEditingExampleId(null);
       } else {
@@ -681,6 +687,7 @@ export default function WordPage() {
         headers: { 'Authorization': `Bearer ${session.access_token}` },
       });
       if (resp.ok) {
+        wordDetailsCache.invalidate();
         setExamples(exs => {
           const next = exs.filter(e => e.id !== id);
           setExampleIdx(idx => Math.min(idx, Math.max(0, next.length - 1)));
@@ -1118,7 +1125,9 @@ export default function WordPage() {
             </div>
             {sideView === 'related' ? (
               related.length === 0
-                ? <div style={{ fontSize: 13, color: 'var(--fg3)', padding: '4px 0' }}>Loading…</div>
+                ? <div style={{ fontSize: 13, color: 'var(--fg3)', padding: '4px 0' }}>
+                    {relatedStatus === 'loading' ? 'Loading…' : relatedStatus === 'error' ? 'Related words couldn’t be loaded.' : 'No related words found.'}
+                  </div>
                 : related.map((r, i) => (
                   <button key={i} className="related-row"
                     onClick={() => router.push(`/word/${encodeURIComponent(r.simplified)}`)}>
