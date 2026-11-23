@@ -13,6 +13,10 @@ export async function middleware(request) {
     return response;
   }
 
+  // This endpoint verifies its explicit bearer token in its own handler.
+  // Cookie refresh here would add a redundant Supabase Auth round trip.
+  if (['GET', 'HEAD'].includes(request.method) && path === '/api/subscription') return response;
+
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return response;
   }

@@ -15,6 +15,7 @@ import AudioButton from '../../components/AudioButton';
 import AddToListButton from '../../components/AddToListButton';
 import ClickableChars from '../../components/ClickableChars';
 import Footer from '../../components/Footer';
+import WordLoadDiagnostics from '../../components/WordLoadDiagnostics';
 import { useAuth } from '../../components/AuthProvider';
 import { useSimpToTrad } from '../../hooks/useSimpToTrad';
 import { useTradToSimp } from '../../hooks/useTradToSimp';
@@ -56,6 +57,7 @@ export default function WordPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
   const [loadAttempt, setLoadAttempt] = useState(0);
+  const [wordLoadMetrics, setWordLoadMetrics] = useState(null);
   const [script, setScript] = useState('simplified'); // 'simplified' | 'traditional'
   const toTraditional = useSimpToTrad(script);
   const toSimplified = useTradToSimp(script);
@@ -167,6 +169,9 @@ export default function WordPage() {
     if (!hanzi) return;
     let active = true;
     const background = new AbortController();
+    const startedAt = performance.now();
+    const cacheHit = !!wordCache.read(hanzi);
+    setWordLoadMetrics({ pending: true, cacheHit });
     setLoading(true);
     setLoadError('');
     setRelated([]);
@@ -174,6 +179,7 @@ export default function WordPage() {
     wordCache.load(hanzi)
       .then(async data => {
         if (!active) return;
+        setWordLoadMetrics({ pending: false, cacheHit, loadMs: performance.now() - startedAt });
         const entries = data.results || [];
         const exactMatches = entries.filter(e => e.simplified === hanzi || e.traditional === hanzi);
 
@@ -255,7 +261,10 @@ export default function WordPage() {
           });
         }
       })
-      .catch(error => { if (active) { setLoadError(error.message); setLoading(false); } });
+      .catch(error => { if (active) {
+        setWordLoadMetrics({ pending: false, cacheHit, failed: true, loadMs: performance.now() - startedAt });
+        setLoadError(error.message); setLoading(false);
+      } });
     return () => { active = false; background.abort(); };
   }, [hanzi, loadAttempt, router]);
 
@@ -402,6 +411,7 @@ export default function WordPage() {
   );
 
   const footer = <Footer compactNewsletter />;
+  const diagnostics = <WordLoadDiagnostics wordLoad={wordLoadMetrics} />;
 
   if (loadError) {
     return <main>
@@ -412,6 +422,7 @@ export default function WordPage() {
         <button className="lp-start-btn" onClick={() => setLoadAttempt(n => n + 1)}>Try again</button>
       </div>
       {footer}
+      {diagnostics}
     </main>;
   }
 
@@ -420,7 +431,7 @@ export default function WordPage() {
       <main>
         {nav}{wordHeader}
         <div style={{ textAlign: 'center', padding: '100px 0', color: 'var(--fg3)', fontSize: 15 }}>Searching…</div>
-        {footer}
+        {footer}{diagnostics}
       </main>
     );
   }
@@ -434,7 +445,7 @@ export default function WordPage() {
           <div style={{ fontSize: 20, fontWeight: 500, marginBottom: 10, color: 'var(--fg)' }}>No results for &quot;{hanzi}&quot;</div>
           <div style={{ fontSize: 14, color: 'var(--fg3)' }}>Try simplified characters, pinyin, or an English keyword</div>
         </div>
-        {footer}
+        {footer}{diagnostics}
       </main>
     );
   }
@@ -1138,6 +1149,7 @@ export default function WordPage() {
       </div>
 
       {footer}
+      {diagnostics}
     </main>
 
     {suggestOpen && (
