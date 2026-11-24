@@ -89,6 +89,19 @@ test('Blocked/corrupt storage never blocks dictionary loading', async () => {
   }
 });
 
+test('A word response arriving after 16 seconds is accepted by default', async ({ mock }) => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  const cache = createWordCache({ storage: () => null, fetcher: (_url, { signal }) =>
+    new Promise((resolve, reject) => {
+      signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+      setTimeout(() => resolve(Response.json(word)), 16_000);
+    }),
+  });
+  const pending = cache.load('你好');
+  mock.timers.tick(16_000);
+  assert.deepEqual(await pending, word);
+});
+
 test('A stalled word request times out and can be retried', async () => {
   let stalled = true;
   const cache = createWordCache({ timeoutMs: 15, storage: () => null, fetcher: async (_url, { signal }) => {

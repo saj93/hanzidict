@@ -59,6 +59,21 @@ test('Concurrent requests share one fetch, and an edit cannot restore stale in-f
   assert.deepEqual(await reloaded.load('examples', '你'), [{ id: 'new' }]);
 });
 
+test('A public detail response arriving after 16 seconds is accepted by default', async ({ mock }) => {
+  mock.timers.enable({ apis: ['setTimeout'] });
+  const examples = [{ id: 1, chinese: '你好。' }];
+  const cache = createWordDetailsCache({ storage: () => null, fetcher: (_url, { signal }) =>
+    new Promise((resolve, reject) => {
+      signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+      setTimeout(() => resolve(response(examples)), 16_000);
+    }),
+  });
+  const pending = cache.load('examples', '你好');
+  await Promise.resolve(); // The cache starts the fetch in a microtask.
+  mock.timers.tick(16_000);
+  assert.deepEqual(await pending, examples);
+});
+
 test('Broken storage does not block details; timed-out requests can be retried', async () => {
   const cache = createWordDetailsCache({ timeoutMs: 10, storage: () => { throw new Error('Storage denied'); },
     fetcher: (url, { signal }) => new Promise((resolve, reject) => signal.addEventListener('abort', () => reject(signal.reason), { once: true })) });
